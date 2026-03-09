@@ -1018,90 +1018,136 @@ const FeatureExploreCard: React.FC<{ icon: React.ReactNode, title: string, descr
 
 // --- PRODUCTS PAGE VIEW ---
 const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => (
-  <main className="max-w-[1400px] mx-auto px-6 py-8 md:py-12">
-    {/* DISTRIBUTED SAAS HEADER */}
-    <div className="flex flex-col gap-10 mb-16 px-2">
-      {/* SECTION 1: IDENTITY & LIVE STATUS */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 relative">
-        <div className="absolute -left-20 -top-20 w-64 h-64 bg-[#3B82F6]/5 blur-[100px] rounded-full pointer-events-none"></div>
-        <div className="relative z-10">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-2 h-2 bg-[#00b37e] rounded-full shadow-[0_0_10px_rgba(0,179,126,0.8)] animate-pulse"></div>
-            <span className="text-[10px] font-black text-[#00b37e] tracking-[0.3em] uppercase">Mining Live Tracking</span>
+  <main className="max-w-[1400px] mx-auto px-6 py-12 md:py-16">
+    {/* HIGH-END PREMIUM HEADER 2.0 */}
+    <div className="flex flex-col gap-14 mb-20">
+
+      {/* SECTION 1: METALLIC IDENTITY & LIVE STATUS */}
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-10 relative">
+        {/* BACKGROUND AMBIANCE */}
+        <div className="absolute -left-24 -top-24 w-[500px] h-[500px] bg-[#3B82F6]/5 blur-[120px] rounded-full pointer-events-none opacity-40"></div>
+
+        <div className="relative z-10 flex flex-col gap-4">
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#16161A]/80 border border-white/5 backdrop-blur-md shadow-2xl">
+            <div className="relative flex items-center justify-center">
+              <div className="absolute w-3 h-3 bg-[#00b37e]/40 rounded-full animate-ping"></div>
+              <div className="w-2 h-2 bg-[#00b37e] rounded-full shadow-[0_0_12px_rgba(0,179,126,1)]"></div>
+            </div>
+            <span className="text-[10px] font-black text-white/50 tracking-[0.3em] uppercase flex items-center gap-2">
+              Deep Mining <span className="w-1 h-1 bg-white/20 rounded-full"></span> Active Now
+            </span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-black text-white tracking-tighter mb-2">Produtos Virais</h1>
-          <p className="text-[#5b5b7b] text-base font-medium max-w-sm">Inteligência competitiva em tempo real dos maiores marketplaces globais.</p>
+
+          <div className="relative">
+            <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-none mb-3">
+              <span className="bg-gradient-to-b from-white via-white to-white/40 bg-clip-text text-transparent">Produtos</span>
+              <br />
+              <span className="bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent">Virais</span>
+            </h1>
+            <div className="absolute -left-4 top-0 w-1 h-full bg-gradient-to-b from-[#3B82F6] to-transparent rounded-full opacity-50"></div>
+          </div>
+          <p className="text-[#8d8d99] text-base md:text-lg font-medium max-w-md leading-relaxed">
+            Algoritmos de IA processando milhões de sinais de venda para isolar o próximo <span className="text-white font-bold">Winner</span>.
+          </p>
         </div>
 
-        {/* SECTION 2: INDEPENDENT METRICS CARDS */}
-        <div className="flex flex-wrap items-center gap-4 md:gap-6 relative z-10">
-          <div className="bg-[#14151a]/40 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-6 flex items-center gap-5 shadow-2xl hover:border-[#3B82F6]/30 transition-all group">
-            <div className="w-12 h-12 rounded-2xl bg-[#0B0B0E] flex items-center justify-center border border-white/5 group-hover:scale-110 transition-transform">
-              <Package className="w-5 h-5 text-[#3B82F6]" />
-            </div>
-            <div>
-              <span className="text-[9px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] block mb-0.5">NOVOS DETECTADOS</span>
-              <span className="text-3xl font-black text-white tracking-tighter">18</span>
-            </div>
-          </div>
-
-          <div className="bg-[#14151a]/40 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-6 flex items-center gap-5 shadow-2xl hover:border-[#00b37e]/30 transition-all group">
-            <div className="w-12 h-12 rounded-2xl bg-[#0B0B0E] flex items-center justify-center border border-white/5 group-hover:scale-110 transition-transform">
-              <TrendingUp className="w-5 h-5 text-[#00b37e]" />
-            </div>
-            <div>
-              <span className="text-[9px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] block mb-0.5">RECEITA ESTIMADA</span>
-              <div className="flex items-baseline gap-1">
-                <span className="text-sm font-black text-[#00b37e]/60">R$</span>
-                <span className="text-3xl font-black text-[#00b37e] tracking-tighter tabular-nums">3.9M</span>
+        {/* SECTION 2: HIGH-END METRICS GRID (DISTRIBUTED) */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 relative z-10 w-full lg:w-auto">
+          {/* CARD: NEW DETECTED (GLASS BEAM) */}
+          <div className="relative group bg-[#0B0B0E] border border-white/5 rounded-[40px] p-8 min-w-[220px] transition-all hover:bg-[#0f0f12]">
+            <div className="absolute inset-0 bg-gradient-to-br from-[#3B82F6]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[40px]"></div>
+            <div className="relative z-10">
+              <div className="flex items-center justify-between mb-6">
+                <div className="w-10 h-10 rounded-xl bg-[#16161a] border border-white/5 flex items-center justify-center">
+                  <Package className="w-5 h-5 text-[#3B82F6]" />
+                </div>
+                <div className="text-[10px] font-black text-[#00b37e] bg-[#00b37e]/10 px-2 py-1 rounded-md">+14%</div>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-5xl font-black text-white tracking-tighter mb-2">18</span>
+                <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">Novos Hoje</span>
               </div>
             </div>
           </div>
 
-          <div className="bg-[#14151a]/40 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-6 flex items-center gap-5 shadow-2xl hover:border-[#8B5CF6]/30 transition-all group">
-            <div className="w-12 h-12 rounded-2xl bg-[#0B0B0E] flex items-center justify-center border border-white/5 group-hover:scale-110 transition-transform">
-              <Activity className="w-5 h-5 text-[#8B5CF6]" />
+          {/* CARD: REVENUE (GLASS LAYER) */}
+          <div className="relative group bg-[#0B0B0E] border border-white/5 rounded-[40px] p-8 min-w-[220px] transition-all hover:bg-[#0f0f12]">
+            <div className="absolute inset-0 bg-gradient-to-br from-[#00b37e]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[40px]"></div>
+            <div className="relative z-10">
+              <div className="flex items-center justify-between mb-6">
+                <div className="w-10 h-10 rounded-xl bg-[#16161a] border border-white/5 flex items-center justify-center">
+                  <TrendingUp className="w-5 h-5 text-[#00b37e]" />
+                </div>
+                <div className="w-2 h-2 bg-[#00b37e] rounded-full shadow-[0_0_8px_#00b37e]"></div>
+              </div>
+              <div className="flex flex-col">
+                <div className="flex items-baseline gap-1.5 mb-2">
+                  <span className="text-lg font-black text-[#00b37e]/50 tracking-tighter uppercase">R$</span>
+                  <span className="text-5xl font-black text-[#00b37e] tracking-tighter tabular-nums">3.9M</span>
+                </div>
+                <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">Volume Est.</span>
+              </div>
             </div>
-            <div>
-              <span className="text-[9px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] block mb-0.5">PRECISÃO IA</span>
-              <span className="text-3xl font-black text-white tracking-tighter">98<span className="text-sm text-[#5b5b7b]">%</span></span>
+          </div>
+
+          {/* CARD: ACCURACY (SVG ARC) */}
+          <div className="relative group bg-[#0B0B0E] border border-white/5 rounded-[40px] p-8 min-w-[220px] transition-all hover:bg-[#0f0f12]">
+            <div className="absolute inset-0 bg-gradient-to-br from-[#8B5CF6]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[40px]"></div>
+            <div className="relative z-10 flex flex-col items-center">
+              <div className="relative w-24 h-24 mb-4 flex items-center justify-center">
+                {/* SVG MINI DASHBOARD ARC */}
+                <svg className="absolute inset-0 w-full h-full transform -rotate-90">
+                  <circle cx="48" cy="48" r="42" stroke="currentColor" strokeWidth="4" fill="transparent" className="text-white/5" />
+                  <circle cx="48" cy="48" r="42" stroke="currentColor" strokeWidth="6" fill="transparent" strokeDasharray="264" strokeDashoffset="52" strokeLinecap="round" className="text-[#8B5CF6] transition-all duration-1000 shadow-[0_0_15px_#8B5CF6]" />
+                </svg>
+                <div className="flex flex-col items-center">
+                  <span className="text-2xl font-black text-white leading-none">98<span className="text-xs text-[#5b5b7b]">%</span></span>
+                </div>
+              </div>
+              <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] text-center">IA Accuracy</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* SECTION 3: OPERATIONAL TOOLBAR */}
-      <div className="bg-[#0B0B0E] border border-white/5 rounded-[28px] p-4 md:p-5 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-xl relative z-20">
-        <div className="flex items-center gap-2 w-full lg:w-auto overflow-x-auto scrollbar-hide pb-2 lg:pb-0 px-2">
-          <button className="bg-[#16161A] border border-[#3B82F6]/40 text-white px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.15em] flex items-center gap-2 shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all hover:bg-[#1c1c21]">
-            <LayoutGrid className="w-3.5 h-3.5 fill-[#3B82F6] text-[#3B82F6]" />
-            Todos os Produtos
-          </button>
-          <button className="bg-transparent border border-white/5 text-[#5b5b7b] px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.15em] flex items-center gap-2 transition-all hover:text-white hover:border-white/10">
-            <Sparkles className="w-3.5 h-3.5" />
-            Dividir por Nicho
-          </button>
-        </div>
+      {/* SECTION 3: PREMIUM OPERATIONAL TOOLBAR */}
+      <div className="relative z-20">
+        <div className="absolute inset-0 bg-white/[0.02] backdrop-blur-xl rounded-[32px] border border-white/5"></div>
+        <div className="relative p-5 md:p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-10">
 
-        <div className="flex flex-col md:flex-row items-center gap-8 w-full lg:w-auto px-2">
-          <div className="flex items-center gap-8 md:gap-10 overflow-x-auto scrollbar-hide w-full md:w-auto flex-1">
-            <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] cursor-pointer hover:text-white transition-colors">00-06</span>
-            <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] cursor-pointer hover:text-white transition-colors">06-12</span>
-            <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] cursor-pointer hover:text-white transition-colors">12-18</span>
-            <div className="flex flex-col items-center group/time cursor-default">
-              <span className="text-[10px] font-black text-[#3B82F6] uppercase tracking-[0.3em]">18-00</span>
-              <div className="w-1.5 h-1.5 bg-[#3B82F6] rounded-full mt-1 shadow-[0_0_10px_rgba(59,130,246,1)] group-hover:scale-125 transition-transform"></div>
-            </div>
+          <div className="flex items-center gap-3">
+            <button className="relative group overflow-hidden bg-white text-black px-7 py-3.5 rounded-2xl flex items-center gap-2.5 transition-all hover:scale-[1.02] active:scale-95">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></div>
+              <LayoutGrid className="w-4 h-4" />
+              <span className="text-xs font-black uppercase tracking-wider">Ver Todos</span>
+            </button>
+            <button className="bg-[#16161A] border border-white/5 text-[#8d8d99] px-7 py-3.5 rounded-2xl flex items-center gap-2.5 transition-all hover:bg-white/5 hover:text-white">
+              <Sparkles className="w-4 h-4" />
+              <span className="text-xs font-black uppercase tracking-wider">Por Nicho</span>
+            </button>
           </div>
 
-          <div className="hidden md:block w-px h-8 bg-white/5"></div>
+          <div className="flex flex-col md:flex-row items-center gap-12">
+            <div className="flex items-center gap-10">
+              {['00-06', '06-12', '12-18'].map((time) => (
+                <div key={time} className="flex flex-col items-center gap-1.5 cursor-pointer group">
+                  <span className="text-[10px] font-bold text-[#5b5b7b] group-hover:text-white/60 transition-colors tracking-widest uppercase">{time}</span>
+                  <div className="w-1 h-1 rounded-full bg-white/10 group-hover:bg-white/30 transition-all"></div>
+                </div>
+              ))}
+              <div className="flex flex-col items-center gap-1.5">
+                <span className="text-[10px] font-black text-[#3B82F6] tracking-widest uppercase shadow-[0_0_10px_#3B82F6]">18-00</span>
+                <div className="w-1.5 h-1.5 rounded-full bg-[#3B82F6] shadow-[0_0_15px_#3B82F6] animate-pulse"></div>
+              </div>
+            </div>
 
-          <div className="flex items-center gap-4 bg-[#14151a] px-5 py-2.5 rounded-2xl border border-white/5 shadow-inner">
-            <div className="flex flex-col">
-              <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] mb-0.5">NEXT SYNC</span>
-              <div className="flex items-center gap-2">
-                <Clock className="w-3.5 h-3.5 text-[#3B82F6]" />
-                <span className="text-base font-black text-white tabular-nums tracking-tighter">04:35:11</span>
+            <div className="flex items-center gap-4 bg-black/40 px-6 py-3 rounded-2xl border border-white/5 shadow-inner group">
+              <div className="flex flex-col">
+                <span className="text-[8px] font-black text-[#5b5b7b] tracking-widest uppercase mb-1">Próxima Sincronização</span>
+                <div className="flex items-center gap-2.5">
+                  <Clock className="w-4 h-4 text-[#3B82F6] animate-pulse" />
+                  <span className="text-lg font-black text-white tabular-nums tracking-tighter">04:35:11</span>
+                </div>
               </div>
             </div>
           </div>

@@ -63,9 +63,8 @@ import {
   FileText,
   Mail,
   Rocket,
-  Link
-  Menu,
-  X,
+  Link,
+  Menu
 } from 'lucide-react';
 
 // Language Context
@@ -544,43 +543,43 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>
-        {/* Mobile Sidebar Overlay */}
-        {isMobileMenuOpen && (
-          <div className="fixed inset-0 z-[100] lg:hidden">
-            <div className="absolute inset-0 bg-[#0b0c10]/80 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)} />
-            <div className="absolute left-0 top-0 bottom-0 w-[280px] bg-[#0b0c10] border-r border-[#1e1f26] flex flex-col pt-6 px-6">
-              <div className="flex items-center justify-between mb-8">
-                <div className="flex items-center gap-2 cursor-pointer" onClick={() => { setIsMobileMenuOpen(false); setCurrentPage('explorar'); }}>
-                  <img src="https://i.imgur.com/hkRPBxg.png" alt="Trendfy Logo" className="w-10 h-10 object-contain" />
-                  <span className="text-xl font-black text-white">Trendfy</span>
-                </div>
-                <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 text-[#8d8d99] hover:text-white rounded-lg hover:bg-[#1f2026]">
-                  <X className="w-5 h-5" />
-                </button>
+      {/* Mobile Sidebar Overlay */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-[100] lg:hidden">
+          <div className="absolute inset-0 bg-[#0b0c10]/80 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)} />
+          <div className="absolute left-0 top-0 bottom-0 w-[280px] bg-[#0b0c10] border-r border-[#1e1f26] flex flex-col pt-6 px-6">
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center gap-2 cursor-pointer" onClick={() => { setIsMobileMenuOpen(false); setCurrentPage('explorar'); }}>
+                <img src="https://i.imgur.com/hkRPBxg.png" alt="Trendfy Logo" className="w-10 h-10 object-contain" />
+                <span className="text-xl font-black text-white">Trendfy</span>
               </div>
-              <nav className="flex flex-col gap-4">
-                {['explorar', 'produtos', 'videos', 'criadores'].map((page) => (
-                  <button
-                    key={page}
-                    onClick={() => { setCurrentPage(page as any); setIsMobileMenuOpen(false); }}
-                    className={`text-left text-base font-semibold py-3 px-4 rounded-xl transition-all ${currentPage === page ? 'text-white bg-[#3B82F6]' : 'text-[#8d8d99] hover:text-white hover:bg-[#1f2026]'}`}
-                  >
-                    {t(page)}
-                  </button>
-                ))}
-              </nav>
+              <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 text-[#8d8d99] hover:text-white rounded-lg hover:bg-[#1f2026]">
+                <X className="w-5 h-5" />
+              </button>
             </div>
+            <nav className="flex flex-col gap-4">
+              {['explorar', 'produtos', 'videos', 'criadores'].map((page) => (
+                <button
+                  key={page}
+                  onClick={() => { setCurrentPage(page as any); setIsMobileMenuOpen(false); }}
+                  className={`text-left text-base font-semibold py-3 px-4 rounded-xl transition-all ${currentPage === page ? 'text-white bg-[#3B82F6]' : 'text-[#8d8d99] hover:text-white hover:bg-[#1f2026]'}`}
+                >
+                  {t(page)}
+                </button>
+              ))}
+            </nav>
           </div>
-        )}
+        </div>
+      )}
 
       <div className="min-h-screen bg-[#0b0c10] text-[#e1e1e6] selection:bg-[#3B82F6]/30 flex flex-col">
         {/* PERFECT CLONE HEADER */}
         <header className="h-[72px] border-b border-[#1e1f26] bg-[#0b0c10] flex items-center sticky top-0 z-50">
           <div className="max-w-[1400px] w-full mx-auto px-6 flex items-center h-full">
             {/* Logo Area */}
-            
+
             {/* Mobile Hamburger */}
-            <button 
+            <button
               className="lg:hidden mr-4 p-2 -ml-2 text-white hover:bg-[#1f2026] rounded-lg transition-colors"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >

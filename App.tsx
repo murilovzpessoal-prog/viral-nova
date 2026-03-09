@@ -1018,138 +1018,123 @@ const FeatureExploreCard: React.FC<{ icon: React.ReactNode, title: string, descr
 
 // --- PRODUCTS PAGE VIEW ---
 const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => (
-  <main className="max-w-[1400px] mx-auto px-6 py-12 md:py-16">
-    {/* HIGH-END PREMIUM HEADER 2.0 */}
-    <div className="flex flex-col gap-14 mb-20">
+  <main className="max-w-[1500px] mx-auto px-8 py-16 md:py-24 relative">
+    {/* ATMOSPHERIC BACKGROUND SYSTEM */}
+    <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-[#3B82F6]/5 blur-[150px] rounded-full pointer-events-none opacity-50"></div>
+    <div className="absolute top-40 right-1/4 w-[400px] h-[400px] bg-[#8B5CF6]/5 blur-[120px] rounded-full pointer-events-none opacity-30"></div>
 
-      {/* SECTION 1: METALLIC IDENTITY & LIVE STATUS */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-10 relative">
-        {/* BACKGROUND AMBIANCE */}
-        <div className="absolute -left-24 -top-24 w-[500px] h-[500px] bg-[#3B82F6]/5 blur-[120px] rounded-full pointer-events-none opacity-40"></div>
+    {/* RADICAL ASYMMETRIC HEADER */}
+    <div className="flex flex-col lg:flex-row items-start justify-between gap-16 mb-24 relative z-10">
 
-        <div className="relative z-10 flex flex-col gap-4">
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#16161A]/80 border border-white/5 backdrop-blur-md shadow-2xl">
-            <div className="relative flex items-center justify-center">
-              <div className="absolute w-3 h-3 bg-[#00b37e]/40 rounded-full animate-ping"></div>
-              <div className="w-2 h-2 bg-[#00b37e] rounded-full shadow-[0_0_12px_rgba(0,179,126,1)]"></div>
+      {/* LEFT: TYPOGRAPHY SCULPTURE & PULSE */}
+      <div className="flex flex-col gap-8 flex-1">
+        <div className="relative group">
+          {/* ARCHITECTURAL STATUS LINE */}
+          <div className="flex items-center gap-4 mb-6">
+            <div className="h-[1px] w-12 bg-gradient-to-r from-[#00b37e] to-transparent"></div>
+            <span className="text-[10px] font-black text-[#00b37e] tracking-[0.4em] uppercase">System Pulse Active</span>
+            <div className="flex gap-1">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="w-1 h-1 bg-[#00b37e]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
+              ))}
             </div>
-            <span className="text-[10px] font-black text-white/50 tracking-[0.3em] uppercase flex items-center gap-2">
-              Deep Mining <span className="w-1 h-1 bg-white/20 rounded-full"></span> Active Now
-            </span>
           </div>
 
           <div className="relative">
-            <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-none mb-3">
-              <span className="bg-gradient-to-b from-white via-white to-white/40 bg-clip-text text-transparent">Produtos</span>
-              <br />
-              <span className="bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent">Virais</span>
+            <h1 className="text-6xl md:text-8xl lg:text-[100px] font-black tracking-tighter leading-[0.85] select-none">
+              <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent transform -translate-x-2">Produtos</span>
+              <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent">Virais</span>
             </h1>
-            <div className="absolute -left-4 top-0 w-1 h-full bg-gradient-to-b from-[#3B82F6] to-transparent rounded-full opacity-50"></div>
+            {/* DEPTH SHADOW TEXT */}
+            <span className="absolute -top-4 -left-4 text-6xl md:text-8xl lg:text-[100px] font-black tracking-tighter leading-[0.85] text-white/5 blur-sm -z-10 pointer-events-none">Produtos<br />Virais</span>
           </div>
-          <p className="text-[#8d8d99] text-base md:text-lg font-medium max-w-md leading-relaxed">
-            Algoritmos de IA processando milhões de sinais de venda para isolar o próximo <span className="text-white font-bold">Winner</span>.
-          </p>
         </div>
 
-        {/* SECTION 2: HIGH-END METRICS GRID (DISTRIBUTED) */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 relative z-10 w-full lg:w-auto">
-          {/* CARD: NEW DETECTED (GLASS BEAM) */}
-          <div className="relative group bg-[#0B0B0E] border border-white/5 rounded-[40px] p-8 min-w-[220px] transition-all hover:bg-[#0f0f12]">
-            <div className="absolute inset-0 bg-gradient-to-br from-[#3B82F6]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[40px]"></div>
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-6">
-                <div className="w-10 h-10 rounded-xl bg-[#16161a] border border-white/5 flex items-center justify-center">
-                  <Package className="w-5 h-5 text-[#3B82F6]" />
-                </div>
-                <div className="text-[10px] font-black text-[#00b37e] bg-[#00b37e]/10 px-2 py-1 rounded-md">+14%</div>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-5xl font-black text-white tracking-tighter mb-2">18</span>
-                <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">Novos Hoje</span>
-              </div>
-            </div>
-          </div>
+        <p className="text-[#8d8d99] text-lg md:text-xl font-medium max-w-lg leading-relaxed border-l-2 border-white/5 pl-8 mt-4">
+          Nossa rede neural minera <span className="text-white">trilhões de signals</span> para materializar oportunidades de escala global.
+        </p>
+      </div>
 
-          {/* CARD: REVENUE (GLASS LAYER) */}
-          <div className="relative group bg-[#0B0B0E] border border-white/5 rounded-[40px] p-8 min-w-[220px] transition-all hover:bg-[#0f0f12]">
-            <div className="absolute inset-0 bg-gradient-to-br from-[#00b37e]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[40px]"></div>
-            <div className="relative z-10">
-              <div className="flex items-center justify-between mb-6">
-                <div className="w-10 h-10 rounded-xl bg-[#16161a] border border-white/5 flex items-center justify-center">
-                  <TrendingUp className="w-5 h-5 text-[#00b37e]" />
-                </div>
-                <div className="w-2 h-2 bg-[#00b37e] rounded-full shadow-[0_0_8px_#00b37e]"></div>
-              </div>
-              <div className="flex flex-col">
-                <div className="flex items-baseline gap-1.5 mb-2">
-                  <span className="text-lg font-black text-[#00b37e]/50 tracking-tighter uppercase">R$</span>
-                  <span className="text-5xl font-black text-[#00b37e] tracking-tighter tabular-nums">3.9M</span>
-                </div>
-                <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">Volume Est.</span>
-              </div>
-            </div>
+      {/* RIGHT: FLOATING DATA ORBS & FROSTED PANES */}
+      <div className="flex flex-col md:flex-row items-center gap-8 lg:mt-12">
+        {/* NEW DETECTED (ORGANIC FROSTED) */}
+        <div className="relative group">
+          <div className="absolute inset-0 bg-[#3B82F6]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+          <div className="w-52 h-52 backdrop-blur-3xl bg-white/[0.03] border border-white/10 rounded-[60px] p-8 flex flex-col items-center justify-center shadow-[0_24px_48px_rgba(0,0,0,0.5)] transform rotate-3 hover:rotate-0 transition-transform duration-500">
+            <Package className="w-8 h-8 text-[#3B82F6] mb-4 opacity-50" />
+            <span className="text-6xl font-black text-white tracking-tighter mb-1">18</span>
+            <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">HITS HOJE</span>
           </div>
+        </div>
 
-          {/* CARD: ACCURACY (SVG ARC) */}
-          <div className="relative group bg-[#0B0B0E] border border-white/5 rounded-[40px] p-8 min-w-[220px] transition-all hover:bg-[#0f0f12]">
-            <div className="absolute inset-0 bg-gradient-to-br from-[#8B5CF6]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[40px]"></div>
-            <div className="relative z-10 flex flex-col items-center">
-              <div className="relative w-24 h-24 mb-4 flex items-center justify-center">
-                {/* SVG MINI DASHBOARD ARC */}
-                <svg className="absolute inset-0 w-full h-full transform -rotate-90">
-                  <circle cx="48" cy="48" r="42" stroke="currentColor" strokeWidth="4" fill="transparent" className="text-white/5" />
-                  <circle cx="48" cy="48" r="42" stroke="currentColor" strokeWidth="6" fill="transparent" strokeDasharray="264" strokeDashoffset="52" strokeLinecap="round" className="text-[#8B5CF6] transition-all duration-1000 shadow-[0_0_15px_#8B5CF6]" />
-                </svg>
-                <div className="flex flex-col items-center">
-                  <span className="text-2xl font-black text-white leading-none">98<span className="text-xs text-[#5b5b7b]">%</span></span>
-                </div>
+        {/* REVENUE ORB (DYNAMIC) */}
+        <div className="relative group -mt-8 md:mt-0">
+          <div className="absolute inset-x-0 -bottom-10 h-20 bg-[#00b37e]/10 blur-3xl rounded-full opacity-40"></div>
+          <div className="w-64 h-64 backdrop-blur-3xl bg-[#0B0B0E]/60 border border-white/10 rounded-full p-10 flex flex-col items-center justify-center shadow-2xl relative overflow-hidden group-hover:border-[#00b37e]/30 transition-all">
+            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#00b37e]/10 to-transparent pointer-events-none"></div>
+            <TrendingUp className="w-6 h-6 text-[#00b37e] mb-2 animate-bounce" />
+            <div className="flex items-baseline gap-1">
+              <span className="text-sm font-black text-[#00b37e]/40 tabular-nums">R$</span>
+              <span className="text-5xl font-black text-[#00b37e] tracking-tighter tabular-nums drop-shadow-[0_0_15px_rgba(0,179,126,0.3)]">3.9M</span>
+            </div>
+            <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.4em] mt-2">VOLUME REAL</span>
+          </div>
+        </div>
+
+        {/* ACCURACY SPHERE (SCIFI DATA ORB) */}
+        <div className="relative group">
+          <div className="w-48 h-48 flex items-center justify-center p-4">
+            <div className="absolute inset-0 bg-[#8B5CF6]/10 blur-3xl rounded-full animate-pulse"></div>
+            <div className="relative w-full h-full flex items-center justify-center rounded-full border border-white/5 bg-[#0B0B0E]/40 backdrop-blur-md">
+              <svg className="absolute inset-0 w-full h-full transform -rotate-90">
+                <circle cx="50%" cy="50%" r="44%" stroke="currentColor" strokeWidth="2" fill="transparent" className="text-white/5" />
+                <circle cx="50%" cy="50%" r="44%" stroke="currentColor" strokeWidth="12" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#8B5CF6] transition-all duration-1000 opacity-20" />
+                <circle cx="50%" cy="50%" r="44%" stroke="currentColor" strokeWidth="2" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#8B5CF6] shadow-[0_0_20px_#8B5CF6]" />
+              </svg>
+              <div className="flex flex-col items-center">
+                <span className="text-4xl font-black text-white tracking-tighter">98<span className="text-sm text-[#5b5b7b]">%</span></span>
+                <span className="text-[8px] font-black text-[#8B5CF6] uppercase tracking-[0.2em] mt-1">Accuracy</span>
               </div>
-              <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] text-center">IA Accuracy</span>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
-      {/* SECTION 3: PREMIUM OPERATIONAL TOOLBAR */}
-      <div className="relative z-20">
-        <div className="absolute inset-0 bg-white/[0.02] backdrop-blur-xl rounded-[32px] border border-white/5"></div>
-        <div className="relative p-5 md:p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-10">
+    {/* FLOATING CONTROL ORBS (TOOLBAR) */}
+    <div className="flex flex-col md:flex-row items-center justify-between gap-12 mb-16 relative z-20">
+      <div className="flex items-center gap-6">
+        <button className="relative px-10 py-5 rounded-[24px] bg-white text-black font-black uppercase text-xs tracking-widest shadow-[0_20px_40px_rgba(255,255,255,0.15)] hover:scale-105 active:scale-95 transition-all flex items-center gap-3">
+          <LayoutGrid className="w-5 h-5" />
+          MASTER LIST
+        </button>
+        <button className="px-10 py-5 rounded-[24px] bg-[#16161A]/60 backdrop-blur-xl border border-white/5 text-[#5b5b7b] font-black uppercase text-xs tracking-widest hover:text-white hover:border-white/20 transition-all flex items-center gap-3">
+          <Sparkles className="w-5 h-5" />
+          NICHE MAP
+        </button>
+      </div>
 
-          <div className="flex items-center gap-3">
-            <button className="relative group overflow-hidden bg-white text-black px-7 py-3.5 rounded-2xl flex items-center gap-2.5 transition-all hover:scale-[1.02] active:scale-95">
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/50 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></div>
-              <LayoutGrid className="w-4 h-4" />
-              <span className="text-xs font-black uppercase tracking-wider">Ver Todos</span>
-            </button>
-            <button className="bg-[#16161A] border border-white/5 text-[#8d8d99] px-7 py-3.5 rounded-2xl flex items-center gap-2.5 transition-all hover:bg-white/5 hover:text-white">
-              <Sparkles className="w-4 h-4" />
-              <span className="text-xs font-black uppercase tracking-wider">Por Nicho</span>
-            </button>
+      <div className="h-px flex-1 bg-gradient-to-r from-white/5 via-white/10 to-transparent hidden lg:block"></div>
+
+      <div className="flex items-center gap-12">
+        <div className="flex items-center gap-8">
+          {['00-06', '06-12', '12-18', '18-00'].map((time, idx) => (
+            <div key={time} className="flex flex-col items-center group cursor-pointer">
+              <span className={`text-[10px] font-black tracking-[0.2em] uppercase transition-all ${idx === 3 ? 'text-[#3B82F6]' : 'text-[#5b5b7b] group-hover:text-white/60'}`}>
+                {time}
+              </span>
+              <div className={`w-1.5 h-1.5 rounded-full mt-2 transition-all ${idx === 3 ? 'bg-[#3B82F6] shadow-[0_0_15px_#3B82F6]' : 'bg-white/5 group-hover:bg-white/20'}`}></div>
+            </div>
+          ))}
+        </div>
+
+        <div className="px-8 py-4 rounded-[28px] bg-white/[0.02] border border-white/5 backdrop-blur-md flex items-center gap-4 group">
+          <div className="w-10 h-10 rounded-full bg-black/40 flex items-center justify-center border border-white/5">
+            <Clock className="w-5 h-5 text-[#3B82F6] animate-pulse" />
           </div>
-
-          <div className="flex flex-col md:flex-row items-center gap-12">
-            <div className="flex items-center gap-10">
-              {['00-06', '06-12', '12-18'].map((time) => (
-                <div key={time} className="flex flex-col items-center gap-1.5 cursor-pointer group">
-                  <span className="text-[10px] font-bold text-[#5b5b7b] group-hover:text-white/60 transition-colors tracking-widest uppercase">{time}</span>
-                  <div className="w-1 h-1 rounded-full bg-white/10 group-hover:bg-white/30 transition-all"></div>
-                </div>
-              ))}
-              <div className="flex flex-col items-center gap-1.5">
-                <span className="text-[10px] font-black text-[#3B82F6] tracking-widest uppercase shadow-[0_0_10px_#3B82F6]">18-00</span>
-                <div className="w-1.5 h-1.5 rounded-full bg-[#3B82F6] shadow-[0_0_15px_#3B82F6] animate-pulse"></div>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4 bg-black/40 px-6 py-3 rounded-2xl border border-white/5 shadow-inner group">
-              <div className="flex flex-col">
-                <span className="text-[8px] font-black text-[#5b5b7b] tracking-widest uppercase mb-1">Próxima Sincronização</span>
-                <div className="flex items-center gap-2.5">
-                  <Clock className="w-4 h-4 text-[#3B82F6] animate-pulse" />
-                  <span className="text-lg font-black text-white tabular-nums tracking-tighter">04:35:11</span>
-                </div>
-              </div>
-            </div>
+          <div className="flex flex-col">
+            <span className="text-[8px] font-black text-[#5b5b7b] tracking-wider uppercase">SYNC ENGINE</span>
+            <span className="text-xl font-black text-white tabular-nums tracking-tighter">04:35:11</span>
           </div>
         </div>
       </div>

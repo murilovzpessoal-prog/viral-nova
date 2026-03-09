@@ -64,7 +64,9 @@ import {
   Mail,
   Rocket,
   Link,
-  Menu
+  Menu,
+  Activity,
+  Globe
 } from 'lucide-react';
 
 // Language Context
@@ -840,88 +842,111 @@ const FooterSocialIcon: React.FC<{ icon: React.ReactNode }> = ({ icon }) => (
 
 // --- EXPLORE PAGE VIEW ---
 const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => void, onGoToProducts: () => void }> = ({ products, onGoToAcademy, onGoToProducts }) => (
-  <main className="max-w-[1400px] mx-auto px-6 py-6 md:py-10">
-    <div className="bg-[#1F2028] rounded-3xl p-6 md:p-10 border border-[#2C2D38]/30 flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-0 mb-8 md:mb-12 relative overflow-hidden min-h-[160px] shadow-2xl">
-      <div className="hidden md:flex absolute left-10 top-1/2 -translate-y-1/2 items-center gap-4">
-        <div className="w-14 h-14 bg-[#14151a] rounded-2xl flex items-center justify-center relative shadow-2xl border border-white/5">
-          <LayoutGrid className="w-7 h-7 text-[#5b5b7b]" />
-          <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-[#3B82F6] rounded-lg flex items-center justify-center shadow-lg">
-            <TrendingUp className="w-3.5 h-3.5 text-white" />
+  <main className="max-w-[1400px] mx-auto px-6 py-8 md:py-12">
+    {/* PREMIUM HERO SECTION */}
+    <div className="relative mb-16 md:mb-20 flex flex-col items-center justify-center text-center">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] bg-gradient-to-r from-[#3B82F6]/20 to-[#8B5CF6]/20 blur-[100px] md:blur-[120px] rounded-full pointer-events-none"></div>
+
+      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#16161A] border border-white/5 mb-6 shadow-xl relative z-10">
+        <Sparkles className="w-4 h-4 text-[#3B82F6]" />
+        <span className="text-[10px] md:text-xs font-black text-[#8d8d99] tracking-[0.2em] md:tracking-[0.25em] uppercase">Inteligência Estratégica</span>
+      </div>
+
+      <h1 className="text-4xl md:text-6xl lg:text-[72px] font-black text-white tracking-tighter mb-6 max-w-4xl leading-[1.1] relative z-10">
+        Descubra os próximos <br className="hidden md:block" />
+        <span className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] bg-clip-text text-transparent">Produtos Vencedores</span>
+      </h1>
+
+      <p className="text-[#a8a8b3] text-base md:text-xl font-medium max-w-2xl mb-10 md:mb-12 relative z-10">
+        Analise tendências, monitore concorrentes ocultos e encontre sua próxima campanha milionária antes de todo mundo.
+      </p>
+
+      {/* SUPER SEARCH BAR */}
+      <div className="relative w-full max-w-3xl group z-20">
+        <div className="absolute inset-x-0 -inset-y-2 md:inset-0 bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] rounded-full blur-[20px] md:blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
+        <div className="relative flex items-center bg-[#0B0B0E]/80 backdrop-blur-2xl border border-white/10 rounded-full p-2 md:p-2.5 h-16 md:h-20 shadow-[0_8px_32px_rgba(0,0,0,0.5)] transition-all hover:border-white/20">
+          <div className="pl-6 md:pl-8 text-[#5b5b7b]">
+            <Search className="w-5 h-5 md:w-6 md:h-6" />
+          </div>
+          <input
+            type="text"
+            placeholder="Pesquise por nicho, loja ou criador..."
+            className="flex-1 bg-transparent text-white placeholder:text-[#5b5b7b] text-sm md:text-lg px-4 md:px-6 focus:outline-none w-full"
+          />
+          <button className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] text-white h-full px-6 md:px-10 rounded-full font-black text-sm md:text-base tracking-wide shadow-lg hover:scale-[1.02] transition-transform flex items-center gap-2">
+            Explorar
+            <ArrowRight className="w-4 h-4 md:w-5 md:h-5 hidden sm:block" />
+          </button>
+        </div>
+      </div>
+    </div>
+
+    {/* QUICK METRICS / DASHBOARD WIDGETS */}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 mb-16 md:mb-20">
+      <div className="bg-[#0B0B0E] border border-[#1e1f26] rounded-[32px] p-8 relative overflow-hidden group hover:border-[#3B82F6]/30 transition-all shadow-2xl">
+        <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity transform group-hover:scale-110 duration-500">
+          <TrendingUp className="w-32 h-32 text-[#3B82F6]" />
+        </div>
+        <div className="relative z-10 flex flex-col gap-5">
+          <div className="w-14 h-14 rounded-2xl bg-[#16161a] flex items-center justify-center border border-white/5 group-hover:border-[#3B82F6]/30 transition-colors shadow-inner">
+            <Activity className="w-6 h-6 text-[#3B82F6]" />
+          </div>
+          <div>
+            <span className="text-[#5b5b7b] text-[10px] md:text-xs font-black uppercase tracking-[0.2em] block mb-2">MERCADO AQUECIDO</span>
+            <div className="flex items-baseline gap-3">
+              <span className="text-4xl md:text-5xl font-black text-white tracking-tighter">4.2k</span>
+              <span className="text-[#00b37e] text-xs font-black flex items-center bg-[#00b37e]/10 px-2 py-1 rounded-lg border border-[#00b37e]/20">+12% hoje</span>
+            </div>
+            <p className="text-[#8d8d99] text-sm font-medium mt-3">Produtos detectados com pico de vendas no tracking</p>
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col md:flex-row items-center text-center md:text-left gap-4 md:gap-8 mx-auto z-10 py-4 md:py-0">
-        <h2 className="text-xl md:text-2xl font-black flex flex-col md:flex-row items-center gap-2 md:gap-6">
-          <span className="text-[#3B82F6]">Novo no Trendfy?</span>
-          <span className="hidden md:block w-[1px] h-10 bg-white/10"></span>
-          <span className="text-[#a8a8b3] text-sm md:text-xl font-medium mt-1 md:mt-0">Acelere seus resultados com a Creator Academy</span>
-        </h2>
-        <button
-          onClick={onGoToAcademy}
-          className="bg-gradient-to-r from-[#5142f5] to-[#7f5af0] hover:opacity-90 text-white px-6 md:px-10 py-4 rounded-2xl text-base font-black flex items-center gap-3 transition-all shadow-2xl shadow-[#5142f5]/40 transform hover:scale-[1.03]"
-        >
-          Acessar Academy
-          <GraduationCap className="w-6 h-6" />
-        </button>
-      </div>
-
-      <div className="hidden md:block absolute right-10 top-1/2 -translate-y-1/2">
-        <div className="w-14 h-14 bg-[#14151a] rounded-2xl flex items-center justify-center border border-white/5 shadow-2xl">
-          <Monitor className="w-7 h-7 text-[#5b5b7b]" />
+      <div className="bg-[#0B0B0E] border border-[#1e1f26] rounded-[32px] p-8 relative overflow-hidden group hover:border-[#8B5CF6]/30 transition-all shadow-2xl">
+        <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity transform group-hover:scale-110 duration-500">
+          <Eye className="w-32 h-32 text-[#8B5CF6]" />
         </div>
-      </div>
-    </div>
-
-    <div className="relative mb-12">
-      <input
-        type="text"
-        placeholder="Pesquise produtos, lojas ou criadores..."
-        className="w-full bg-[#14151a] border border-[#1e1f26] rounded-[32px] py-6 px-6 md:px-10 text-base text-[#e1e1e6] placeholder:text-[#5b5b7b] focus:outline-none focus:border-[#3B82F6]/50 transition-colors h-16 md:h-20 shadow-2xl text-sm md:text-base"
-      />
-      <button className="absolute right-4 top-1/2 -translate-y-1/2 p-4 bg-[#3B82F6] rounded-2xl hover:bg-[#4338ca] transition-all shadow-xl hover:scale-105 active:scale-95">
-        <Search className="w-7 h-7 text-white" />
-      </button>
-    </div>
-
-    <div className="bg-[#14151a] border border-[#1e1f26] rounded-[40px] p-6 md:p-10 mb-16 relative shadow-2xl">
-      <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-8 relative">
-        <div className="shrink-0 w-12 h-12 md:w-14 md:h-14 bg-[#24242a] rounded-2xl md:rounded-3xl flex items-center justify-center border border-[#1e1f26] shadow-inner mt-1 md:mt-0">
-          <Sparkles className="w-7 h-7 text-[#4d4dff]" />
-        </div>
-        <div className="flex-1 pr-0 md:pr-20">
-          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-3 md:mb-4 pr-16 md:pr-0">
-            <h3 className="text-2xl font-black text-white tracking-tight">Dica do Dia</h3>
-            <span className="px-4 py-1.5 bg-[#4d4dff]/10 border border-[#4d4dff]/20 text-[#4d4dff] rounded-xl text-[11px] font-black uppercase tracking-[0.25em]">AI Insights</span>
+        <div className="relative z-10 flex flex-col gap-5">
+          <div className="w-14 h-14 rounded-2xl bg-[#16161a] flex items-center justify-center border border-white/5 group-hover:border-[#8B5CF6]/30 transition-colors shadow-inner">
+            <Globe className="w-6 h-6 text-[#8B5CF6]" />
           </div>
-          <p className="text-[#a8a8b3] text-lg leading-relaxed font-medium">
-            <span className="font-black text-white">A Regra dos 2 Segundos:</span> Se o produto não aparece nos primeiros 2 segundos do vídeo, você perde 70% da audiência. O TikTok analisa os primeiros frames para decidir para quem mostrar.
-          </p>
-        </div>
-        <div className="absolute md:relative top-0 right-0 md:top-auto md:right-auto text-[#5b5b7b] text-sm font-black tabular-nums bg-[#0b0c10] px-5 py-2.5 rounded-2xl border border-[#1e1f26]">1 / 20</div>
-      </div>
-
-      <div className="mt-8 md:mt-10 bg-[#14151a] border border-[#1e1f26] rounded-2xl md:rounded-3xl p-4 md:p-8 flex flex-col md:flex-row md:items-start gap-4 md:gap-6 shadow-inner">
-        <div className="p-3 bg-[#1c1c21] rounded-2xl">
-          <Zap className="w-6 h-6 text-[#4d4dff]" />
-        </div>
-        <div>
-          <span className="text-[11px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] block mb-3">AÇÃO RECOMENDADA</span>
-          <p className="text-base font-bold text-[#a8a8b3]">Comece SEMPRE com o produto na mão ou em close-up antes de qualquer introdução para maximizar o retencimento.</p>
+          <div>
+            <span className="text-[#5b5b7b] text-[10px] md:text-xs font-black uppercase tracking-[0.2em] block mb-2">LOJAS RASTREADAS</span>
+            <div className="flex items-baseline gap-3">
+              <span className="text-4xl md:text-5xl font-black text-white tracking-tighter">128</span>
+              <span className="text-[#8B5CF6] text-xs font-black flex items-center bg-[#8B5CF6]/10 px-2 py-1 rounded-lg border border-[#8B5CF6]/20">Ativas</span>
+            </div>
+            <p className="text-[#8d8d99] text-sm font-medium mt-3">Monitoramento estrutural 24h por dia das top lojas</p>
+          </div>
         </div>
       </div>
 
-      <div className="hidden md:flex absolute right-10 top-1/2 -translate-y-1/2 flex flex-col gap-6 md:gap-10">
-        <button className="text-[#5b5b7b] hover:text-white transition-all transform hover:scale-125"><ChevronLeft className="w-8 h-8 rotate-90" /></button>
-        <button className="text-[#5b5b7b] hover:text-white transition-all transform hover:scale-125"><ChevronLeft className="w-8 h-8 -rotate-90" /></button>
+      <div className="bg-[#0B0B0E] border border-[#1e1f26] rounded-[32px] p-8 relative overflow-hidden group hover:border-[#f59e0b]/30 transition-all shadow-2xl">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#f59e0b]/[0.02] to-transparent group-hover:from-[#f59e0b]/[0.05] transition-colors"></div>
+        <div className="relative z-10 flex flex-col h-full justify-between gap-6">
+          <div className="flex items-start justify-between">
+            <div className="w-14 h-14 rounded-2xl bg-[#16161a] flex items-center justify-center border border-white/5 group-hover:border-[#f59e0b]/30 transition-colors shadow-inner">
+              <GraduationCap className="w-6 h-6 text-[#f59e0b]" />
+            </div>
+            <span className="px-3 py-1 bg-[#16161A] text-[#f59e0b] text-[9px] font-black uppercase tracking-[0.2em] rounded-lg border border-white/5 shadow-md">Academy</span>
+          </div>
+          <div>
+            <h3 className="text-xl font-black text-white mb-2">Treinamento Exclusivo</h3>
+            <p className="text-[#8d8d99] text-sm font-medium mb-6">Acelere seus resultados com as estratégias e métodos dos maiores players.</p>
+            <button onClick={onGoToAcademy} className="w-full py-3.5 bg-[#16161A] hover:bg-[#1c1c21] border border-[#1e1f26] hover:border-[#f59e0b]/40 rounded-xl text-white font-black text-[13px] uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-lg group/btn">
+              Acessar Módulos <ChevronRight className="w-4 h-4 text-[#5b5b7b] group-hover/btn:text-white transition-colors" />
+            </button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div className="grid grid-cols-1 md:grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mb-24">
-      <FeatureExploreCard icon={<Package className="w-7 h-7 text-[#3B82F6]" />} title="Produtos em Tendência" description="Identifique agora quais produtos estão escalando e gerando lucro real." onClick={onGoToProducts} />
-      <FeatureExploreCard icon={<Wand2 className="w-7 h-7 text-[#3B82F6]" />} title="Influencer IA" description="Crie roteiros e vídeos UGC altamente persuasivos com inteligência artificial." onClick={() => { }} />
-      <FeatureExploreCard icon={<Eye className="w-7 h-7 text-[#3B82F6]" />} title="Análise de Concorrentes" description="Espione estratégias, faturamento e criativos das maiores lojas do mercado." onClick={() => { }} />
-      <FeatureExploreCard icon={<Video className="w-7 h-7 text-[#3B82F6]" />} title="Vídeos Virais" description="Base de dados with os criativos que mais converteram nas últimas 24h." onClick={() => { }} />
+    {/* FEATURES GRID */}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 mb-20 md:mb-24">
+      <FeatureExploreCard icon={<Package className="w-6 h-6 md:w-7 md:h-7 text-[#3B82F6]" />} title="Produtos em Tendência" description="Identifique agora quais produtos estão escalando e gerando lucro real." onClick={onGoToProducts} />
+      <FeatureExploreCard icon={<Wand2 className="w-6 h-6 md:w-7 md:h-7 text-[#3B82F6]" />} title="Influencer IA" description="Crie roteiros e vídeos UGC altamente persuasivos com inteligência artificial." onClick={() => { }} />
+      <FeatureExploreCard icon={<Eye className="w-6 h-6 md:w-7 md:h-7 text-[#3B82F6]" />} title="Análise de Concorrentes" description="Espione estratégias, faturamento e criativos das maiores lojas do mercado." onClick={() => { }} />
+      <FeatureExploreCard icon={<Video className="w-6 h-6 md:w-7 md:h-7 text-[#3B82F6]" />} title="Vídeos Virais" description="Base de dados completa com os criativos que mais converteram nas últimas 24h." onClick={() => { }} />
     </div>
 
     <div>
@@ -975,93 +1000,112 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
 );
 
 const FeatureExploreCard: React.FC<{ icon: React.ReactNode, title: string, description: string, onClick: () => void }> = ({ icon, title, description, onClick }) => (
-  <div onClick={onClick} className="bg-[#14151a] border border-[#1e1f26] rounded-[32px] p-6 md:p-10 flex items-center gap-5 md:gap-8 hover:border-[#3B82F6]/40 transition-all cursor-pointer group shadow-2xl">
-    <div className="w-16 h-16 bg-[#1F2028] rounded-[24px] flex items-center justify-center border border-[#2C2D38] shadow-inner group-hover:scale-110 transition-transform duration-500">
-      {icon}
+  <div onClick={onClick} className={`relative bg-[#0B0B0E] p-8 md:p-10 flex flex-col gap-6 rounded-[32px] border border-[#1e1f26] overflow-hidden group cursor-pointer transition-all duration-300 ${onClick ? 'hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(59,130,246,0.1)] hover:border-[#3B82F6]/30' : ''}`}>
+    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#3B82F6]/0 to-[#3B82F6]/0 group-hover:from-[#3B82F6]/[0.03] group-hover:to-transparent transition-all duration-500 pointer-events-none"></div>
+
+    <div className="w-14 h-14 md:w-16 md:h-16 bg-[#16161a] rounded-2xl flex items-center justify-center border border-white/5 group-hover:border-[#3B82F6]/30 transition-all duration-300 shadow-inner z-10 shrink-0">
+      <div className="transform group-hover:scale-110 transition-transform duration-500">
+        {icon}
+      </div>
     </div>
-    <div className="flex-1">
-      <h4 className="font-black text-white text-xl mb-2 group-hover:text-[#3B82F6] transition-colors">{title}</h4>
-      <p className="text-[#8d8d99] text-base font-medium leading-relaxed">{description}</p>
+
+    <div className="z-10 flex-1 flex flex-col justify-end">
+      <h3 className="text-xl md:text-2xl font-black text-white mb-3 group-hover:text-[#3B82F6] transition-colors">{title}</h3>
+      <p className="text-[#8d8d99] leading-relaxed text-sm md:text-base font-medium">{description}</p>
     </div>
   </div>
 );
 
 // --- PRODUCTS PAGE VIEW ---
 const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => (
-  <main className="max-w-[1400px] mx-auto px-6 py-6 md:py-10">
-    <div className="bg-[#0c0c0e] border border-[#1c1c1f] rounded-[40px] p-6 md:p-12 lg:p-14 mb-16 relative overflow-hidden shadow-2xl">
-      <div className="flex flex-col md:flex-row justify-between items-start gap-6 md:gap-12">
-        <div className="flex flex-col gap-4">
-          <h1 className="text-[44px] font-black text-white tracking-tighter leading-none">Produtos Virais</h1>
-          <p className="text-[#5b5b7b] text-base font-medium">Identifique tendências antes dos concorrentes</p>
+  <main className="max-w-[1400px] mx-auto px-6 py-8 md:py-12">
+    {/* PREMIUM HERO SECTION */}
+    <div className="relative mb-16 md:mb-20 flex flex-col items-center justify-center text-center">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] bg-gradient-to-r from-[#3B82F6]/20 to-[#8B5CF6]/20 blur-[100px] md:blur-[120px] rounded-full pointer-events-none"></div>
 
-          <div className="mt-8 flex items-center gap-3 bg-[#101915] border border-[#1b3d2b] px-5 py-2 rounded-full w-fit">
-            <div className="w-2.5 h-2.5 bg-[#00b37e] rounded-full shadow-[0_0_10px_rgba(0,179,126,0.8)]"></div>
-            <span className="text-[11px] font-black uppercase tracking-[0.25em] text-[#00b37e]">SISTEMA ONLINE • MINERANDO</span>
-          </div>
-        </div>
-
-        <div className="flex items-stretch gap-px bg-[#1c1c1f] p-[1.5px] rounded-[32px] overflow-hidden shadow-2xl min-w-[460px]">
-          <div className="bg-[#0b0c10] flex-1 px-8 py-6 md:py-10 flex flex-col items-center justify-center gap-1 border-r border-[#1c1c1f] relative group">
-            <div className="absolute top-4 left-4 opacity-20 group-hover:opacity-40 transition-opacity">
-              <Package size={16} className="text-[#5b5b7b]" />
-            </div>
-            <span className="text-3xl md:text-5xl font-black text-white leading-none tracking-tighter">18</span>
-            <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] mt-4 flex items-center gap-2">
-              <span className="w-1 h-1 bg-[#5b5b7b] rounded-full"></span>
-              Novos Produtos
-            </span>
-          </div>
-
-          <div className="bg-[#0b0c10] flex-[1.4] px-8 py-6 md:py-10 flex flex-col items-center justify-center gap-1 relative group">
-            <div className="absolute top-4 right-4 opacity-20 group-hover:opacity-40 transition-opacity">
-              <TrendingUp size={16} className="text-[#00b37e]" />
-            </div>
-            <div className="flex items-baseline gap-1">
-              <span className="text-2xl font-black text-[#00b37e]/60 leading-none">R$</span>
-              <span className="text-3xl md:text-5xl font-black text-[#00b37e] leading-none tracking-tighter">3.9M</span>
-            </div>
-            <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] mt-4 flex items-center gap-2">
-              <span className="w-1 h-1 bg-[#00b37e] rounded-full animate-pulse"></span>
-              Receita Detectada
-            </span>
-          </div>
-        </div>
+      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#16161A] border border-white/5 mb-6 shadow-xl relative z-10">
+        <div className="w-2 h-2 bg-[#00b37e] rounded-full shadow-[0_0_8px_rgba(0,179,126,0.8)] animate-pulse"></div>
+        <span className="text-[10px] md:text-xs font-black text-[#8d8d99] tracking-[0.2em] md:tracking-[0.25em] uppercase">SISTEMA ONLINE • MINERANDO AGORA</span>
       </div>
 
-      {/* Modern Horizontal Separator / Selection Bar */}
-      <div className="mt-20 flex flex-col gap-6">
-        <div className="flex items-end justify-between px-2">
-          <div className="flex items-center gap-6 md:gap-12">
-            <span className="text-[12px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors">00:00 - 06:00</span>
-            <span className="text-[12px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors">06:00 - 12:00</span>
-            <span className="text-[12px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors">12:00 - 18:00</span>
-            <span className="text-[12px] font-black text-white uppercase tracking-[0.2em] cursor-default">18:00 - 00:00</span>
-          </div>
+      <h1 className="text-4xl md:text-6xl lg:text-[72px] font-black text-white tracking-tighter mb-6 max-w-4xl leading-[1.1] relative z-10">
+        A Inteligência por trás dos <br className="hidden md:block" />
+        <span className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] bg-clip-text text-transparent">Produtos Milionários</span>
+      </h1>
 
-          <div className="flex flex-col items-end gap-1">
-            <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] opacity-80">PRÓXIMA ATUALIZAÇÃO EM:</span>
-            <span className="text-[#7f5af0]xl font-black text-white tabular-nums tracking-tighter">04:35:11</span>
+      <p className="text-[#a8a8b3] text-base md:text-xl font-medium max-w-2xl mb-12 relative z-10">
+        Nossa IA analisa milhares de transações por minuto para identificar tendências globais antes que elas se tornem comuns.
+      </p>
+
+      {/* QUICK METRICS GRID */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 w-full max-w-5xl relative z-10">
+        <div className="bg-[#0B0B0E]/60 backdrop-blur-xl border border-white/5 rounded-[32px] p-8 flex flex-col items-center justify-center group hover:border-[#3B82F6]/30 transition-all shadow-2xl">
+          <div className="w-12 h-12 rounded-2xl bg-[#16161a] flex items-center justify-center mb-4 border border-white/5 group-hover:scale-110 transition-transform">
+            <Package className="w-6 h-6 text-[#3B82F6]" />
           </div>
+          <span className="text-4xl md:text-5xl font-black text-white tracking-tighter mb-1">18</span>
+          <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">Novos Detectados</span>
         </div>
 
-        <div className="relative w-full h-[3px] bg-[#1c1c1f] rounded-full overflow-hidden">
-          {/* The active marker matching the screenshot placement under 18:00-00:00 */}
-          <div className="absolute right-0 w-1/4 h-full bg-[#3B82F6] shadow-[0_0_15px_rgba(81,66,245,0.5)]"></div>
+        <div className="bg-[#0B0B0E]/60 backdrop-blur-xl border border-white/5 rounded-[32px] p-8 flex flex-col items-center justify-center group hover:border-[#00b37e]/30 transition-all shadow-2xl">
+          <div className="w-12 h-12 rounded-2xl bg-[#16161a] flex items-center justify-center mb-4 border border-white/5 group-hover:scale-110 transition-transform">
+            <TrendingUp className="w-6 h-6 text-[#00b37e]" />
+          </div>
+          <div className="flex items-baseline gap-1 mb-1">
+            <span className="text-xl font-black text-[#00b37e]/60">R$</span>
+            <span className="text-4xl md:text-5xl font-black text-[#00b37e] tracking-tighter">3.9M</span>
+          </div>
+          <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">Receita Estimada</span>
+        </div>
+
+        <div className="bg-[#0B0B0E]/60 backdrop-blur-xl border border-white/5 rounded-[32px] p-8 flex flex-col items-center justify-center group hover:border-[#8B5CF6]/30 transition-all shadow-2xl">
+          <div className="w-12 h-12 rounded-2xl bg-[#16161a] flex items-center justify-center mb-4 border border-white/5 group-hover:scale-110 transition-transform">
+            <Activity className="w-6 h-6 text-[#8B5CF6]" />
+          </div>
+          <span className="text-4xl md:text-5xl font-black text-white tracking-tighter mb-1">98%</span>
+          <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">Precisão de Dados</span>
         </div>
       </div>
     </div>
 
-    {/* IDENTICAL FILTERS BUTTONS AS PER REFERENCE */}
-    <div className="flex items-center gap-3 mb-10 px-2">
-      <button className="bg-[#3B82F6] text-white px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-[0.15em] flex items-center gap-2 shadow-lg shadow-[#3B82F6]/20 transition-all hover:scale-105 active:scale-95">
-        <LayoutGrid className="w-4 h-4 fill-white" />
-        Todos os Produtos
-      </button>
-      <button className="bg-[#14151a] border border-[#1e1f26] text-[#8d8d99] px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-[0.15em] flex items-center gap-2 transition-all hover:bg-[#24242a] hover:border-[#44444f] hover:text-white">
-        <Sparkles className="w-4 h-4" />
-        Dividir por Nicho
-      </button>
+    {/* MODERN TIMELINE & FILTERS */}
+    <div className="bg-[#0B0B0E] border border-[#1e1f26] rounded-[40px] p-6 md:p-8 mb-12 shadow-2xl relative overflow-hidden group">
+      <div className="absolute top-0 right-0 w-64 h-64 bg-[#3B82F6]/5 blur-[80px] rounded-full -mr-20 -mt-20"></div>
+
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-8 relative z-10">
+        <div className="flex items-center gap-3 overflow-x-auto w-full lg:w-auto pb-2 lg:pb-0 scrollbar-hide">
+          <button className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] text-white px-6 py-3 rounded-2xl text-[11px] font-black uppercase tracking-[0.15em] flex items-center gap-2 shadow-lg shadow-[#3B82F6]/20 transition-all hover:scale-[1.03]">
+            <LayoutGrid className="w-4 h-4 fill-white" />
+            Todos os Produtos
+          </button>
+          <button className="bg-[#16161A] border border-white/5 text-[#8d8d99] px-6 py-3 rounded-2xl text-[11px] font-black uppercase tracking-[0.15em] flex items-center gap-2 transition-all hover:bg-[#1c1c21] hover:text-white hover:border-white/10">
+            <Sparkles className="w-4 h-4" />
+            Dividir por Nicho
+          </button>
+        </div>
+
+        <div className="flex flex-col md:flex-row items-center gap-8 w-full lg:w-auto">
+          <div className="flex items-center gap-6 md:gap-10 overflow-x-auto scrollbar-hide w-full md:w-auto">
+            <span className="text-[11px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors">00-06</span>
+            <span className="text-[11px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors">06-12</span>
+            <span className="text-[11px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors">12-18</span>
+            <div className="flex flex-col items-center">
+              <span className="text-[11px] font-black text-[#3B82F6] uppercase tracking-[0.2em]">18-00</span>
+              <div className="w-1.5 h-1.5 bg-[#3B82F6] rounded-full mt-1 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
+            </div>
+          </div>
+
+          <div className="h-10 w-px bg-white/5 hidden md:block"></div>
+
+          <div className="flex flex-col items-center lg:items-end gap-1">
+            <span className="text-[9px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] opacity-80">PRÓXIMA ATUALIZAÇÃO EM</span>
+            <div className="flex items-center gap-2">
+              <Clock className="w-3.5 h-3.5 text-[#3B82F6]" />
+              <span className="text-xl font-black text-white tabular-nums tracking-tighter">04:35:11</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-8">

@@ -841,8 +841,8 @@ const FooterSocialIcon: React.FC<{ icon: React.ReactNode }> = ({ icon }) => (
 // --- EXPLORE PAGE VIEW ---
 const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => void, onGoToProducts: () => void }> = ({ products, onGoToAcademy, onGoToProducts }) => (
   <main className="max-w-[1400px] mx-auto px-6 py-6 md:py-10">
-    <div className="bg-[#1F2028] rounded-3xl p-6 md:p-10 border border-[#2C2D38]/30 flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-0 mb-8 md:mb-12 relative overflow-hidden h-[160px] shadow-2xl">
-      <div className="absolute left-10 top-1/2 -translate-y-1/2 flex items-center gap-4">
+    <div className="bg-[#1F2028] rounded-3xl p-6 md:p-10 border border-[#2C2D38]/30 flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-0 mb-8 md:mb-12 relative overflow-hidden min-h-[160px] shadow-2xl">
+      <div className="hidden md:flex absolute left-10 top-1/2 -translate-y-1/2 items-center gap-4">
         <div className="w-14 h-14 bg-[#14151a] rounded-2xl flex items-center justify-center relative shadow-2xl border border-white/5">
           <LayoutGrid className="w-7 h-7 text-[#5b5b7b]" />
           <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-[#3B82F6] rounded-lg flex items-center justify-center shadow-lg">
@@ -851,11 +851,11 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
         </div>
       </div>
 
-      <div className="flex items-center gap-5 md:gap-8 mx-auto z-10">
-        <h2 className="text-[#7f5af0]xl font-black flex items-center gap-6">
+      <div className="flex flex-col md:flex-row items-center text-center md:text-left gap-4 md:gap-8 mx-auto z-10 py-4 md:py-0">
+        <h2 className="text-xl md:text-2xl font-black flex flex-col md:flex-row items-center gap-2 md:gap-6">
           <span className="text-[#3B82F6]">Novo no Trendfy?</span>
-          <span className="w-[1px] h-10 bg-white/10"></span>
-          <span className="text-[#a8a8b3] text-xl font-medium">Acelere seus resultados com a Creator Academy</span>
+          <span className="hidden md:block w-[1px] h-10 bg-white/10"></span>
+          <span className="text-[#a8a8b3] text-sm md:text-xl font-medium mt-1 md:mt-0">Acelere seus resultados com a Creator Academy</span>
         </h2>
         <button
           onClick={onGoToAcademy}
@@ -866,7 +866,7 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
         </button>
       </div>
 
-      <div className="absolute right-10 top-1/2 -translate-y-1/2">
+      <div className="hidden md:block absolute right-10 top-1/2 -translate-y-1/2">
         <div className="w-14 h-14 bg-[#14151a] rounded-2xl flex items-center justify-center border border-white/5 shadow-2xl">
           <Monitor className="w-7 h-7 text-[#5b5b7b]" />
         </div>
@@ -877,7 +877,7 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
       <input
         type="text"
         placeholder="Pesquise produtos, lojas ou criadores..."
-        className="w-full bg-[#14151a] border border-[#1e1f26] rounded-[32px] py-6 px-6 md:px-10 text-base text-[#e1e1e6] placeholder:text-[#5b5b7b] focus:outline-none focus:border-[#3B82F6]/50 transition-colors h-20 shadow-2xl"
+        className="w-full bg-[#14151a] border border-[#1e1f26] rounded-[32px] py-6 px-6 md:px-10 text-base text-[#e1e1e6] placeholder:text-[#5b5b7b] focus:outline-none focus:border-[#3B82F6]/50 transition-colors h-16 md:h-20 shadow-2xl text-sm md:text-base"
       />
       <button className="absolute right-4 top-1/2 -translate-y-1/2 p-4 bg-[#3B82F6] rounded-2xl hover:bg-[#4338ca] transition-all shadow-xl hover:scale-105 active:scale-95">
         <Search className="w-7 h-7 text-white" />
@@ -885,12 +885,12 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
     </div>
 
     <div className="bg-[#14151a] border border-[#1e1f26] rounded-[40px] p-6 md:p-10 mb-16 relative shadow-2xl">
-      <div className="flex items-start gap-5 md:gap-8">
-        <div className="w-14 h-14 bg-[#24242a] rounded-3xl flex items-center justify-center border border-[#1e1f26] shadow-inner">
+      <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-8 relative">
+        <div className="shrink-0 w-12 h-12 md:w-14 md:h-14 bg-[#24242a] rounded-2xl md:rounded-3xl flex items-center justify-center border border-[#1e1f26] shadow-inner mt-1 md:mt-0">
           <Sparkles className="w-7 h-7 text-[#4d4dff]" />
         </div>
-        <div className="flex-1 pr-20">
-          <div className="flex items-center gap-4 mb-4">
+        <div className="flex-1 pr-0 md:pr-20">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-3 md:mb-4 pr-16 md:pr-0">
             <h3 className="text-2xl font-black text-white tracking-tight">Dica do Dia</h3>
             <span className="px-4 py-1.5 bg-[#4d4dff]/10 border border-[#4d4dff]/20 text-[#4d4dff] rounded-xl text-[11px] font-black uppercase tracking-[0.25em]">AI Insights</span>
           </div>
@@ -898,10 +898,10 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
             <span className="font-black text-white">A Regra dos 2 Segundos:</span> Se o produto não aparece nos primeiros 2 segundos do vídeo, você perde 70% da audiência. O TikTok analisa os primeiros frames para decidir para quem mostrar.
           </p>
         </div>
-        <div className="text-[#5b5b7b] text-sm font-black tabular-nums bg-[#0b0c10] px-5 py-2.5 rounded-2xl border border-[#1e1f26]">1 / 20</div>
+        <div className="absolute md:relative top-0 right-0 md:top-auto md:right-auto text-[#5b5b7b] text-sm font-black tabular-nums bg-[#0b0c10] px-5 py-2.5 rounded-2xl border border-[#1e1f26]">1 / 20</div>
       </div>
 
-      <div className="mt-10 bg-[#14151a] border border-[#1e1f26] rounded-3xl p-5 md:p-8 flex items-start gap-6 shadow-inner">
+      <div className="mt-8 md:mt-10 bg-[#14151a] border border-[#1e1f26] rounded-2xl md:rounded-3xl p-4 md:p-8 flex flex-col md:flex-row md:items-start gap-4 md:gap-6 shadow-inner">
         <div className="p-3 bg-[#1c1c21] rounded-2xl">
           <Zap className="w-6 h-6 text-[#4d4dff]" />
         </div>
@@ -911,7 +911,7 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
         </div>
       </div>
 
-      <div className="absolute right-10 top-1/2 -translate-y-1/2 flex flex-col gap-6 md:gap-10">
+      <div className="hidden md:flex absolute right-10 top-1/2 -translate-y-1/2 flex flex-col gap-6 md:gap-10">
         <button className="text-[#5b5b7b] hover:text-white transition-all transform hover:scale-125"><ChevronLeft className="w-8 h-8 rotate-90" /></button>
         <button className="text-[#5b5b7b] hover:text-white transition-all transform hover:scale-125"><ChevronLeft className="w-8 h-8 -rotate-90" /></button>
       </div>

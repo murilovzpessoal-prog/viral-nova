@@ -1018,21 +1018,21 @@ const FeatureExploreCard: React.FC<{ icon: React.ReactNode, title: string, descr
 
 // --- PRODUCTS PAGE VIEW ---
 const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => (
-  <main className="max-w-[1500px] mx-auto px-8 py-16 md:py-24 relative">
+  <main className="max-w-[1500px] mx-auto px-6 py-12 md:py-16 relative">
     {/* ATMOSPHERIC BACKGROUND SYSTEM */}
     <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-[#3B82F6]/5 blur-[150px] rounded-full pointer-events-none opacity-50"></div>
     <div className="absolute top-40 right-1/4 w-[400px] h-[400px] bg-[#8B5CF6]/5 blur-[120px] rounded-full pointer-events-none opacity-30"></div>
 
-    {/* RADICAL ASYMMETRIC HEADER */}
-    <div className="flex flex-col lg:flex-row items-start justify-between gap-16 mb-24 relative z-10">
+    {/* RADICAL ASYMMETRIC HEADER - REFINED SPACING */}
+    <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-16 relative z-10 bg-[#0B0B0E]/20 backdrop-blur-sm p-8 rounded-[48px] border border-white/5">
 
       {/* LEFT: TYPOGRAPHY SCULPTURE & PULSE */}
-      <div className="flex flex-col gap-8 flex-1">
+      <div className="flex flex-col gap-6 flex-1 min-w-[400px]">
         <div className="relative group">
           {/* ARCHITECTURAL STATUS LINE */}
-          <div className="flex items-center gap-4 mb-6">
-            <div className="h-[1px] w-12 bg-gradient-to-r from-[#00b37e] to-transparent"></div>
-            <span className="text-[10px] font-black text-[#00b37e] tracking-[0.4em] uppercase">System Pulse Active</span>
+          <div className="flex items-center gap-4 mb-4">
+            <div className="h-[1px] w-8 bg-gradient-to-r from-[#00b37e] to-transparent"></div>
+            <span className="text-[9px] font-black text-[#00b37e] tracking-[0.4em] uppercase">System Pulse Active</span>
             <div className="flex gap-1">
               {[1, 2, 3].map((i) => (
                 <div key={i} className="w-1 h-1 bg-[#00b37e]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
@@ -1041,59 +1041,57 @@ const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => (
           </div>
 
           <div className="relative">
-            <h1 className="text-6xl md:text-8xl lg:text-[100px] font-black tracking-tighter leading-[0.85] select-none">
-              <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent transform -translate-x-2">Produtos</span>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none">
+              <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent">Produtos</span>
               <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent">Virais</span>
             </h1>
-            {/* DEPTH SHADOW TEXT */}
-            <span className="absolute -top-4 -left-4 text-6xl md:text-8xl lg:text-[100px] font-black tracking-tighter leading-[0.85] text-white/5 blur-sm -z-10 pointer-events-none">Produtos<br />Virais</span>
           </div>
         </div>
 
-        <p className="text-[#8d8d99] text-lg md:text-xl font-medium max-w-lg leading-relaxed border-l-2 border-white/5 pl-8 mt-4">
+        <p className="text-[#8d8d99] text-sm md:text-base font-medium max-w-sm leading-relaxed border-l border-white/10 pl-6">
           Nossa rede neural minera <span className="text-white">trilhões de signals</span> para materializar oportunidades de escala global.
         </p>
       </div>
 
-      {/* RIGHT: FLOATING DATA ORBS & FROSTED PANES */}
-      <div className="flex flex-col md:flex-row items-center gap-8 lg:mt-12">
+      {/* RIGHT: COMPACT METRICS GRID */}
+      <div className="flex flex-wrap items-center justify-center lg:justify-end gap-6 flex-[1.5]">
         {/* NEW DETECTED (ORGANIC FROSTED) */}
         <div className="relative group">
           <div className="absolute inset-0 bg-[#3B82F6]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-          <div className="w-52 h-52 backdrop-blur-3xl bg-white/[0.03] border border-white/10 rounded-[60px] p-8 flex flex-col items-center justify-center shadow-[0_24px_48px_rgba(0,0,0,0.5)] transform rotate-3 hover:rotate-0 transition-transform duration-500">
-            <Package className="w-8 h-8 text-[#3B82F6] mb-4 opacity-50" />
-            <span className="text-6xl font-black text-white tracking-tighter mb-1">18</span>
-            <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">HITS HOJE</span>
+          <div className="w-40 h-40 backdrop-blur-3xl bg-white/[0.03] border border-white/10 rounded-[40px] p-6 flex flex-col items-center justify-center shadow-2xl transition-all duration-500 group-hover:scale-105">
+            <Package className="w-6 h-6 text-[#3B82F6] mb-2 opacity-50" />
+            <span className="text-4xl font-black text-white tracking-tighter mb-1">18</span>
+            <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">HITS HOJE</span>
           </div>
         </div>
 
         {/* REVENUE ORB (DYNAMIC) */}
-        <div className="relative group -mt-8 md:mt-0">
-          <div className="absolute inset-x-0 -bottom-10 h-20 bg-[#00b37e]/10 blur-3xl rounded-full opacity-40"></div>
-          <div className="w-64 h-64 backdrop-blur-3xl bg-[#0B0B0E]/60 border border-white/10 rounded-full p-10 flex flex-col items-center justify-center shadow-2xl relative overflow-hidden group-hover:border-[#00b37e]/30 transition-all">
+        <div className="relative group">
+          <div className="absolute inset-x-0 -bottom-6 h-12 bg-[#00b37e]/10 blur-3xl rounded-full opacity-40"></div>
+          <div className="w-48 h-48 backdrop-blur-3xl bg-[#0B0B0E]/60 border border-white/10 rounded-full p-8 flex flex-col items-center justify-center shadow-2xl relative overflow-hidden group-hover:border-[#00b37e]/30 transition-all group-hover:scale-105">
             <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#00b37e]/10 to-transparent pointer-events-none"></div>
-            <TrendingUp className="w-6 h-6 text-[#00b37e] mb-2 animate-bounce" />
-            <div className="flex items-baseline gap-1">
-              <span className="text-sm font-black text-[#00b37e]/40 tabular-nums">R$</span>
-              <span className="text-5xl font-black text-[#00b37e] tracking-tighter tabular-nums drop-shadow-[0_0_15px_rgba(0,179,126,0.3)]">3.9M</span>
+            <TrendingUp className="w-5 h-5 text-[#00b37e] mb-1 animate-bounce" />
+            <div className="flex items-baseline gap-0.5">
+              <span className="text-xs font-black text-[#00b37e]/40">R$</span>
+              <span className="text-4xl font-black text-[#00b37e] tracking-tighter tabular-nums drop-shadow-[0_0_15px_rgba(0,179,126,0.3)]">3.9M</span>
             </div>
-            <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.4em] mt-2">VOLUME REAL</span>
+            <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.4em] mt-1 text-center">VOLUME REAL</span>
           </div>
         </div>
 
         {/* ACCURACY SPHERE (SCIFI DATA ORB) */}
         <div className="relative group">
-          <div className="w-48 h-48 flex items-center justify-center p-4">
+          <div className="w-40 h-40 flex items-center justify-center p-2 group-hover:scale-105 transition-all">
             <div className="absolute inset-0 bg-[#8B5CF6]/10 blur-3xl rounded-full animate-pulse"></div>
             <div className="relative w-full h-full flex items-center justify-center rounded-full border border-white/5 bg-[#0B0B0E]/40 backdrop-blur-md">
               <svg className="absolute inset-0 w-full h-full transform -rotate-90">
-                <circle cx="50%" cy="50%" r="44%" stroke="currentColor" strokeWidth="2" fill="transparent" className="text-white/5" />
-                <circle cx="50%" cy="50%" r="44%" stroke="currentColor" strokeWidth="12" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#8B5CF6] transition-all duration-1000 opacity-20" />
-                <circle cx="50%" cy="50%" r="44%" stroke="currentColor" strokeWidth="2" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#8B5CF6] shadow-[0_0_20px_#8B5CF6]" />
+                <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="1" fill="transparent" className="text-white/5" />
+                <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="8" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#8B5CF6] transition-all duration-1000 opacity-20" />
+                <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="2" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#8B5CF6] shadow-[0_0_20px_#8B5CF6]" />
               </svg>
               <div className="flex flex-col items-center">
-                <span className="text-4xl font-black text-white tracking-tighter">98<span className="text-sm text-[#5b5b7b]">%</span></span>
-                <span className="text-[8px] font-black text-[#8B5CF6] uppercase tracking-[0.2em] mt-1">Accuracy</span>
+                <span className="text-3xl font-black text-white tracking-tighter">98<span className="text-xs text-[#5b5b7b]">%</span></span>
+                <span className="text-[7px] font-black text-[#8B5CF6] uppercase tracking-[0.2em]">Accuracy</span>
               </div>
             </div>
           </div>
@@ -1101,40 +1099,38 @@ const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => (
       </div>
     </div>
 
-    {/* FLOATING CONTROL ORBS (TOOLBAR) */}
-    <div className="flex flex-col md:flex-row items-center justify-between gap-12 mb-16 relative z-20">
-      <div className="flex items-center gap-6">
-        <button className="relative px-10 py-5 rounded-[24px] bg-white text-black font-black uppercase text-xs tracking-widest shadow-[0_20px_40px_rgba(255,255,255,0.15)] hover:scale-105 active:scale-95 transition-all flex items-center gap-3">
-          <LayoutGrid className="w-5 h-5" />
+    {/* TOOLBAR - RE-ALIGN TO GRID */}
+    <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-16 relative z-20 px-4">
+      <div className="flex items-center gap-4">
+        <button className="relative px-8 py-4 rounded-[20px] bg-white text-black font-black uppercase text-[10px] tracking-widest shadow-2xl hover:scale-105 transition-all flex items-center gap-2.5">
+          <LayoutGrid className="w-4 h-4" />
           MASTER LIST
         </button>
-        <button className="px-10 py-5 rounded-[24px] bg-[#16161A]/60 backdrop-blur-xl border border-white/5 text-[#5b5b7b] font-black uppercase text-xs tracking-widest hover:text-white hover:border-white/20 transition-all flex items-center gap-3">
-          <Sparkles className="w-5 h-5" />
+        <button className="px-8 py-4 rounded-[20px] bg-[#16161A]/60 backdrop-blur-xl border border-white/5 text-[#5b5b7b] font-black uppercase text-[10px] tracking-widest hover:text-white transition-all flex items-center gap-2.5">
+          <Sparkles className="w-4 h-4" />
           NICHE MAP
         </button>
       </div>
 
-      <div className="h-px flex-1 bg-gradient-to-r from-white/5 via-white/10 to-transparent hidden lg:block"></div>
+      <div className="h-[1px] flex-1 bg-gradient-to-r from-white/5 via-white/10 to-transparent hidden xl:block mx-8"></div>
 
-      <div className="flex items-center gap-12">
-        <div className="flex items-center gap-8">
+      <div className="flex items-center gap-10">
+        <div className="flex items-center gap-6">
           {['00-06', '06-12', '12-18', '18-00'].map((time, idx) => (
             <div key={time} className="flex flex-col items-center group cursor-pointer">
-              <span className={`text-[10px] font-black tracking-[0.2em] uppercase transition-all ${idx === 3 ? 'text-[#3B82F6]' : 'text-[#5b5b7b] group-hover:text-white/60'}`}>
+              <span className={`text-[9px] font-black tracking-[0.2em] uppercase transition-all ${idx === 3 ? 'text-[#3B82F6]' : 'text-[#5b5b7b] group-hover:text-white/60'}`}>
                 {time}
               </span>
-              <div className={`w-1.5 h-1.5 rounded-full mt-2 transition-all ${idx === 3 ? 'bg-[#3B82F6] shadow-[0_0_15px_#3B82F6]' : 'bg-white/5 group-hover:bg-white/20'}`}></div>
+              <div className={`w-1 h-1 rounded-full mt-1.5 transition-all ${idx === 3 ? 'bg-[#3B82F6] shadow-[0_0_10px_#3B82F6]' : 'bg-white/5 group-hover:bg-white/20'}`}></div>
             </div>
           ))}
         </div>
 
-        <div className="px-8 py-4 rounded-[28px] bg-white/[0.02] border border-white/5 backdrop-blur-md flex items-center gap-4 group">
-          <div className="w-10 h-10 rounded-full bg-black/40 flex items-center justify-center border border-white/5">
-            <Clock className="w-5 h-5 text-[#3B82F6] animate-pulse" />
-          </div>
+        <div className="px-6 py-3 rounded-[24px] bg-white/[0.02] border border-white/5 backdrop-blur-md flex items-center gap-4">
+          <Clock className="w-4 h-4 text-[#3B82F6] animate-pulse" />
           <div className="flex flex-col">
-            <span className="text-[8px] font-black text-[#5b5b7b] tracking-wider uppercase">SYNC ENGINE</span>
-            <span className="text-xl font-black text-white tabular-nums tracking-tighter">04:35:11</span>
+            <span className="text-[7px] font-black text-[#5b5b7b] tracking-wider uppercase">SYNC</span>
+            <span className="text-base font-black text-white tabular-nums tracking-tighter">04:35:11</span>
           </div>
         </div>
       </div>

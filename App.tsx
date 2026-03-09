@@ -1019,89 +1019,90 @@ const FeatureExploreCard: React.FC<{ icon: React.ReactNode, title: string, descr
 // --- PRODUCTS PAGE VIEW ---
 const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => (
   <main className="max-w-[1400px] mx-auto px-6 py-8 md:py-12">
-    {/* PREMIUM HERO SECTION */}
-    <div className="relative mb-16 md:mb-20 flex flex-col items-center justify-center text-center">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] bg-gradient-to-r from-[#3B82F6]/20 to-[#8B5CF6]/20 blur-[100px] md:blur-[120px] rounded-full pointer-events-none"></div>
+    {/* DISTRIBUTED SAAS HEADER */}
+    <div className="flex flex-col gap-10 mb-16 px-2">
+      {/* SECTION 1: IDENTITY & LIVE STATUS */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 relative">
+        <div className="absolute -left-20 -top-20 w-64 h-64 bg-[#3B82F6]/5 blur-[100px] rounded-full pointer-events-none"></div>
+        <div className="relative z-10">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-2 h-2 bg-[#00b37e] rounded-full shadow-[0_0_10px_rgba(0,179,126,0.8)] animate-pulse"></div>
+            <span className="text-[10px] font-black text-[#00b37e] tracking-[0.3em] uppercase">Mining Live Tracking</span>
+          </div>
+          <h1 className="text-4xl md:text-5xl font-black text-white tracking-tighter mb-2">Produtos Virais</h1>
+          <p className="text-[#5b5b7b] text-base font-medium max-w-sm">Inteligência competitiva em tempo real dos maiores marketplaces globais.</p>
+        </div>
 
-      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#16161A] border border-white/5 mb-6 shadow-xl relative z-10">
-        <div className="w-2 h-2 bg-[#00b37e] rounded-full shadow-[0_0_8px_rgba(0,179,126,0.8)] animate-pulse"></div>
-        <span className="text-[10px] md:text-xs font-black text-[#8d8d99] tracking-[0.2em] md:tracking-[0.25em] uppercase">SISTEMA ONLINE • MINERANDO AGORA</span>
+        {/* SECTION 2: INDEPENDENT METRICS CARDS */}
+        <div className="flex flex-wrap items-center gap-4 md:gap-6 relative z-10">
+          <div className="bg-[#14151a]/40 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-6 flex items-center gap-5 shadow-2xl hover:border-[#3B82F6]/30 transition-all group">
+            <div className="w-12 h-12 rounded-2xl bg-[#0B0B0E] flex items-center justify-center border border-white/5 group-hover:scale-110 transition-transform">
+              <Package className="w-5 h-5 text-[#3B82F6]" />
+            </div>
+            <div>
+              <span className="text-[9px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] block mb-0.5">NOVOS DETECTADOS</span>
+              <span className="text-3xl font-black text-white tracking-tighter">18</span>
+            </div>
+          </div>
+
+          <div className="bg-[#14151a]/40 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-6 flex items-center gap-5 shadow-2xl hover:border-[#00b37e]/30 transition-all group">
+            <div className="w-12 h-12 rounded-2xl bg-[#0B0B0E] flex items-center justify-center border border-white/5 group-hover:scale-110 transition-transform">
+              <TrendingUp className="w-5 h-5 text-[#00b37e]" />
+            </div>
+            <div>
+              <span className="text-[9px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] block mb-0.5">RECEITA ESTIMADA</span>
+              <div className="flex items-baseline gap-1">
+                <span className="text-sm font-black text-[#00b37e]/60">R$</span>
+                <span className="text-3xl font-black text-[#00b37e] tracking-tighter tabular-nums">3.9M</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-[#14151a]/40 backdrop-blur-xl border border-white/5 rounded-3xl p-5 md:p-6 flex items-center gap-5 shadow-2xl hover:border-[#8B5CF6]/30 transition-all group">
+            <div className="w-12 h-12 rounded-2xl bg-[#0B0B0E] flex items-center justify-center border border-white/5 group-hover:scale-110 transition-transform">
+              <Activity className="w-5 h-5 text-[#8B5CF6]" />
+            </div>
+            <div>
+              <span className="text-[9px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] block mb-0.5">PRECISÃO IA</span>
+              <span className="text-3xl font-black text-white tracking-tighter">98<span className="text-sm text-[#5b5b7b]">%</span></span>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <h1 className="text-4xl md:text-6xl lg:text-[72px] font-black text-white tracking-tighter mb-6 max-w-4xl leading-[1.1] relative z-10">
-        A Inteligência por trás dos <br className="hidden md:block" />
-        <span className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] bg-clip-text text-transparent">Produtos Milionários</span>
-      </h1>
-
-      <p className="text-[#a8a8b3] text-base md:text-xl font-medium max-w-2xl mb-12 relative z-10">
-        Nossa IA analisa milhares de transações por minuto para identificar tendências globais antes que elas se tornem comuns.
-      </p>
-
-      {/* QUICK METRICS GRID */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 w-full max-w-5xl relative z-10">
-        <div className="bg-[#0B0B0E]/60 backdrop-blur-xl border border-white/5 rounded-[32px] p-8 flex flex-col items-center justify-center group hover:border-[#3B82F6]/30 transition-all shadow-2xl">
-          <div className="w-12 h-12 rounded-2xl bg-[#16161a] flex items-center justify-center mb-4 border border-white/5 group-hover:scale-110 transition-transform">
-            <Package className="w-6 h-6 text-[#3B82F6]" />
-          </div>
-          <span className="text-4xl md:text-5xl font-black text-white tracking-tighter mb-1">18</span>
-          <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">Novos Detectados</span>
-        </div>
-
-        <div className="bg-[#0B0B0E]/60 backdrop-blur-xl border border-white/5 rounded-[32px] p-8 flex flex-col items-center justify-center group hover:border-[#00b37e]/30 transition-all shadow-2xl">
-          <div className="w-12 h-12 rounded-2xl bg-[#16161a] flex items-center justify-center mb-4 border border-white/5 group-hover:scale-110 transition-transform">
-            <TrendingUp className="w-6 h-6 text-[#00b37e]" />
-          </div>
-          <div className="flex items-baseline gap-1 mb-1">
-            <span className="text-xl font-black text-[#00b37e]/60">R$</span>
-            <span className="text-4xl md:text-5xl font-black text-[#00b37e] tracking-tighter">3.9M</span>
-          </div>
-          <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">Receita Estimada</span>
-        </div>
-
-        <div className="bg-[#0B0B0E]/60 backdrop-blur-xl border border-white/5 rounded-[32px] p-8 flex flex-col items-center justify-center group hover:border-[#8B5CF6]/30 transition-all shadow-2xl">
-          <div className="w-12 h-12 rounded-2xl bg-[#16161a] flex items-center justify-center mb-4 border border-white/5 group-hover:scale-110 transition-transform">
-            <Activity className="w-6 h-6 text-[#8B5CF6]" />
-          </div>
-          <span className="text-4xl md:text-5xl font-black text-white tracking-tighter mb-1">98%</span>
-          <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">Precisão de Dados</span>
-        </div>
-      </div>
-    </div>
-
-    {/* MODERN TIMELINE & FILTERS */}
-    <div className="bg-[#0B0B0E] border border-[#1e1f26] rounded-[40px] p-6 md:p-8 mb-12 shadow-2xl relative overflow-hidden group">
-      <div className="absolute top-0 right-0 w-64 h-64 bg-[#3B82F6]/5 blur-[80px] rounded-full -mr-20 -mt-20"></div>
-
-      <div className="flex flex-col lg:flex-row items-center justify-between gap-8 relative z-10">
-        <div className="flex items-center gap-3 overflow-x-auto w-full lg:w-auto pb-2 lg:pb-0 scrollbar-hide">
-          <button className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] text-white px-6 py-3 rounded-2xl text-[11px] font-black uppercase tracking-[0.15em] flex items-center gap-2 shadow-lg shadow-[#3B82F6]/20 transition-all hover:scale-[1.03]">
-            <LayoutGrid className="w-4 h-4 fill-white" />
+      {/* SECTION 3: OPERATIONAL TOOLBAR */}
+      <div className="bg-[#0B0B0E] border border-white/5 rounded-[28px] p-4 md:p-5 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-xl relative z-20">
+        <div className="flex items-center gap-2 w-full lg:w-auto overflow-x-auto scrollbar-hide pb-2 lg:pb-0 px-2">
+          <button className="bg-[#16161A] border border-[#3B82F6]/40 text-white px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.15em] flex items-center gap-2 shadow-[0_0_15px_rgba(59,130,246,0.15)] transition-all hover:bg-[#1c1c21]">
+            <LayoutGrid className="w-3.5 h-3.5 fill-[#3B82F6] text-[#3B82F6]" />
             Todos os Produtos
           </button>
-          <button className="bg-[#16161A] border border-white/5 text-[#8d8d99] px-6 py-3 rounded-2xl text-[11px] font-black uppercase tracking-[0.15em] flex items-center gap-2 transition-all hover:bg-[#1c1c21] hover:text-white hover:border-white/10">
-            <Sparkles className="w-4 h-4" />
+          <button className="bg-transparent border border-white/5 text-[#5b5b7b] px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-[0.15em] flex items-center gap-2 transition-all hover:text-white hover:border-white/10">
+            <Sparkles className="w-3.5 h-3.5" />
             Dividir por Nicho
           </button>
         </div>
 
-        <div className="flex flex-col md:flex-row items-center gap-8 w-full lg:w-auto">
-          <div className="flex items-center gap-6 md:gap-10 overflow-x-auto scrollbar-hide w-full md:w-auto">
-            <span className="text-[11px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors">00-06</span>
-            <span className="text-[11px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors">06-12</span>
-            <span className="text-[11px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors">12-18</span>
-            <div className="flex flex-col items-center">
-              <span className="text-[11px] font-black text-[#3B82F6] uppercase tracking-[0.2em]">18-00</span>
-              <div className="w-1.5 h-1.5 bg-[#3B82F6] rounded-full mt-1 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
+        <div className="flex flex-col md:flex-row items-center gap-8 w-full lg:w-auto px-2">
+          <div className="flex items-center gap-8 md:gap-10 overflow-x-auto scrollbar-hide w-full md:w-auto flex-1">
+            <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] cursor-pointer hover:text-white transition-colors">00-06</span>
+            <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] cursor-pointer hover:text-white transition-colors">06-12</span>
+            <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] cursor-pointer hover:text-white transition-colors">12-18</span>
+            <div className="flex flex-col items-center group/time cursor-default">
+              <span className="text-[10px] font-black text-[#3B82F6] uppercase tracking-[0.3em]">18-00</span>
+              <div className="w-1.5 h-1.5 bg-[#3B82F6] rounded-full mt-1 shadow-[0_0_10px_rgba(59,130,246,1)] group-hover:scale-125 transition-transform"></div>
             </div>
           </div>
 
-          <div className="h-10 w-px bg-white/5 hidden md:block"></div>
+          <div className="hidden md:block w-px h-8 bg-white/5"></div>
 
-          <div className="flex flex-col items-center lg:items-end gap-1">
-            <span className="text-[9px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] opacity-80">PRÓXIMA ATUALIZAÇÃO EM</span>
-            <div className="flex items-center gap-2">
-              <Clock className="w-3.5 h-3.5 text-[#3B82F6]" />
-              <span className="text-xl font-black text-white tabular-nums tracking-tighter">04:35:11</span>
+          <div className="flex items-center gap-4 bg-[#14151a] px-5 py-2.5 rounded-2xl border border-white/5 shadow-inner">
+            <div className="flex flex-col">
+              <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] mb-0.5">NEXT SYNC</span>
+              <div className="flex items-center gap-2">
+                <Clock className="w-3.5 h-3.5 text-[#3B82F6]" />
+                <span className="text-base font-black text-white tabular-nums tracking-tighter">04:35:11</span>
+              </div>
             </div>
           </div>
         </div>

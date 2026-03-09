@@ -64,6 +64,8 @@ import {
   Mail,
   Rocket,
   Link
+  Menu,
+  X,
 } from 'lucide-react';
 
 // Language Context
@@ -183,7 +185,7 @@ const ConfiguracoesView: React.FC<ConfiguracoesViewProps> = ({ profileImage, onI
   };
 
   return (
-    <main className="max-w-[800px] mx-auto px-6 py-16 flex flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <main className="max-w-[800px] mx-auto px-6 py-10 md:py-16 flex flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-700">
       {/* Header Section */}
       <div className="flex flex-col items-center mb-12">
         <div
@@ -206,14 +208,14 @@ const ConfiguracoesView: React.FC<ConfiguracoesViewProps> = ({ profileImage, onI
             className="hidden"
           />
         </div>
-        <h1 className="text-4xl font-black text-white tracking-tighter mb-2">{t('configuracoes')}</h1>
+        <h1 className="text-2xl md:text-4xl font-black text-white tracking-tighter mb-2">{t('configuracoes')}</h1>
         <p className="text-[#8d8d99] text-base font-medium opacity-80">{t('gerencieInformacoes')}</p>
       </div>
 
       {/* Cards Section */}
       <div className="w-full flex flex-col gap-6">
         {/* Personal Info Card */}
-        <div className="bg-[#14151a] border border-[#1e1f26] rounded-[32px] p-8 shadow-2xl">
+        <div className="bg-[#14151a] border border-[#1e1f26] rounded-[32px] p-5 md:p-8 shadow-2xl">
           <div className="flex items-center gap-3 mb-8">
             <User className="w-5 h-5 text-[#8d8d99]" />
             <h2 className="text-lg font-black text-white tracking-tight">{t('informacoesPessoais')}</h2>
@@ -252,7 +254,7 @@ const ConfiguracoesView: React.FC<ConfiguracoesViewProps> = ({ profileImage, onI
         </div>
 
         {/* Security Card */}
-        <div className="bg-[#14151a] border border-[#1e1f26] rounded-[32px] p-8 shadow-2xl">
+        <div className="bg-[#14151a] border border-[#1e1f26] rounded-[32px] p-5 md:p-8 shadow-2xl">
           <div className="flex items-center gap-3 mb-8">
             <Lock className="w-5 h-5 text-[#8d8d99]" />
             <h2 className="text-lg font-black text-white tracking-tight">{t('seguranca')}</h2>
@@ -296,6 +298,7 @@ const ConfiguracoesView: React.FC<ConfiguracoesViewProps> = ({ profileImage, onI
 };
 
 const App: React.FC = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [currentPage, setCurrentPage] = useState<'explorar' | 'produtos' | 'videos' | 'criadores' | 'ugc-criador' | 'galeria-avatares' | 'galeria-prompts' | 'meus-avatares' | 'criar-avatar' | 'previsibilidade-receita' | 'hacks-virais' | 'hacks-virais-detalhe' | 'creator-academy' | 'passos-iniciais' | 'como-se-afiliar' | 'regras-e-restricoes' | 'como-criar-avatar-ia' | 'como-criar-videos-ugc' | 'configuracoes'>('explorar');
   const [selectedHackId, setSelectedHackId] = useState<string | null>(null);
   const [userProfileImage, setUserProfileImage] = useState<string | null>(null);
@@ -541,12 +544,49 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>
+        {/* Mobile Sidebar Overlay */}
+        {isMobileMenuOpen && (
+          <div className="fixed inset-0 z-[100] lg:hidden">
+            <div className="absolute inset-0 bg-[#0b0c10]/80 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)} />
+            <div className="absolute left-0 top-0 bottom-0 w-[280px] bg-[#0b0c10] border-r border-[#1e1f26] flex flex-col pt-6 px-6">
+              <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center gap-2 cursor-pointer" onClick={() => { setIsMobileMenuOpen(false); setCurrentPage('explorar'); }}>
+                  <img src="https://i.imgur.com/hkRPBxg.png" alt="Trendfy Logo" className="w-10 h-10 object-contain" />
+                  <span className="text-xl font-black text-white">Trendfy</span>
+                </div>
+                <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 text-[#8d8d99] hover:text-white rounded-lg hover:bg-[#1f2026]">
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+              <nav className="flex flex-col gap-4">
+                {['explorar', 'produtos', 'videos', 'criadores'].map((page) => (
+                  <button
+                    key={page}
+                    onClick={() => { setCurrentPage(page as any); setIsMobileMenuOpen(false); }}
+                    className={`text-left text-base font-semibold py-3 px-4 rounded-xl transition-all ${currentPage === page ? 'text-white bg-[#3B82F6]' : 'text-[#8d8d99] hover:text-white hover:bg-[#1f2026]'}`}
+                  >
+                    {t(page)}
+                  </button>
+                ))}
+              </nav>
+            </div>
+          </div>
+        )}
+
       <div className="min-h-screen bg-[#0b0c10] text-[#e1e1e6] selection:bg-[#3B82F6]/30 flex flex-col">
         {/* PERFECT CLONE HEADER */}
         <header className="h-[72px] border-b border-[#1e1f26] bg-[#0b0c10] flex items-center sticky top-0 z-50">
           <div className="max-w-[1400px] w-full mx-auto px-6 flex items-center h-full">
             {/* Logo Area */}
-            <div className="flex items-center gap-2 group cursor-pointer mr-auto" onClick={() => setCurrentPage('explorar')}>
+            
+            {/* Mobile Hamburger */}
+            <button 
+              className="lg:hidden mr-4 p-2 -ml-2 text-white hover:bg-[#1f2026] rounded-lg transition-colors"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              <Menu className="w-6 h-6" />
+            </button>
+            <div className="flex items-center gap-2 group cursor-pointer mr-auto" onClick={() => { setIsMobileMenuOpen(false); setCurrentPage('explorar'); }}>
               <div className="w-14 h-14 bg-transparent flex items-center justify-center">
                 <img
                   src="https://i.imgur.com/hkRPBxg.png"
@@ -559,7 +599,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
             </div>
 
             {/* Navigation Links Grouped closer to Right Actions */}
-            <div className="flex items-center gap-8 h-full">
+            <div className="flex items-center gap-5 md:gap-8 h-full">
               <nav className="hidden lg:flex items-center gap-5 h-full">
                 <button
                   onClick={() => setCurrentPage('explorar')}
@@ -707,7 +747,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
         {/* PERFECT CLONE ROBUST FOOTER */}
         <footer className="bg-[#0b0c10] border-t border-[#1e1f26] pt-24 pb-12">
           <div className="max-w-[1400px] w-full mx-auto px-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-12 mb-24">
+            <div className="grid grid-cols-1 md:grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 md:gap-12 mb-24">
               <div className="lg:col-span-2">
                 <div className="flex items-center gap-2 mb-8 group cursor-pointer w-fit" onClick={() => setCurrentPage('explorar')}>
                   <img
@@ -735,8 +775,8 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
               <FooterColumn title="Legal" links={['Termos de Uso', 'Privacidade', 'Cookies', 'Contato']} />
             </div>
 
-            <div className="pt-12 border-t border-[#1e1f26] flex flex-col md:flex-row items-center justify-between gap-8">
-              <div className="flex flex-col md:flex-row items-center gap-4 md:gap-10">
+            <div className="pt-12 border-t border-[#1e1f26] flex flex-col md:flex-row items-center justify-between gap-5 md:gap-8">
+              <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 md:gap-10">
                 <span className="text-[#5b5b7b] text-sm font-bold tracking-tight">© 2025 Trendfy. All rights reserved.</span>
                 <div className="flex items-center gap-6">
                   <a href="#" className="text-[#5b5b7b] hover:text-white text-xs font-bold transition-colors uppercase tracking-widest">{t('status')}</a>
@@ -744,7 +784,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
                 </div>
               </div>
 
-              <div className="flex items-center gap-8">
+              <div className="flex items-center gap-5 md:gap-8">
                 <div className="flex items-center gap-2 px-4 py-2 bg-[#14151a] rounded-xl border border-[#1e1f26] shadow-inner">
                   <div className="w-2 h-2 bg-[#00b37e] rounded-full shadow-[0_0_8px_rgba(0,179,126,1)]"></div>
                   <span className="text-[10px] font-black text-white/80 uppercase tracking-[0.2em]">{t('serversOnline')}</span>
@@ -801,8 +841,8 @@ const FooterSocialIcon: React.FC<{ icon: React.ReactNode }> = ({ icon }) => (
 
 // --- EXPLORE PAGE VIEW ---
 const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => void, onGoToProducts: () => void }> = ({ products, onGoToAcademy, onGoToProducts }) => (
-  <main className="max-w-[1400px] mx-auto px-6 py-10">
-    <div className="bg-[#1F2028] rounded-3xl p-10 border border-[#2C2D38]/30 flex items-center justify-between mb-12 relative overflow-hidden h-[160px] shadow-2xl">
+  <main className="max-w-[1400px] mx-auto px-6 py-6 md:py-10">
+    <div className="bg-[#1F2028] rounded-3xl p-6 md:p-10 border border-[#2C2D38]/30 flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-0 mb-8 md:mb-12 relative overflow-hidden h-[160px] shadow-2xl">
       <div className="absolute left-10 top-1/2 -translate-y-1/2 flex items-center gap-4">
         <div className="w-14 h-14 bg-[#14151a] rounded-2xl flex items-center justify-center relative shadow-2xl border border-white/5">
           <LayoutGrid className="w-7 h-7 text-[#5b5b7b]" />
@@ -812,7 +852,7 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
         </div>
       </div>
 
-      <div className="flex items-center gap-8 mx-auto z-10">
+      <div className="flex items-center gap-5 md:gap-8 mx-auto z-10">
         <h2 className="text-[#7f5af0]xl font-black flex items-center gap-6">
           <span className="text-[#3B82F6]">Novo no Trendfy?</span>
           <span className="w-[1px] h-10 bg-white/10"></span>
@@ -820,7 +860,7 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
         </h2>
         <button
           onClick={onGoToAcademy}
-          className="bg-gradient-to-r from-[#5142f5] to-[#7f5af0] hover:opacity-90 text-white px-10 py-4 rounded-2xl text-base font-black flex items-center gap-3 transition-all shadow-2xl shadow-[#5142f5]/40 transform hover:scale-[1.03]"
+          className="bg-gradient-to-r from-[#5142f5] to-[#7f5af0] hover:opacity-90 text-white px-6 md:px-10 py-4 rounded-2xl text-base font-black flex items-center gap-3 transition-all shadow-2xl shadow-[#5142f5]/40 transform hover:scale-[1.03]"
         >
           Acessar Academy
           <GraduationCap className="w-6 h-6" />
@@ -838,15 +878,15 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
       <input
         type="text"
         placeholder="Pesquise produtos, lojas ou criadores..."
-        className="w-full bg-[#14151a] border border-[#1e1f26] rounded-[32px] py-6 px-10 text-base text-[#e1e1e6] placeholder:text-[#5b5b7b] focus:outline-none focus:border-[#3B82F6]/50 transition-colors h-20 shadow-2xl"
+        className="w-full bg-[#14151a] border border-[#1e1f26] rounded-[32px] py-6 px-6 md:px-10 text-base text-[#e1e1e6] placeholder:text-[#5b5b7b] focus:outline-none focus:border-[#3B82F6]/50 transition-colors h-20 shadow-2xl"
       />
       <button className="absolute right-4 top-1/2 -translate-y-1/2 p-4 bg-[#3B82F6] rounded-2xl hover:bg-[#4338ca] transition-all shadow-xl hover:scale-105 active:scale-95">
         <Search className="w-7 h-7 text-white" />
       </button>
     </div>
 
-    <div className="bg-[#14151a] border border-[#1e1f26] rounded-[40px] p-10 mb-16 relative shadow-2xl">
-      <div className="flex items-start gap-8">
+    <div className="bg-[#14151a] border border-[#1e1f26] rounded-[40px] p-6 md:p-10 mb-16 relative shadow-2xl">
+      <div className="flex items-start gap-5 md:gap-8">
         <div className="w-14 h-14 bg-[#24242a] rounded-3xl flex items-center justify-center border border-[#1e1f26] shadow-inner">
           <Sparkles className="w-7 h-7 text-[#4d4dff]" />
         </div>
@@ -862,7 +902,7 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
         <div className="text-[#5b5b7b] text-sm font-black tabular-nums bg-[#0b0c10] px-5 py-2.5 rounded-2xl border border-[#1e1f26]">1 / 20</div>
       </div>
 
-      <div className="mt-10 bg-[#14151a] border border-[#1e1f26] rounded-3xl p-8 flex items-start gap-6 shadow-inner">
+      <div className="mt-10 bg-[#14151a] border border-[#1e1f26] rounded-3xl p-5 md:p-8 flex items-start gap-6 shadow-inner">
         <div className="p-3 bg-[#1c1c21] rounded-2xl">
           <Zap className="w-6 h-6 text-[#4d4dff]" />
         </div>
@@ -872,13 +912,13 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
         </div>
       </div>
 
-      <div className="absolute right-10 top-1/2 -translate-y-1/2 flex flex-col gap-10">
+      <div className="absolute right-10 top-1/2 -translate-y-1/2 flex flex-col gap-6 md:gap-10">
         <button className="text-[#5b5b7b] hover:text-white transition-all transform hover:scale-125"><ChevronLeft className="w-8 h-8 rotate-90" /></button>
         <button className="text-[#5b5b7b] hover:text-white transition-all transform hover:scale-125"><ChevronLeft className="w-8 h-8 -rotate-90" /></button>
       </div>
     </div>
 
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-24">
+    <div className="grid grid-cols-1 md:grid-cols-1 md:grid-cols-2 gap-5 md:gap-8 mb-24">
       <FeatureExploreCard icon={<Package className="w-7 h-7 text-[#3B82F6]" />} title="Produtos em Tendência" description="Identifique agora quais produtos estão escalando e gerando lucro real." onClick={onGoToProducts} />
       <FeatureExploreCard icon={<Wand2 className="w-7 h-7 text-[#3B82F6]" />} title="Influencer IA" description="Crie roteiros e vídeos UGC altamente persuasivos com inteligência artificial." onClick={() => { }} />
       <FeatureExploreCard icon={<Eye className="w-7 h-7 text-[#3B82F6]" />} title="Análise de Concorrentes" description="Espione estratégias, faturamento e criativos das maiores lojas do mercado." onClick={() => { }} />
@@ -886,7 +926,7 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
     </div>
 
     <div>
-      <div className="flex items-center justify-between mb-12">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-0 mb-8 md:mb-12">
         <div className="flex items-center gap-4">
           <Flame className="w-7 h-7 text-[#3B82F6]" />
           <h2 className="text-[#7f5af0]xl font-black text-white tracking-tighter">Top Produtos (24h)</h2>
@@ -896,14 +936,14 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
         </button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-8">
         {products.map((product) => (
           <div key={product.id} className="bg-[#14151a] border border-[#1e1f26] rounded-[32px] overflow-hidden group cursor-pointer hover:border-[#3B82F6]/40 transition-all shadow-2xl">
             <div className="relative aspect-[4/3] overflow-hidden bg-[#24242a]">
               <img src={product.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt="" />
               <div className="absolute top-5 left-5 px-4 py-1.5 bg-[#f59e0b] text-white rounded-xl text-xs font-black shadow-2xl border border-white/10">#{product.rank}</div>
             </div>
-            <div className="p-8">
+            <div className="p-5 md:p-8">
               <h4 className="text-lg font-bold text-white mb-5 truncate tracking-tight">{product.title}</h4>
               <div className="flex flex-col gap-2">
                 <span className="text-[9px] text-[#8d8d99] font-medium uppercase tracking-wider">RECEITA ESTIMADA</span>
@@ -936,7 +976,7 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
 );
 
 const FeatureExploreCard: React.FC<{ icon: React.ReactNode, title: string, description: string, onClick: () => void }> = ({ icon, title, description, onClick }) => (
-  <div onClick={onClick} className="bg-[#14151a] border border-[#1e1f26] rounded-[32px] p-10 flex items-center gap-8 hover:border-[#3B82F6]/40 transition-all cursor-pointer group shadow-2xl">
+  <div onClick={onClick} className="bg-[#14151a] border border-[#1e1f26] rounded-[32px] p-6 md:p-10 flex items-center gap-5 md:gap-8 hover:border-[#3B82F6]/40 transition-all cursor-pointer group shadow-2xl">
     <div className="w-16 h-16 bg-[#1F2028] rounded-[24px] flex items-center justify-center border border-[#2C2D38] shadow-inner group-hover:scale-110 transition-transform duration-500">
       {icon}
     </div>
@@ -949,9 +989,9 @@ const FeatureExploreCard: React.FC<{ icon: React.ReactNode, title: string, descr
 
 // --- PRODUCTS PAGE VIEW ---
 const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => (
-  <main className="max-w-[1400px] mx-auto px-6 py-10">
-    <div className="bg-[#0c0c0e] border border-[#1c1c1f] rounded-[40px] p-12 lg:p-14 mb-16 relative overflow-hidden shadow-2xl">
-      <div className="flex flex-col md:flex-row justify-between items-start gap-12">
+  <main className="max-w-[1400px] mx-auto px-6 py-6 md:py-10">
+    <div className="bg-[#0c0c0e] border border-[#1c1c1f] rounded-[40px] p-6 md:p-12 lg:p-14 mb-16 relative overflow-hidden shadow-2xl">
+      <div className="flex flex-col md:flex-row justify-between items-start gap-6 md:gap-12">
         <div className="flex flex-col gap-4">
           <h1 className="text-[44px] font-black text-white tracking-tighter leading-none">Produtos Virais</h1>
           <p className="text-[#5b5b7b] text-base font-medium">Identifique tendências antes dos concorrentes</p>
@@ -963,24 +1003,24 @@ const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => (
         </div>
 
         <div className="flex items-stretch gap-px bg-[#1c1c1f] p-[1.5px] rounded-[32px] overflow-hidden shadow-2xl min-w-[460px]">
-          <div className="bg-[#0b0c10] flex-1 px-8 py-10 flex flex-col items-center justify-center gap-1 border-r border-[#1c1c1f] relative group">
+          <div className="bg-[#0b0c10] flex-1 px-8 py-6 md:py-10 flex flex-col items-center justify-center gap-1 border-r border-[#1c1c1f] relative group">
             <div className="absolute top-4 left-4 opacity-20 group-hover:opacity-40 transition-opacity">
               <Package size={16} className="text-[#5b5b7b]" />
             </div>
-            <span className="text-5xl font-black text-white leading-none tracking-tighter">18</span>
+            <span className="text-3xl md:text-5xl font-black text-white leading-none tracking-tighter">18</span>
             <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] mt-4 flex items-center gap-2">
               <span className="w-1 h-1 bg-[#5b5b7b] rounded-full"></span>
               Novos Produtos
             </span>
           </div>
 
-          <div className="bg-[#0b0c10] flex-[1.4] px-8 py-10 flex flex-col items-center justify-center gap-1 relative group">
+          <div className="bg-[#0b0c10] flex-[1.4] px-8 py-6 md:py-10 flex flex-col items-center justify-center gap-1 relative group">
             <div className="absolute top-4 right-4 opacity-20 group-hover:opacity-40 transition-opacity">
               <TrendingUp size={16} className="text-[#00b37e]" />
             </div>
             <div className="flex items-baseline gap-1">
               <span className="text-2xl font-black text-[#00b37e]/60 leading-none">R$</span>
-              <span className="text-5xl font-black text-[#00b37e] leading-none tracking-tighter">3.9M</span>
+              <span className="text-3xl md:text-5xl font-black text-[#00b37e] leading-none tracking-tighter">3.9M</span>
             </div>
             <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] mt-4 flex items-center gap-2">
               <span className="w-1 h-1 bg-[#00b37e] rounded-full animate-pulse"></span>
@@ -993,7 +1033,7 @@ const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => (
       {/* Modern Horizontal Separator / Selection Bar */}
       <div className="mt-20 flex flex-col gap-6">
         <div className="flex items-end justify-between px-2">
-          <div className="flex items-center gap-12">
+          <div className="flex items-center gap-6 md:gap-12">
             <span className="text-[12px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors">00:00 - 06:00</span>
             <span className="text-[12px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors">06:00 - 12:00</span>
             <span className="text-[12px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors">12:00 - 18:00</span>
@@ -1025,7 +1065,7 @@ const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => (
       </button>
     </div>
 
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-8">
       {products.map((p) => (
         <ViralCard key={p.id} product={p} />
       ))}
@@ -1078,7 +1118,7 @@ const ViralCard: React.FC<{ product: ProductViral }> = ({ product }) => {
       </div>
 
       {/* CONTENT SECTION - RECONFIGURED FOR PERFECT HIERARCHY */}
-      <div className="px-10 pb-10 flex-1 flex flex-col">
+      <div className="px-6 md:px-10 pb-10 flex-1 flex flex-col">
         <h3 className="text-xl font-bold text-white mb-3 leading-tight tracking-tight group-hover:text-[#3B82F6] transition-colors">{product.title}</h3>
 
         <div className="mb-6 flex items-center gap-2">
@@ -1612,9 +1652,9 @@ const VideosView: React.FC = () => {
   }));
 
   return (
-    <main className="max-w-[1400px] mx-auto px-6 py-10">
-      <div className="bg-[#0c0c0e] border border-[#1c1c1f] rounded-[40px] p-12 lg:p-14 mb-16 relative overflow-hidden shadow-2xl">
-        <div className="flex flex-col md:flex-row justify-between items-start gap-12">
+    <main className="max-w-[1400px] mx-auto px-6 py-6 md:py-10">
+      <div className="bg-[#0c0c0e] border border-[#1c1c1f] rounded-[40px] p-6 md:p-12 lg:p-14 mb-16 relative overflow-hidden shadow-2xl">
+        <div className="flex flex-col md:flex-row justify-between items-start gap-6 md:gap-12">
           <div className="flex flex-col gap-4">
             <h1 className="text-[44px] font-black text-white tracking-tighter leading-none">Vídeos</h1>
             <p className="text-[#5b5b7b] text-base font-medium">Aulas e análises de produtos virais.</p>
@@ -1626,24 +1666,24 @@ const VideosView: React.FC = () => {
           </div>
 
           <div className="flex items-stretch gap-px bg-[#1c1c1f] p-[1.5px] rounded-[32px] overflow-hidden shadow-2xl min-w-[460px]">
-            <div className="bg-[#0b0c10] flex-1 px-8 py-10 flex flex-col items-center justify-center gap-1 border-r border-[#1c1c1f] relative group">
+            <div className="bg-[#0b0c10] flex-1 px-8 py-6 md:py-10 flex flex-col items-center justify-center gap-1 border-r border-[#1c1c1f] relative group">
               <div className="absolute top-4 left-4 opacity-20 group-hover:opacity-40 transition-opacity">
                 <Video size={16} className="text-[#5b5b7b]" />
               </div>
-              <span className="text-5xl font-black text-white leading-none tracking-tighter">40</span>
+              <span className="text-3xl md:text-5xl font-black text-white leading-none tracking-tighter">40</span>
               <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] mt-4 flex items-center gap-2">
                 <span className="w-1 h-1 bg-[#5b5b7b] rounded-full"></span>
                 Vídeos Detectados
               </span>
             </div>
 
-            <div className="bg-[#0b0c10] flex-[1.4] px-8 py-10 flex flex-col items-center justify-center gap-1 relative group">
+            <div className="bg-[#0b0c10] flex-[1.4] px-8 py-6 md:py-10 flex flex-col items-center justify-center gap-1 relative group">
               <div className="absolute top-4 right-4 opacity-20 group-hover:opacity-40 transition-opacity">
                 <TrendingUp size={16} className="text-[#00b37e]" />
               </div>
               <div className="flex items-baseline gap-1">
                 <span className="text-2xl font-black text-[#00b37e]/60 leading-none">R$</span>
-                <span className="text-5xl font-black text-[#00b37e] leading-none tracking-tighter">1.2M</span>
+                <span className="text-3xl md:text-5xl font-black text-[#00b37e] leading-none tracking-tighter">1.2M</span>
               </div>
               <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] mt-4 flex items-center gap-2">
                 <span className="w-1 h-1 bg-[#00b37e] rounded-full animate-pulse"></span>
@@ -1656,7 +1696,7 @@ const VideosView: React.FC = () => {
         {/* Modern Horizontal Separator / Selection Bar */}
         <div className="mt-20 flex flex-col gap-6">
           <div className="flex items-end justify-between px-2">
-            <div className="flex items-center gap-12">
+            <div className="flex items-center gap-6 md:gap-12">
               <span className="text-[12px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors">00:00 - 06:00</span>
               <span className="text-[12px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors">06:00 - 12:00</span>
               <span className="text-[12px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors">12:00 - 18:00</span>
@@ -1691,7 +1731,7 @@ const VideosView: React.FC = () => {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10">
         {videoData.map((video) => (
           <VideoCard key={video.id} video={video} />
         ))}
@@ -1720,14 +1760,14 @@ const ScriptModal: React.FC<{ isOpen: boolean; onClose: () => void; video: Video
         className="bg-[#0b0c10] border border-[#1c1c1f] rounded-[32px] w-full max-w-md overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-300"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="p-8 flex items-center justify-between border-b border-[#1c1c1f]">
+        <div className="p-5 md:p-8 flex items-center justify-between border-b border-[#1c1c1f]">
           <h2 className="text-xl font-black text-white">Como obter o Script</h2>
           <button onClick={onClose} className="text-[#5b5b7b] hover:text-white transition-colors">
             <X className="w-6 h-6" />
           </button>
         </div>
 
-        <div className="p-8 flex flex-col gap-8">
+        <div className="p-5 md:p-8 flex flex-col gap-5 md:gap-8">
           <div className="flex flex-col gap-6">
             <div className="flex items-start gap-4">
               <div className="w-8 h-8 rounded-full bg-[#1F2028] flex items-center justify-center text-[#3B82F6] font-black text-sm shrink-0 mt-0.5">1</div>
@@ -1839,7 +1879,7 @@ const VideoCard: React.FC<{ video: VideoViral }> = ({ video }) => {
           </>
         )}
       </div>
-      <div className="mt-8 bg-[#0b0c10] border border-[#1c1c1f] rounded-[40px] p-8 flex flex-col gap-6 shadow-2xl">
+      <div className="mt-8 bg-[#0b0c10] border border-[#1c1c1f] rounded-[40px] p-5 md:p-8 flex flex-col gap-6 shadow-2xl">
         <div className="flex flex-col gap-5 px-1">
           {/* Linha Superior (Informações Primárias) */}
           <div className="flex items-center justify-between w-full">
@@ -1865,7 +1905,7 @@ const VideoCard: React.FC<{ video: VideoViral }> = ({ video }) => {
           <span className="text-lg font-black text-white line-clamp-1 flex-1 tracking-tight">{video.productTitle}</span>
         </div>
 
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           <button
             onClick={() => setIsModalOpen(true)}
             className="bg-[#1c1c1f] hover:bg-[#24242a] text-white py-4 rounded-2xl flex items-center justify-center gap-2 transition-all group/btn"
@@ -1930,9 +1970,9 @@ const CreatorsView: React.FC = () => {
   ];
 
   return (
-    <main className="max-w-[1400px] mx-auto px-6 py-10">
-      <div className="bg-[#0c0c0e] border border-[#1c1c1f] rounded-[40px] p-12 lg:p-14 mb-16 relative overflow-hidden shadow-2xl">
-        <div className="flex flex-col md:flex-row justify-between items-start gap-12">
+    <main className="max-w-[1400px] mx-auto px-6 py-6 md:py-10">
+      <div className="bg-[#0c0c0e] border border-[#1c1c1f] rounded-[40px] p-6 md:p-12 lg:p-14 mb-16 relative overflow-hidden shadow-2xl">
+        <div className="flex flex-col md:flex-row justify-between items-start gap-6 md:gap-12">
           <div className="flex flex-col gap-4">
             <h1 className="text-[44px] font-black text-white tracking-tighter leading-none">Criadores Virais</h1>
             <p className="text-[#5b5b7b] text-base font-medium">O ranking das mentes que estão gerando faturamentos astronômicos.</p>
@@ -1944,24 +1984,24 @@ const CreatorsView: React.FC = () => {
           </div>
 
           <div className="flex items-stretch gap-px bg-[#1c1c1f] p-[1.5px] rounded-[32px] overflow-hidden shadow-2xl min-w-[460px]">
-            <div className="bg-[#0b0c10] flex-1 px-8 py-10 flex flex-col items-center justify-center gap-1 border-r border-[#1c1c1f] relative group">
+            <div className="bg-[#0b0c10] flex-1 px-8 py-6 md:py-10 flex flex-col items-center justify-center gap-1 border-r border-[#1c1c1f] relative group">
               <div className="absolute top-4 left-4 opacity-20 group-hover:opacity-40 transition-opacity">
                 <Users size={16} className="text-[#5b5b7b]" />
               </div>
-              <span className="text-5xl font-black text-white leading-none tracking-tighter">8</span>
+              <span className="text-3xl md:text-5xl font-black text-white leading-none tracking-tighter">8</span>
               <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] mt-4 flex items-center gap-2">
                 <span className="w-1 h-1 bg-[#5b5b7b] rounded-full"></span>
                 Monitorados
               </span>
             </div>
 
-            <div className="bg-[#0b0c10] flex-[1.4] px-8 py-10 flex flex-col items-center justify-center gap-1 relative group">
+            <div className="bg-[#0b0c10] flex-[1.4] px-8 py-6 md:py-10 flex flex-col items-center justify-center gap-1 relative group">
               <div className="absolute top-4 right-4 opacity-20 group-hover:opacity-40 transition-opacity">
                 <DollarSign size={16} className="text-[#00b37e]" />
               </div>
               <div className="flex items-baseline gap-1">
                 <span className="text-2xl font-black text-[#00b37e]/60 leading-none">R$</span>
-                <span className="text-5xl font-black text-[#00b37e] leading-none tracking-tighter">512.765</span>
+                <span className="text-3xl md:text-5xl font-black text-[#00b37e] leading-none tracking-tighter">512.765</span>
               </div>
               <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] mt-4 flex items-center gap-2">
                 <span className="w-1 h-1 bg-[#00b37e] rounded-full animate-pulse"></span>
@@ -1974,7 +2014,7 @@ const CreatorsView: React.FC = () => {
         {/* Modern Horizontal Separator / Selection Bar */}
         <div className="mt-20 flex flex-col gap-6">
           <div className="flex items-end justify-between px-2">
-            <div className="flex items-center gap-12">
+            <div className="flex items-center gap-6 md:gap-12">
               <span className="text-[12px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors">00:00 - 06:00</span>
               <span className="text-[12px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors">06:00 - 12:00</span>
               <span className="text-[12px] font-black text-white uppercase tracking-[0.2em] cursor-default">12:00 - 18:00</span>
@@ -2006,9 +2046,9 @@ const CreatorsView: React.FC = () => {
 const CreatorRow: React.FC<{ creator: CreatorViral }> = ({ creator }) => (
   <div
     onClick={() => window.open(creator.profileUrl, '_blank')}
-    className="bg-[#0b0c10] border border-[#27272a] rounded-[48px] px-10 py-8 flex items-center justify-between group hover:border-[#3B82F6]/40 transition-all cursor-pointer shadow-2xl"
+    className="bg-[#0b0c10] border border-[#27272a] rounded-[48px] px-6 md:px-10 py-8 flex items-center justify-between group hover:border-[#3B82F6]/40 transition-all cursor-pointer shadow-2xl"
   >
-    <div className="flex items-center gap-12 flex-1">
+    <div className="flex items-center gap-6 md:gap-12 flex-1">
       {/* RANKING ICON */}
       <div className="w-16 h-16 flex items-center justify-center">
         {creator.rank === 1 ? (
@@ -2232,7 +2272,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
   }
 
   return (
-    <main className={`max-w-[1400px] mx-auto px-6 flex flex-col items-center ${step === 5 ? 'pt-12 pb-20' : 'py-20'}`}>
+    <main className={`max-w-[1400px] mx-auto px-6 flex flex-col items-center ${step === 5 ? 'pt-12 pb-20' : 'py-12 md:py-20'}`}>
       {/* Header Step Indicator */}
       <div className={`text-center ${step === 5 ? 'mb-16' : 'mb-10'}`}>
         <span className="text-[11px] font-black text-[#5b5b7b] uppercase tracking-[0.5em] mb-4 block opacity-80">
@@ -2259,7 +2299,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
 
       {/* Step 1: Avatar / Influencer */}
       {step === 1 && (
-        <div className="w-full max-w-[1080px] bg-[#14151a] border border-[#1e1f26]/60 rounded-[56px] p-12 shadow-2xl flex flex-col animate-in fade-in slide-in-from-right duration-500">
+        <div className="w-full max-w-[1080px] bg-[#14151a] border border-[#1e1f26]/60 rounded-[56px] p-6 md:p-12 shadow-2xl flex flex-col animate-in fade-in slide-in-from-right duration-500">
           {selectedStyle === 'review' ? (
             <>
               <div className="flex items-center justify-between mb-10">
@@ -2271,7 +2311,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
 
               <div className="w-full h-[1px] bg-[#33333a] mb-12"></div>
 
-              <div className="flex-1 flex flex-col items-center justify-center py-16 px-10 border-2 border-dashed border-[#1e1f26] rounded-[48px] bg-[#0b0c10] mb-12">
+              <div className="flex-1 flex flex-col items-center justify-center py-10 md:py-16 px-6 md:px-10 border-2 border-dashed border-[#1e1f26] rounded-[48px] bg-[#0b0c10] mb-12">
                 <div className="w-20 h-20 bg-[#24242a] rounded-full flex items-center justify-center mb-8 shadow-xl">
                   <Eye className="w-10 h-10 text-[#8d8d99]" />
                 </div>
@@ -2307,7 +2347,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                 </button>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-12">
+              <div className="grid grid-cols-1 md:grid-cols-2 sm:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
                 {currentInfluencers.map((inf) => (
                   <div
                     key={inf.id}
@@ -2327,7 +2367,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                   </div>
                 ))}
                 {activeTab === 'meus-avatares' && (
-                  <div className="col-span-full py-20 flex flex-col items-center justify-center border-2 border-dashed border-[#1e1f26] rounded-[48px] bg-[#0b0c10]/20">
+                  <div className="col-span-full py-12 md:py-20 flex flex-col items-center justify-center border-2 border-dashed border-[#1e1f26] rounded-[48px] bg-[#0b0c10]/20">
                     <div className="w-20 h-20 bg-[#14151a] rounded-full flex items-center justify-center mb-6 border border-[#1e1f26]">
                       <Plus className="w-10 h-10 text-[#5b5b7b]" />
                     </div>
@@ -2359,8 +2399,8 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
 
       {/* Step 2: Produto */}
       {step === 2 && (
-        <div className="w-full max-w-[1080px] bg-[#14151a] border border-[#1e1f26]/60 rounded-[56px] p-12 shadow-2xl flex flex-col animate-in fade-in slide-in-from-right duration-500">
-          <div className="flex items-center justify-between mb-8">
+        <div className="w-full max-w-[1080px] bg-[#14151a] border border-[#1e1f26]/60 rounded-[56px] p-6 md:p-12 shadow-2xl flex flex-col animate-in fade-in slide-in-from-right duration-500">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0 mb-6 md:mb-8">
             <h2 className="text-2xl font-black text-white tracking-tight">Selecione o Produto Viral</h2>
             <button onClick={() => setStep(1)} className="text-[#5b5b7b] hover:text-white text-sm font-black flex items-center gap-2 transition-all">
               Voltar
@@ -2370,7 +2410,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
           <p className="text-[#5b5b7b] text-sm font-black mb-10 tracking-tight">Escolha um dos produtos em alta:</p>
 
           <div className="max-h-[500px] overflow-y-auto custom-scrollbar pr-4 -mr-4 mb-12">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 md:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {viralStepProducts.map((p) => (
                 <div
                   key={p.id}
@@ -2417,7 +2457,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
 
       {/* Step 3: Configuração Visual */}
       {step === 3 && (
-        <div className="w-full max-w-[1080px] bg-[#14151a] border border-[#1e1f26]/60 rounded-[56px] p-12 shadow-2xl flex flex-col animate-in fade-in slide-in-from-right duration-500">
+        <div className="w-full max-w-[1080px] bg-[#14151a] border border-[#1e1f26]/60 rounded-[56px] p-6 md:p-12 shadow-2xl flex flex-col animate-in fade-in slide-in-from-right duration-500">
           <div className="flex items-center justify-between mb-10">
             <h2 className="text-2xl font-black text-white tracking-tight">Configuração do Vídeo</h2>
             <button onClick={() => setStep(3)} className="text-[#5b5b7b] hover:text-white text-sm font-black flex items-center gap-2 transition-all">
@@ -2427,7 +2467,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
 
           <div className="mb-10">
             <h3 className="text-[11px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] mb-5">CENÁRIO</h3>
-            <div className="grid grid-cols-4 sm:grid-cols-7 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 sm:grid-cols-7 gap-4">
               {scenarios.map((scen) => (
                 <button
                   key={scen.id}
@@ -2449,7 +2489,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
 
           <div className="mb-10">
             <h3 className="text-[11px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] mb-5">MODELO DO VÍDEO</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {videoModels.map((model) => (
                 <button
                   key={model.id}
@@ -2516,15 +2556,15 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
 
       {/* Step 4: Roteiro & Voz */}
       {step === 4 && (
-        <div className="w-full max-w-[1080px] bg-[#14151a] border border-[#1e1f26]/60 rounded-[56px] p-12 shadow-2xl flex flex-col animate-in fade-in slide-in-from-right duration-500">
-          <div className="flex items-center justify-between mb-12">
+        <div className="w-full max-w-[1080px] bg-[#14151a] border border-[#1e1f26]/60 rounded-[56px] p-6 md:p-12 shadow-2xl flex flex-col animate-in fade-in slide-in-from-right duration-500">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-0 mb-8 md:mb-12">
             <h2 className="text-2xl font-black text-white tracking-tight">Áudio & Roteiro</h2>
             <button onClick={() => setStep(3)} className="text-[#5b5b7b] hover:text-white text-sm font-black flex items-center gap-2 transition-all">
               Voltar
             </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 mb-12">
             <div>
               <h3 className="text-[11px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] mb-5">VOZ DO AVATAR</h3>
               <div className="bg-[#0b0c10] p-1 rounded-2xl flex items-center border border-[#1e1f26]">
@@ -2560,7 +2600,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
           </div>
 
           <div className="mb-12">
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0 mb-6 md:mb-8">
               <h3 className="text-[11px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">ROTEIRO (COPY)</h3>
               <button className="flex items-center gap-2 px-5 py-2.5 bg-[#3B82F6]/10 border border-[#3B82F6]/20 text-[#3B82F6] rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-[#3B82F6]/20 transition-all">
                 <Wand2 className="w-3.5 h-3.5" />
@@ -2582,7 +2622,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                       setTakes(newTakes);
                     }}
                     placeholder={`Digite o roteiro do take ${index + 1} aqui...`}
-                    className="w-full h-32 bg-[#0b0c10] border-2 border-[#1e1f26] rounded-[24px] p-8 text-sm text-white placeholder:text-[#44444f] focus:outline-none focus:border-[#3B82F6]/50 transition-all resize-none custom-scrollbar"
+                    className="w-full h-32 bg-[#0b0c10] border-2 border-[#1e1f26] rounded-[24px] p-5 md:p-8 text-sm text-white placeholder:text-[#44444f] focus:outline-none focus:border-[#3B82F6]/50 transition-all resize-none custom-scrollbar"
                   />
                   <div className="absolute bottom-4 right-6 text-[9px] font-black text-[#44444f] uppercase tracking-widest tabular-nums">
                     {take.length} / 200
@@ -2625,9 +2665,9 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.35fr] gap-8 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.35fr] gap-5 md:gap-8 w-full">
             {/* Left side: Reference Images */}
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-5 md:gap-8">
               <div className="relative rounded-[32px] overflow-hidden group border border-white/5 shadow-[0_30px_60px_rgba(0,0,0,0.6)]">
                 <img
                   src={allInfluencers.find(i => i.id === selectedInfluencer)?.image || allInfluencers[0].image}
@@ -2647,14 +2687,14 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                   </button>
                 </div>
 
-                <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black via-black/40 to-transparent">
+                <div className="absolute bottom-0 left-0 right-0 p-5 md:p-8 bg-gradient-to-t from-black via-black/40 to-transparent">
                   <span className="text-[10px] font-black text-white/40 uppercase tracking-[0.25em] block mb-1">ATOR PRINCIPAL</span>
                   <span className="text-xl font-black text-white tracking-tight leading-none">{allInfluencers.find(i => i.id === selectedInfluencer)?.name || 'Ana'}</span>
                 </div>
               </div>
 
               <div className="relative rounded-[32px] overflow-hidden group border border-[#1e1f26] shadow-[0_30px_60px_rgba(0,0,0,0.6)] bg-[#14151a] flex flex-col min-h-[340px]">
-                <div className="flex-1 flex items-center justify-center p-12 relative">
+                <div className="flex-1 flex items-center justify-center p-6 md:p-12 relative">
                   <img
                     src={viralStepProducts.find(p => p.id === selectedProduct)?.image || viralStepProducts[0].image}
                     className="max-w-[180px] aspect-square object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)] opacity-90 group-hover:opacity-100 transition-all duration-700"
@@ -2673,7 +2713,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                     </button>
                   </div>
                 </div>
-                <div className="p-8 pt-0">
+                <div className="p-5 md:p-8 pt-0">
                   <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.25em] block mb-1">PRODUTO FOCO</span>
                   <span className="text-xl font-black text-white tracking-tight leading-none">High Res Cutout</span>
                 </div>
@@ -2681,7 +2721,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
             </div>
 
             {/* Right side: Station / Checklist */}
-            <div className="bg-[#14151a] border border-[#1e1f26] rounded-[48px] p-10 lg:p-14 shadow-2xl relative">
+            <div className="bg-[#14151a] border border-[#1e1f26] rounded-[48px] p-6 md:p-10 lg:p-14 shadow-2xl relative">
               <div className="flex items-center gap-3 mb-10">
                 <Stars className="w-5 h-5 text-[#3B82F6] fill-[#3B82F6]" />
                 <h3 className="text-[22px] font-black text-white tracking-tighter uppercase tracking-[0.1em]">Estação de Trabalho</h3>
@@ -2691,7 +2731,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                 <div className="absolute left-[13px] top-6 bottom-6 w-[2px] bg-[#1c1c21]"></div>
 
                 {/* STEP 1 */}
-                <div className="flex items-start gap-8 relative z-10">
+                <div className="flex items-start gap-5 md:gap-8 relative z-10">
                   <div className="w-7 h-7 bg-[#1c1c21] border border-[#1e1f26] rounded-full flex items-center justify-center text-[11px] font-black text-[#44444f] shadow-lg">1</div>
                   <div className="flex-1">
                     <h4 className="text-[19px] font-black text-[#e1e1e6] mb-1.5 tracking-tight">Salvar Referências Visuais</h4>
@@ -2700,7 +2740,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                 </div>
 
                 {/* STEP 2 */}
-                <div className="flex items-start gap-8 relative z-10">
+                <div className="flex items-start gap-5 md:gap-8 relative z-10">
                   <div className="w-7 h-7 bg-[#1c1c21] border border-[#1e1f26] rounded-full flex items-center justify-center text-[11px] font-black text-[#44444f] shadow-lg">2</div>
                   <div className="flex-1">
                     <h4 className="text-[19px] font-black text-[#e1e1e6] mb-1.5 tracking-tight">Roteiro de Direção (Veo 3)</h4>
@@ -2728,7 +2768,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                 </div>
 
                 {/* STEP 3 */}
-                <div className="flex items-start gap-8 relative z-10">
+                <div className="flex items-start gap-5 md:gap-8 relative z-10">
                   <div className="w-7 h-7 bg-[#1c1c21] border border-[#1e1f26] rounded-full flex items-center justify-center text-[11px] font-black text-[#44444f] shadow-lg">3</div>
                   <div className="flex-1 pt-1">
                     <h4 className="text-[19px] font-black text-[#e1e1e6] mb-8 tracking-tight">Finalizar no Veo 3</h4>
@@ -2805,7 +2845,7 @@ const PrevisibilidadeReceitaView: React.FC = () => {
   ];
 
   return (
-    <main className="max-w-[1400px] mx-auto px-6 py-12 flex flex-col gap-10">
+    <main className="max-w-[1400px] mx-auto px-6 py-12 flex flex-col gap-6 md:gap-10">
       <div>
         <h1 className="text-[34px] font-black text-white tracking-tighter mb-2">Previsibilidade de Receita</h1>
         <p className="text-[#8d8d99] text-base font-medium opacity-80">
@@ -2813,10 +2853,10 @@ const PrevisibilidadeReceitaView: React.FC = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_2.4fr] gap-8 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_2.4fr] gap-5 md:gap-8 items-start">
         {/* Left Column: Operation Config */}
-        <div className="flex flex-col gap-8">
-          <div className="bg-[#14151a] border border-[#1e1f26] rounded-[40px] p-10 flex flex-col gap-12 shadow-2xl">
+        <div className="flex flex-col gap-5 md:gap-8">
+          <div className="bg-[#14151a] border border-[#1e1f26] rounded-[40px] p-6 md:p-10 flex flex-col gap-6 md:gap-12 shadow-2xl">
             <div className="flex items-center gap-4">
               <div className="w-11 h-11 bg-[#14151a] border border-[#1e1f26] rounded-2xl flex items-center justify-center">
                 <Settings className="w-5 h-5 text-[#3B82F6]" />
@@ -2824,7 +2864,7 @@ const PrevisibilidadeReceitaView: React.FC = () => {
               <h3 className="text-[17px] font-black text-white tracking-tight">Configuração da Operação</h3>
             </div>
 
-            <div className="flex flex-col gap-10">
+            <div className="flex flex-col gap-6 md:gap-10">
               <OperationSlider
                 icon={<Users className="w-4 h-4" />}
                 label="Contas TikTok"
@@ -2875,7 +2915,7 @@ const PrevisibilidadeReceitaView: React.FC = () => {
           </div>
 
           {/* Bottom Summary Tags */}
-          <div className="bg-[#14151a] border border-[#1e1f26] rounded-[32px] p-8 grid grid-cols-3 gap-4 shadow-xl">
+          <div className="bg-[#14151a] border border-[#1e1f26] rounded-[32px] p-5 md:p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 shadow-xl">
             <div className="flex flex-col items-center">
               <span className="text-[#7f5af0]xl font-black text-white leading-none">{accounts}</span>
               <span className="text-[9px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] mt-2">CONTAS</span>
@@ -2892,17 +2932,17 @@ const PrevisibilidadeReceitaView: React.FC = () => {
         </div>
 
         {/* Right Column: Projections */}
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-5 md:gap-8">
           <div className="flex items-center gap-4">
             <TrendingUp className="w-6 h-6 text-[#3B82F6]" />
             <h3 className="text-xs font-black text-[#5b5b7b] uppercase tracking-[0.4em]">PROJEÇÕES DE FATURAMENTO MENSAL</h3>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {projections.map((p) => (
               <div
                 key={p.id}
-                className={`relative bg-[#14151a] border border-[#1e1f26] rounded-[48px] p-10 flex flex-col h-[740px] transition-all duration-500 hover:scale-[1.02] shadow-2xl group ${p.isRecommended ? 'ring-2 ring-[#3B82F6]/30 shadow-[#3B82F6]/10' : ''}`}
+                className={`relative bg-[#14151a] border border-[#1e1f26] rounded-[48px] p-6 md:p-10 flex flex-col h-[740px] transition-all duration-500 hover:scale-[1.02] shadow-2xl group ${p.isRecommended ? 'ring-2 ring-[#3B82F6]/30 shadow-[#3B82F6]/10' : ''}`}
               >
                 <div className="flex items-center gap-3 mb-10">
                   <div className="w-2.5 h-2.5 rounded-full bg-current opacity-40 group-hover:opacity-100 transition-opacity" style={{ color: p.id === 'conservador' ? '#5b5b7b' : p.id === 'moderado' ? '#3B82F6' : '#ff8c00' }}></div>
@@ -3006,7 +3046,7 @@ const HacksViraisView: React.FC<{ hacks: HackItem[], onSelectHack: (id: string) 
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
         {hacks.map((hack) => (
           <div
             key={hack.id}
@@ -3083,7 +3123,7 @@ const HacksViraisDetalheView: React.FC<{ hack: HackItem, onBack: () => void }> =
   const exampleImages = hack.exampleVideos || defaultImages;
 
   return (
-    <main className="max-w-[1400px] mx-auto px-6 py-10 flex flex-col gap-10">
+    <main className="max-w-[1400px] mx-auto px-6 py-6 md:py-10 flex flex-col gap-6 md:gap-10">
       {/* Upper Navigation */}
       <button
         onClick={onBack}
@@ -3095,7 +3135,7 @@ const HacksViraisDetalheView: React.FC<{ hack: HackItem, onBack: () => void }> =
 
       {/* Main Banner */}
       <div
-        className="relative border border-white/5 rounded-[40px] p-12 lg:p-16 overflow-hidden flex flex-col md:flex-row items-center justify-between gap-12 shadow-2xl"
+        className="relative border border-white/5 rounded-[40px] p-6 md:p-12 lg:p-16 overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12 shadow-2xl"
         style={{ backgroundColor: hack.bannerColor }}
       >
         {/* Decoration Gradient */}
@@ -3106,9 +3146,9 @@ const HacksViraisDetalheView: React.FC<{ hack: HackItem, onBack: () => void }> =
           </div>
         </div>
 
-        <div className="flex items-center gap-12 z-10">
+        <div className="flex items-center gap-6 md:gap-12 z-10">
           <div className="w-24 h-24 bg-[#0b0c10]/40 backdrop-blur-xl rounded-[32px] flex items-center justify-center border border-white/10 shadow-2xl">
-            <span className="text-4xl">{hack.icon}</span>
+            <span className="text-2xl md:text-4xl">{hack.icon}</span>
           </div>
           <div className="flex flex-col text-center md:text-left">
             <h1 className="text-[44px] font-black text-white tracking-tighter mb-4 leading-none">{hack.title}</h1>
@@ -3134,7 +3174,7 @@ const HacksViraisDetalheView: React.FC<{ hack: HackItem, onBack: () => void }> =
           <h2 className="text-2xl font-black text-white tracking-tight">Exemplos de Vídeos</h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-8">
           {exampleImages.map((img, idx) => (
             <div key={idx} className="flex flex-col gap-4 group">
               <div className="relative aspect-[9/16] rounded-[48px] overflow-hidden bg-[#0b0c10] shadow-2xl cursor-pointer">
@@ -3240,7 +3280,7 @@ const HacksViraisDetalheView: React.FC<{ hack: HackItem, onBack: () => void }> =
 // --- PASSOS INICIAIS VIEW ---
 const PassosIniciaisView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   return (
-    <main className="max-w-[1400px] mx-auto px-6 py-16">
+    <main className="max-w-[1400px] mx-auto px-6 py-10 md:py-16">
       {/* Back Button */}
       <button
         onClick={onBack}
@@ -3258,7 +3298,7 @@ const PassosIniciaisView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
           Tudo o que você precisa saber para começar do jeito certo.
         </p>
 
-        <div className="flex flex-col gap-12">
+        <div className="flex flex-col gap-6 md:gap-12">
           {/* Section 1 */}
           <section className="flex flex-col gap-4">
             <h2 className="text-xl font-black text-white tracking-tight uppercase">BEM-VINDO AO TRENDFY APP</h2>
@@ -3309,7 +3349,7 @@ const PassosIniciaisView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
 // --- COMO SE AFILIAR VIEW ---
 const ComoSeAfiliarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   return (
-    <main className="max-w-[1400px] mx-auto px-6 py-16">
+    <main className="max-w-[1400px] mx-auto px-6 py-10 md:py-16">
       {/* Back Button */}
       <button
         onClick={onBack}
@@ -3327,7 +3367,7 @@ const ComoSeAfiliarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
           Passo a passo detalhado para sua primeira afiliação.
         </p>
 
-        <div className="flex flex-col gap-12">
+        <div className="flex flex-col gap-6 md:gap-12">
           {/* Section 1 */}
           <section className="flex flex-col gap-4">
             <h2 className="text-xl font-black text-white tracking-tight uppercase">REQUISITOS PARA AFILIAÇÃO</h2>
@@ -3391,7 +3431,7 @@ const ComoSeAfiliarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
 // --- REGRAS E RESTRICOES VIEW ---
 const RegrasERestricoesView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   return (
-    <main className="max-w-[1400px] mx-auto px-6 py-16">
+    <main className="max-w-[1400px] mx-auto px-6 py-10 md:py-16">
       {/* Back Button */}
       <button
         onClick={onBack}
@@ -3409,7 +3449,7 @@ const RegrasERestricoesView: React.FC<{ onBack: () => void }> = ({ onBack }) => 
           Evite bloqueios e penalidades conhecendo as diretrizes.
         </p>
 
-        <div className="flex flex-col gap-12">
+        <div className="flex flex-col gap-6 md:gap-12">
           {/* Section 1 */}
           <section className="flex flex-col gap-4">
             <h2 className="text-xl font-black text-white tracking-tight uppercase">DIRETRIZES DE CONTEÚDO</h2>
@@ -3462,7 +3502,7 @@ const RegrasERestricoesView: React.FC<{ onBack: () => void }> = ({ onBack }) => 
 // --- COMO CRIAR AVATAR IA VIEW ---
 const ComoCriarAvatarIAView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   return (
-    <main className="max-w-[1400px] mx-auto px-6 py-16">
+    <main className="max-w-[1400px] mx-auto px-6 py-10 md:py-16">
       {/* Back Button */}
       <button
         onClick={onBack}
@@ -3480,7 +3520,7 @@ const ComoCriarAvatarIAView: React.FC<{ onBack: () => void }> = ({ onBack }) => 
           Use inteligência artificial para criar apresentadores humanos e realistas.
         </p>
 
-        <div className="flex flex-col gap-12">
+        <div className="flex flex-col gap-6 md:gap-12">
           {/* Section 1 */}
           <section className="flex flex-col gap-4">
             <h2 className="text-xl font-black text-white tracking-tight uppercase">UTILIZANDO A FERRAMENTA DE AVATAR</h2>
@@ -3524,7 +3564,7 @@ const ComoCriarAvatarIAView: React.FC<{ onBack: () => void }> = ({ onBack }) => 
 // --- COMO CRIAR VIDEOS UGC VIEW ---
 const ComoCriarVideosUGCView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   return (
-    <main className="max-w-[1400px] mx-auto px-6 py-16">
+    <main className="max-w-[1400px] mx-auto px-6 py-10 md:py-16">
       {/* Back Button */}
       <button
         onClick={onBack}
@@ -3542,7 +3582,7 @@ const ComoCriarVideosUGCView: React.FC<{ onBack: () => void }> = ({ onBack }) =>
           Aprenda a criar roteiros e vídeos que vendem usando nossa ferramenta.
         </p>
 
-        <div className="flex flex-col gap-12">
+        <div className="flex flex-col gap-6 md:gap-12">
           {/* Section 1 */}
           <section className="flex flex-col gap-4">
             <h2 className="text-xl font-black text-white tracking-tight uppercase">CRIAÇÃO DE VÍDEOS UGC</h2>
@@ -3593,7 +3633,7 @@ const ComoCriarVideosUGCView: React.FC<{ onBack: () => void }> = ({ onBack }) =>
 // --- CREATOR ACADEMY VIEW (CLONED FROM ATTACHED IMAGES) ---
 const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = ({ onSelectModule }) => {
   return (
-    <main className="max-w-[1400px] mx-auto px-6 py-16 flex flex-col items-center">
+    <main className="max-w-[1400px] mx-auto px-6 py-10 md:py-16 flex flex-col items-center">
       {/* Title Section */}
       <div className="text-center mb-16">
         <h1 className="text-[48px] font-black text-white tracking-tighter mb-4 leading-none uppercase">Creator Academy</h1>
@@ -3603,7 +3643,7 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
       </div>
 
       {/* Hero Card */}
-      <div className="w-full relative bg-gradient-to-br from-[#16161A] via-[#1F2028] to-[#111114] border border-white/5 rounded-[48px] p-12 lg:p-20 overflow-hidden mb-24 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-16">
+      <div className="w-full relative bg-gradient-to-br from-[#16161A] via-[#1F2028] to-[#111114] border border-white/5 rounded-[48px] p-6 md:p-12 lg:p-20 overflow-hidden mb-24 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-16">
         {/* Decoration */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#3B82F6]/5 to-transparent pointer-events-none"></div>
         <div className="absolute right-[-100px] top-[-50px] w-[600px] h-[600px] bg-[#3B82F6]/10 blur-[150px] rounded-full pointer-events-none"></div>
@@ -3623,7 +3663,7 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
             Explore as diretrizes oficiais e os atalhos validados para construir um ecossistema de vendas lucrativo.
           </p>
 
-          <button className="bg-white/10 hover:bg-white/20 border border-white/10 text-white px-10 py-5 rounded-2xl text-base font-black flex items-center gap-3 transition-all backdrop-blur-xl shadow-2xl">
+          <button className="bg-white/10 hover:bg-white/20 border border-white/10 text-white px-6 md:px-10 py-5 rounded-2xl text-base font-black flex items-center gap-3 transition-all backdrop-blur-xl shadow-2xl">
             COMEÇAR JORNADA
             <ArrowRight className="w-5 h-5 text-[#3B82F6]" />
           </button>
@@ -3649,7 +3689,7 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
           <div className="flex-1 h-[1px] bg-white/5 ml-4"></div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
           <AcademyCard
             title="Passos iniciais"
             description="Tudo o que você precisa saber para começar do jeito certo."
@@ -3676,7 +3716,7 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
           <div className="flex-1 h-[1px] bg-white/5 ml-4"></div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
           <AcademyCard
             title="Como criar avatar with IA"
             description="Use inteligência artificial para criar apresentadores humanos e realistas."
@@ -3692,7 +3732,7 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
       </div>
 
       {/* Support Section */}
-      <div className="w-full relative bg-[#1c1c21]/50 border border-white/5 rounded-[48px] p-12 lg:p-20 overflow-hidden shadow-2xl flex flex-col md:flex-row items-center justify-between gap-12">
+      <div className="w-full relative bg-[#1c1c21]/50 border border-white/5 rounded-[48px] p-6 md:p-12 lg:p-20 overflow-hidden shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12">
         <div className="flex flex-col items-center md:items-start text-center md:text-left z-10">
           <span className="px-5 py-2 bg-white/5 border border-white/10 rounded-full text-[9px] font-black text-white/40 uppercase tracking-[0.3em] mb-8">Canal Oferecido</span>
           <h3 className="text-[52px] font-black text-white tracking-tighter leading-[0.9] mb-8">
@@ -3705,7 +3745,7 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
         </div>
 
         <div className="flex flex-col items-center md:items-end gap-6 z-10">
-          <button className="bg-[#3B82F6] hover:bg-[#4338ca] text-white px-10 py-5 rounded-2xl text-base font-black flex items-center gap-3 transition-all shadow-[0_20px_50px_rgba(81,66,245,0.3)] hover:scale-[1.03]">
+          <button className="bg-[#3B82F6] hover:bg-[#4338ca] text-white px-6 md:px-10 py-5 rounded-2xl text-base font-black flex items-center gap-3 transition-all shadow-[0_20px_50px_rgba(81,66,245,0.3)] hover:scale-[1.03]">
             <Mail className="w-6 h-6" />
             Contatar Suporte
           </button>
@@ -3721,9 +3761,9 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
 const AcademyCard: React.FC<{ title: string, description: string, isHighlighted?: boolean, onClick?: () => void }> = ({ title, description, isHighlighted, onClick }) => (
   <div
     onClick={onClick}
-    className={`bg-[#14151a] border rounded-[40px] p-10 flex flex-col justify-between group hover:border-[#3B82F6]/30 transition-all shadow-2xl h-[340px] cursor-pointer ${isHighlighted ? 'border-[#3B82F6]/20 ring-1 ring-[#3B82F6]/10' : 'border-white/5'}`}
+    className={`bg-[#14151a] border rounded-[40px] p-6 md:p-10 flex flex-col justify-between group hover:border-[#3B82F6]/30 transition-all shadow-2xl h-[340px] cursor-pointer ${isHighlighted ? 'border-[#3B82F6]/20 ring-1 ring-[#3B82F6]/10' : 'border-white/5'}`}
   >
-    <div className="flex flex-col items-start gap-8">
+    <div className="flex flex-col items-start gap-5 md:gap-8">
       <div className={`w-14 h-14 rounded-2xl flex items-center justify-center border border-white/5 transition-all shadow-xl ${isHighlighted ? 'bg-[#3B82F6] text-white' : 'bg-[#24242a] text-[#3B82F6]'}`}>
         <FileText className="w-6 h-6" />
       </div>
@@ -3764,7 +3804,7 @@ const GaleriaAvataresView: React.FC<{ onGoToMyAvatars: () => void; onCreateNew: 
 
   return (
     <main className="max-w-[1400px] mx-auto px-6 py-12 relative">
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-8">
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-5 md:gap-8">
         <div>
           <h1 className="text-[44px] font-black text-[#3B82F6] tracking-tighter mb-4 leading-none">
             Galeria de Avatares
@@ -3793,7 +3833,7 @@ const GaleriaAvataresView: React.FC<{ onGoToMyAvatars: () => void; onCreateNew: 
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 md:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {avatars.map((avatar) => (
           <div
             key={avatar.id}
@@ -3845,7 +3885,7 @@ const GaleriaAvataresView: React.FC<{ onGoToMyAvatars: () => void; onCreateNew: 
             </div>
 
             {/* Right side: Content */}
-            <div className="flex-1 p-10 md:p-14 flex flex-col justify-between relative bg-[#14151a]">
+            <div className="flex-1 p-6 md:p-10 md:p-14 flex flex-col justify-between relative bg-[#14151a]">
               {/* Close Button */}
               <button
                 onClick={() => setSelectedAvatar(null)}
@@ -4155,7 +4195,7 @@ const GaleriaPromptsView: React.FC = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {filteredPrompts.map((item) => (
           <div key={item.id} className="bg-[#14151a] border border-[#1e1f26] rounded-[32px] overflow-hidden flex flex-col group transition-all hover:border-[#3B82F6]/30">
             <div className="relative aspect-[3/4.5] overflow-hidden">
@@ -4226,7 +4266,7 @@ const GaleriaPromptsView: React.FC = () => {
 // --- MEUS AVATARES VIEW ---
 const MeusAvataresView: React.FC<{ onBack: () => void; onCreateNew: () => void }> = ({ onBack, onCreateNew }) => {
   return (
-    <main className="max-w-[1400px] mx-auto px-6 py-10 flex flex-col min-h-[70vh]">
+    <main className="max-w-[1400px] mx-auto px-6 py-6 md:py-10 flex flex-col min-h-[70vh]">
       {/* Upper Navigation and Header Row */}
       <div className="flex flex-col gap-6 mb-12">
         <button
@@ -4258,7 +4298,7 @@ const MeusAvataresView: React.FC<{ onBack: () => void; onCreateNew: () => void }
       </div>
 
       {/* Empty State Section - Perfectly Cloned from Screenshot */}
-      <div className="flex-1 flex flex-col items-center justify-center py-20">
+      <div className="flex-1 flex flex-col items-center justify-center py-12 md:py-20">
         <div className="w-[88px] h-[88px] bg-[#14151a] border border-[#1e1f26] rounded-full flex items-center justify-center mb-10 shadow-2xl">
           <User className="w-10 h-10 text-[#5b5b7b]" />
         </div>
@@ -4273,7 +4313,7 @@ const MeusAvataresView: React.FC<{ onBack: () => void; onCreateNew: () => void }
 
         <button
           onClick={onCreateNew}
-          className="px-10 py-5 bg-[#3B82F6] hover:bg-[#4338ca] rounded-[24px] flex items-center gap-3 text-[15px] font-black text-white transition-all shadow-[0_15px_40px_rgba(81,66,245,0.25)] hover:scale-[1.03] active:scale-[0.98]"
+          className="px-6 md:px-10 py-5 bg-[#3B82F6] hover:bg-[#4338ca] rounded-[24px] flex items-center gap-3 text-[15px] font-black text-white transition-all shadow-[0_15px_40px_rgba(81,66,245,0.25)] hover:scale-[1.03] active:scale-[0.98]"
         >
           <Sparkles className="w-5 h-5" />
           Criar Primeiro Avatar
@@ -4344,7 +4384,7 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   const isFormComplete = name.trim().length > 0;
 
   return (
-    <main className="max-w-[1400px] mx-auto px-6 py-10 flex flex-col min-h-screen">
+    <main className="max-w-[1400px] mx-auto px-6 py-6 md:py-10 flex flex-col min-h-screen">
       {/* Upper Navigation */}
       <button
         onClick={onBack}
@@ -4354,7 +4394,7 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
         Voltar para Galeria
       </button>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-12 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-6 md:gap-12 items-start">
         {/* Left Column: Form */}
         <div className="flex flex-col gap-14">
           <div>
@@ -4368,7 +4408,7 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
           </div>
 
           {/* Section 1: IDENTIDADE */}
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-5 md:gap-8">
             <div className="flex items-center gap-4">
               <div className="w-6 h-6 bg-[#24242a] rounded-full flex items-center justify-center text-[11px] font-black text-[#8d8d99]">1</div>
               <h3 className="text-xs font-black text-[#8d8d99] uppercase tracking-[0.3em]">IDENTIDADE</h3>
@@ -4422,13 +4462,13 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
           </div>
 
           {/* Section 2: DNA & TRAÇOS */}
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-5 md:gap-8">
             <div className="flex items-center gap-4">
               <div className="w-6 h-6 bg-[#24242a] rounded-full flex items-center justify-center text-[11px] font-black text-[#8d8d99]">2</div>
               <h3 className="text-xs font-black text-[#8d8d99] uppercase tracking-[0.3em]">DNA & TRAÇOS</h3>
             </div>
 
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-5 md:gap-8">
               <div className="flex flex-col gap-4">
                 <label className="text-[11px] font-black text-[#8d8d99] uppercase tracking-widest">Etnia</label>
                 <div className="flex flex-wrap gap-3">
@@ -4497,13 +4537,13 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
           </div>
 
           {/* Section 3: CABELO & ESTILO */}
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-5 md:gap-8">
             <div className="flex items-center gap-4">
               <div className="w-6 h-6 bg-[#24242a] rounded-full flex items-center justify-center text-[11px] font-black text-[#8d8d99]">3</div>
               <h3 className="text-xs font-black text-[#8d8d99] uppercase tracking-[0.3em]">CABELO & ESTILO</h3>
             </div>
 
-            <div className="flex flex-col gap-8">
+            <div className="flex flex-col gap-5 md:gap-8">
               <div className="flex flex-col gap-4">
                 <label className="text-[11px] font-black text-[#8d8d99] uppercase tracking-widest">Cor</label>
                 <div className="flex flex-wrap gap-3">
@@ -4538,19 +4578,19 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
           </div>
 
           {/* Section 4: ARQUÉTIPO / VIBE */}
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-5 md:gap-8">
             <div className="flex items-center gap-4">
               <div className="w-6 h-6 bg-[#24242a] rounded-full flex items-center justify-center text-[11px] font-black text-[#8d8d99]">4</div>
               <h3 className="text-xs font-black text-[#8d8d99] uppercase tracking-[0.3em]">ARQUÉTIPO / VIBE</h3>
             </div>
 
-            <div className="flex flex-col gap-8">
-              <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col gap-5 md:gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {vibes.map(v => (
                   <button
                     key={v.id}
                     onClick={() => setVibe(v.id)}
-                    className={`p-10 rounded-[32px] border-2 transition-all flex flex-col items-center gap-4 text-center ${vibe === v.id ? 'bg-[#1F2028] border-[#3B82F6]/40' : 'bg-[#14151a] border-[#1e1f26] hover:border-white/5'}`}
+                    className={`p-6 md:p-10 rounded-[32px] border-2 transition-all flex flex-col items-center gap-4 text-center ${vibe === v.id ? 'bg-[#1F2028] border-[#3B82F6]/40' : 'bg-[#14151a] border-[#1e1f26] hover:border-white/5'}`}
                   >
                     <div className="mb-2">{v.icon}</div>
                     <span className={`text-[15px] font-black ${vibe === v.id ? 'text-white' : 'text-[#8d8d99]'}`}>{v.label}</span>
@@ -4580,10 +4620,10 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
         </div>
 
         {/* Right Column: Preview / Workstation */}
-        <div className="sticky top-32 flex flex-col gap-8">
+        <div className="sticky top-32 flex flex-col gap-5 md:gap-8">
           {/* Preview Card */}
           <div className="bg-[#14151a] border border-[#1e1f26] rounded-[48px] overflow-hidden shadow-2xl">
-            <div className="aspect-[3/3.5] bg-[#0b0c10]/40 flex flex-col items-center justify-center p-12 text-center gap-6 border-b border-[#1e1f26]">
+            <div className="aspect-[3/3.5] bg-[#0b0c10]/40 flex flex-col items-center justify-center p-6 md:p-12 text-center gap-6 border-b border-[#1e1f26]">
               <div className="w-20 h-20 bg-[#24242a] border border-[#1e1f26] rounded-full flex items-center justify-center shadow-inner">
                 <User className="w-8 h-8 text-[#5b5b7b]" />
               </div>
@@ -4591,7 +4631,7 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                 A foto do seu avatar aparecerá aqui após o Grok.
               </p>
             </div>
-            <div className="p-10">
+            <div className="p-6 md:p-10">
               <h4 className="text-2xl font-black text-white tracking-tight mb-2">
                 {name || 'Seu Avatar'}
               </h4>
@@ -4602,7 +4642,7 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
           </div>
 
           {/* Call to Action Container */}
-          <div className="bg-[#14151a] border border-[#1e1f26] rounded-[40px] p-10 flex flex-col items-center gap-8 shadow-2xl relative overflow-hidden group">
+          <div className="bg-[#14151a] border border-[#1e1f26] rounded-[40px] p-6 md:p-10 flex flex-col items-center gap-5 md:gap-8 shadow-2xl relative overflow-hidden group">
             {isFormComplete ? (
               <button
                 onClick={() => window.open('https://x.ai/', '_blank', 'noopener,noreferrer')}
@@ -4625,13 +4665,13 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             </p>
 
             {/* Checklist Section */}
-            <div className="w-full bg-[#14151a] border border-[#1e1f26] border-dashed rounded-[32px] p-8 mt-4 flex flex-col gap-10">
+            <div className="w-full bg-[#14151a] border border-[#1e1f26] border-dashed rounded-[32px] p-5 md:p-8 mt-4 flex flex-col gap-6 md:gap-10">
               <div className="flex items-center gap-3">
                 <MousePointer2 className="w-4 h-4 text-[#3B82F6]" />
                 <span className="text-[11px] font-black text-[#3B82F6] uppercase tracking-[0.2em]">PRÓXIMOS PASSOS NO GROK</span>
               </div>
 
-              <div className="flex flex-col gap-10">
+              <div className="flex flex-col gap-6 md:gap-10">
                 <div className="flex items-start gap-5">
                   <div className="w-7 h-7 bg-[#24242a] border border-[#1e1f26] rounded-full flex items-center justify-center text-[10px] font-black text-[#5b5b7b]">1</div>
                   <div className="flex-1">

@@ -277,14 +277,14 @@ const ConfiguracoesView: React.FC<ConfiguracoesViewProps> = ({ profileImage, onI
               />
             </div>
 
-            <button className="w-full bg-[#3B82F6] hover:bg-[#d81b60] text-white py-5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all shadow-lg shadow-[#3B82F6]/20 active:scale-[0.98]">
+            <button className="w-full bg-[#3B82F6] hover:bg-[#4338ca] text-white py-5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all shadow-lg shadow-[#3B82F6]/20 active:scale-[0.98]">
               {t('atualizarSenha')}
             </button>
           </div>
         </div>
 
         {/* Logout Button */}
-        <button className="w-full bg-[#1a1114] border border-[#3a1a21] text-[#3B82F6] py-5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all hover:bg-[#3B82F6]/5 flex items-center justify-center gap-3">
+        <button className="w-full bg-[#16161A] border border-[#2C2D38] text-[#3B82F6] py-5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all hover:bg-[#3B82F6]/5 flex items-center justify-center gap-3">
           <LogOut className="w-5 h-5" />
           {t('sair')}
         </button>
@@ -624,7 +624,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
 
               {/* Right Actions */}
               <div className="flex items-center gap-3">
-                <button className="flex items-center gap-2 px-4 py-2 border border-[#3a1a21] text-[#3B82F6] rounded-lg text-xs font-black hover:bg-[#3B82F6]/5 transition-all">
+                <button className="flex items-center gap-2 px-4 py-2 border border-[#2C2D38] text-[#3B82F6] rounded-lg text-xs font-black hover:bg-[#3B82F6]/5 transition-all">
                   <Download className="w-4 h-4" />
                   {t('baixarApp')}
                 </button>
@@ -802,7 +802,7 @@ const FooterSocialIcon: React.FC<{ icon: React.ReactNode }> = ({ icon }) => (
 // --- EXPLORE PAGE VIEW ---
 const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => void, onGoToProducts: () => void }> = ({ products, onGoToAcademy, onGoToProducts }) => (
   <main className="max-w-[1400px] mx-auto px-6 py-10">
-    <div className="bg-[#24171a] rounded-3xl p-10 border border-[#3a1a21]/30 flex items-center justify-between mb-12 relative overflow-hidden h-[160px] shadow-2xl">
+    <div className="bg-[#1F2028] rounded-3xl p-10 border border-[#2C2D38]/30 flex items-center justify-between mb-12 relative overflow-hidden h-[160px] shadow-2xl">
       <div className="absolute left-10 top-1/2 -translate-y-1/2 flex items-center gap-4">
         <div className="w-14 h-14 bg-[#14151a] rounded-2xl flex items-center justify-center relative shadow-2xl border border-white/5">
           <LayoutGrid className="w-7 h-7 text-[#5b5b7b]" />
@@ -840,7 +840,7 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
         placeholder="Pesquise produtos, lojas ou criadores..."
         className="w-full bg-[#14151a] border border-[#1e1f26] rounded-[32px] py-6 px-10 text-base text-[#e1e1e6] placeholder:text-[#5b5b7b] focus:outline-none focus:border-[#3B82F6]/50 transition-colors h-20 shadow-2xl"
       />
-      <button className="absolute right-4 top-1/2 -translate-y-1/2 p-4 bg-[#3B82F6] rounded-2xl hover:bg-[#d81b60] transition-all shadow-xl hover:scale-105 active:scale-95">
+      <button className="absolute right-4 top-1/2 -translate-y-1/2 p-4 bg-[#3B82F6] rounded-2xl hover:bg-[#4338ca] transition-all shadow-xl hover:scale-105 active:scale-95">
         <Search className="w-7 h-7 text-white" />
       </button>
     </div>
@@ -937,7 +937,7 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
 
 const FeatureExploreCard: React.FC<{ icon: React.ReactNode, title: string, description: string, onClick: () => void }> = ({ icon, title, description, onClick }) => (
   <div onClick={onClick} className="bg-[#14151a] border border-[#1e1f26] rounded-[32px] p-10 flex items-center gap-8 hover:border-[#3B82F6]/40 transition-all cursor-pointer group shadow-2xl">
-    <div className="w-16 h-16 bg-[#24171a] rounded-[24px] flex items-center justify-center border border-[#3a1a21] shadow-inner group-hover:scale-110 transition-transform duration-500">
+    <div className="w-16 h-16 bg-[#1F2028] rounded-[24px] flex items-center justify-center border border-[#2C2D38] shadow-inner group-hover:scale-110 transition-transform duration-500">
       {icon}
     </div>
     <div className="flex-1">
@@ -1008,7 +1008,7 @@ const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => (
 
         <div className="relative w-full h-[3px] bg-[#1c1c1f] rounded-full overflow-hidden">
           {/* The active marker matching the screenshot placement under 18:00-00:00 */}
-          <div className="absolute right-0 w-1/4 h-full bg-[#3B82F6] shadow-[0_0_15px_rgba(233,30,99,0.5)]"></div>
+          <div className="absolute right-0 w-1/4 h-full bg-[#3B82F6] shadow-[0_0_15px_rgba(81,66,245,0.5)]"></div>
         </div>
       </div>
     </div>
@@ -1108,7 +1108,7 @@ const ViralCard: React.FC<{ product: ProductViral }> = ({ product }) => {
 
         <button
           onClick={() => product.productUrl && window.open(product.productUrl, '_blank')}
-          className="w-full bg-[#3B82F6] hover:bg-[#d81b60] text-white py-5 rounded-[28px] font-black text-[17px] uppercase tracking-[0.02em] flex items-center justify-center gap-2.5 transition-all shadow-[0_15px_40px_rgba(233,30,99,0.3)] hover:scale-[1.02] active:scale-[0.98]"
+          className="w-full bg-[#3B82F6] hover:bg-[#4338ca] text-white py-5 rounded-[28px] font-black text-[17px] uppercase tracking-[0.02em] flex items-center justify-center gap-2.5 transition-all shadow-[0_15px_40px_rgba(81,66,245,0.3)] hover:scale-[1.02] active:scale-[0.98]"
         >
           <ExternalLink className="w-5.5 h-5.5 stroke-[3px]" /> Ver Produto
         </button>
@@ -1671,7 +1671,7 @@ const VideosView: React.FC = () => {
 
           <div className="relative w-full h-[3px] bg-[#1c1c1f] rounded-full overflow-hidden">
             {/* The active marker matching the screenshot placement under 18:00-00:00 */}
-            <div className="absolute right-0 w-1/4 h-full bg-[#3B82F6] shadow-[0_0_15px_rgba(233,30,99,0.5)]"></div>
+            <div className="absolute right-0 w-1/4 h-full bg-[#3B82F6] shadow-[0_0_15px_rgba(81,66,245,0.5)]"></div>
           </div>
         </div>
       </div>
@@ -1730,15 +1730,15 @@ const ScriptModal: React.FC<{ isOpen: boolean; onClose: () => void; video: Video
         <div className="p-8 flex flex-col gap-8">
           <div className="flex flex-col gap-6">
             <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-[#2d161d] flex items-center justify-center text-[#3B82F6] font-black text-sm shrink-0 mt-0.5">1</div>
+              <div className="w-8 h-8 rounded-full bg-[#1F2028] flex items-center justify-center text-[#3B82F6] font-black text-sm shrink-0 mt-0.5">1</div>
               <p className="text-[#8d8d99] text-[15px] font-medium leading-relaxed">Clique no botão abaixo para copiar o link do vídeo.</p>
             </div>
             <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-[#2d161d] flex items-center justify-center text-[#3B82F6] font-black text-sm shrink-0 mt-0.5">2</div>
+              <div className="w-8 h-8 rounded-full bg-[#1F2028] flex items-center justify-center text-[#3B82F6] font-black text-sm shrink-0 mt-0.5">2</div>
               <p className="text-[#8d8d99] text-[15px] font-medium leading-relaxed">O site Transcript24 abrirá em uma nova aba.</p>
             </div>
             <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-[#2d161d] flex items-center justify-center text-[#3B82F6] font-black text-sm shrink-0 mt-0.5">3</div>
+              <div className="w-8 h-8 rounded-full bg-[#1F2028] flex items-center justify-center text-[#3B82F6] font-black text-sm shrink-0 mt-0.5">3</div>
               <p className="text-[#8d8d99] text-[15px] font-medium leading-relaxed">Cole o link no site para gerar o script completo.</p>
             </div>
           </div>
@@ -1746,7 +1746,7 @@ const ScriptModal: React.FC<{ isOpen: boolean; onClose: () => void; video: Video
           <div className="flex flex-col gap-4">
             <button
               onClick={handleCopyAndOpen}
-              className="w-full bg-[#3B82F6] hover:bg-[#d81b60] text-white py-5 rounded-2xl flex items-center justify-center gap-3 transition-all font-black text-[15px] shadow-lg shadow-[#3B82F6]/20"
+              className="w-full bg-[#3B82F6] hover:bg-[#4338ca] text-white py-5 rounded-2xl flex items-center justify-center gap-3 transition-all font-black text-[15px] shadow-lg shadow-[#3B82F6]/20"
             >
               <Copy className="w-5 h-5" /> Copiar Link e Abrir Site
             </button>
@@ -1989,7 +1989,7 @@ const CreatorsView: React.FC = () => {
 
           <div className="relative w-full h-[3px] bg-[#1c1c1f] rounded-full overflow-hidden">
             {/* The active marker matching the screenshot placement under 12:00-18:00 */}
-            <div className="absolute left-1/2 -translate-x-1/2 w-1/4 h-full bg-[#3B82F6] shadow-[0_0_15px_rgba(233,30,99,0.5)]"></div>
+            <div className="absolute left-1/2 -translate-x-1/2 w-1/4 h-full bg-[#3B82F6] shadow-[0_0_15px_rgba(81,66,245,0.5)]"></div>
           </div>
         </div>
       </div>
@@ -2251,7 +2251,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
           {[1, 2, 3, 4].map((s) => (
             <div
               key={s}
-              className={`h-[3px] flex-1 rounded-full transition-all duration-500 ${step >= s ? 'bg-[#3B82F6] shadow-[0_0_12px_rgba(233,30,99,0.5)]' : 'bg-[#33333a]'}`}
+              className={`h-[3px] flex-1 rounded-full transition-all duration-500 ${step >= s ? 'bg-[#3B82F6] shadow-[0_0_12px_rgba(81,66,245,0.5)]' : 'bg-[#33333a]'}`}
             ></div>
           ))}
         </div>
@@ -2732,7 +2732,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                   <div className="w-7 h-7 bg-[#1c1c21] border border-[#1e1f26] rounded-full flex items-center justify-center text-[11px] font-black text-[#44444f] shadow-lg">3</div>
                   <div className="flex-1 pt-1">
                     <h4 className="text-[19px] font-black text-[#e1e1e6] mb-8 tracking-tight">Finalizar no Veo 3</h4>
-                    <button className="w-full py-5 bg-[#3B82F6] hover:bg-[#d81b60] text-white rounded-2xl font-black text-base flex items-center justify-center gap-3 shadow-[0_15px_40px_rgba(233,30,99,0.3)] transition-all hover:scale-[1.02] active:scale-[0.98]">
+                    <button className="w-full py-5 bg-[#3B82F6] hover:bg-[#4338ca] text-white rounded-2xl font-black text-base flex items-center justify-center gap-3 shadow-[0_15px_40px_rgba(81,66,245,0.3)] transition-all hover:scale-[1.02] active:scale-[0.98]">
                       <Video className="w-6 h-6 fill-current" />
                       Abrir Veo Studio
                       <ExternalLink className="w-5 h-5 opacity-40 ml-1" />
@@ -2909,7 +2909,7 @@ const PrevisibilidadeReceitaView: React.FC = () => {
                   <span className="text-base font-black text-white tracking-tight">{p.label}</span>
 
                   {p.isRecommended && (
-                    <span className="text-[10px] font-black text-[#6b0b23] uppercase tracking-[0.1em] ml-auto">RECOMMENDED</span>
+                    <span className="text-[10px] font-black text-[#1E1B4B] uppercase tracking-[0.1em] ml-auto">RECOMMENDED</span>
                   )}
 
                   <span className={`px-2.5 py-1 bg-[#14151a] border border-[#1e1f26] text-[9px] font-bold text-[#5b5b7b] rounded-lg ${p.isRecommended ? 'ml-3' : 'ml-auto'}`}>{p.views}</span>
@@ -3211,7 +3211,7 @@ const HacksViraisDetalheView: React.FC<{ hack: HackItem, onBack: () => void }> =
                   }}
                   className={`w-full py-4 rounded-2xl text-[13px] font-black flex items-center justify-center gap-3 transition-all shadow-lg active:scale-[0.98] ${copiedIdx === idx
                     ? 'bg-[#10b981] text-white'
-                    : 'bg-[#881337] hover:bg-[#9f1239] text-white'
+                    : 'bg-[#312E81] hover:bg-[#3730A3] text-white'
                     }`}
                 >
                   {copiedIdx === idx ? (
@@ -3603,7 +3603,7 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
       </div>
 
       {/* Hero Card */}
-      <div className="w-full relative bg-gradient-to-br from-[#1e0f12] via-[#24171a] to-[#111114] border border-white/5 rounded-[48px] p-12 lg:p-20 overflow-hidden mb-24 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-16">
+      <div className="w-full relative bg-gradient-to-br from-[#16161A] via-[#1F2028] to-[#111114] border border-white/5 rounded-[48px] p-12 lg:p-20 overflow-hidden mb-24 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-16">
         {/* Decoration */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#3B82F6]/5 to-transparent pointer-events-none"></div>
         <div className="absolute right-[-100px] top-[-50px] w-[600px] h-[600px] bg-[#3B82F6]/10 blur-[150px] rounded-full pointer-events-none"></div>
@@ -3705,7 +3705,7 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
         </div>
 
         <div className="flex flex-col items-center md:items-end gap-6 z-10">
-          <button className="bg-[#3B82F6] hover:bg-[#d81b60] text-white px-10 py-5 rounded-2xl text-base font-black flex items-center gap-3 transition-all shadow-[0_20px_50px_rgba(233,30,99,0.3)] hover:scale-[1.03]">
+          <button className="bg-[#3B82F6] hover:bg-[#4338ca] text-white px-10 py-5 rounded-2xl text-base font-black flex items-center gap-3 transition-all shadow-[0_20px_50px_rgba(81,66,245,0.3)] hover:scale-[1.03]">
             <Mail className="w-6 h-6" />
             Contatar Suporte
           </button>
@@ -3785,7 +3785,7 @@ const GaleriaAvataresView: React.FC<{ onGoToMyAvatars: () => void; onCreateNew: 
           </button>
           <button
             onClick={onCreateNew}
-            className="px-8 py-4 bg-[#3B82F6] rounded-2xl flex items-center gap-3 text-sm font-black text-white hover:bg-[#d81b60] transition-all shadow-[0_10px_30px_rgba(233,30,99,0.2)]"
+            className="px-8 py-4 bg-[#3B82F6] rounded-2xl flex items-center gap-3 text-sm font-black text-white hover:bg-[#4338ca] transition-all shadow-[0_10px_30px_rgba(81,66,245,0.2)]"
           >
             <Sparkles className="w-5 h-5" />
             Criar do Zero
@@ -3870,7 +3870,7 @@ const GaleriaAvataresView: React.FC<{ onGoToMyAvatars: () => void; onCreateNew: 
               </div>
 
               <div className="mt-12">
-                <button className="w-full py-5 bg-[#3B82F6] hover:bg-[#d81b60] text-white rounded-3xl font-black text-base flex items-center justify-center gap-3 shadow-[0_15px_40px_rgba(233,30,99,0.3)] transition-all hover:scale-[1.02] active:scale-[0.98]">
+                <button className="w-full py-5 bg-[#3B82F6] hover:bg-[#4338ca] text-white rounded-3xl font-black text-base flex items-center justify-center gap-3 shadow-[0_15px_40px_rgba(81,66,245,0.3)] transition-all hover:scale-[1.02] active:scale-[0.98]">
                   <Download className="w-6 h-6" />
                   Baixar Imagem do Avatar
                 </button>
@@ -4132,14 +4132,14 @@ const GaleriaPromptsView: React.FC = () => {
       <div className="flex items-center gap-4 mb-12">
         <button
           onClick={() => setActiveTab('todos')}
-          className={`px-6 py-3 rounded-xl flex items-center gap-2 text-sm font-bold transition-all ${activeTab === 'todos' ? 'bg-[#3B82F6] text-white shadow-[0_10px_20px_rgba(233,30,99,0.3)]' : 'bg-[#14151a] text-[#8d8d99] border border-[#1e1f26] hover:bg-[#24242a]'}`}
+          className={`px-6 py-3 rounded-xl flex items-center gap-2 text-sm font-bold transition-all ${activeTab === 'todos' ? 'bg-[#3B82F6] text-white shadow-[0_10px_20px_rgba(81,66,245,0.3)]' : 'bg-[#14151a] text-[#8d8d99] border border-[#1e1f26] hover:bg-[#24242a]'}`}
         >
           <Sparkles className="w-4 h-4" />
           Todos os Prompts
         </button>
         <button
           onClick={() => setActiveTab('favoritos')}
-          className={`px-6 py-3 rounded-xl flex items-center gap-2 text-sm font-bold transition-all ${activeTab === 'favoritos' ? 'bg-[#3B82F6] text-white shadow-[0_10px_20px_rgba(233,30,99,0.3)]' : 'bg-[#14151a] text-[#8d8d99] border border-[#1e1f26] hover:bg-[#24242a]'}`}
+          className={`px-6 py-3 rounded-xl flex items-center gap-2 text-sm font-bold transition-all ${activeTab === 'favoritos' ? 'bg-[#3B82F6] text-white shadow-[0_10px_20px_rgba(81,66,245,0.3)]' : 'bg-[#14151a] text-[#8d8d99] border border-[#1e1f26] hover:bg-[#24242a]'}`}
         >
           <Heart className="w-4 h-4" />
           Favoritos
@@ -4249,7 +4249,7 @@ const MeusAvataresView: React.FC<{ onBack: () => void; onCreateNew: () => void }
 
           <button
             onClick={onCreateNew}
-            className="px-8 py-4 bg-[#3B82F6] hover:bg-[#d81b60] rounded-2xl flex items-center gap-3 text-sm font-black text-white transition-all shadow-[0_10px_30px_rgba(233,30,99,0.2)]"
+            className="px-8 py-4 bg-[#3B82F6] hover:bg-[#4338ca] rounded-2xl flex items-center gap-3 text-sm font-black text-white transition-all shadow-[0_10px_30px_rgba(81,66,245,0.2)]"
           >
             <Sparkles className="w-5 h-5" />
             Criar Novo
@@ -4273,7 +4273,7 @@ const MeusAvataresView: React.FC<{ onBack: () => void; onCreateNew: () => void }
 
         <button
           onClick={onCreateNew}
-          className="px-10 py-5 bg-[#3B82F6] hover:bg-[#d81b60] rounded-[24px] flex items-center gap-3 text-[15px] font-black text-white transition-all shadow-[0_15px_40px_rgba(233,30,99,0.25)] hover:scale-[1.03] active:scale-[0.98]"
+          className="px-10 py-5 bg-[#3B82F6] hover:bg-[#4338ca] rounded-[24px] flex items-center gap-3 text-[15px] font-black text-white transition-all shadow-[0_15px_40px_rgba(81,66,245,0.25)] hover:scale-[1.03] active:scale-[0.98]"
         >
           <Sparkles className="w-5 h-5" />
           Criar Primeiro Avatar
@@ -4306,7 +4306,7 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
     { name: 'Preto', color: '#000000' },
     { name: 'Castanho Escuro', color: '#3d2b1f' },
     { name: 'Loiro', color: '#e6be8a' },
-    { name: 'Ruivo', color: '#a52a2a' },
+    { name: 'Ruivo', color: '#4338CA' },
     { name: 'Grisalho', color: '#d3d3d3' }
   ];
   const hairStyles = ['Longo Liso', 'Curto', 'Ondulado', 'Cacheado/Crespo', 'Raspado'];
@@ -4550,7 +4550,7 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                   <button
                     key={v.id}
                     onClick={() => setVibe(v.id)}
-                    className={`p-10 rounded-[32px] border-2 transition-all flex flex-col items-center gap-4 text-center ${vibe === v.id ? 'bg-[#24171a] border-[#3B82F6]/40' : 'bg-[#14151a] border-[#1e1f26] hover:border-white/5'}`}
+                    className={`p-10 rounded-[32px] border-2 transition-all flex flex-col items-center gap-4 text-center ${vibe === v.id ? 'bg-[#1F2028] border-[#3B82F6]/40' : 'bg-[#14151a] border-[#1e1f26] hover:border-white/5'}`}
                   >
                     <div className="mb-2">{v.icon}</div>
                     <span className={`text-[15px] font-black ${vibe === v.id ? 'text-white' : 'text-[#8d8d99]'}`}>{v.label}</span>
@@ -4606,7 +4606,7 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             {isFormComplete ? (
               <button
                 onClick={() => window.open('https://x.ai/', '_blank', 'noopener,noreferrer')}
-                className="w-full py-6 bg-gradient-to-r from-[#3B82F6] to-[#ff4081] text-white rounded-[32px] font-black text-lg flex items-center justify-center gap-3 transition-all hover:scale-[1.05] hover:shadow-[0_0_30px_rgba(233,30,99,0.5)] active:scale-[0.98] shadow-lg shadow-[#3B82F6]/30 animate-in fade-in zoom-in duration-300 group"
+                className="w-full py-6 bg-gradient-to-r from-[#3B82F6] to-[#7f5af0] text-white rounded-[32px] font-black text-lg flex items-center justify-center gap-3 transition-all hover:scale-[1.05] hover:shadow-[0_0_30px_rgba(81,66,245,0.5)] active:scale-[0.98] shadow-lg shadow-[#3B82F6]/30 animate-in fade-in zoom-in duration-300 group"
               >
                 <div className="w-8 h-8 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center transition-transform group-hover:rotate-12">
                   <ArrowUpRight className="w-5 h-5 text-white stroke-[4px]" />

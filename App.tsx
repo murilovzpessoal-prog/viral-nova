@@ -1816,52 +1816,37 @@ const VideoCard: React.FC<{ video: VideoViral }> = ({ video }) => {
   };
 
   const renderVideo = () => {
-    let resolvedTiktokId = video.tiktokId;
-    if (!resolvedTiktokId && video.directVideoUrl && video.directVideoUrl.includes('tiktok.com')) {
-      const match = video.directVideoUrl.match(/\/video\/(\d+)/);
-      if (match) resolvedTiktokId = match[1];
-    }
-    if (!resolvedTiktokId && video.videoUrl && video.videoUrl.includes('tiktok.com')) {
-      const match = video.videoUrl.match(/\/video\/(\d+)/);
-      if (match) resolvedTiktokId = match[1];
-    }
+    // Derive direct .mp4 from the Imgur thumbnail hash (same hash, different extension)
+    // This allows seamless native playback.
+    const imgurVideoSrc = video.thumbnail
+      ? video.thumbnail
+        .replace('i.imgur.com/', 'i.imgur.com/')
+        .replace(/\.(jpg|jpeg|png|gif|webp)(\?.*)?$/, '.mp4')
+      : null;
 
-    if (video.directVideoUrl && !video.directVideoUrl.includes("tiktok.com")) {
-      return (
-        <video
-          ref={videoRef}
-          src={video.directVideoUrl}
-          className="absolute inset-0 w-full h-full object-cover scale-[1.2]"
-          controls={isPlaying}
-          playsInline
-          autoPlay
-          muted
-          loop
-          onClick={(e) => e.stopPropagation()}
-        />
-      );
-    }
-    if (resolvedTiktokId) {
-      return (
-        <iframe
-          src={`https://www.tiktok.com/embed/v2/${resolvedTiktokId}?autoplay=1`}
-          className="absolute inset-0 w-full h-full border-0 object-cover"
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-        ></iframe>
-      );
-    }
-    if (video.videoUrl) {
-      return (
-        <iframe
-          src={`${video.videoUrl}${video.videoUrl.includes('?') ? '&' : '?'}autoplay=1`}
-          className="absolute inset-0 w-full h-full border-0 object-cover"
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-        ></iframe>
-      );
-    }
-    return null;
+    const videoSrc = imgurVideoSrc || video.directVideoUrl;
+
+    if (!videoSrc) return null;
+
+    return (
+      <video
+        ref={videoRef}
+        src={videoSrc}
+        className="absolute inset-0 w-full h-full object-cover scale-[1.2]"
+        controls={false}
+        playsInline
+        autoPlay
+        muted
+        loop
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsPlaying(!isPlaying);
+          if (videoRef.current) {
+            isPlaying ? videoRef.current.pause() : videoRef.current.play();
+          }
+        }}
+      />
+    );
   };
 
   return (

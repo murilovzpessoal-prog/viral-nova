@@ -1,41 +1,109 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="/logo.png" />
-    <title>Trendfy</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-      :root {
-        color-scheme: dark;
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/png" href="/logo.png" />
+  <title>Trendfy</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0b0b0e;
+      color: #e1e1e6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #0b0b0e;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #33333a;
+      border-radius: 10px;
+      border: 2px solid #111114;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #44444f;
+    }
+
+    @keyframes scanline {
+      0% {
+        transform: translateY(-100%);
+        opacity: 0;
       }
-      body {
-        font-family: 'Inter', sans-serif;
-        background-color: #0b0b0e;
-        color: #e1e1e6;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
+
+      50% {
+        opacity: 1;
       }
-      .custom-scrollbar::-webkit-scrollbar {
-        width: 8px;
+
+      100% {
+        transform: translateY(400%);
+        opacity: 0;
       }
-      .custom-scrollbar::-webkit-scrollbar-track {
-        background: #0b0b0e;
+    }
+
+    @keyframes rotate-orbital {
+      from {
+        transform: rotate(0deg);
       }
-      .custom-scrollbar::-webkit-scrollbar-thumb {
-        background: #33333a;
-        border-radius: 10px;
-        border: 2px solid #111114;
+
+      to {
+        transform: rotate(360deg);
       }
-      .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-        background: #44444f;
+    }
+
+    @keyframes pulse-soft {
+
+      0%,
+      100% {
+        transform: scale(1);
+        opacity: 0.5;
       }
-    </style>
+
+      50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+      }
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    @keyframes tech-shimmer {
+      0% {
+        transform: translateX(-100%);
+      }
+
+      100% {
+        transform: translateX(100%);
+      }
+    }
+  </style>
   <script type="importmap">
 {
   "imports": {
@@ -46,10 +114,12 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
+  <link rel="stylesheet" href="/index.css">
 </head>
-  <body class="custom-scrollbar">
-    <div id="root"></div>
+
+<body class="custom-scrollbar">
+  <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
 </body>
+
 </html>

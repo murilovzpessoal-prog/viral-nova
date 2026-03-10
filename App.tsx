@@ -48,6 +48,7 @@ import {
   Stars,
   Brain,
   CheckCircle2,
+  Trash2,
   Copy,
   Heart,
   Layout,
@@ -57,6 +58,9 @@ import {
   Type,
   Lock,
   LogOut,
+  Terminal,
+  Cpu,
+  FileDown,
   Settings,
   VolumeX,
   Pause,
@@ -66,7 +70,12 @@ import {
   Link,
   Menu,
   Activity,
-  Globe
+  Globe,
+  Target,
+  ArrowLeft,
+  BookOpen,
+  Award,
+  Star
 } from 'lucide-react';
 
 // Language Context
@@ -298,6 +307,29 @@ const ConfiguracoesView: React.FC<ConfiguracoesViewProps> = ({ profileImage, onI
   );
 };
 
+// --- GLOBAL BACKGROUND COMPONENT ---
+const GlobalBackground: React.FC = () => (
+  <div className="fixed inset-0 pointer-events-none overflow-hidden z-[0]">
+    {/* Mesh Gradients */}
+    <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-[#3B82F6]/10 blur-[120px] rounded-full animate-[pulse-soft_8s_infinite] mix-blend-screen"></div>
+    <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-[#8B5CF6]/10 blur-[120px] rounded-full animate-[pulse-soft_12s_infinite_reverse] mix-blend-screen"></div>
+
+    {/* Digital Grid with Perspective */}
+    <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30 transform perspective-[1000px] rotateX-[20deg] origin-top scale-110"></div>
+
+    {/* Neural Particles (Digital Dust) */}
+    <div className="absolute inset-0 opacity-20">
+      <div className="absolute top-[20%] left-[15%] w-1 h-1 bg-white rounded-full animate-pulse shadow-[0_0_8px_white]"></div>
+      <div className="absolute top-[45%] left-[85%] w-1 h-1 bg-[#3B82F6] rounded-full animate-pulse shadow-[0_0_8px_#3B82F6] delay-700"></div>
+      <div className="absolute top-[75%] left-[25%] w-1 h-1 bg-[#8B5CF6] rounded-full animate-pulse shadow-[0_0_8px_#8B5CF6] delay-1000"></div>
+      <div className="absolute top-[15%] left-[65%] w-1 h-1 bg-white rounded-full animate-pulse shadow-[0_0_8px_white] delay-300"></div>
+    </div>
+
+    {/* Scanning Line Effect */}
+    <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#3B82F6]/20 to-transparent animate-[scanline_10s_linear_infinite]"></div>
+  </div>
+);
+
 const App: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [currentPage, setCurrentPage] = useState<'explorar' | 'produtos' | 'videos' | 'criadores' | 'ugc-criador' | 'galeria-avatares' | 'galeria-prompts' | 'meus-avatares' | 'criar-avatar' | 'previsibilidade-receita' | 'hacks-virais' | 'hacks-virais-detalhe' | 'creator-academy' | 'passos-iniciais' | 'como-se-afiliar' | 'regras-e-restricoes' | 'como-criar-avatar-ia' | 'como-criar-videos-ugc' | 'configuracoes'>('explorar');
@@ -336,6 +368,8 @@ const App: React.FC = () => {
 
 
   ];
+
+
 
   const exploreTopProducts: ProductExplore[] = [
     { id: 'e1', rank: 3, image: 'https://i.imgur.com/91dJ7Xs.jpeg', title: 'Chinelo Slide Nuvem Confort', revenue: 'R$ 5.724.863,85', priceRange: 'R$ 29,99 - R$ 99,99', productUrl: 'https://www.tiktok.com/view/product/1734261789877372669?_svg=1&checksum=782f06b151ccfec8f9f200209e9a78123f28879ad4f943d4aada5addccd94a76&encode_params=MIIBUQQMqMWscggKYZLXadgABIIBLZovPpQKWt9KOIP2LSyf8b2iFMY6BroHwo3n3u9JMKsA7KrqnNd0nmcKe012FbFem7iYPq5KLdtB2t7u9KwfEiJZyxg3uDRdq5RJAEBQz_X4s6b7hO-zUKpCltuLowGL0TvF5xlatIXqDqWbZcRtClb2biCuDjCDc06LRHibmyKqfeQ_e5EIGhfV3ZgqWIEjmRKNPxuPo5-Ud7lEYcBGNCQY163gu6qoIuu_lxS58asgqFjV2eR_QdCt02pQeNajrgOAsHt3p9_ewOU509N3O_GBJkMRF_aSJvVBn1zZuxaUZHMrY3U--LiSe8GD2JL4V1dDokgERjaWnQZ0OMgcEmsNf6F3gjChKHxLV1lrxD1A2HN0hhEHMHl0gXtPCV6KkOmBf_euVUGS-3DpwQcEEJCGseP_AvM-cpKxqGsd88M%3D&og_info=%7B%22title%22%3A%22Chinelo+Slide+Unissex+Casual+Para+Uso+Di%C3%A1rio%22%2C%22image%22%3A%22https%3A%5C%2F%5C%2Fp16-oec-va.ibyteimg.com%5C%2Ftos-maliva-i-o3syd03w52-us%5C%2F9a4070e224bd4714942a9e5442d1a9e8~tplv-o3syd03w52-resize-webp%3A260%3A260.webp%3Fdr%3D15582%26t%3D555f072d%26ps%3D933b5bde%26shp%3D7745054a%26shcp%3D9b759fb9%26idc%3Dmy%26from%3D2001012042%22%7D&sec_user_id=MS4wLjABAAAAGPJ9HjGz6Iuay6qmfIsuPNuurOsZ-IcMREG54wV7FpCyZpLNFGNNgtpxlaqhiZJP&share_app_id=1233&share_link_id=74CCB9BD-343F-4637-AF44-6E10F308BC5E&share_region=BR&social_share_type=15&timestamp=1770366698&trackParams=%7B%22enable_shop_tab_popup%22%3A1%2C%22device_id%22%3A%227506972083776636422%22%2C%22enter_from_info%22%3A%22product_share_outside%22%2C%22source_page_type%22%3A%22product_share%22%2C%22traffic_source_list%22%3A%5B%5D%7D&tt_from=copy&u_code=E6FIJC%3AL28K12M&ug_btm=b6880%2Cb6661&unique_id=joaovellini_&user_id=7203069836077974534&utm_campaign=client_share&utm_medium=ios&utm_source=copy' },
@@ -566,7 +600,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
                   onClick={() => { setCurrentPage(page as any); setIsMobileMenuOpen(false); }}
                   className={`text-left text-base font-semibold py-3 px-4 rounded-xl transition-all ${currentPage === page ? 'text-white bg-[#3B82F6]' : 'text-[#8d8d99] hover:text-white hover:bg-[#1f2026]'}`}
                 >
-                  {t(page)}
+                  {t(page as any)}
                 </button>
               ))}
             </nav>
@@ -574,9 +608,12 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
         </div>
       )}
 
-      <div className="min-h-screen bg-[#0b0c10] text-[#e1e1e6] selection:bg-[#3B82F6]/30 flex flex-col">
+      <div className="min-h-screen bg-[#0b0c10] text-[#e1e1e6] selection:bg-[#3B82F6]/30 flex flex-col relative">
+        {/* GLOBAL PREMIUM BACKGROUND (EXCLUINDO EXPLORAR) */}
+        {currentPage !== 'explorar' && <GlobalBackground />}
+
         {/* PERFECT CLONE HEADER */}
-        <header className="h-[72px] border-b border-[#1e1f26] bg-[#0b0c10] flex items-center sticky top-0 z-50">
+        <header className="h-[88px] border-b-2 border-white/10 bg-[#0b0c10] flex items-center sticky top-0 z-50 transition-all duration-300">
           <div className="max-w-[1400px] w-full mx-auto px-6 flex items-center h-full">
             {/* Logo Area */}
 
@@ -745,63 +782,6 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
           )}
         </div>
 
-        {/* PERFECT CLONE ROBUST FOOTER */}
-        <footer className="bg-[#0b0c10] border-t border-[#1e1f26] pt-24 pb-12">
-          <div className="max-w-[1400px] w-full mx-auto px-6">
-            <div className="grid grid-cols-1 md:grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 md:gap-12 mb-24">
-              <div className="lg:col-span-2">
-                <div className="flex items-center gap-2 mb-8 group cursor-pointer w-fit" onClick={() => setCurrentPage('explorar')}>
-                  <img
-                    src="https://i.imgur.com/hkRPBxg.png"
-                    alt="Trendfy Logo"
-                    className="w-20 h-20 object-contain"
-                    referrerPolicy="no-referrer"
-                  />
-                  <span className="text-[#7f5af0]xl font-black tracking-tighter text-white">Trendfy</span>
-                </div>
-                <p className="text-[#8d8d99] text-lg leading-relaxed mb-10 max-w-sm font-medium">
-                  A tecnologia definitiva para minerar produtos campeões e escalar operações de Dropshipping com inteligência artificial.
-                </p>
-                <div className="flex items-center gap-4">
-                  <FooterSocialIcon icon={<Instagram className="w-5 h-5" />} />
-                  <FooterSocialIcon icon={<Youtube className="w-5 h-5" />} />
-                  <FooterSocialIcon icon={<Twitter className="w-5 h-5" />} />
-                  <FooterSocialIcon icon={<Linkedin className="w-5 h-5" />} />
-                </div>
-              </div>
-
-              <FooterColumn title="Produto" links={['Explorar', 'Produtos Virais', 'Vídeos Virais', 'Ranking Criadores', 'Lojas Monitoradas']} />
-              <FooterColumn title={t('ferramentas')} links={['Extensão Chrome', 'Calculadora ROI', 'Nicho Tracker', 'Ads Analytics']} />
-              <FooterColumn title="Educação" links={['Creator Academy', 'Blog', 'Documentação API', 'Webinars']} />
-              <FooterColumn title="Legal" links={['Termos de Uso', 'Privacidade', 'Cookies', 'Contato']} />
-            </div>
-
-            <div className="pt-12 border-t border-[#1e1f26] flex flex-col md:flex-row items-center justify-between gap-5 md:gap-8">
-              <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 md:gap-10">
-                <span className="text-[#5b5b7b] text-sm font-bold tracking-tight">© 2025 Trendfy. All rights reserved.</span>
-                <div className="flex items-center gap-6">
-                  <a href="#" className="text-[#5b5b7b] hover:text-white text-xs font-bold transition-colors uppercase tracking-widest">{t('status')}</a>
-                  <a href="#" className="text-[#5b5b7b] hover:text-white text-xs font-bold transition-colors uppercase tracking-widest">{t('sistemas')}</a>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-5 md:gap-8">
-                <div className="flex items-center gap-2 px-4 py-2 bg-[#14151a] rounded-xl border border-[#1e1f26] shadow-inner">
-                  <div className="w-2 h-2 bg-[#00b37e] rounded-full shadow-[0_0_8px_rgba(0,179,126,1)]"></div>
-                  <span className="text-[10px] font-black text-white/80 uppercase tracking-[0.2em]">{t('serversOnline')}</span>
-                </div>
-                <div
-                  onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-                  className="flex items-center gap-3 px-4 py-2 bg-[#14151a] rounded-xl border border-[#1e1f26] cursor-pointer hover:border-[#3B82F6]/20 transition-all relative"
-                >
-                  <img src="https://flagcdn.com/w20/br.png" width="16" alt="" className="rounded-[1px]" />
-                  <span className="text-[11px] font-bold text-[#8d8d99]">{t('portugues')}</span>
-                  <ChevronRight className={`w-3 h-3 text-[#5b5b7b] transition-transform ${isLangMenuOpen ? '-rotate-90' : 'rotate-90'}`} />
-                </div>
-              </div>
-            </div>
-          </div>
-        </footer>
       </div>
     </LanguageContext.Provider>
   );
@@ -822,23 +802,6 @@ const DropdownToolItem: React.FC<{ label: string; badge?: string; isActive?: boo
   </button>
 );
 
-// --- Footer Components ---
-const FooterColumn: React.FC<{ title: string, links: string[] }> = ({ title, links }) => (
-  <div className="flex flex-col gap-6">
-    <h4 className="text-[11px] font-black text-white/40 uppercase tracking-[0.3em] mb-2">{title}</h4>
-    <div className="flex flex-col gap-4">
-      {links.map(link => (
-        <a key={link} href="#" className="text-[#8d8d99] hover:text-[#3B82F6] transition-colors text-[15px] font-bold tracking-tight">{link}</a>
-      ))}
-    </div>
-  </div>
-);
-
-const FooterSocialIcon: React.FC<{ icon: React.ReactNode }> = ({ icon }) => (
-  <a href="#" className="w-11 h-11 bg-[#14151a] border border-[#1e1f26] rounded-2xl flex items-center justify-center text-[#5b5b7b] hover:text-white hover:border-[#3B82F6]/40 hover:bg-[#3B82F6]/5 transition-all shadow-lg">
-    {icon}
-  </a>
-);
 
 // --- EXPLORE PAGE VIEW ---
 const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => void, onGoToProducts: () => void }> = ({ products, onGoToAcademy, onGoToProducts }) => (
@@ -1019,9 +982,6 @@ const FeatureExploreCard: React.FC<{ icon: React.ReactNode, title: string, descr
 // --- PRODUCTS PAGE VIEW ---
 const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => (
   <main className="max-w-[1500px] mx-auto px-6 py-12 md:py-16 relative">
-    {/* ATMOSPHERIC BACKGROUND SYSTEM */}
-    <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-[#3B82F6]/5 blur-[150px] rounded-full pointer-events-none opacity-50"></div>
-    <div className="absolute top-40 right-1/4 w-[400px] h-[400px] bg-[#8B5CF6]/5 blur-[120px] rounded-full pointer-events-none opacity-30"></div>
 
     {/* RADICAL ASYMMETRIC HEADER - REFINED SPACING */}
     <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-16 relative z-10 bg-[#0B0B0E]/20 backdrop-blur-sm p-8 rounded-[48px] border border-white/5">
@@ -1228,7 +1188,8 @@ const ViralCard: React.FC<{ product: ProductViral }> = ({ product }) => {
   );
 };
 
-// --- VIDEOS PAGE VIEW ---
+
+
 const VideosView: React.FC = () => {
   const baseVideos: VideoViral[] = [
     {
@@ -1715,7 +1676,6 @@ const VideosView: React.FC = () => {
     }
   ];
 
-  // Generate 40 videos (10 rows of 4)
   const videoData: VideoViral[] = Array.from({ length: 40 }, (_, i) => ({
     ...baseVideos[i % baseVideos.length],
     id: `v${i + 1}`,
@@ -1723,66 +1683,102 @@ const VideosView: React.FC = () => {
   }));
 
   return (
-    <main className="max-w-[1400px] mx-auto px-6 py-6 md:py-10">
-      <div className="bg-[#0c0c0e] border border-[#1c1c1f] rounded-[40px] p-6 md:p-12 lg:p-14 mb-16 relative overflow-hidden shadow-2xl">
-        <div className="flex flex-col md:flex-row justify-between items-start gap-6 md:gap-12">
-          <div className="flex flex-col gap-4">
-            <h1 className="text-[44px] font-black text-white tracking-tighter leading-none">Vídeos</h1>
-            <p className="text-[#5b5b7b] text-base font-medium">Aulas e análises de produtos virais.</p>
+    <main className="max-w-[1500px] mx-auto px-6 py-12 md:py-16 relative">
 
-            <div className="mt-8 flex items-center gap-3 bg-[#101915] border border-[#1b3d2b] px-5 py-2 rounded-full w-fit">
-              <div className="w-2.5 h-2.5 bg-[#00b37e] rounded-full shadow-[0_0_10px_rgba(0,179,126,0.8)]"></div>
-              <span className="text-[11px] font-black uppercase tracking-[0.25em] text-[#00b37e]">SISTEMA ONLINE • MINERANDO</span>
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-16 relative z-10 bg-[#0B0B0E]/20 backdrop-blur-sm p-8 rounded-[48px] border border-white/5">
+        <div className="flex flex-col gap-6 flex-1 min-w-[400px]">
+          <div className="relative group">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="h-[1px] w-8 bg-gradient-to-r from-[#00b37e] to-transparent"></div>
+              <span className="text-[9px] font-black text-[#00b37e] tracking-[0.4em] uppercase">Visual Sync Active</span>
+              <div className="flex gap-1">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="w-1 h-1 bg-[#00b37e]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
+                ))}
+              </div>
+            </div>
+            <div className="relative">
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none">
+                <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent">Vídeos</span>
+                <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent transform translate-x-1">Virais</span>
+              </h1>
+            </div>
+          </div>
+          <p className="text-[#8d8d99] text-sm md:text-base font-medium max-w-sm leading-relaxed border-l border-white/10 pl-6">
+            Análise cinemática de <span className="text-white">engagement patterns</span> para identificar os criativos que dominam o feed global.
+          </p>
+        </div>
+
+        <div className="flex flex-wrap items-center justify-center lg:justify-end gap-6 flex-[1.5]">
+          {/* HIT COUNT (ORGANIC FROSTED) */}
+          <div className="relative group">
+            <div className="absolute inset-0 bg-[#3B82F6]/10 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            <div className="w-40 h-40 backdrop-blur-3xl bg-white/[0.03] border border-white/10 rounded-[40px] p-6 flex flex-col items-center justify-center shadow-2xl transition-all duration-500 group-hover:scale-105">
+              <Zap className="w-6 h-6 text-[#3B82F6] mb-2 opacity-50 animate-bounce" />
+              <span className="text-4xl font-black text-white tracking-tighter mb-1">40</span>
+              <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">HITS HOJE</span>
             </div>
           </div>
 
-          <div className="flex items-stretch gap-px bg-[#1c1c1f] p-[1.5px] rounded-[32px] overflow-hidden shadow-2xl min-w-[460px]">
-            <div className="bg-[#0b0c10] flex-1 px-8 py-6 md:py-10 flex flex-col items-center justify-center gap-1 border-r border-[#1c1c1f] relative group">
-              <div className="absolute top-4 left-4 opacity-20 group-hover:opacity-40 transition-opacity">
-                <Video size={16} className="text-[#5b5b7b]" />
+          {/* REVENUE ORB (DYNAMIC) */}
+          <div className="relative group">
+            <div className="absolute inset-x-0 -bottom-6 h-12 bg-[#00b37e]/10 blur-3xl rounded-full opacity-40"></div>
+            <div className="w-48 h-48 backdrop-blur-3xl bg-[#0B0B0E]/60 border border-white/10 rounded-full p-8 flex flex-col items-center justify-center shadow-2xl relative overflow-hidden group-hover:border-[#00b37e]/30 transition-all group-hover:scale-105">
+              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#00b37e]/10 to-transparent pointer-events-none"></div>
+              <Activity className="w-5 h-5 text-[#00b37e] mb-1 animate-bounce" />
+              <div className="flex items-baseline gap-0.5">
+                <span className="text-xs font-black text-[#00b37e]/40">R$</span>
+                <span className="text-4xl font-black text-[#00b37e] tracking-tighter tabular-nums drop-shadow-[0_0_15px_rgba(0,179,126,0.3)]">1.2M</span>
               </div>
-              <span className="text-3xl md:text-5xl font-black text-white leading-none tracking-tighter">40</span>
-              <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] mt-4 flex items-center gap-2">
-                <span className="w-1 h-1 bg-[#5b5b7b] rounded-full"></span>
-                Vídeos Detectados
-              </span>
+              <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.4em] mt-1 text-center">VOLUME REAL</span>
             </div>
+          </div>
 
-            <div className="bg-[#0b0c10] flex-[1.4] px-8 py-6 md:py-10 flex flex-col items-center justify-center gap-1 relative group">
-              <div className="absolute top-4 right-4 opacity-20 group-hover:opacity-40 transition-opacity">
-                <TrendingUp size={16} className="text-[#00b37e]" />
+          {/* ENGAGEMENT SPHERE (SCIFI DATA ORB) */}
+          <div className="relative group">
+            <div className="w-40 h-40 flex items-center justify-center p-2 group-hover:scale-105 transition-all">
+              <div className="absolute inset-0 bg-[#8B5CF6]/10 blur-3xl rounded-full animate-pulse"></div>
+              <div className="relative w-full h-full flex items-center justify-center rounded-full border border-white/5 bg-[#0B0B0E]/40 backdrop-blur-md">
+                <svg className="absolute inset-0 w-full h-full transform -rotate-90">
+                  <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="1" fill="transparent" className="text-white/5" />
+                  <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="8" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#8B5CF6] transition-all duration-1000 opacity-20" />
+                  <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="2" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#8B5CF6] shadow-[0_0_20px_#8B5CF6]" />
+                </svg>
+                <div className="flex flex-col items-center">
+                  <Target className="w-5 h-5 text-[#8B5CF6] mb-1 opacity-50 animate-pulse" />
+                  <span className="text-3xl font-black text-white tracking-tighter">99<span className="text-xs text-[#5b5b7b]">%</span></span>
+                </div>
               </div>
-              <div className="flex items-baseline gap-1">
-                <span className="text-2xl font-black text-[#00b37e]/60 leading-none">R$</span>
-                <span className="text-3xl md:text-5xl font-black text-[#00b37e] leading-none tracking-tighter">1.2M</span>
-              </div>
-              <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] mt-4 flex items-center gap-2">
-                <span className="w-1 h-1 bg-[#00b37e] rounded-full animate-pulse"></span>
-                Receita Analisada
-              </span>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Modern Horizontal Separator / Selection Bar */}
-        <div className="mt-20 flex flex-col gap-6">
-          <div className="flex items-end justify-between px-2">
-            <div className="flex items-center gap-6 md:gap-12">
-              <span className="text-[12px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors">00:00 - 06:00</span>
-              <span className="text-[12px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors">06:00 - 12:00</span>
-              <span className="text-[12px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors">12:00 - 18:00</span>
-              <span className="text-[12px] font-black text-white uppercase tracking-[0.2em] cursor-default">18:00 - 00:00</span>
-            </div>
-
-            <div className="flex flex-col items-end gap-1">
-              <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] opacity-80">PRÓXIMA ATUALIZAÇÃO EM:</span>
-              <span className="text-[#7f5af0]xl font-black text-white tabular-nums tracking-tighter">04:29:38</span>
-            </div>
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-16 relative z-20 px-4">
+        <div className="flex flex-col gap-2">
+          <span className="text-[9px] font-black text-[#5b5b7b] tracking-[0.4em] uppercase mb-1">System Frequency Timeline</span>
+          <div className="flex items-center gap-10 h-8 border-b border-white/5 pb-2">
+            {['00-06', '06-12', '12-18', '18-00'].map((time, idx) => (
+              <div key={time} className="flex flex-col items-center group cursor-pointer relative h-full justify-end">
+                <span className={`text-[10px] font-black tracking-widest uppercase transition-all mb-2 ${idx === 3 ? 'text-[#00b37e]' : 'text-[#5b5b7b] group-hover:text-white/60'}`}>
+                  {time}
+                </span>
+                <div className={`w-[2px] h-2 transition-all ${idx === 3 ? 'bg-[#00b37e] shadow-[0_0_10px_#00b37e]' : 'bg-white/10 group-hover:bg-white/30'}`}></div>
+                {idx === 3 && <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-8 h-px bg-[#00b37e] blur-[2px]"></div>}
+              </div>
+            ))}
           </div>
-
-          <div className="relative w-full h-[3px] bg-[#1c1c1f] rounded-full overflow-hidden">
-            {/* The active marker matching the screenshot placement under 18:00-00:00 */}
-            <div className="absolute right-0 w-1/4 h-full bg-[#3B82F6] shadow-[0_0_15px_rgba(81,66,245,0.5)]"></div>
+        </div>
+        <div className="flex items-center gap-6">
+          <div className="px-10 py-4 rounded-[28px] bg-white/[0.02] border border-white/5 backdrop-blur-md flex items-center gap-5 group hover:border-[#00b37e]/20 transition-all">
+            <div className="relative">
+              <div className="absolute inset-0 bg-[#00b37e]/20 blur-lg rounded-full animate-ping"></div>
+              <Clock className="w-5 h-5 text-[#00b37e] relative z-10" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-[8px] font-black text-[#5b5b7b] tracking-widest uppercase">NEXT UPDATE</span>
+              <span className="text-2xl font-black text-white tabular-nums tracking-tighter">04:29:38</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1802,7 +1798,7 @@ const VideosView: React.FC = () => {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10">
         {videoData.map((video) => (
           <VideoCard key={video.id} video={video} />
         ))}
@@ -1888,37 +1884,70 @@ const VideoCard: React.FC<{ video: VideoViral }> = ({ video }) => {
   };
 
   const renderVideo = () => {
-    // Derive direct .mp4 from the Imgur thumbnail hash (same hash, different extension)
-    // This allows seamless native playback.
+    let resolvedTiktokId = video.tiktokId;
+    if (!resolvedTiktokId && video.directVideoUrl && video.directVideoUrl.includes('tiktok.com')) {
+      const match = video.directVideoUrl.match(/\/video\/(\d+)/);
+      if (match) resolvedTiktokId = match[1];
+    }
+    if (!resolvedTiktokId && video.videoUrl && video.videoUrl.includes('tiktok.com')) {
+      const match = video.videoUrl.match(/\/video\/(\d+)/);
+      if (match) resolvedTiktokId = match[1];
+    }
+
+    if (video.directVideoUrl && !video.directVideoUrl.includes("tiktok.com")) {
+      return (
+        <video
+          ref={videoRef}
+          src={video.directVideoUrl}
+          className="absolute inset-0 w-full h-full object-cover"
+          controls={isPlaying}
+          playsInline
+          autoPlay
+          muted
+          loop
+          onClick={(e) => e.stopPropagation()}
+        />
+      );
+    }
+    if (resolvedTiktokId) {
+      return (
+        <iframe
+          src={`https://www.tiktok.com/embed/v2/${resolvedTiktokId}?autoplay=1`}
+          className="absolute inset-0 w-full h-full border-0 object-cover"
+          allow="autoplay; encrypted-media"
+          allowFullScreen
+        ></iframe>
+      );
+    }
+
     const imgurVideoSrc = video.thumbnail
       ? video.thumbnail
         .replace('i.imgur.com/', 'i.imgur.com/')
         .replace(/\.(jpg|jpeg|png|gif|webp)(\?.*)?$/, '.mp4')
       : null;
 
-    const videoSrc = imgurVideoSrc || video.directVideoUrl;
-
-    if (!videoSrc) return null;
-
-    return (
-      <video
-        ref={videoRef}
-        src={videoSrc}
-        className="absolute inset-0 w-full h-full object-cover scale-[1.2]"
-        controls={false}
-        playsInline
-        autoPlay
-        muted
-        loop
-        onClick={(e) => {
-          e.stopPropagation();
-          setIsPlaying(!isPlaying);
-          if (videoRef.current) {
-            isPlaying ? videoRef.current.pause() : videoRef.current.play();
-          }
-        }}
-      />
-    );
+    if (imgurVideoSrc) {
+      return (
+        <video
+          ref={videoRef}
+          src={imgurVideoSrc}
+          className="absolute inset-0 w-full h-full object-cover scale-[1.2]"
+          controls={false}
+          playsInline
+          autoPlay
+          muted
+          loop
+          onClick={(e) => {
+            e.stopPropagation();
+            setIsPlaying(!isPlaying);
+            if (videoRef.current) {
+              isPlaying ? videoRef.current.pause() : videoRef.current.play();
+            }
+          }}
+        />
+      );
+    }
+    return null;
   };
 
   return (
@@ -2036,66 +2065,110 @@ const CreatorsView: React.FC = () => {
   ];
 
   return (
-    <main className="max-w-[1400px] mx-auto px-6 py-6 md:py-10">
-      <div className="bg-[#0c0c0e] border border-[#1c1c1f] rounded-[40px] p-6 md:p-12 lg:p-14 mb-16 relative overflow-hidden shadow-2xl">
-        <div className="flex flex-col md:flex-row justify-between items-start gap-6 md:gap-12">
-          <div className="flex flex-col gap-4">
-            <h1 className="text-[44px] font-black text-white tracking-tighter leading-none">Criadores Virais</h1>
-            <p className="text-[#5b5b7b] text-base font-medium">O ranking das mentes que estão gerando faturamentos astronômicos.</p>
+    <main className="max-w-[1500px] mx-auto px-6 py-12 md:py-16 relative">
 
-            <div className="mt-8 flex items-center gap-3 bg-[#101915] border border-[#1b3d2b] px-5 py-2 rounded-full w-fit">
-              <div className="w-2.5 h-2.5 bg-[#00b37e] rounded-full shadow-[0_0_10px_rgba(0,179,126,0.8)]"></div>
-              <span className="text-[11px] font-black uppercase tracking-[0.25em] text-[#00b37e]">TRACKING EM TEMPO REAL</span>
+      {/* RADICAL ASYMMETRIC HEADER - REFINED SPACING */}
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-16 relative z-10 bg-[#0B0B0E]/20 backdrop-blur-sm p-8 rounded-[48px] border border-white/5 shadow-2xl">
+
+        {/* LEFT: TYPOGRAPHY SCULPTURE & PULSE */}
+        <div className="flex flex-col gap-6 flex-1 min-w-[400px]">
+          <div className="relative group">
+            {/* ARCHITECTURAL STATUS LINE */}
+            <div className="flex items-center gap-4 mb-4">
+              <div className="h-[1px] w-8 bg-gradient-to-r from-[#00b37e] to-transparent"></div>
+              <span className="text-[9px] font-black text-[#00b37e] tracking-[0.4em] uppercase">Creator Hub Active</span>
+              <div className="flex gap-1">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="w-1 h-1 bg-[#00b37e]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
+                ))}
+              </div>
+            </div>
+
+            <div className="relative">
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none">
+                <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent">Criadores</span>
+                <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent transform translate-x-1">Virais</span>
+              </h1>
             </div>
           </div>
 
-          <div className="flex items-stretch gap-px bg-[#1c1c1f] p-[1.5px] rounded-[32px] overflow-hidden shadow-2xl min-w-[460px]">
-            <div className="bg-[#0b0c10] flex-1 px-8 py-6 md:py-10 flex flex-col items-center justify-center gap-1 border-r border-[#1c1c1f] relative group">
-              <div className="absolute top-4 left-4 opacity-20 group-hover:opacity-40 transition-opacity">
-                <Users size={16} className="text-[#5b5b7b]" />
-              </div>
-              <span className="text-3xl md:text-5xl font-black text-white leading-none tracking-tighter">8</span>
-              <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] mt-4 flex items-center gap-2">
-                <span className="w-1 h-1 bg-[#5b5b7b] rounded-full"></span>
-                Monitorados
-              </span>
-            </div>
+          <p className="text-[#8d8d99] text-sm md:text-base font-medium max-w-sm leading-relaxed border-l border-white/10 pl-6">
+            O ranking das mentes brilhantes que estão gerando <span className="text-white">faturamentos astronômicos</span> no feed digital.
+          </p>
+        </div>
 
-            <div className="bg-[#0b0c10] flex-[1.4] px-8 py-6 md:py-10 flex flex-col items-center justify-center gap-1 relative group">
-              <div className="absolute top-4 right-4 opacity-20 group-hover:opacity-40 transition-opacity">
-                <DollarSign size={16} className="text-[#00b37e]" />
+        {/* RIGHT: COMPACT METRICS GRID */}
+        <div className="flex flex-wrap items-center justify-center lg:justify-end gap-6 flex-[1.5]">
+          {/* MONITORADOS (ORGANIC FROSTED) */}
+          <div className="relative group">
+            <div className="absolute inset-0 bg-[#3B82F6]/10 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            <div className="w-40 h-40 backdrop-blur-3xl bg-white/[0.03] border border-white/10 rounded-[40px] p-6 flex flex-col items-center justify-center shadow-2xl transition-all duration-500 group-hover:scale-105">
+              <Users className="w-6 h-6 text-[#3B82F6] mb-2 opacity-50 animate-bounce" />
+              <span className="text-4xl font-black text-white tracking-tighter mb-1">8</span>
+              <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">INSIGHTS HOJE</span>
+            </div>
+          </div>
+
+          {/* REVENUE ORB (DYNAMIC) */}
+          <div className="relative group">
+            <div className="absolute inset-x-0 -bottom-6 h-12 bg-[#00b37e]/10 blur-3xl rounded-full opacity-40"></div>
+            <div className="w-48 h-48 backdrop-blur-3xl bg-[#0B0B0E]/60 border border-white/10 rounded-full p-8 flex flex-col items-center justify-center shadow-2xl relative overflow-hidden group-hover:border-[#00b37e]/30 transition-all group-hover:scale-105">
+              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#00b37e]/10 to-transparent pointer-events-none"></div>
+              <TrendingUp className="w-5 h-5 text-[#00b37e] mb-1 animate-bounce" />
+              <div className="flex items-baseline gap-1.5">
+                <span className="text-xs font-black text-[#00b37e]/40">R$</span>
+                <span className="text-4xl font-black text-[#00b37e] tracking-tighter tabular-nums drop-shadow-[0_0_15px_rgba(0,179,126,0.3)]">512k</span>
               </div>
-              <div className="flex items-baseline gap-1">
-                <span className="text-2xl font-black text-[#00b37e]/60 leading-none">R$</span>
-                <span className="text-3xl md:text-5xl font-black text-[#00b37e] leading-none tracking-tighter">512.765</span>
+              <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.4em] mt-1 text-center">VOLUME REAL</span>
+            </div>
+          </div>
+
+          {/* DOMINANCE SPHERE (SCIFI DATA ORB) */}
+          <div className="relative group">
+            <div className="w-40 h-40 flex items-center justify-center p-2 group-hover:scale-105 transition-all">
+              <div className="absolute inset-0 bg-[#8B5CF6]/10 blur-3xl rounded-full animate-pulse"></div>
+              <div className="relative w-full h-full flex items-center justify-center rounded-full border border-white/5 bg-[#0B0B0E]/40 backdrop-blur-md">
+                <svg className="absolute inset-0 w-full h-full transform -rotate-90">
+                  <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="1" fill="transparent" className="text-white/5" />
+                  <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="8" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#8B5CF6] transition-all duration-1000 opacity-20" />
+                  <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="2" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#8B5CF6] shadow-[0_0_20px_#8B5CF6]" />
+                </svg>
+                <div className="flex flex-col items-center">
+                  <Crown className="w-5 h-5 text-[#8B5CF6] mb-1 opacity-50 animate-pulse" />
+                  <span className="text-3xl font-black text-white tracking-tighter">98<span className="text-xs text-[#5b5b7b]">%</span></span>
+                </div>
               </div>
-              <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] mt-4 flex items-center gap-2">
-                <span className="w-1 h-1 bg-[#00b37e] rounded-full animate-pulse"></span>
-                Faturamento Total
-              </span>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Modern Horizontal Separator / Selection Bar */}
-        <div className="mt-20 flex flex-col gap-6">
-          <div className="flex items-end justify-between px-2">
-            <div className="flex items-center gap-6 md:gap-12">
-              <span className="text-[12px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors">00:00 - 06:00</span>
-              <span className="text-[12px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors">06:00 - 12:00</span>
-              <span className="text-[12px] font-black text-white uppercase tracking-[0.2em] cursor-default">12:00 - 18:00</span>
-              <span className="text-[12px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] cursor-pointer hover:text-white transition-colors">18:00 - 00:00</span>
-            </div>
-
-            <div className="flex flex-col items-end gap-1">
-              <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] opacity-80">PRÓXIMA ATUALIZAÇÃO EM:</span>
-              <span className="text-[#7f5af0]xl font-black text-white tabular-nums tracking-tighter">01:18:30</span>
-            </div>
+      {/* TIMELINE - RE-ALIGN TO GRID */}
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-16 relative z-20 px-4">
+        <div className="flex flex-col gap-2">
+          <span className="text-[9px] font-black text-[#5b5b7b] tracking-[0.4em] uppercase mb-1">System Frequency Timeline</span>
+          <div className="flex items-center gap-10 h-8 border-b border-white/5 pb-2">
+            {['00-06', '06-12', '12-18', '18-00'].map((time, idx) => (
+              <div key={time} className="flex flex-col items-center group cursor-pointer relative h-full justify-end">
+                <span className={`text-[10px] font-black tracking-widest uppercase transition-all mb-2 ${idx === 2 ? 'text-[#3B82F6]' : 'text-[#5b5b7b] group-hover:text-white/60'}`}>
+                  {time}
+                </span>
+                <div className={`w-[2px] h-2 transition-all ${idx === 2 ? 'bg-[#3B82F6] shadow-[0_0_10px_#3B82F6]' : 'bg-white/10 group-hover:bg-white/30'}`}></div>
+                {idx === 2 && <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-8 h-px bg-[#3B82F6] blur-[2px]"></div>}
+              </div>
+            ))}
           </div>
-
-          <div className="relative w-full h-[3px] bg-[#1c1c1f] rounded-full overflow-hidden">
-            {/* The active marker matching the screenshot placement under 12:00-18:00 */}
-            <div className="absolute left-1/2 -translate-x-1/2 w-1/4 h-full bg-[#3B82F6] shadow-[0_0_15px_rgba(81,66,245,0.5)]"></div>
+        </div>
+        <div className="flex items-center gap-6">
+          <div className="px-10 py-4 rounded-[28px] bg-white/[0.02] border border-white/5 backdrop-blur-md flex items-center gap-5 group hover:border-[#3B82F6]/20 transition-all shadow-2xl">
+            <div className="relative">
+              <div className="absolute inset-0 bg-[#3B82F6]/20 blur-lg rounded-full animate-ping"></div>
+              <Clock className="w-5 h-5 text-[#3B82F6] relative z-10" />
+            </div>
+            <div className="flex flex-col">
+              <span className="text-[7px] font-black text-[#5b5b7b] tracking-[0.3em] uppercase">Status de Sync</span>
+              <span className="text-xl font-black text-white tabular-nums tracking-tighter">Online</span>
+            </div>
           </div>
         </div>
       </div>
@@ -2112,61 +2185,113 @@ const CreatorsView: React.FC = () => {
 const CreatorRow: React.FC<{ creator: CreatorViral }> = ({ creator }) => (
   <div
     onClick={() => window.open(creator.profileUrl, '_blank')}
-    className="bg-[#0b0c10] border border-[#27272a] rounded-[48px] px-6 md:px-10 py-8 flex items-center justify-between group hover:border-[#3B82F6]/40 transition-all cursor-pointer shadow-2xl"
+    className="relative group cursor-pointer mb-2"
   >
-    <div className="flex items-center gap-6 md:gap-12 flex-1">
-      {/* RANKING ICON */}
-      <div className="w-16 h-16 flex items-center justify-center">
-        {creator.rank === 1 ? (
-          <div className="w-14 h-14 bg-[#f59e0b] rounded-[22px] flex items-center justify-center shadow-[0_0_30px_rgba(245,158,11,0.3)] transform rotate-1 animate-pulse">
-            <Crown className="w-8 h-8 text-white fill-white" />
-          </div>
-        ) : (
-          <div className="w-14 h-14 bg-[#14151a] border border-[#27272a] rounded-[22px] flex items-center justify-center text-lg font-bold text-[#5b5b7b]">
-            #{creator.rank}
-          </div>
-        )}
+    {/* ARCHITECTURAL SELECTION CLIPS (HOVER ONLY) - ULTRA-COMPACT */}
+    <div className="absolute -inset-0.25 bg-gradient-to-r from-[#3B82F6]/20 via-transparent to-[#8B5CF6]/20 rounded-xl opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-500"></div>
+
+    {/* MAIN ARCHITECTURAL CONTAINER - ENHANCED SCALE & PROFESSIONAL */}
+    <div className="relative bg-[#0B0B0E]/80 backdrop-blur-3xl border border-white/5 rounded-xl px-6 py-5 flex items-center justify-between overflow-hidden shadow-2xl transition-all duration-500 group-hover:translate-x-1 group-hover:border-white/10 group-hover:bg-[#0B0B0E]/90">
+
+      {/* DATA-VIZ BACKGROUND PATTERN - HIGH DENSITY GRID */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="grid-dense" width="16" height="16" patternUnits="userSpaceOnUse">
+              <path d="M 16 0 L 0 0 0 16" fill="none" stroke="white" strokeWidth="1" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid-dense)" />
+        </svg>
       </div>
 
-      {/* AVATAR + INFO */}
-      <div className="flex items-center gap-6">
-        <div className="relative">
-          <div className="w-20 h-20 rounded-full overflow-hidden border-[4px] border-[#1c1c1f] shadow-2xl group-hover:scale-105 transition-transform duration-500">
-            <img src={creator.avatar} className="w-full h-full object-cover" alt="" />
+      {/* SCANLINE SWEEP EFFECT */}
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent -translate-x-full group-hover:animate-[scanline_2s_ease-in-out_infinite] pointer-events-none"></div>
+
+      <div className="flex items-center gap-8 md:gap-10 flex-1 relative z-10">
+
+        {/* RANKING SEGMENT (TECHNICAL POD) - ULTRA SCALE */}
+        <div className="flex items-center gap-3">
+          <div className="relative group/rank">
+            {creator.rank === 1 ? (
+              <div className="relative">
+                <div className="absolute inset-0 bg-[#f59e0b]/20 blur-xl rounded-full animate-pulse"></div>
+                <div className="w-14 h-14 bg-gradient-to-br from-[#f59e0b] to-[#d97706] rounded-lg flex items-center justify-center border border-white/20 shadow-[0_0_15px_rgba(245,158,11,0.3)] transform rotate-1 group-hover:rotate-3 transition-transform duration-500">
+                  <Crown className="w-9 h-9 text-white fill-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]" />
+                </div>
+              </div>
+            ) : (
+              <div className="w-12 h-12 bg-white/[0.02] border border-white/5 rounded-lg flex items-center justify-center relative overflow-hidden group-hover:border-white/20 transition-all duration-500">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <span className="text-sm font-black text-[#5b5b7b] group-hover:text-white transition-colors tabular-nums tracking-tighter">#{creator.rank}</span>
+              </div>
+            )}
           </div>
-          {creator.rank === 1 && (
-            <div className="absolute -bottom-2 -right-1 bg-[#f59e0b] text-[9px] font-bold text-white px-2 py-0.5 rounded-lg border-[3px] border-[#111114] shadow-lg">TOP 1</div>
-          )}
+
+          {/* AVATAR POD (FLOATING IDENTITY) - ULTRA SCALE */}
+          <div className="relative">
+            <div className="absolute -inset-1 bg-gradient-to-br from-[#3B82F6]/20 to-transparent rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div className="relative w-16 h-16 p-0.5 rounded-full bg-gradient-to-br from-white/10 to-transparent border border-white/5 group-hover:border-white/20 transition-all duration-500">
+              <div className="w-full h-full rounded-full overflow-hidden border border-[#1c1c1f] shadow-2xl relative">
+                <img src={creator.avatar} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="" />
+                <div className="absolute inset-0 ring-1 ring-inset ring-white/10 group-hover:ring-white/30 transition-all"></div>
+              </div>
+              {creator.rank === 1 && (
+                <div className="absolute -bottom-0.5 -right-0.5 bg-[#f59e0b] text-[5px] font-black text-white px-1 py-0.5 rounded-full border border-[#0B0B0E] shadow-xl tracking-tighter z-20 whitespace-nowrap">TOP ALPHA</div>
+              )}
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col justify-center">
-          <div className="flex items-center gap-4 mb-1">
-            <span className="text-xl font-bold text-white group-hover:text-[#3B82F6] transition-colors tracking-tight">{creator.username}</span>
-            <span className="px-3 py-1 bg-[#14151a] border border-[#27272a] text-[#8d8d99] rounded-lg text-[10px] font-medium uppercase tracking-wider">{creator.category}</span>
+
+        {/* CREATOR INTEL (TYPOGRAPHY) - ULTRA DENSE PROFILE */}
+        <div className="flex flex-col gap-0.5">
+          <div className="flex items-center gap-2">
+            <h3 className="text-xl font-black text-white group-hover:text-[#3B82F6] transition-colors leading-none tracking-tighter">
+              {creator.username}
+            </h3>
+            <div className="px-1.5 py-0 bg-white/[0.03] border border-white/10 rounded flex items-center gap-1">
+              <div className="w-1 h-1 bg-[#3B82F6] rounded-full animate-pulse"></div>
+              <span className="text-[6.5px] font-black text-[#8d8d99] uppercase tracking-[0.2em]">{creator.category}</span>
+            </div>
           </div>
-          <span className="text-[13px] font-medium text-[#5b5b7b] uppercase tracking-wider">{creator.shopName}</span>
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 px-1.5 py-0 rounded bg-[#00b37e]/5 border border-[#00b37e]/10">
+              <div className="w-0.5 h-0.5 bg-[#00b37e] rounded-full"></div>
+              <span className="text-[8px] font-black text-[#00b37e] uppercase tracking-[0.15em] opacity-80">{creator.shopName}</span>
+            </div>
+            <span className="w-0.5 h-0.5 bg-white/10 rounded-full"></span>
+            <span className="text-[7.5px] font-bold text-[#5b5b7b] uppercase tracking-widest whitespace-nowrap">Verified Creator</span>
+          </div>
+        </div>
+
+        {/* FINANCIAL DATA MODULE - ULTRA SLIM */}
+        <div className="ml-auto pr-4">
+          <div className="flex flex-col items-end gap-0.5 relative">
+            <span className="text-[7px] font-black text-[#5b5b7b] uppercase tracking-[0.4em] mb-0 flex items-center gap-1">
+              <TrendingUp size={8} className="text-[#00b37e] opacity-40" />
+              Est. Monthly Yield
+            </span>
+            <div className="relative group/revenue">
+              <div className="absolute -inset-x-2 -inset-y-0.5 bg-[#00b37e]/5 blur-lg rounded-xl opacity-0 group-hover/revenue:opacity-100 transition-opacity"></div>
+              <div className="flex items-baseline gap-1 relative">
+                <span className="text-lg font-black text-[#00b37e]/40 tabular-nums">R$</span>
+                <span className="text-2xl font-black text-[#00b37e] tracking-tighter tabular-nums drop-shadow-[0_0_15px_rgba(0,179,126,0.15)]">
+                  {creator.revenue.replace('R$ ', '')}
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* REVENUE SECTION - MOVED TO CENTER-RIGHT */}
-      <div className="ml-auto pr-12 flex items-center gap-4">
-        <div className="flex items-baseline gap-2.5">
-          <span className="text-[#00b37e] font-medium text-xl">$</span>
-          <span className="text-[#7f5af0]xl font-semibold text-[#00b37e] tracking-tight leading-none">{creator.revenue}</span>
-          <span className="text-[10px] font-medium text-[#5b5b7b] uppercase tracking-wider ml-1">/MÊS ESTIMADO</span>
+      {/* EXTERNAL LINK POD - ULTRA SCALE */}
+      <div className="relative group/link">
+        <div className="absolute inset-0 bg-[#3B82F6]/20 blur-xl rounded-full opacity-0 group-hover/link:opacity-100 transition-opacity"></div>
+        <div className="w-12 h-12 bg-white/[0.03] border border-white/10 rounded-lg flex items-center justify-center transition-all duration-500 group-hover:bg-[#3B82F6] group-hover:border-[#3B82F6] group-hover:shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+          <ExternalLink className="w-6 h-6 text-[#5b5b7b] group-hover:text-white transition-colors" />
         </div>
       </div>
     </div>
-
-    {/* ACTION BUTTON */}
-    <button
-      onClick={(e) => {
-        e.stopPropagation();
-        window.open(creator.profileUrl, '_blank');
-      }}
-      className="w-14 h-14 bg-[#14151a] border border-[#27272a] rounded-[22px] flex items-center justify-center group-hover:bg-[#3B82F6]/10 group-hover:border-[#3B82F6]/40 transition-all shadow-xl cursor-pointer"
-    >
-      <ExternalLink className="w-6 h-6 text-[#5b5b7b] group-hover:text-[#3B82F6] transition-colors" />
-    </button>
   </div>
 );
 
@@ -2187,7 +2312,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
   // Step 4 state (formerly Step 5)
   const [voiceGender, setVoiceGender] = useState<'fem' | 'masc'>('fem');
   const [selectedStepTone, setSelectedStepTone] = useState<string | null>(null);
-  const [takes, setTakes] = useState(['', '', '']);
+  const [takes, setTakes] = useState(['']);
 
   // Loading state
   const [isLoading, setIsLoading] = useState(false);
@@ -2230,6 +2355,8 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
       viral: false
     }))
   ];
+
+
 
   const scenarios = [
     { id: 'quarto', label: 'Quarto Aconchegante', icon: <Home className="w-5 h-5" /> },
@@ -2287,12 +2414,10 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
 
   const handleInfluencerSelect = (id: string) => {
     setSelectedInfluencer(id);
-    setTimeout(() => setStep(2), 400);
   };
 
   const handleProductSelect = (id: string) => {
     setSelectedProduct(id);
-    setTimeout(() => setStep(3), 400);
   };
 
   const handleGenerate = () => {
@@ -2317,129 +2442,304 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
 
   if (isLoading) {
     return (
-      <div className="fixed inset-0 z-[100] bg-[#0b0c10] flex flex-col items-center justify-center animate-in fade-in duration-700">
-        <div className="relative mb-12">
-          <div className="absolute inset-0 bg-[#3B82F6] rounded-full blur-[80px] opacity-20 animate-pulse scale-150"></div>
-          <div className="absolute inset-0 bg-[#3B82F6] rounded-full blur-[40px] opacity-30 animate-pulse"></div>
-          <div className="relative w-32 h-32 bg-[#14151a] border-2 border-[#1e1f26] rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(0,0,0,0.5)]">
-            <Brain className="w-14 h-14 text-[#8d8d99] animate-pulse" />
+      <div className="fixed inset-0 z-[200] bg-[#0B0B0E] flex flex-col items-center justify-center animate-in fade-in duration-1000 overflow-hidden">
+        {/* ATMOSPHERIC DEPTH LAYERS */}
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.08)_0%,transparent_70%)] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03] pointer-events-none"></div>
+
+        {/* TECHNICAL GRID SYSTEM */}
+        <div className="absolute inset-0 opacity-[0.1] pointer-events-none" style={{ backgroundImage: 'linear-gradient(#3B82F6 1px, transparent 1px), linear-gradient(90deg, #3B82F6 1px, transparent 1px)', backgroundSize: '60px 60px' }}></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0B0B0E] to-transparent opacity-60"></div>
+
+        {/* NEURAL CORE VISUALIZATION */}
+        <div className="relative mb-24 scale-125 md:scale-150">
+          {/* SYNAPTIC RINGS */}
+          <div className="absolute inset-0 w-48 h-48 -left-8 -top-8 border border-[#3B82F6]/20 rounded-full animate-[spin_10s_linear_infinite]"></div>
+          <div className="absolute inset-0 w-56 h-56 -left-12 -top-12 border border-[#8B5CF6]/10 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
+          <div className="absolute inset-0 w-40 h-40 -left-4 -top-4 border-2 border-dashed border-[#3B82F6]/5 rounded-full animate-[spin_20s_linear_infinite]"></div>
+
+          {/* INNER HUB */}
+          <div className="relative w-32 h-32 bg-[#14151a] border border-white/10 rounded-full flex items-center justify-center shadow-[0_0_80px_rgba(59,130,246,0.2)]">
+            <div className="absolute inset-0 bg-[#3B82F6]/5 rounded-full blur-xl animate-pulse"></div>
+            <Brain className="w-16 h-16 text-white animate-[pulse_2s_ease-in-out_infinite]" strokeWidth={1.5} />
+
+            {/* SCANNING RADAR */}
+            <div className="absolute inset-0 border-t-2 border-[#3B82F6] rounded-full animate-[spin_3s_linear_infinite]"></div>
+          </div>
+
+          {/* ORBITAL DATA NODES */}
+          {[0, 120, 240].map((deg) => (
+            <div
+              key={deg}
+              className="absolute w-2 h-2 bg-[#3B82F6] rounded-full shadow-[0_0_10px_#3B82F6] animate-pulse"
+              style={{
+                left: 'calc(50% - 4px)',
+                top: '-20px',
+                transformOrigin: '50% 84px',
+                transform: `rotate(${deg}deg)`
+              }}
+            ></div>
+          ))}
+        </div>
+
+        {/* PHASIC STATUS INTERFACE */}
+        <div className="relative z-10 flex flex-col items-center gap-8 w-full max-w-md px-8 text-center">
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-center gap-3 opacity-0">
+              <div className="w-2 h-2 bg-[#3B82F6] rounded-full animate-ping"></div>
+              <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.5em]">.</span>
+            </div>
+            <h2 className="text-2xl font-black text-white tracking-widest uppercase transition-all duration-1000 animate-in fade-in slide-in-from-bottom-2">
+              {loadingMessages[loadingPhase]}
+            </h2>
+          </div>
+
+          {/* HIGH-DYNAMIC PROGRESS BAR */}
+          <div className="w-full flex flex-col gap-3">
+            <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden relative border border-white/5">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent animate-[tech-shimmer_3s_infinite]"></div>
+              <div
+                className="h-full bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#3B82F6] relative transition-all duration-1000 ease-out"
+                style={{ width: `${(loadingPhase + 1) * 25}%` }}
+              >
+                <div className="absolute right-0 top-0 bottom-0 w-8 bg-white/40 blur-sm"></div>
+              </div>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-[8px] font-mono text-[#5b5b7b] uppercase tracking-widest">Sinc: 0x{((loadingPhase + 1) * 25).toString(16).toUpperCase()}_VALID</span>
+              <span className="text-[8px] font-mono text-[#5b5b7b] uppercase tracking-widest">{(loadingPhase + 1) * 25}%</span>
+            </div>
+          </div>
+
+          {/* TECHNICAL PROCESSING LOGS (SIMULATED CONSOLE) */}
+          <div className="w-full p-4 bg-black/40 border border-white/5 rounded-2xl font-mono text-left space-y-1.5 backdrop-blur-md">
+            <div className="flex items-center gap-3 text-[8px] text-[#3B82F6] font-black uppercase tracking-widest mb-1">
+              <Terminal className="w-3 h-3" /> System Logs // Real-time
+            </div>
+            <div className="space-y-1 opacity-40">
+              <p className="text-[8px] text-[#3B82F6] animate-in slide-in-from-left duration-300">{'>>'} INITIALIZING_NEURAL_SYNAPSE_LINK...</p>
+              {loadingPhase >= 1 && <p className="text-[8px] text-white animate-in slide-in-from-left duration-300">{'>>'} PARSING_AVATAR_FACIAL_MATRICS... [OK]</p>}
+              {loadingPhase >= 2 && <p className="text-[8px] text-white animate-in slide-in-from-left duration-300">{'>>'} MODULATING_ACOUSTIC_SYNTHESIS... [READY]</p>}
+              {loadingPhase >= 3 && <p className="text-[8px] text-[#00b37e] animate-in slide-in-from-left duration-300">{'>>'} EXPORTING_FINAL_RENDER_FRAME... [100%]</p>}
+              <p className="text-[8px] text-[#3B82F6] flex gap-1 items-center">{'>>'} EXEC_STATE: <span className="w-1 h-3 bg-[#3B82F6] animate-pulse"></span></p>
+            </div>
           </div>
         </div>
-        <h2 className="text-[#e1e1e6] text-xl font-medium tracking-tight mb-8">
-          {loadingMessages[loadingPhase]}
-        </h2>
-        <div className="flex items-center gap-2">
-          <div className="w-1.5 h-1.5 bg-[#5b5b7b] rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-          <div className="w-1.5 h-1.5 bg-[#5b5b7b] rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-          <div className="w-1.5 h-1.5 bg-[#5b5b7b] rounded-full animate-bounce"></div>
-        </div>
+
+        {/* SCANLINES OVERLAY */}
+        <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%),linear-gradient(90deg,rgba(255,0,0,0.02),rgba(0,255,0,0.01),rgba(0,0,255,0.02))] bg-[length:100%_2px,3px_100%] z-50"></div>
       </div>
     );
   }
 
   return (
-    <main className={`max-w-[1400px] mx-auto px-6 flex flex-col items-center ${step === 5 ? 'pt-12 pb-20' : 'py-12 md:py-20'}`}>
-      {/* Header Step Indicator */}
-      <div className={`text-center ${step === 5 ? 'mb-16' : 'mb-10'}`}>
-        <span className="text-[11px] font-black text-[#5b5b7b] uppercase tracking-[0.5em] mb-4 block opacity-80">
-          PASSO {step === 5 ? '4' : step} DE 4
-        </span>
-        {step !== 5 && (
-          <h1 className="text-[34px] font-black text-white tracking-tight">
-            {getStepTitle()}
-          </h1>
-        )}
-      </div>
+    <main className={`max-w-[1400px] mx-auto px-6 flex flex-col items-center relative ${step === 5 ? 'pt-12 pb-20' : 'py-12 md:py-20'}`}>
 
-      {/* Progress Bar */}
-      {step !== 5 && (
-        <div className="flex items-center gap-4 mb-20 w-full max-w-[640px] justify-center">
-          {[1, 2, 3, 4].map((s) => (
-            <div
-              key={s}
-              className={`h-[3px] flex-1 rounded-full transition-all duration-500 ${step >= s ? 'bg-[#3B82F6] shadow-[0_0_12px_rgba(81,66,245,0.5)]' : 'bg-[#33333a]'}`}
-            ></div>
-          ))}
+      {/* HOLOGRAPHIC STEP HEADER & TECHNICAL PROGRESS */}
+      <div className="w-full max-w-[1080px] mb-12 relative z-10">
+        <div className="flex flex-col md:flex-row items-end justify-between gap-6 mb-8">
+          <div className="flex flex-col">
+            <div className="flex items-center gap-3 mb-2 opacity-0">
+              <div className="w-2 h-2 bg-[#3B82F6] rounded-full"></div>
+              <span className="text-[10px] font-black text-[#3B82F6] uppercase tracking-[0.4em]">.</span>
+            </div>
+            <h1 className="text-4xl md:text-5xl font-black text-white tracking-tighter leading-none">
+              {getStepTitle()}
+            </h1>
+          </div>
+
+          <div className="flex items-baseline gap-4">
+            <div className="flex flex-col items-end">
+              <span className="text-[9px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] mb-1">Etapa do Processo</span>
+              <div className="flex items-baseline gap-1">
+                <span className="text-4xl font-black text-white tabular-nums tracking-tighter">{step === 5 ? '04' : `0${step}`}</span>
+                <span className="text-xl font-black text-[#5b5b7b]/40 tabular-nums">//</span>
+                <span className="text-xl font-black text-[#5b5b7b] tabular-nums">04</span>
+              </div>
+            </div>
+          </div>
         </div>
-      )}
+
+        {/* DATA-VIZ PROGRESS TIMELINE */}
+        <div className="relative h-[2px] w-full bg-white/5 rounded-full overflow-hidden">
+          <div
+            className="absolute inset-y-0 left-0 bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] shadow-[0_0_15px_rgba(59,130,246,0.5)] transition-all duration-1000 ease-out"
+            style={{ width: `${(step / 4) * 100}%` }}
+          >
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,rgba(255,255,255,0.4)_50%,transparent_100%)] animate-[shimmer_2s_infinite]"></div>
+          </div>
+        </div>
+      </div>
 
       {/* Step 1: Avatar / Influencer */}
       {step === 1 && (
-        <div className="w-full max-w-[1080px] bg-[#14151a] border border-[#1e1f26]/60 rounded-[56px] p-6 md:p-12 shadow-2xl flex flex-col animate-in fade-in slide-in-from-right duration-500">
+        <div className="w-full max-w-[1080px] bg-[#0B0B0E]/60 backdrop-blur-3xl border border-white/5 rounded-[48px] p-8 md:p-12 shadow-2xl flex flex-col animate-in fade-in slide-in-from-bottom-8 duration-700 relative overflow-hidden group/container">
+          {/* TECHNICAL BACKGROUND GRID */}
+          <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
+            <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <pattern id="grid-step1" width="40" height="40" patternUnits="userSpaceOnUse">
+                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="1" />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#grid-step1)" />
+            </svg>
+          </div>
+
           {selectedStyle === 'review' ? (
             <>
-              <div className="flex items-center justify-between mb-10">
-                <h2 className="text-2xl font-black text-white tracking-tight">Estilo POV</h2>
-                <button onClick={() => setStep(1)} className="text-[#5b5b7b] hover:text-white text-sm font-black flex items-center gap-2 transition-all">
+              <div className="flex items-center justify-between mb-12 relative z-10">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-10 bg-[#3B82F6]/10 rounded-xl flex items-center justify-center border border-[#3B82F6]/20">
+                    <Eye className="w-5 h-5 text-[#3B82F6]" />
+                  </div>
+                  <h2 className="text-2xl font-black text-white tracking-tight uppercase">POV Configuration</h2>
+                </div>
+                <button onClick={() => setStep(1)} className="px-5 py-2 rounded-xl bg-white/5 border border-white/10 text-[#5b5b7b] hover:text-white hover:bg-white/10 text-xs font-black flex items-center gap-2 transition-all group/back">
+                  <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                   Voltar
                 </button>
               </div>
 
-              <div className="w-full h-[1px] bg-[#33333a] mb-12"></div>
-
-              <div className="flex-1 flex flex-col items-center justify-center py-10 md:py-16 px-6 md:px-10 border-2 border-dashed border-[#1e1f26] rounded-[48px] bg-[#0b0c10] mb-12">
-                <div className="w-20 h-20 bg-[#24242a] rounded-full flex items-center justify-center mb-8 shadow-xl">
-                  <Eye className="w-10 h-10 text-[#8d8d99]" />
+              <div className="flex-1 flex flex-col items-center justify-center py-16 px-10 border border-white/5 rounded-[40px] bg-[#0B0B0E]/40 mb-12 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#3B82F6]/5 to-transparent"></div>
+                <div className="w-24 h-24 bg-[#14151a] rounded-full flex items-center justify-center mb-8 shadow-2xl border border-white/10 relative z-10">
+                  <Eye className="w-12 h-12 text-[#3B82F6] opacity-50" />
                 </div>
-                <p className="text-[#8d8d99] text-lg font-medium text-center max-w-[480px] leading-relaxed">
-                  Modo POV selecionado. O vídeo focará nas mãos e no produto.
+                <p className="text-[#8d8d99] text-xl font-medium text-center max-w-[500px] leading-relaxed relative z-10 tracking-tight">
+                  <span className="text-white">Modo POV detectado.</span> O sistema irá renderizar a perspectiva em primeira pessoa, focando na interação tátil com o produto.
                 </p>
               </div>
             </>
           ) : (
             <>
-              <div className="flex items-center justify-between mb-10">
-                <h2 className="text-2xl font-black text-white tracking-tight">Selecione o Influencer</h2>
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-12 relative z-10">
+                <div className="flex flex-col">
+                  <h2 className="text-3xl font-black text-white tracking-tighter uppercase mb-1">Select Identity</h2>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1 h-3 bg-[#3B82F6] rounded-full"></div>
+                    <span className="text-[10px] font-black text-[#8d8d99] tracking-[0.4em] uppercase opacity-70">Hardware Slot Authentication</span>
+                  </div>
+                </div>
+
+                {/* MECHANICAL HARDWARE TABS */}
+                <div className="bg-[#0B0B0E]/90 backdrop-blur-3xl p-1 rounded-2xl flex items-center border border-white/10 shadow-[inner_0_2px_4px_rgba(255,255,255,0.05)] relative overflow-hidden group/tabs">
+                  <div className="absolute inset-x-0 h-[1px] top-0 bg-gradient-to-r from-transparent via-[#3B82F6]/40 to-transparent"></div>
+                  {[
+                    { id: 'mulheres', label: 'Mulheres', icon: <User size={14} /> },
+                    { id: 'homens', label: 'Homens', icon: <User size={14} /> },
+                    { id: 'meus-avatares', label: 'Meus Avatares', icon: <Plus size={14} /> }
+                  ].map((tab) => (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id as any)}
+                      className={`flex items-center gap-3 px-8 py-3 rounded-xl text-[11px] font-black transition-all duration-700 relative group/tab ${activeTab === tab.id ? 'text-[#3B82F6] bg-[#3B82F6]/5' : 'text-[#5b5b7b] hover:text-white hover:bg-white/5'}`}
+                    >
+                      <span className={`${activeTab === tab.id ? 'opacity-100 scale-110' : 'opacity-40'} transition-all duration-500`}>{tab.icon}</span>
+                      <span className="relative z-10 uppercase tracking-[0.2em]">{tab.label}</span>
+                      {activeTab === tab.id && (
+                        <>
+                          <div className="absolute left-0 top-1/4 bottom-1/4 w-[2px] bg-[#3B82F6] rounded-full shadow-[0_0_10px_#3B82F6]"></div>
+                          <div className="absolute right-0 top-1/4 bottom-1/4 w-[2px] bg-[#3B82F6] rounded-full shadow-[0_0_10px_#3B82F6]"></div>
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#3B82F6]/10 to-transparent animate-pulse"></div>
+                        </>
+                      )}
+                    </button>
+                  ))}
+                </div>
               </div>
 
-              <div className="bg-[#0b0c10] p-1 rounded-2xl flex items-center mb-10 border border-[#1e1f26]">
-                <button
-                  onClick={() => setActiveTab('mulheres')}
-                  className={`flex-1 py-3.5 rounded-xl text-sm font-black transition-all ${activeTab === 'mulheres' ? 'bg-[#24242a] text-[#3B82F6]' : 'text-[#5b5b7b] hover:text-white'}`}
-                >
-                  Mulheres
-                </button>
-                <button
-                  onClick={() => setActiveTab('homens')}
-                  className={`flex-1 py-3.5 rounded-xl text-sm font-black transition-all ${activeTab === 'homens' ? 'bg-[#24242a] text-[#3B82F6]' : 'text-[#5b5b7b] hover:text-white'}`}
-                >
-                  Homens
-                </button>
-                <button
-                  onClick={() => setActiveTab('meus-avatares')}
-                  className={`flex-1 py-3.5 rounded-xl text-sm font-black transition-all ${activeTab === 'meus-avatares' ? 'bg-[#24242a] text-[#3B82F6]' : 'text-[#5b5b7b] hover:text-white'}`}
-                >
-                  Meus Avatares
-                </button>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 sm:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-16 relative z-10">
                 {currentInfluencers.map((inf) => (
                   <div
                     key={inf.id}
                     onClick={() => handleInfluencerSelect(inf.id)}
-                    className={`group relative aspect-[3/4] rounded-3xl overflow-hidden border-2 cursor-pointer transition-all duration-300 ${selectedInfluencer === inf.id ? 'border-[#3B82F6] ring-4 ring-[#3B82F6]/20 shadow-2xl shadow-[#3B82F6]/30' : 'border-[#1e1f26] hover:border-white/20'}`}
+                    className="relative group/card cursor-pointer"
                   >
-                    <img src={inf.image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={inf.name} />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-                    <div className="absolute bottom-5 left-5">
-                      <span className="text-white text-sm font-black tracking-tight">{inf.name}</span>
-                    </div>
+                    {/* ULTRA-PREMIUM ROTATING ORBITAL RING */}
                     {selectedInfluencer === inf.id && (
-                      <div className="absolute top-4 right-4 w-6 h-6 bg-[#3B82F6] rounded-full flex items-center justify-center shadow-lg border border-white/20">
-                        <div className="w-2.5 h-2.5 bg-white rounded-full"></div>
+                      <div className="absolute -inset-6 animate-in fade-in duration-1000">
+                        <div className="absolute inset-0 border-[1.5px] border-dashed border-[#3B82F6]/40 rounded-[48px] animate-[rotate-orbital_20s_linear_infinite]"></div>
+                        <div className="absolute inset-4 border-[1px] border-white/10 rounded-[40px] animate-[rotate-orbital_15s_linear_infinite_reverse]"></div>
+                        <div className="absolute -inset-10 bg-[#3B82F6]/10 blur-[60px] rounded-full animate-pulse"></div>
                       </div>
                     )}
+
+                    <div className={`relative aspect-[3.5/4.5] rounded-[40px] overflow-hidden border-2 transition-all duration-700 ${selectedInfluencer === inf.id ? 'border-[#3B82F6] shadow-[0_0_50px_rgba(59,130,246,0.3)] scale-[1.02]' : 'border-white/5 hover:border-white/20 hover:scale-[1.01]'}`}>
+
+                      {/* HARDWARE DECALS & ID OVERLAYS */}
+                      <div className="absolute top-8 left-8 z-20 flex flex-col gap-1 opacity-40">
+                        <span className="text-[7px] font-mono text-[#3B82F6] tracking-[2px]">SYS_ID_{inf.id.toUpperCase()}</span>
+                        <div className="w-12 h-[1px] bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
+                      </div>
+
+                      {/* IMAGE LAYER */}
+                      <img src={inf.image} className="w-full h-full object-cover transition-transform duration-[2000ms] group-hover/card:scale-110" alt={inf.name} />
+
+                      {/* BIO-SCAN RADIUS OVERLAY (HOVER ONLY) */}
+                      <div className="absolute inset-0 opacity-0 group-hover/card:opacity-100 transition-opacity duration-700 overflow-hidden">
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,rgba(59,130,246,0.1)_100%)]"></div>
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[180%] aspect-square border border-[#3B82F6]/10 rounded-full animate-[rotate-orbital_10s_linear_infinite]"></div>
+
+                        {/* TARGETING BRACKETS */}
+                        <div className="absolute top-1/4 left-1/4 w-8 h-8 border-t border-l border-[#3B82F6] animate-pulse"></div>
+                        <div className="absolute top-1/4 right-1/4 w-8 h-8 border-t border-r border-[#3B82F6] animate-pulse"></div>
+                        <div className="absolute bottom-1/4 left-1/4 w-8 h-8 border-b border-l border-[#3B82F6] animate-pulse"></div>
+                        <div className="absolute bottom-1/4 right-1/4 w-8 h-8 border-b border-r border-[#3B82F6] animate-pulse"></div>
+
+                        {/* SCANNER LINE */}
+                        <div className="absolute inset-x-0 h-[30%] bg-gradient-to-b from-[#3B82F6]/20 to-transparent -top-1/4 group-hover/card:animate-[scanline_3s_ease-in-out_infinite]"></div>
+                      </div>
+
+                      {/* GLASS EFFECT SYSTEM */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0E] via-[#0B0B0E]/20 to-transparent opacity-90 group-hover/card:opacity-70 transition-opacity"></div>
+
+                      {/* DATA LABEL POD */}
+                      <div className="absolute bottom-10 left-10 right-10">
+                        <div className="flex flex-col gap-1.5 translate-y-2 group-hover/card:translate-y-0 transition-transform duration-500">
+                          <div className="flex items-center gap-2">
+                            <div className="w-1.5 h-1.5 bg-[#3B82F6] rounded-full animate-pulse"></div>
+                            <span className="text-[9px] font-black text-[#8d8d99] uppercase tracking-[0.3em] font-mono">{inf.id.startsWith('w') ? 'NEURAL_UNIT_W' : 'NEURAL_UNIT_M'}</span>
+                          </div>
+                          <h3 className="text-3xl font-black text-white tracking-tighter leading-none uppercase group-hover/card:text-[#3B82F6] transition-colors">{inf.name}</h3>
+                        </div>
+                      </div>
+
+                      {/* ACTIVE STATUS & NEURAL SYNC */}
+                      {selectedInfluencer === inf.id && (
+                        <div className="absolute top-10 right-10 flex flex-col items-end gap-2">
+                          <div className="relative w-12 h-12 flex items-center justify-center">
+                            <div className="absolute inset-0 bg-[#3B82F6] blur-xl rounded-full animate-ping"></div>
+                            <div className="relative w-full h-full bg-[#3B82F6] rounded-full flex items-center justify-center border-2 border-white/40 shadow-[0_0_20px_#3B82F6]">
+                              <Check className="w-7 h-7 text-white" strokeWidth={4} />
+                            </div>
+                          </div>
+                          <span className="text-[7px] font-bold text-[#3B82F6] uppercase tracking-[0.2em] animate-pulse">Linked</span>
+                        </div>
+                      )}
+
+                      {/* CORNER CLIPS (CINEMATIC) */}
+                      <div className="absolute top-0 left-0 w-12 h-12 border-t-[3px] border-l-[3px] border-[#3B82F6]/20 rounded-tl-[40px] opacity-0 group-hover/card:opacity-100 transition-all duration-700 group-hover/card:top-2 group-hover/card:left-2"></div>
+                      <div className="absolute bottom-0 right-0 w-12 h-12 border-b-[3px] border-r-[3px] border-[#3B82F6]/20 rounded-br-[40px] opacity-0 group-hover/card:opacity-100 transition-all duration-700 group-hover/card:bottom-2 group-hover/card:right-2"></div>
+                    </div>
                   </div>
                 ))}
+
                 {activeTab === 'meus-avatares' && (
-                  <div className="col-span-full py-12 md:py-20 flex flex-col items-center justify-center border-2 border-dashed border-[#1e1f26] rounded-[48px] bg-[#0b0c10]/20">
-                    <div className="w-20 h-20 bg-[#14151a] rounded-full flex items-center justify-center mb-6 border border-[#1e1f26]">
-                      <Plus className="w-10 h-10 text-[#5b5b7b]" />
+                  <div className="col-span-full py-24 flex flex-col items-center justify-center border-[2px] border-dashed border-white/5 rounded-[56px] bg-white/[0.01] relative overflow-hidden group/new">
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#3B82F6]/10 via-transparent to-transparent opacity-0 group-hover/new:opacity-100 transition-opacity duration-1000"></div>
+                    <div className="relative w-32 h-32 mb-10">
+                      <div className="absolute inset-0 bg-[#3B82F6]/20 blur-3xl rounded-full animate-pulse"></div>
+                      <div className="relative w-full h-full bg-[#0B0B0E] rounded-full flex items-center justify-center border border-white/10 shadow-2xl group-hover/new:scale-110 transition-transform duration-700">
+                        <Plus className="w-16 h-16 text-[#3B82F6] animate-pulse" />
+                      </div>
                     </div>
-                    <p className="text-[#8d8d99] font-medium">Você ainda não criou nenhum avatar personalizado.</p>
-                    <button className="mt-6 px-8 py-3 bg-[#24242a] text-white rounded-xl text-sm font-black hover:bg-[#2a2a30] transition-all">
-                      Criar Novo Avatar
+                    <p className="text-[#8d8d99] text-xl font-medium tracking-tight mb-10 relative z-10 max-w-[400px] text-center leading-relaxed">Não foram detectadas <span className="text-white">assinaturas neurais</span> personalizadas nesta unidade de processamento.</p>
+                    <button className="px-12 py-5 bg-[#3B82F6] text-white rounded-[24px] text-base font-black hover:bg-[#2563EB] transition-all relative z-10 shadow-[0_15px_30px_rgba(59,130,246,0.3)] hover:scale-105 active:scale-95 group/btn">
+                      <span className="relative z-10 uppercase tracking-[0.2em] flex items-center gap-3">
+                        Initialize Bio-Upload
+                        <ChevronRight className="w-6 h-6 group-hover/btn:translate-x-2 transition-transform" />
+                      </span>
                     </button>
                   </div>
                 )}
@@ -2447,17 +2747,33 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
             </>
           )}
 
-          <div className="flex justify-end">
+          <div className="flex justify-between items-center relative z-10">
+            <div className="flex flex-col gap-1">
+              <span className="text-[9px] font-black text-[#5b5b7b] uppercase tracking-[0.4em]">Unit Verification Status</span>
+              <div className="flex items-center gap-2">
+                <div className={`w-2 h-2 rounded-full ${selectedInfluencer ? 'bg-[#00b37e] shadow-[0_0_8px_#00b37e]' : 'bg-[#5b5b7b]'} transition-colors`}></div>
+                <span className={`text-[10px] font-bold uppercase tracking-widest ${selectedInfluencer ? 'text-white' : 'text-[#5b5b7b]'}`}>
+                  {selectedInfluencer ? 'Signature Verified // Ready' : 'Awaiting Authentication'}
+                </span>
+              </div>
+            </div>
+
             <button
               onClick={() => setStep(2)}
               disabled={selectedStyle === 'influencer' && !selectedInfluencer}
-              className={`px-12 py-4 rounded-2xl text-base font-black flex items-center gap-3 transition-all ${(selectedStyle === 'review' || selectedInfluencer)
-                ? 'bg-[#3B82F6] text-white shadow-xl shadow-[#3B82F6]/30 hover:scale-[1.03]'
-                : 'bg-[#33333a] text-[#5b5b7b] cursor-not-allowed'
+              className={`px-16 py-6 rounded-[24px] text-lg font-black flex items-center gap-6 transition-all duration-700 relative overflow-hidden group/next ${(selectedStyle === 'review' || selectedInfluencer)
+                ? 'bg-white/10 backdrop-blur-xl border border-white/20 text-white shadow-[0_20px_40px_rgba(0,0,0,0.3)] hover:bg-white/20 hover:scale-[1.05] active:scale-95'
+                : 'bg-white/5 text-[#5b5b7b] border border-white/5 cursor-not-allowed opacity-40'
                 }`}
             >
-              Próximo
-              <ArrowRight className="w-6 h-6" />
+              <span className="relative z-10 uppercase tracking-[0.3em]">Prosseguir</span>
+              <div className="relative z-10 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover/next:bg-white/20 transition-colors">
+                <ArrowRight className="w-5 h-5 group-hover/next:translate-x-1 transition-transform" />
+              </div>
+
+              {(selectedStyle === 'review' || selectedInfluencer) && (
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover/next:animate-[tech-shimmer_2s_infinite]"></div>
+              )}
             </button>
           </div>
         </div>
@@ -2465,57 +2781,145 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
 
       {/* Step 2: Produto */}
       {step === 2 && (
-        <div className="w-full max-w-[1080px] bg-[#14151a] border border-[#1e1f26]/60 rounded-[56px] p-6 md:p-12 shadow-2xl flex flex-col animate-in fade-in slide-in-from-right duration-500">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0 mb-6 md:mb-8">
-            <h2 className="text-2xl font-black text-white tracking-tight">Selecione o Produto Viral</h2>
-            <button onClick={() => setStep(1)} className="text-[#5b5b7b] hover:text-white text-sm font-black flex items-center gap-2 transition-all">
-              Voltar
-            </button>
+        <div className="w-full max-w-[1200px] bg-[#0B0B0E]/90 backdrop-blur-3xl border border-white/10 rounded-[64px] p-8 md:p-16 shadow-[0_0_100px_rgba(0,0,0,0.5)] flex flex-col relative overflow-hidden animate-in fade-in zoom-in-95 duration-1000">
+
+          {/* HOLOGRAPHIC STAGE HEADER */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 relative z-10">
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-3 opacity-0">
+                <div className="px-3 py-1 bg-[#3B82F6]/10 border border-[#3B82F6]/30 rounded-full">
+                  <span className="text-[10px] font-black text-[#3B82F6] uppercase tracking-widest">.</span>
+                </div>
+              </div>
+              <h1 className="text-5xl font-black text-white tracking-tighter uppercase leading-none">
+                Selecione o <span className="text-[#3B82F6]">Produto Viral</span>
+              </h1>
+            </div>
+
+            <div className="flex flex-col items-end gap-3">
+              <div className="flex items-center gap-4 text-right">
+                <div className="flex flex-col">
+                  <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">Process Stage</span>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-4xl font-black text-white tracking-tighter tabular-nums">02</span>
+                    <span className="text-xl font-black text-[#1e1f26]">//</span>
+                    <span className="text-xl font-black text-[#5b5b7b] tabular-nums">04</span>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setStep(1)}
+                  className="group/back flex items-center justify-center w-14 h-14 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-500"
+                >
+                  <ChevronLeft className="w-6 h-6 text-[#5b5b7b] group-hover/back:text-white group-hover/back:-translate-x-1 transition-all" />
+                </button>
+              </div>
+
+              {/* DATA-VIZ PROGRESS TIMELINE */}
+              <div className="w-64 h-1.5 bg-white/5 rounded-full overflow-hidden relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[tech-shimmer_3s_infinite]"></div>
+                <div
+                  className="h-full bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] relative"
+                  style={{ width: '50%' }}
+                >
+                  <div className="absolute right-0 top-0 bottom-0 w-4 bg-white/40 blur-sm"></div>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <p className="text-[#5b5b7b] text-sm font-black mb-10 tracking-tight">Escolha um dos produtos em alta:</p>
-
-          <div className="max-h-[500px] overflow-y-auto custom-scrollbar pr-4 -mr-4 mb-12">
-            <div className="grid grid-cols-1 md:grid-cols-2 md:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="max-h-[560px] overflow-y-auto custom-scrollbar pr-4 -mr-4 mb-16 relative z-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {viralStepProducts.map((p) => (
                 <div
                   key={p.id}
                   onClick={() => handleProductSelect(p.id)}
-                  className={`group relative bg-[#24242a] border-2 rounded-[32px] overflow-hidden cursor-pointer transition-all duration-300 ${selectedProduct === p.id ? 'border-[#3B82F6] shadow-2xl shadow-[#3B82F6]/10' : 'border-[#1e1f26] hover:border-white/10'}`}
+                  className={`group relative bg-[#0B0B0E]/40 backdrop-blur-xl border-2 rounded-[40px] overflow-hidden cursor-pointer transition-all duration-700 transform-gpu hover:scale-[1.03] ${selectedProduct === p.id ? 'border-[#3B82F6] shadow-[0_0_50px_rgba(59,130,246,0.2)]' : 'border-white/5 hover:border-white/20'}`}
                 >
-                  <div className="aspect-square relative overflow-hidden bg-[#0b0c10]/40">
-                    <img src={p.image} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" alt={p.title} />
-                    <div className="absolute top-4 left-4">
+                  <div className="aspect-square relative overflow-hidden bg-black/40">
+                    <img src={p.image} className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 group-hover:rotate-1" alt={p.title} />
+
+                    {/* BIO-SCAN HOVER EFFECT */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                      <div className="absolute inset-x-0 h-[1px] bg-[#3B82F6]/50 top-0 animate-[scanline_2s_infinite]"></div>
+                      <div className="absolute top-4 right-4 w-12 h-12 border-t-2 border-r-2 border-[#3B82F6] opacity-40"></div>
+                      <div className="absolute bottom-4 left-4 w-12 h-12 border-b-2 border-l-2 border-[#3B82F6] opacity-40"></div>
+                    </div>
+
+                    {/* HARDWARE DECALS */}
+                    <div className="absolute top-4 left-4 flex flex-col gap-1 translate-x-[-10px] group-hover:translate-x-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
+                      <span className="text-[8px] font-mono text-[#3B82F6] bg-black/60 px-2 py-0.5 rounded border border-[#3B82F6]/30 uppercase tracking-tighter">SYS_ID_1048_X</span>
+                      <span className="text-[8px] font-mono text-white/40 bg-black/40 px-2 py-0.5 rounded border border-white/10 uppercase tracking-tighter">REF_PROD_V{p.id.slice(0, 4)}</span>
+                    </div>
+
+                    <div className="absolute bottom-4 right-4 translate-y-[10px] group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
                       {p.viral ? (
-                        <span className="px-3 py-1.5 bg-[#3B82F6] text-white text-[9px] font-black rounded-lg uppercase tracking-widest flex items-center gap-1 shadow-lg">
-                          {p.badge}
-                        </span>
+                        <div className="bg-[#3B82F6] px-3 py-1 rounded-full shadow-lg flex items-center gap-2">
+                          <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
+                          <span className="text-[9px] font-black text-white uppercase tracking-widest">{p.badge}</span>
+                        </div>
                       ) : (
-                        <span className="px-3 py-1.5 bg-[#14151a] text-white text-[9px] font-black rounded-lg uppercase tracking-widest flex items-center gap-1 border border-white/5 shadow-lg">
-                          <Flame className="w-2.5 h-2.5 text-[#ff8c00]" /> {p.badge}
-                        </span>
+                        <div className="bg-black/80 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full shadow-lg flex items-center gap-2">
+                          <Flame className="w-3 h-3 text-[#ff8c00]" />
+                          <span className="text-[9px] font-black text-white uppercase tracking-widest">{p.badge}</span>
+                        </div>
                       )}
                     </div>
+
+                    {/* ACTIVE SYNC OVERLAY */}
+                    {selectedProduct === p.id && (
+                      <div className="absolute inset-0 bg-[#3B82F6]/10 flex items-center justify-center animate-in fade-in duration-500">
+                        <div className="w-20 h-20 rounded-full border-2 border-[#3B82F6] border-t-transparent animate-spin"></div>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <Check className="text-[#3B82F6] w-10 h-10" strokeWidth={3} />
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <div className="p-6 pt-5 bg-[#0b0c10]/20">
-                    <h4 className="text-white text-[13px] font-black mb-3 line-clamp-2 leading-tight tracking-tight min-h-[32px] group-hover:text-[#3B82F6] transition-colors">{p.title}</h4>
-                    <span className="inline-block px-3 py-1 bg-[#00b37e]/10 text-[#00b37e] text-[9px] font-black rounded-md uppercase tracking-widest border border-[#00b37e]/20">
-                      Alta Demanda
-                    </span>
+
+                  <div className="p-8 relative bg-black/20">
+                    <h4 className="text-white text-[15px] font-black mb-4 line-clamp-2 leading-tight tracking-tight min-h-[40px] group-hover:text-[#3B82F6] transition-colors">{p.title}</h4>
+
+                    <div className="flex items-center justify-between">
+                      <div className="px-3 py-1 bg-[#00b37e]/10 border border-[#00b37e]/20 rounded-md">
+                        <span className="text-[9px] font-black text-[#00b37e] uppercase tracking-widest leading-none">Alta Demanda</span>
+                      </div>
+                      {selectedProduct === p.id && (
+                        <span className="text-[9px] font-black text-[#3B82F6] uppercase tracking-[0.2em] animate-pulse">Synchronized</span>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="flex justify-end">
+          <div className="flex justify-between items-center pt-12 border-t border-white/5 relative z-10">
+            <div className="flex flex-col gap-1">
+              <span className="text-[9px] font-black text-[#5b5b7b] uppercase tracking-[0.4em]">Hardware Link Ready</span>
+              <div className="flex items-center gap-2">
+                <div className={`w-2 h-2 rounded-full ${selectedProduct ? 'bg-[#00b37e] shadow-[0_0_8px_#00b37e]' : 'bg-[#5b5b7b]'} transition-colors`}></div>
+                <span className={`text-[10px] font-bold uppercase tracking-widest ${selectedProduct ? 'text-white' : 'text-[#5b5b7b]'}`}>
+                  {selectedProduct ? 'Data Packet Validated // Optimized' : 'Establishing Secure Link'}
+                </span>
+              </div>
+            </div>
+
             <button
               onClick={() => setStep(3)}
               disabled={!selectedProduct}
-              className={`px-12 py-4 rounded-2xl text-base font-black flex items-center gap-3 transition-all ${selectedProduct ? 'bg-[#3B82F6] text-white shadow-xl shadow-[#3B82F6]/30 hover:scale-[1.03]' : 'bg-[#33333a] text-[#5b5b7b] cursor-not-allowed'}`}
+              className={`px-16 py-6 rounded-[24px] text-lg font-black flex items-center gap-6 transition-all duration-700 relative overflow-hidden group/next ${selectedProduct
+                ? 'bg-white/10 backdrop-blur-xl border border-white/20 text-white shadow-[0_20px_40px_rgba(0,0,0,0.3)] hover:bg-white/20 hover:scale-[1.05] active:scale-95'
+                : 'bg-white/5 text-[#5b5b7b] border border-white/5 cursor-not-allowed opacity-40'
+                }`}
             >
-              Próximo
-              <ArrowRight className="w-6 h-6" />
+              <span className="relative z-10 uppercase tracking-[0.3em]">Prosseguir</span>
+              <div className="relative z-10 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover/next:bg-white/20 transition-colors">
+                <ArrowRight className="w-5 h-5 group-hover/next:translate-x-1 transition-transform" />
+              </div>
+
+              {selectedProduct && (
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover/next:animate-[tech-shimmer_2s_infinite]"></div>
+              )}
             </button>
           </div>
         </div>
@@ -2523,29 +2927,82 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
 
       {/* Step 3: Configuração Visual */}
       {step === 3 && (
-        <div className="w-full max-w-[1080px] bg-[#14151a] border border-[#1e1f26]/60 rounded-[56px] p-6 md:p-12 shadow-2xl flex flex-col animate-in fade-in slide-in-from-right duration-500">
-          <div className="flex items-center justify-between mb-10">
-            <h2 className="text-2xl font-black text-white tracking-tight">Configuração do Vídeo</h2>
-            <button onClick={() => setStep(3)} className="text-[#5b5b7b] hover:text-white text-sm font-black flex items-center gap-2 transition-all">
-              Voltar
-            </button>
+        <div className="w-full max-w-[1200px] bg-[#0B0B0E]/90 backdrop-blur-3xl border border-white/10 rounded-[64px] p-8 md:p-16 shadow-[0_0_100px_rgba(0,0,0,0.5)] flex flex-col relative overflow-hidden animate-in fade-in zoom-in-95 duration-1000">
+
+          {/* HOLOGRAPHIC STAGE HEADER */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 relative z-10">
+            <div className="flex flex-col gap-2">
+              <h1 className="text-5xl font-black text-white tracking-tighter uppercase leading-none">
+                Configuração <span className="text-[#3B82F6]">do Vídeo</span>
+              </h1>
+            </div>
+
+            <div className="flex flex-col items-end gap-3">
+              <div className="flex items-center gap-4 text-right">
+                <div className="flex flex-col">
+                  <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">Process Stage</span>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-4xl font-black text-white tracking-tighter tabular-nums">03</span>
+                    <span className="text-xl font-black text-[#1e1f26]">//</span>
+                    <span className="text-xl font-black text-[#5b5b7b] tabular-nums">04</span>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setStep(2)}
+                  className="group/back flex items-center justify-center w-14 h-14 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-500"
+                >
+                  <ChevronLeft className="w-6 h-6 text-[#5b5b7b] group-hover/back:text-white group-hover/back:-translate-x-1 transition-all" />
+                </button>
+              </div>
+
+              {/* DATA-VIZ PROGRESS TIMELINE */}
+              <div className="w-64 h-1.5 bg-white/5 rounded-full overflow-hidden relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[tech-shimmer_3s_infinite]"></div>
+                <div
+                  className="h-full bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] relative"
+                  style={{ width: '75%' }}
+                >
+                  <div className="absolute right-0 top-0 bottom-0 w-4 bg-white/40 blur-sm"></div>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div className="mb-10">
-            <h3 className="text-[11px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] mb-5">CENÁRIO</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 sm:grid-cols-7 gap-4">
+          {/* ENVIRONMENT PODS (CENÁRIO) */}
+          <div className="mb-16 relative z-10">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="w-12 h-[1px] bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
+              <h3 className="text-[12px] font-black text-white uppercase tracking-[0.5em]">Ambiente // Cenário</h3>
+            </div>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-6">
               {scenarios.map((scen) => (
                 <button
                   key={scen.id}
                   onClick={() => setSelectedScenario(scen.id)}
-                  className={`flex flex-col items-center gap-3 group transition-all`}
+                  className="flex flex-col items-center gap-4 group/pod perspective-1000"
                 >
-                  <div className={`w-full aspect-square bg-[#0b0c10] border-2 rounded-2xl flex items-center justify-center transition-all ${selectedScenario === scen.id ? 'border-[#3B82F6] bg-[#3B82F6]/5' : 'border-[#1e1f26] hover:border-white/20'}`}>
-                    <div className={`transition-colors ${selectedScenario === scen.id ? 'text-[#3B82F6]' : 'text-[#5b5b7b] group-hover:text-white'}`}>
-                      {scen.icon}
+                  <div className={`relative w-full aspect-square rounded-[32px] flex items-center justify-center transition-all duration-700 transform-gpu group-hover/pod:scale-105 group-active/pod:scale-95 ${selectedScenario === scen.id ? 'bg-[#3B82F6]/10 border-2 border-[#3B82F6] shadow-[0_0_30px_rgba(59,130,246,0.2)]' : 'bg-[#0B0B0E] border border-white/5 hover:border-white/20'}`}>
+
+                    {/* POD SCANNER EFFECT */}
+                    {selectedScenario === scen.id && (
+                      <div className="absolute inset-0 overflow-hidden rounded-[30px]">
+                        <div className="absolute inset-x-0 h-[2px] bg-[#3B82F6]/40 top-0 animate-[scanline_2s_infinite]"></div>
+                      </div>
+                    )}
+
+                    <div className={`relative z-10 transition-all duration-500 ${selectedScenario === scen.id ? 'text-[#3B82F6] scale-125' : 'text-[#5b5b7b] group-hover/pod:text-white'}`}>
+                      {React.cloneElement(scen.icon as React.ReactElement, { size: 32, strokeWidth: 1.5 })}
                     </div>
+
+                    {/* SELECTION INDICATOR */}
+                    {selectedScenario === scen.id && (
+                      <div className="absolute -top-2 -right-2 w-6 h-6 bg-[#3B82F6] rounded-full flex items-center justify-center border-2 border-[#0B0B0E] shadow-lg">
+                        <Check size={12} className="text-white" strokeWidth={4} />
+                      </div>
+                    )}
                   </div>
-                  <span className={`text-[10px] font-bold text-center leading-tight transition-colors ${selectedScenario === scen.id ? 'text-white' : 'text-[#5b5b7b] group-hover:text-white'}`}>
+                  <span className={`text-[10px] font-black text-center uppercase tracking-widest transition-colors duration-500 ${selectedScenario === scen.id ? 'text-white' : 'text-[#8d8d99] group-hover/pod:text-white'}`}>
                     {scen.label}
                   </span>
                 </button>
@@ -2553,68 +3010,136 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
             </div>
           </div>
 
-          <div className="mb-10">
-            <h3 className="text-[11px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] mb-5">MODELO DO VÍDEO</h3>
-            <div className="grid grid-cols-1 md:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {/* NEURAL PROCESSING MODULES (MODELO DO VÍDEO) */}
+          <div className="mb-16 relative z-10">
+            <div className="flex items-center gap-4 mb-8">
+              <div className="w-12 h-[1px] bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
+              <h3 className="text-[12px] font-black text-white uppercase tracking-[0.5em]">Processamento // Template</h3>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {videoModels.map((model) => (
                 <button
                   key={model.id}
                   onClick={() => setSelectedVideoModel(model.id)}
-                  className={`flex flex-col items-start p-6 bg-[#0b0c10] border-2 rounded-2xl transition-all text-left ${selectedVideoModel === model.id ? 'border-[#3B82F6] bg-[#3B82F6]/5' : 'border-[#1e1f26] hover:border-white/10'}`}
+                  className={`group/model relative flex flex-col items-start p-8 rounded-[32px] border-2 transition-all duration-700 text-left overflow-hidden ${selectedVideoModel === model.id ? 'bg-[#3B82F6]/5 border-[#3B82F6] shadow-[0_0_40px_rgba(59,130,246,0.15)] scale-[1.02]' : 'bg-[#0B0B0E] border-white/5 hover:border-white/10'}`}
                 >
-                  <span className={`text-sm font-black mb-1 transition-colors ${selectedVideoModel === model.id ? 'text-[#3B82F6]' : 'text-white'}`}>
-                    {model.title}
-                  </span>
-                  <span className="text-[11px] font-bold text-[#5b5b7b]">
-                    {model.description}
-                  </span>
-                </button>
-              ))}
-            </div>
-          </div>
+                  {/* ACTIVE MODULE GLOW */}
+                  {selectedVideoModel === model.id && (
+                    <div className="absolute inset-x-0 bottom-0 h-1 bg-[#3B82F6] shadow-[0_0_20px_#3B82F6] animate-pulse"></div>
+                  )}
 
-          <div className="mb-10">
-            <h3 className="text-[11px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] mb-5">TOM</h3>
-            <div className="flex flex-wrap gap-4">
-              {tones.map((tone) => (
-                <button
-                  key={tone.id}
-                  onClick={() => setSelectedTone(tone.id)}
-                  className={`flex items-center gap-2.5 px-6 py-3.5 bg-[#0b0c10] border-2 rounded-xl transition-all ${selectedTone === tone.id ? 'border-[#3B82F6] bg-[#3B82F6]/5 text-white' : 'border-[#1e1f26] text-[#8d8d99] hover:text-white hover:border-white/10'}`}
-                >
-                  <div className={`${selectedTone === tone.id ? 'text-[#3B82F6]' : 'text-current'}`}>
-                    {tone.icon}
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className={`w-2 h-2 rounded-full transition-colors ${selectedVideoModel === model.id ? 'bg-[#3B82F6] animate-pulse' : 'bg-[#1e1f26]'}`}></div>
+                    <span className={`text-sm font-black tracking-tight uppercase transition-colors ${selectedVideoModel === model.id ? 'text-[#3B82F6]' : 'text-white/80 group-hover/model:text-white'}`}>
+                      {model.title}
+                    </span>
                   </div>
-                  <span className="text-xs font-black">{tone.label}</span>
+
+                  <p className="text-[11px] font-medium text-[#5b5b7b] leading-relaxed mb-6">
+                    {model.description}
+                  </p>
+
+                  <div className={`mt-auto flex items-center gap-2 opacity-0 group-hover/model:opacity-100 transition-opacity duration-500 ${selectedVideoModel === model.id ? 'opacity-100' : ''}`}>
+                    <span className="text-[8px] font-black text-[#3B82F6] uppercase tracking-[0.2em]">Neural Match</span>
+                    <div className="flex gap-0.5">
+                      {[1, 2, 3, 4].map(i => (
+                        <div key={i} className={`w-1 h-3 rounded-full ${i <= 3 ? 'bg-[#3B82F6]' : 'bg-[#1e1f26]'}`}></div>
+                      ))}
+                    </div>
+                  </div>
                 </button>
               ))}
             </div>
           </div>
 
-          <div className="mb-12">
-            <h3 className="text-[11px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] mb-5">DURAÇÃO</h3>
-            <div className="flex flex-wrap gap-4">
-              {durations.map((dur) => (
-                <button
-                  key={dur.id}
-                  onClick={() => setSelectedDuration(dur.id)}
-                  className={`flex items-center gap-2.5 px-6 py-3.5 bg-[#0b0c10] border-2 rounded-xl transition-all ${selectedDuration === dur.id ? 'border-[#3B82F6] bg-[#3B82F6]/5 text-white' : 'border-[#1e1f26] text-[#8d8d99] hover:text-white hover:border-white/10'}`}
-                >
-                  <Clock className={`w-4 h-4 ${selectedDuration === dur.id ? 'text-[#3B82F6]' : 'text-current'}`} />
-                  <span className="text-xs font-black">{dur.label}</span>
-                </button>
-              ))}
+          {/* SYNAPTIC TUNERS (TOM & DURAÇÃO) */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16 relative z-10">
+            <div>
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-8 h-[1px] bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
+                <h3 className="text-[12px] font-black text-white uppercase tracking-[0.5em]">Tonalidade // Sync</h3>
+              </div>
+              <div className="flex flex-wrap gap-4">
+                {tones.map((tone) => (
+                  <button
+                    key={tone.id}
+                    onClick={() => setSelectedTone(tone.id)}
+                    className={`flex items-center gap-3 px-8 py-4 rounded-2xl border-2 transition-all duration-500 relative overflow-hidden group/tone ${selectedTone === tone.id ? 'bg-[#3B82F6]/10 border-[#3B82F6] text-white shadow-lg' : 'bg-[#0B0B0E] border-white/5 text-[#8d8d99] hover:text-white hover:border-white/10'}`}
+                  >
+                    <div className={`transition-all duration-500 ${selectedTone === tone.id ? 'text-[#3B82F6] scale-125' : 'text-current opacity-40 group-hover/tone:opacity-100'}`}>
+                      {tone.icon}
+                    </div>
+                    <span className="text-xs font-black uppercase tracking-widest">{tone.label}</span>
+                    {selectedTone === tone.id && (
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#3B82F6]/10 to-transparent"></div>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-8 h-[1px] bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
+                <h3 className="text-[12px] font-black text-white uppercase tracking-[0.5em]">Temporal // Ciclo</h3>
+              </div>
+              <div className="flex flex-wrap gap-4">
+                {durations.map((dur) => (
+                  <button
+                    key={dur.id}
+                    onClick={() => setSelectedDuration(dur.id)}
+                    className={`flex items-center gap-3 px-8 py-4 rounded-2xl border-2 transition-all duration-500 relative overflow-hidden group/dur ${selectedDuration === dur.id ? 'bg-[#3B82F6]/10 border-[#3B82F6] text-white shadow-lg' : 'bg-[#0B0B0E] border-white/5 text-[#8d8d99] hover:text-white hover:border-white/10'}`}
+                  >
+                    <Clock className={`w-4 h-4 transition-all duration-500 ${selectedDuration === dur.id ? 'text-[#3B82F6] scale-125' : 'text-current opacity-40 group-hover/dur:opacity-100'}`} />
+                    <span className="text-xs font-black uppercase tracking-widest">{dur.label}</span>
+                    {selectedDuration === dur.id && (
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#3B82F6]/10 to-transparent"></div>
+                    )}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
 
-          <div className="flex justify-end pt-8 border-t border-[#1e1f26]">
+          {/* CINEMATIC NAVIGATION FOOTER */}
+          <div className="flex justify-between items-center pt-12 border-t border-white/5 relative z-10">
+            <div className="flex flex-col gap-1">
+              <span className="text-[9px] font-black text-[#5b5b7b] uppercase tracking-[0.4em]">Hardware Config Status</span>
+              <div className="flex items-center gap-2">
+                <div className={`w-2 h-2 rounded-full ${selectedScenario && selectedVideoModel && selectedTone && selectedDuration ? 'bg-[#00b37e] shadow-[0_0_8px_#00b37e]' : 'bg-[#5b5b7b]'} transition-colors`}></div>
+                <span className={`text-[10px] font-bold uppercase tracking-widest ${selectedScenario && selectedVideoModel && selectedTone && selectedDuration ? 'text-white' : 'text-[#5b5b7b]'}`}>
+                  {selectedScenario && selectedVideoModel && selectedTone && selectedDuration ? 'Config Optimized // Ready' : 'Pending Parameters'}
+                </span>
+              </div>
+            </div>
+
             <button
-              onClick={() => setStep(4)}
+              onClick={() => {
+                const count = parseInt(selectedDuration || '1') || 1;
+                setTakes(prev => {
+                  if (prev.length === count) return prev;
+                  if (prev.length < count) {
+                    return [...prev, ...Array(count - prev.length).fill('')];
+                  }
+                  return prev.slice(0, count);
+                });
+                setStep(4);
+              }}
               disabled={!selectedScenario || !selectedVideoModel || !selectedTone || !selectedDuration}
-              className={`px-12 py-4 rounded-2xl text-base font-black flex items-center gap-3 transition-all ${selectedScenario && selectedVideoModel && selectedTone && selectedDuration ? 'bg-[#3B82F6] text-white shadow-xl shadow-[#3B82F6]/30 hover:scale-[1.03]' : 'bg-[#33333a] text-[#5b5b7b] cursor-not-allowed'}`}
+              className={`px-16 py-6 rounded-[24px] text-lg font-black flex items-center gap-6 transition-all duration-700 relative overflow-hidden group/next ${selectedScenario && selectedVideoModel && selectedTone && selectedDuration
+                ? 'bg-white/10 backdrop-blur-xl border border-white/20 text-white shadow-[0_20px_40px_rgba(0,0,0,0.3)] hover:bg-white/20 hover:scale-[1.05] active:scale-95'
+                : 'bg-white/5 text-[#5b5b7b] border border-white/5 cursor-not-allowed opacity-40'
+                }`}
             >
-              Próximo
-              <ArrowRight className="w-6 h-6" />
+              <span className="relative z-10 uppercase tracking-[0.3em]">Prosseguir</span>
+              <div className="relative z-10 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover/next:bg-white/20 transition-colors">
+                <ArrowRight className="w-5 h-5 group-hover/next:translate-x-1 transition-transform" />
+              </div>
+
+              {(selectedScenario && selectedVideoModel && selectedTone && selectedDuration) && (
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/next:animate-[tech-shimmer_2s_infinite]"></div>
+              )}
             </button>
           </div>
         </div>
@@ -2622,227 +3147,343 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
 
       {/* Step 4: Roteiro & Voz */}
       {step === 4 && (
-        <div className="w-full max-w-[1080px] bg-[#14151a] border border-[#1e1f26]/60 rounded-[56px] p-6 md:p-12 shadow-2xl flex flex-col animate-in fade-in slide-in-from-right duration-500">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-0 mb-8 md:mb-12">
-            <h2 className="text-2xl font-black text-white tracking-tight">Áudio & Roteiro</h2>
-            <button onClick={() => setStep(3)} className="text-[#5b5b7b] hover:text-white text-sm font-black flex items-center gap-2 transition-all">
-              Voltar
-            </button>
-          </div>
+        <div className="w-full max-w-[1240px] bg-[#0B0B0E]/90 backdrop-blur-3xl border border-white/10 rounded-[64px] p-8 md:p-16 shadow-[0_0_100px_rgba(0,0,0,0.5)] flex flex-col relative overflow-hidden animate-in fade-in zoom-in-95 duration-1000">
 
-          <div className="grid grid-cols-1 md:grid-cols-1 md:grid-cols-2 gap-6 md:gap-12 mb-12">
-            <div>
-              <h3 className="text-[11px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] mb-5">VOZ DO AVATAR</h3>
-              <div className="bg-[#0b0c10] p-1 rounded-2xl flex items-center border border-[#1e1f26]">
-                <button
-                  onClick={() => setVoiceGender('fem')}
-                  className={`flex-1 py-3.5 rounded-xl text-xs font-black transition-all ${voiceGender === 'fem' ? 'bg-[#24242a] text-[#3B82F6]' : 'text-[#5b5b7b] hover:text-white'}`}
-                >
-                  Feminino
-                </button>
-                <button
-                  onClick={() => setVoiceGender('masc')}
-                  className={`flex-1 py-3.5 rounded-xl text-xs font-black transition-all ${voiceGender === 'masc' ? 'bg-[#24242a] text-[#3B82F6]' : 'text-[#5b5b7b] hover:text-white'}`}
-                >
-                  Masculino
-                </button>
+          {/* HOLOGRAPHIC STAGE HEADER */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 relative z-10">
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-3 opacity-0">
+                <div className="px-3 py-1 bg-[#3B82F6]/10 border border-[#3B82F6]/30 rounded-full">
+                  <span className="text-[10px] font-black text-[#3B82F6] uppercase tracking-widest">.</span>
+                </div>
               </div>
+              <h1 className="text-5xl font-black text-white tracking-tighter uppercase leading-none">
+                Roteiro <span className="text-[#3B82F6]">& Voz</span>
+              </h1>
             </div>
 
-            <div>
-              <h3 className="text-[11px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] mb-5">TONALIDADE</h3>
-              <div className="flex flex-wrap gap-3">
-                {voiceTones.map((tone) => (
-                  <button
-                    key={tone}
-                    onClick={() => setSelectedStepTone(tone)}
-                    className={`px-6 py-2.5 rounded-full text-xs font-black border-2 transition-all ${selectedStepTone === tone ? 'border-[#3B82F6] bg-[#3B82F6]/5 text-white shadow-lg' : 'border-[#1e1f26] text-[#5b5b7b] hover:border-white/10 hover:text-white'}`}
-                  >
-                    {tone}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="mb-12">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0 mb-6 md:mb-8">
-              <h3 className="text-[11px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">ROTEIRO (COPY)</h3>
-              <button className="flex items-center gap-2 px-5 py-2.5 bg-[#3B82F6]/10 border border-[#3B82F6]/20 text-[#3B82F6] rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-[#3B82F6]/20 transition-all">
-                <Wand2 className="w-3.5 h-3.5" />
-                Gerar com IA
-              </button>
-            </div>
-
-            <div className="grid grid-cols-1 gap-6">
-              {takes.map((take, index) => (
-                <div key={index} className="relative group">
-                  <div className="absolute -top-3 left-6 px-3 bg-[#14151a] text-[10px] font-black text-[#3B82F6] uppercase tracking-widest z-10 border border-[#1e1f26] rounded-full">
-                    Take {index + 1}
-                  </div>
-                  <textarea
-                    value={take}
-                    onChange={(e) => {
-                      const newTakes = [...takes];
-                      newTakes[index] = e.target.value.slice(0, 200);
-                      setTakes(newTakes);
-                    }}
-                    placeholder={`Digite o roteiro do take ${index + 1} aqui...`}
-                    className="w-full h-32 bg-[#0b0c10] border-2 border-[#1e1f26] rounded-[24px] p-5 md:p-8 text-sm text-white placeholder:text-[#44444f] focus:outline-none focus:border-[#3B82F6]/50 transition-all resize-none custom-scrollbar"
-                  />
-                  <div className="absolute bottom-4 right-6 text-[9px] font-black text-[#44444f] uppercase tracking-widest tabular-nums">
-                    {take.length} / 200
+            <div className="flex flex-col items-end gap-3">
+              <div className="flex items-center gap-4 text-right">
+                <div className="flex flex-col">
+                  <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">Process Stage</span>
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-4xl font-black text-white tracking-tighter tabular-nums">04</span>
+                    <span className="text-xl font-black text-[#1e1f26]">//</span>
+                    <span className="text-xl font-black text-[#5b5b7b] tabular-nums">04</span>
                   </div>
                 </div>
-              ))}
-            </div>
+                <button
+                  onClick={() => setStep(3)}
+                  className="group/back flex items-center justify-center w-14 h-14 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-500"
+                >
+                  <ChevronLeft className="w-6 h-6 text-[#5b5b7b] group-hover/back:text-white group-hover/back:-translate-x-1 transition-all" />
+                </button>
+              </div>
 
-            <div className="flex items-center gap-2 mt-6 text-[#44444f]">
-              <Info className="w-3.5 h-3.5" />
-              <span className="text-[10px] font-bold uppercase tracking-tight">O avatar falará exatamente este texto dividido pelos takes.</span>
+              {/* DATA-VIZ PROGRESS TIMELINE */}
+              <div className="w-64 h-1.5 bg-white/5 rounded-full overflow-hidden relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[tech-shimmer_3s_infinite]"></div>
+                <div
+                  className="h-full bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] relative"
+                  style={{ width: '100%' }}
+                >
+                  <div className="absolute right-0 top-0 bottom-0 w-4 bg-white/40 blur-sm"></div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div className="flex justify-center pt-8 border-t border-[#1e1f26]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16 relative z-10">
+            {/* HARDWARE VOICE MODULES */}
+            <div className="space-y-12">
+              <div>
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-8 h-[1px] bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
+                  <h3 className="text-[11px] font-black text-white uppercase tracking-[0.5em]">Gênero // Matriz</h3>
+                </div>
+                <div className="flex gap-4 p-2 bg-black/40 border border-white/5 rounded-3xl backdrop-blur-xl">
+                  {['fem', 'masc'].map((gender) => (
+                    <button
+                      key={gender}
+                      onClick={() => setVoiceGender(gender as 'fem' | 'masc')}
+                      className={`flex-1 py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-500 relative overflow-hidden group/gen ${voiceGender === gender ? 'text-white border border-[#3B82F6]/50 bg-[#3B82F6]/10' : 'text-[#5b5b7b] hover:text-white hover:bg-white/5'}`}
+                    >
+                      {gender === 'fem' ? 'Feminino' : 'Masculino'}
+                      {voiceGender === gender && <div className="absolute inset-0 bg-[#3B82F6]/5 shadow-[inset_0_0_20px_rgba(59,130,246,0.1)]"></div>}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-8 h-[1px] bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
+                  <h3 className="text-[11px] font-black text-white uppercase tracking-[0.5em]">Tonalidade // Modulação</h3>
+                </div>
+                <div className="flex flex-wrap gap-3">
+                  {voiceTones.map((tone) => (
+                    <button
+                      key={tone}
+                      onClick={() => setSelectedStepTone(tone)}
+                      className={`px-8 py-3.5 rounded-2xl text-[10px] font-black border-2 transition-all duration-500 uppercase tracking-widest ${selectedStepTone === tone ? 'border-[#3B82F6] bg-[#3B82F6]/10 text-white shadow-lg shadow-[#3B82F6]/10' : 'border-white/5 bg-black/40 text-[#5b5b7b] hover:border-white/20 hover:text-white'}`}
+                    >
+                      {tone}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* NEURAL SCRIPT ENGINE */}
+            <div className="space-y-8">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-4">
+                  <div className="w-8 h-[1px] bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
+                  <h3 className="text-[11px] font-black text-white uppercase tracking-[0.5em]">Neural Script Engine</h3>
+                </div>
+                <button className="px-4 py-2 bg-[#3B82F6]/10 border border-[#3B82F6]/20 text-[#3B82F6] rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-[#3B82F6]/20 transition-all flex items-center gap-2">
+                  <Sparkles className="w-3 h-3" /> IA Optimization
+                </button>
+              </div>
+
+              <div className="space-y-8 max-h-[450px] overflow-y-auto custom-scrollbar pr-4 pt-6 pb-4">
+                {takes.map((take, index) => (
+                  <div key={index} className="relative group/take animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div className="absolute -top-3 left-6 px-4 py-1 bg-[#0B0B0E] border border-white/10 rounded-full z-10 flex items-center gap-3 shadow-2xl">
+                      <span className="text-[9px] font-black text-[#3B82F6] uppercase tracking-widest leading-none">Module {index + 1}</span>
+                      {index > 0 && (
+                        <button
+                          onClick={() => setTakes(takes.filter((_, i) => i !== index))}
+                          className="text-[#ef4444] hover:scale-125 transition-transform"
+                        >
+                          <Trash2 className="w-3 h-3" />
+                        </button>
+                      )}
+                    </div>
+                    <textarea
+                      value={take}
+                      onChange={(e) => {
+                        const newTakes = [...takes];
+                        newTakes[index] = e.target.value.slice(0, 200);
+                        setTakes(newTakes);
+                      }}
+                      placeholder={`Initialize transcription for module ${index + 1}...`}
+                      className="w-full h-32 bg-black/40 backdrop-blur-xl border-2 border-white/5 rounded-[32px] p-8 text-sm text-white placeholder:text-[#5b5b7b]/30 focus:outline-none focus:border-[#3B82F6]/30 transition-all duration-500 resize-none font-medium leading-relaxed"
+                    />
+                    <div className="absolute bottom-6 right-8 flex items-center gap-4 opacity-40 group-hover/take:opacity-100 transition-opacity">
+                      <div className="w-[1px] h-3 bg-white/10"></div>
+                      <span className="text-[9px] font-mono text-[#5b5b7b] uppercase tracking-widest tabular-nums font-black">
+                        {take.length} // 200
+                      </span>
+                    </div>
+                  </div>
+                ))}
+
+                <button
+                  onClick={() => setTakes([...takes, ''])}
+                  className="w-full py-6 rounded-[32px] border-2 border-dashed border-white/5 hover:border-[#3B82F6]/30 hover:bg-[#3B82F6]/5 text-[#5b5b7b] hover:text-[#3B82F6] flex items-center justify-center gap-4 transition-all duration-500 group/add"
+                >
+                  <Plus className="w-6 h-6 group-hover/add:rotate-90 transition-transform duration-500" />
+                  <span className="text-xs font-black uppercase tracking-[0.2em]">Initialize Additional Module</span>
+                </button>
+              </div>
+
+              <div className="flex items-center gap-3 p-4 bg-white/5 rounded-2xl border border-white/5">
+                <Info className="w-4 h-4 text-[#3B82F6]" />
+                <p className="text-[10px] font-bold text-[#5b5b7b] uppercase tracking-wider leading-relaxed">
+                  Neural link established. Avatar will synthesize text with 99.8% synaptic accuracy.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex justify-between items-center pt-12 border-t border-white/5 relative z-10">
+            <div className="flex flex-col gap-1">
+              <span className="text-[9px] font-black text-[#5b5b7b] uppercase tracking-[0.4em]">Synthesis Ready Status</span>
+              <div className="flex items-center gap-2">
+                <div className={`w-2 h-2 rounded-full ${takes.every(t => t.length > 0) && selectedStepTone ? 'bg-[#00b37e] shadow-[0_0_8px_#00b37e]' : 'bg-[#5b5b7b]'} transition-colors`}></div>
+                <span className={`text-[10px] font-bold uppercase tracking-widest ${takes.every(t => t.length > 0) && selectedStepTone ? 'text-white' : 'text-[#5b5b7b]'}`}>
+                  {takes.every(t => t.length > 0) && selectedStepTone ? 'Neural Path Clear // Ready' : 'Awaiting Matrix Configuration'}
+                </span>
+              </div>
+            </div>
+
             <button
               onClick={handleGenerate}
               disabled={takes.some(t => !t) || !selectedStepTone}
-              className={`px-14 py-5 rounded-3xl text-base font-black flex items-center gap-3 transition-all ${takes.every(t => t) && selectedStepTone ? 'bg-[#94a3b8] text-black shadow-2xl hover:scale-[1.03]' : 'bg-[#33333a] text-[#5b5b7b] cursor-not-allowed'}`}
+              className={`px-16 py-6 rounded-[24px] text-lg font-black flex items-center gap-6 transition-all duration-700 relative overflow-hidden group/generate ${takes.every(t => t) && selectedStepTone
+                ? 'bg-white/10 backdrop-blur-xl border border-white/20 text-white shadow-[0_20px_40px_rgba(0,0,0,0.3)] hover:bg-white/20 hover:scale-[1.05] active:scale-95'
+                : 'bg-white/5 text-[#5b5b7b] border border-white/5 cursor-not-allowed opacity-40'
+                }`}
             >
-              <Sparkles className="w-6 h-6" />
-              Gerar Prompt & Visual
+              <span className="relative z-10 uppercase tracking-[0.3em]">Gerar Vídeo</span>
+              <div className="relative z-10 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover/generate:bg-white/20 transition-colors">
+                <Sparkles className="w-5 h-5 group-hover/generate:rotate-12 transition-transform" />
+              </div>
+
+              {(takes.every(t => t) && selectedStepTone) && (
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover/generate:animate-[tech-shimmer_2s_infinite]"></div>
+              )}
             </button>
           </div>
         </div>
       )}
 
-      {/* Step 5: Final Result (Workstation) */}
+      {/* Step 5: Final Result (Limpo e Profissional) */}
       {step === 5 && (
-        <div className="w-full max-w-[1240px] flex flex-col items-center animate-in fade-in zoom-in duration-700">
-          <div className="flex flex-col items-center text-center mb-16">
-            <div className="w-[52px] h-[52px] bg-[#00b37e]/10 border border-[#00b37e]/30 rounded-full flex items-center justify-center mb-10 shadow-[0_0_30px_rgba(0,179,126,0.1)]">
-              <CheckCircle2 className="w-6 h-6 text-[#00b37e]" />
+        <div className="w-full max-w-[1200px] flex flex-col items-center animate-in fade-in zoom-in duration-1000 relative z-10 px-4">
+
+          <div className="w-full flex flex-col items-center text-center mb-16">
+            <div className="w-16 h-16 bg-[#00b37e]/10 border border-[#00b37e]/30 rounded-full flex items-center justify-center mb-8 shadow-[0_0_30px_rgba(0,179,126,0.2)]">
+              <CheckCircle2 className="w-8 h-8 text-[#00b37e]" />
             </div>
-            <h1 className="text-[42px] font-black text-white tracking-tighter mb-4 leading-tight">
-              Direção de IA Pronta!
+            <h1 className="text-4xl md:text-5xl font-black text-white tracking-tighter mb-4 uppercase">
+              Sua Direção de IA está <span className="text-[#3B82F6]">Pronta!</span>
             </h1>
-            <p className="text-[#8d8d99] text-base font-medium opacity-70">
-              Seu storyboard técnico foi gerado. Siga o checklist ao lado para finalizar.
+            <p className="text-[#8d8d99] text-lg font-medium max-w-2xl">
+              Tudo pronto! Siga os passos abaixo para baixar seus arquivos e gerar seu vídeo no estúdio.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.35fr] gap-5 md:gap-8 w-full">
-            {/* Left side: Reference Images */}
-            <div className="flex flex-col gap-5 md:gap-8">
-              <div className="relative rounded-[32px] overflow-hidden group border border-white/5 shadow-[0_30px_60px_rgba(0,0,0,0.6)]">
-                <img
-                  src={allInfluencers.find(i => i.id === selectedInfluencer)?.image || allInfluencers[0].image}
-                  className="w-full aspect-[4/3.5] object-cover opacity-90 group-hover:opacity-100 transition-all duration-700"
-                  alt="Actor"
-                />
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none group-hover:pointer-events-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 w-full">
+            {/* Coluna da Esquerda: Arquivos para Baixar (4 cols) */}
+            <div className="lg:col-span-4 flex flex-col gap-6">
+              {/* AVATAR REPOSITORY CARD */}
+              <div className="relative group/asset rounded-[40px] overflow-hidden border border-white/5 bg-[#14151a] shadow-2xl transition-all duration-700 hover:border-[#3B82F6]/30">
+                <div className="absolute top-6 left-6 z-20 flex items-center gap-3">
+                  <div className="px-3 py-1 bg-black/60 backdrop-blur-md border border-white/10 rounded-full">
+                    <span className="text-[9px] font-mono text-[#3B82F6] uppercase tracking-[0.2em]">ID_AVATAR_{selectedInfluencer?.toUpperCase() || 'NULL'}</span>
+                  </div>
+                </div>
+
+                <div className="aspect-[4/3] relative overflow-hidden">
+                  <img
+                    src={allInfluencers.find(i => i.id === selectedInfluencer)?.image || allInfluencers[0].image}
+                    className="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-700"
+                    alt="Avatar"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                  <div className="absolute bottom-4 left-6">
+                    <span className="text-[10px] font-bold text-white/50 uppercase tracking-widest">Avatar Selecionado</span>
+                    <p className="text-white font-bold">{allInfluencers.find(i => i.id === selectedInfluencer)?.name || 'Modelo'}</p>
+                  </div>
+                </div>
+                <div className="p-5">
                   <button
                     onClick={() => {
                       const url = allInfluencers.find(i => i.id === selectedInfluencer)?.image || allInfluencers[0].image;
                       window.open(url, '_blank');
                     }}
-                    className="flex items-center gap-3 px-8 py-3.5 bg-[#0b0c10]/60 backdrop-blur-xl border border-white/10 rounded-full text-xs font-black text-white pointer-events-auto hover:bg-[#0b0c10]/80 transition-all"
+                    className="w-full py-4 bg-white hover:bg-[#3B82F6] text-black hover:text-white rounded-2xl text-xs font-black uppercase tracking-widest transition-all flex items-center justify-center gap-3 shadow-lg active:scale-95"
                   >
-                    <Download className="w-4 h-4" />
-                    Obter Ator em Alta (PNG)
+                    <Download className="w-4 h-4" strokeWidth={3} />
+                    Baixar Imagem PNG
                   </button>
-                </div>
-
-                <div className="absolute bottom-0 left-0 right-0 p-5 md:p-8 bg-gradient-to-t from-black via-black/40 to-transparent">
-                  <span className="text-[10px] font-black text-white/40 uppercase tracking-[0.25em] block mb-1">ATOR PRINCIPAL</span>
-                  <span className="text-xl font-black text-white tracking-tight leading-none">{allInfluencers.find(i => i.id === selectedInfluencer)?.name || 'Ana'}</span>
                 </div>
               </div>
 
-              <div className="relative rounded-[32px] overflow-hidden group border border-[#1e1f26] shadow-[0_30px_60px_rgba(0,0,0,0.6)] bg-[#14151a] flex flex-col min-h-[340px]">
-                <div className="flex-1 flex items-center justify-center p-6 md:p-12 relative">
+              {/* Card de Download do Produto */}
+              <div className="bg-[#14151a] border border-white/5 rounded-[32px] overflow-hidden group/card shadow-2xl">
+                <div className="h-48 bg-[#1a1b23] flex items-center justify-center p-8 relative overflow-hidden">
                   <img
                     src={viralStepProducts.find(p => p.id === selectedProduct)?.image || viralStepProducts[0].image}
-                    className="max-w-[180px] aspect-square object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)] opacity-90 group-hover:opacity-100 transition-all duration-700"
-                    alt="Product"
+                    className="max-w-full max-h-full object-contain drop-shadow-[0_15px_30px_rgba(0,0,0,0.5)] group-hover/card:scale-110 transition-transform duration-700"
+                    alt="Produto"
                   />
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none group-hover:pointer-events-auto">
-                    <button
-                      onClick={() => {
-                        const url = viralStepProducts.find(p => p.id === selectedProduct)?.image || viralStepProducts[0].image;
-                        window.open(url, '_blank');
-                      }}
-                      className="flex items-center gap-3 px-8 py-3.5 bg-[#0b0c10]/60 backdrop-blur-xl border border-white/10 rounded-full text-xs font-black text-white pointer-events-auto hover:bg-[#0b0c10]/80 transition-all"
-                    >
-                      <Download className="w-4 h-4" />
-                      Obter Produto em Alta (PNG)
-                    </button>
-                  </div>
+                  <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-black/40 to-transparent"></div>
                 </div>
-                <div className="p-5 md:p-8 pt-0">
-                  <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.25em] block mb-1">PRODUTO FOCO</span>
-                  <span className="text-xl font-black text-white tracking-tight leading-none">High Res Cutout</span>
+                <div className="p-5">
+                  <div className="mb-4">
+                    <span className="text-[10px] font-bold text-[#5b5b7b] uppercase tracking-widest">Produto Selecionado</span>
+                    <p className="text-white font-bold text-sm">Corte PNG (Transparente)</p>
+                  </div>
+                  <button
+                    onClick={() => {
+                      const url = viralStepProducts.find(p => p.id === selectedProduct)?.image || viralStepProducts[0].image;
+                      window.open(url, '_blank');
+                    }}
+                    className="w-full py-4 bg-white/5 hover:bg-white/10 text-white rounded-2xl text-xs font-black uppercase tracking-widest border border-white/5 transition-all flex items-center justify-center gap-3 active:scale-95"
+                  >
+                    <Download className="w-4 h-4" />
+                    Baixar Produto
+                  </button>
                 </div>
               </div>
             </div>
 
-            {/* Right side: Station / Checklist */}
-            <div className="bg-[#14151a] border border-[#1e1f26] rounded-[48px] p-6 md:p-10 lg:p-14 shadow-2xl relative">
-              <div className="flex items-center gap-3 mb-10">
-                <Stars className="w-5 h-5 text-[#3B82F6] fill-[#3B82F6]" />
-                <h3 className="text-[22px] font-black text-white tracking-tighter uppercase tracking-[0.1em]">Estação de Trabalho</h3>
-              </div>
-
-              <div className="flex flex-col gap-14 relative">
-                <div className="absolute left-[13px] top-6 bottom-6 w-[2px] bg-[#1c1c21]"></div>
-
-                {/* STEP 1 */}
-                <div className="flex items-start gap-5 md:gap-8 relative z-10">
-                  <div className="w-7 h-7 bg-[#1c1c21] border border-[#1e1f26] rounded-full flex items-center justify-center text-[11px] font-black text-[#44444f] shadow-lg">1</div>
-                  <div className="flex-1">
-                    <h4 className="text-[19px] font-black text-[#e1e1e6] mb-1.5 tracking-tight">Salvar Referências Visuais</h4>
-                    <p className="text-[#5b5b7b] text-sm font-medium leading-relaxed">Clique nas imagens ao lado para baixar os assets.</p>
+            {/* Coluna da Direita: Estação de Trabalho (8 cols) */}
+            <div className="lg:col-span-8">
+              <div className="bg-[#14151a]/60 backdrop-blur-3xl border border-white/5 rounded-[48px] p-8 md:p-14 shadow-2xl relative overflow-hidden group/station h-full">
+                {/* Cabeçalho Tech */}
+                <div className="flex items-center gap-4 mb-16 relative z-10">
+                  <div className="w-12 h-12 rounded-2xl bg-[#3B82F6]/10 border border-[#3B82F6]/30 flex items-center justify-center shadow-[0_0_20px_rgba(59,130,246,0.2)]">
+                    <Sparkles className="w-6 h-6 text-[#3B82F6]" />
                   </div>
+                  <h3 className="text-3xl font-black text-white uppercase tracking-tight">Estação de Trabalho</h3>
                 </div>
 
-                {/* STEP 2 */}
-                <div className="flex items-start gap-5 md:gap-8 relative z-10">
-                  <div className="w-7 h-7 bg-[#1c1c21] border border-[#1e1f26] rounded-full flex items-center justify-center text-[11px] font-black text-[#44444f] shadow-lg">2</div>
-                  <div className="flex-1">
-                    <h4 className="text-[19px] font-black text-[#e1e1e6] mb-1.5 tracking-tight">Roteiro de Direção (Veo 3)</h4>
-                    <p className="text-[#5b5b7b] text-sm font-medium leading-relaxed mb-10">3 takes de 8 segundos cada. Gere cada vídeo separadamente e junte na edição.</p>
+                <div className="flex flex-col gap-16 relative">
+                  {/* Linha Vertical de Conexão */}
+                  <div className="absolute left-[13px] top-6 bottom-6 w-[1.5px] bg-gradient-to-b from-[#3B82F6]/50 via-white/5 to-white/5"></div>
 
-                    <div className="flex flex-col gap-4">
-                      {[1, 2, 3].map((take) => (
-                        <div key={take} className="bg-[#1c1c21] border border-[#1e1f26] rounded-[24px] p-6 flex flex-col gap-5 group hover:border-[#3B82F6]/20 transition-all">
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                              <div className="w-2.5 h-2.5 bg-[#00b37e] rounded-full shadow-[0_0_10px_rgba(0,179,126,0.3)]"></div>
-                              <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.25em]">TAKE {take}/3</span>
-                            </div>
-                            <button className="text-[9px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] hover:text-white transition-colors underline underline-offset-[6px]">[Ver Prompt]</button>
-                          </div>
-
-                          <button className="w-full flex items-center justify-center gap-3 py-4 bg-[#8d8d99] hover:bg-[#a8a8b3] rounded-2xl text-[13px] font-black text-black transition-all shadow-lg active:scale-[0.98]">
-                            <ArrowUpRight className="w-4 h-4 stroke-[3px]" />
-                            Copiar Take {take}
-                          </button>
-                        </div>
-                      ))}
+                  {/* PASSO 01: SALVAR REFERÊNCIAS */}
+                  <div className="flex items-start gap-8 relative z-10 group/step">
+                    <div className="w-[26px] h-[26px] bg-black border-2 border-[#3B82F6] rounded-full flex items-center justify-center text-[10px] font-black text-[#3B82F6] shadow-[0_0_15px_rgba(59,130,246,0.4)] group-hover/step:scale-110 transition-transform">1</div>
+                    <div className="flex-1">
+                      <h4 className="text-xl font-bold text-white mb-2 uppercase tracking-tight">Salvar Referências Visuais</h4>
+                      <p className="text-[#5b5b7b] text-sm font-medium leading-relaxed uppercase tracking-wider">Clique nas imagens ao lado para baixar os assets.</p>
                     </div>
                   </div>
-                </div>
 
-                {/* STEP 3 */}
-                <div className="flex items-start gap-5 md:gap-8 relative z-10">
-                  <div className="w-7 h-7 bg-[#1c1c21] border border-[#1e1f26] rounded-full flex items-center justify-center text-[11px] font-black text-[#44444f] shadow-lg">3</div>
-                  <div className="flex-1 pt-1">
-                    <h4 className="text-[19px] font-black text-[#e1e1e6] mb-8 tracking-tight">Finalizar no Veo 3</h4>
-                    <button className="w-full py-5 bg-[#3B82F6] hover:bg-[#4338ca] text-white rounded-2xl font-black text-base flex items-center justify-center gap-3 shadow-[0_15px_40px_rgba(81,66,245,0.3)] transition-all hover:scale-[1.02] active:scale-[0.98]">
-                      <Video className="w-6 h-6 fill-current" />
-                      Abrir Veo Studio
-                      <ExternalLink className="w-5 h-5 opacity-40 ml-1" />
-                    </button>
+                  {/* PASSO 02: ROTEIRO DE DIREÇÃO */}
+                  <div className="flex items-start gap-8 relative z-10 group/step">
+                    <div className="w-[26px] h-[26px] bg-black border-2 border-white/10 rounded-full flex items-center justify-center text-[10px] font-black text-white/40 shadow-xl group-hover/step:border-[#3B82F6]/50 group-hover/step:text-[#3B82F6] transition-all">2</div>
+                    <div className="flex-1">
+                      <h4 className="text-xl font-bold text-white mb-2 uppercase tracking-tight">Roteiro de Direção (Veo 3)</h4>
+                      <p className="text-[#5b5b7b] text-sm font-medium leading-relaxed uppercase tracking-wider mb-8">
+                        {takes.length} takes de 8 segundos cada. Gere cada vídeo separadamente e junte na edição.
+                      </p>
+
+                      <div className="flex flex-col gap-5">
+                        {takes.map((text, idx) => (
+                          <div key={idx} className="bg-black/40 border border-white/5 rounded-[28px] p-6 flex flex-col gap-5 group/take transition-all hover:bg-black/60 hover:border-[#3B82F6]/30 shadow-lg">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-3">
+                                <div className="w-1.5 h-1.5 rounded-full bg-[#00b37e] animate-pulse shadow-[0_0_8px_#00b37e]"></div>
+                                <span className="text-[10px] font-black text-white/40 uppercase tracking-widest">Take {idx + 1} / {takes.length}</span>
+                              </div>
+                              <button className="text-[10px] font-black text-[#3B82F6] uppercase tracking-widest hover:underline opacity-60 hover:opacity-100 transition-opacity">
+                                [Ver Prompt]
+                              </button>
+                            </div>
+
+                            <button
+                              onClick={() => {
+                                navigator.clipboard.writeText(text);
+                              }}
+                              className="w-full flex items-center justify-center gap-3 py-4 bg-[#2a2b33] hover:bg-[#3B82F6] text-white/50 hover:text-white rounded-2xl text-[12px] font-black uppercase tracking-widest transition-all active:scale-95 group/btn"
+                            >
+                              <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                              Copiar Take {idx + 1}
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* PASSO 03: FINALIZAR NO VEO */}
+                  <div className="flex items-start gap-8 relative z-10 group/step">
+                    <div className="w-[26px] h-[26px] bg-black border-2 border-white/10 rounded-full flex items-center justify-center text-[10px] font-black text-white/40 shadow-xl group-hover/step:border-[#3B82F6]/50 group-hover/step:text-[#3B82F6] transition-all">3</div>
+                    <div className="flex-1">
+                      <h4 className="text-xl font-bold text-white mb-8 uppercase tracking-tight">Finalizar no Veo 3</h4>
+
+                      <button className="w-full py-6 bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] hover:scale-[1.02] text-white rounded-3xl font-black text-lg flex items-center justify-center gap-4 shadow-[0_20px_40px_rgba(59,130,246,0.3)] transition-all active:scale-[0.98] group/final">
+                        <Video className="w-7 h-7" />
+                        ABRIR VEO STUDIO
+                        <ExternalLink className="w-5 h-5 opacity-40 group-hover/final:opacity-100 transition-opacity" />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -2911,26 +3552,81 @@ const PrevisibilidadeReceitaView: React.FC = () => {
   ];
 
   return (
-    <main className="max-w-[1400px] mx-auto px-6 py-12 flex flex-col gap-6 md:gap-10">
-      <div>
-        <h1 className="text-[34px] font-black text-white tracking-tighter mb-2">Previsibilidade de Receita</h1>
-        <p className="text-[#8d8d99] text-base font-medium opacity-80">
-          Projete seus ganhos e descubra o poder de escala da sua operação no TikTok.
-        </p>
-      </div>
+    <main className="max-w-[1500px] mx-auto px-6 py-12 md:py-16 relative">
+      {/* RADICAL ASYMMETRIC HEADER - PROFIT MATRIX SYNC */}
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-20 relative z-10 bg-[#0B0B0E]/30 backdrop-blur-3xl p-10 rounded-[48px] border border-white/5 shadow-2xl overflow-hidden group">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#3B82F6]/5 via-transparent to-[#8B5CF6]/5 opacity-50"></div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_2.4fr] gap-5 md:gap-8 items-start">
-        {/* Left Column: Operation Config */}
-        <div className="flex flex-col gap-5 md:gap-8">
-          <div className="bg-[#14151a] border border-[#1e1f26] rounded-[40px] p-6 md:p-10 flex flex-col gap-6 md:gap-12 shadow-2xl">
-            <div className="flex items-center gap-4">
-              <div className="w-11 h-11 bg-[#14151a] border border-[#1e1f26] rounded-2xl flex items-center justify-center">
-                <Settings className="w-5 h-5 text-[#3B82F6]" />
+        {/* LEFT: TYPOGRAPHY SCULPTURE & PULSE */}
+        <div className="flex flex-col gap-6 flex-1 min-w-[400px] relative z-20">
+          <div className="relative">
+            {/* ARCHITECTURAL STATUS LINE */}
+            <div className="flex items-center gap-4 mb-4">
+              <div className="h-[1px] w-8 bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
+              <span className="text-[9px] font-black text-[#3B82F6] tracking-[0.4em] uppercase">Profit Matrix Alignment</span>
+              <div className="flex gap-1">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="w-1 h-1 bg-[#3B82F6]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
+                ))}
               </div>
-              <h3 className="text-[17px] font-black text-white tracking-tight">Configuração da Operação</h3>
             </div>
 
-            <div className="flex flex-col gap-6 md:gap-10">
+            <div className="relative">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[0.85] select-none">
+                <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent uppercase text-shadow-sm">Previsibilidade de</span>
+                <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent uppercase">Receita</span>
+              </h1>
+            </div>
+          </div>
+
+          <p className="text-[#8d8d99] text-sm md:text-base font-medium max-w-sm leading-relaxed border-l border-white/10 pl-6">
+            Projete seus ganhos e descubra o poder de <span className="text-white">escala cognitiva</span> da sua operação no TikTok.
+          </p>
+        </div>
+
+        {/* RIGHT: SYNERGIC MODULE CLUSTER */}
+        <div className="flex items-center justify-center lg:justify-end gap-6 flex-1 relative z-20">
+          <div className="relative group">
+            <div className="absolute inset-0 bg-[#3B82F6]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            <div className="w-40 h-40 backdrop-blur-3xl bg-white/[0.03] border border-white/10 rounded-[40px] p-6 flex flex-col items-center justify-center shadow-2xl transition-all duration-500 group-hover:scale-105">
+              <Activity className="w-6 h-6 text-[#3B82F6] mb-2 opacity-50" />
+              <span className="text-4xl font-black text-white tracking-tighter mb-1">98%</span>
+              <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">ACCURACY RATE</span>
+            </div>
+          </div>
+
+          <div className="relative group hidden sm:block">
+            <div className="absolute inset-0 bg-[#8B5CF6]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            <div className="w-32 h-32 backdrop-blur-3xl bg-white/[0.02] border border-white/5 rounded-[32px] p-6 flex flex-col items-center justify-center shadow-xl transition-all duration-500 group-hover:scale-105">
+              <Zap className="w-5 h-5 text-[#8B5CF6] mb-2 opacity-30" />
+              <span className="text-2xl font-black text-white tracking-tighter mb-1">PRO</span>
+              <span className="text-[7px] font-black text-[#5b5b7b] uppercase tracking-[0.2em]">MATRIX LEVEL</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_2fr] gap-8 items-start">
+        {/* Left Column: Operation Config - ATMOSPHERIC REVIVAL */}
+        <div className="flex flex-col gap-8 relative">
+          <div className="bg-[#0B0B0E]/60 backdrop-blur-3xl border border-white/10 rounded-[48px] p-8 md:p-12 flex flex-col gap-10 md:gap-14 shadow-[0_40px_100px_rgba(0,0,0,0.8)] relative overflow-hidden group">
+            {/* DECORATIVE LIGHTING */}
+            <div className="absolute -left-20 -top-20 w-40 h-40 bg-[#3B82F6]/5 blur-[80px] rounded-full pointer-events-none"></div>
+
+            <div className="flex items-center gap-4 relative z-10">
+              <div className="w-12 h-12 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center shadow-xl transition-transform group-hover:rotate-6">
+                <Settings className="w-6 h-6 text-[#3B82F6] filter drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
+              </div>
+              <div>
+                <h3 className="text-xl font-black text-white tracking-tight uppercase">Configuração da Operação</h3>
+                <div className="flex items-center gap-2 mt-1">
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#3B82F6] animate-pulse"></div>
+                  <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">Active Input Core</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-8 md:gap-12 relative z-10">
               <OperationSlider
                 icon={<Users className="w-4 h-4" />}
                 label="Contas TikTok"
@@ -2980,71 +3676,112 @@ const PrevisibilidadeReceitaView: React.FC = () => {
             </div>
           </div>
 
-          {/* Bottom Summary Tags */}
-          <div className="bg-[#14151a] border border-[#1e1f26] rounded-[32px] p-5 md:p-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 shadow-xl">
-            <div className="flex flex-col items-center">
-              <span className="text-[#7f5af0]xl font-black text-white leading-none">{accounts}</span>
-              <span className="text-[9px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] mt-2">CONTAS</span>
+          {/* Bottom Summary Tags - UNIFIED CAPSULE STYLE */}
+          <div className="bg-[#0B0B0E]/40 backdrop-blur-2xl border border-white/5 rounded-[32px] p-6 md:p-10 grid grid-cols-1 md:grid-cols-3 gap-6 shadow-2xl">
+            <div className="flex flex-col items-center group/tag">
+              <span className="text-4xl font-black text-white leading-none tracking-tighter group-hover:text-[#3B82F6] transition-colors">{accounts}</span>
+              <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.4em] mt-3">CONTAS</span>
             </div>
-            <div className="flex flex-col items-center border-x border-[#1e1f26]">
-              <span className="text-[#7f5af0]xl font-black text-white leading-none">{postsPerDay}</span>
-              <span className="text-[9px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] mt-2">POSTS/DIA</span>
+            <div className="flex flex-col items-center border-x border-white/5 px-6 group/tag">
+              <span className="text-4xl font-black text-white leading-none tracking-tighter group-hover:text-[#8B5CF6] transition-colors">{postsPerDay}</span>
+              <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.4em] mt-3">POSTS/DIA</span>
             </div>
-            <div className="flex flex-col items-center">
-              <span className="text-[#7f5af0]xl font-black text-[#3B82F6] leading-none">{monthlyPosts}</span>
-              <span className="text-[9px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] mt-2">POSTS/MÊS</span>
+            <div className="flex flex-col items-center group/tag">
+              <div className="relative">
+                <div className="absolute -inset-1 bg-[#3B82F6]/20 blur-lg rounded-full opacity-0 group-hover/tag:opacity-100 transition-opacity"></div>
+                <span className="relative text-4xl font-black text-[#3B82F6] leading-none tracking-tighter">{monthlyPosts}</span>
+              </div>
+              <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.4em] mt-3">POSTS/MÊS</span>
             </div>
           </div>
         </div>
 
-        {/* Right Column: Projections */}
-        <div className="flex flex-col gap-5 md:gap-8">
-          <div className="flex items-center gap-4">
-            <TrendingUp className="w-6 h-6 text-[#3B82F6]" />
-            <h3 className="text-xs font-black text-[#5b5b7b] uppercase tracking-[0.4em]">PROJEÇÕES DE FATURAMENTO MENSAL</h3>
+        {/* Right Column: Projections - HIGH PERFORMANCE */}
+        <div className="flex flex-col gap-10">
+          <div className="flex items-center gap-5 relative">
+            <div className="w-1 h-8 bg-gradient-to-b from-[#3B82F6] to-transparent"></div>
+            <h3 className="text-sm font-black text-[#8d8d99] uppercase tracking-[0.5em] leading-none">Projeções de Faturamento Mensal</h3>
+            <div className="flex-1 h-[1px] bg-gradient-to-r from-white/10 to-transparent"></div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 relative">
+            {/* AMBIANT GLOW FOR GRID */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[#3B82F6]/5 blur-[120px] rounded-full -z-10 pointer-events-none"></div>
+
             {projections.map((p) => (
               <div
                 key={p.id}
-                className={`relative bg-[#14151a] border border-[#1e1f26] rounded-[48px] p-6 md:p-10 flex flex-col h-[740px] transition-all duration-500 hover:scale-[1.02] shadow-2xl group ${p.isRecommended ? 'ring-2 ring-[#3B82F6]/30 shadow-[#3B82F6]/10' : ''}`}
+                className={`group relative bg-[#0B0B0E]/60 backdrop-blur-3xl border border-white/5 rounded-[64px] p-10 flex flex-col min-h-[680px] transition-all duration-700 hover:scale-[1.03] hover:-translate-y-2 shadow-2xl overflow-hidden ${p.isRecommended ? 'border-[#3B82F6]/30 shadow-[0_40px_100px_rgba(59,130,246,0.15)] ring-1 ring-[#3B82F6]/20' : 'hover:border-white/20'}`}
               >
-                <div className="flex items-center gap-3 mb-10">
-                  <div className="w-2.5 h-2.5 rounded-full bg-current opacity-40 group-hover:opacity-100 transition-opacity" style={{ color: p.id === 'conservador' ? '#5b5b7b' : p.id === 'moderado' ? '#3B82F6' : '#ff8c00' }}></div>
-                  <span className="text-base font-black text-white tracking-tight">{p.label}</span>
+                {/* SCAN LINE ANIMATION */}
+                <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#3B82F6] to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[scan-line_3s_linear_infinite] z-20"></div>
 
-                  {p.isRecommended && (
-                    <span className="text-[10px] font-black text-[#1E1B4B] uppercase tracking-[0.1em] ml-auto">RECOMMENDED</span>
-                  )}
-
-                  <span className={`px-2.5 py-1 bg-[#14151a] border border-[#1e1f26] text-[9px] font-bold text-[#5b5b7b] rounded-lg ${p.isRecommended ? 'ml-3' : 'ml-auto'}`}>{p.views}</span>
-                </div>
-
-                <div className="flex-1 flex flex-col items-center justify-center text-center">
-                  <span className="text-[11px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] mb-4">SUA COMISSÃO PREVISTA</span>
-                  <span className="text-[52px] font-black text-white tracking-tighter leading-none mb-2">
-                    {formatBRL(p.data.commission)}
-                  </span>
-                </div>
-
-                <div className="pt-10 border-t border-[#1e1f26] flex flex-col gap-6">
-                  <div className="flex items-end justify-between">
-                    <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">VENDAS</span>
-                    <span className="text-2xl font-black text-white tracking-tight">{p.data.sales}</span>
+                {/* STATUS BAR */}
+                <div className="flex flex-col gap-3 mb-10 relative z-10 transition-transform group-hover:translate-x-1">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2.5 h-2.5 rounded-full shadow-[0_0_10px_currentColor] animate-pulse" style={{ color: p.id === 'conservador' ? '#5b5b7b' : p.id === 'moderado' ? '#3B82F6' : '#ff8c00' }}></div>
+                    <span className="text-base font-black text-white tracking-tight uppercase leading-none">{p.label}</span>
                   </div>
-                  <div className="flex items-end justify-between">
-                    <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">FATURAMENTO TOTAL</span>
-                    <span className="text-xl font-black text-white tracking-tight leading-none">
-                      <span className="text-[#5b5b7b] text-sm mr-1">R$</span>
-                      {p.data.totalRevenue.toLocaleString('pt-BR', { maximumFractionDigits: 0 })}
+
+                  <div className="flex items-center gap-2">
+                    <span className="px-3 py-1 bg-white/5 border border-white/10 text-[9px] font-black text-[#5b5b7b] rounded-lg uppercase tracking-widest leading-none flex items-center h-6">{p.views}</span>
+                    {p.isRecommended && (
+                      <div className="px-3 py-1 bg-[#3B82F6]/10 border border-[#3B82F6]/30 rounded-full flex items-center h-6">
+                        <span className="text-[7px] font-black text-[#3B82F6] uppercase tracking-[0.1em]">Recommended</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex-1 flex flex-col items-center justify-center text-center relative z-10">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.05),transparent)] pointer-events-none scale-150"></div>
+
+                  <div className="flex items-center gap-4 mb-3 border-b border-white/5 pb-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#3B82F6]"></div>
+                    <span className="text-[11px] font-black text-[#5b5b7b] uppercase tracking-[0.4em]">Sua Comissão Prevista</span>
+                  </div>
+
+                  <div className="relative group/val">
+                    <div className="absolute inset-x-0 bottom-2 h-1/3 bg-[#3B82F6]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                    <span className="relative text-5xl font-black text-white tracking-tighter leading-none block mb-2 filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)]">
+                      {formatBRL(p.data.commission)}
                     </span>
                   </div>
+
+                  <div className="mt-8 px-5 py-2 bg-white/5 border border-white/10 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
+                    <div className="flex items-center gap-2">
+                      <TrendingUp className="w-3 h-3 text-[#3B82F6]" />
+                      <span className="text-[9px] font-black text-[#3B82F6] uppercase tracking-widest">Growth Matrix Active</span>
+                    </div>
+                  </div>
                 </div>
 
-                {p.isRecommended && (
-                  <div className="absolute inset-0 rounded-[48px] bg-gradient-to-b from-[#3B82F6]/[0.03] to-transparent pointer-events-none"></div>
-                )}
+                <div className="pt-10 border-t border-white/5 flex flex-col gap-6 relative z-10">
+                  <div className="flex items-end justify-between group/row">
+                    <div className="flex flex-col gap-1">
+                      <span className="text-[9px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] group-hover/row:text-white transition-colors">Vendas Totais</span>
+                      <div className="h-[1px] w-0 group-hover/row:w-6 bg-[#3B82F6] transition-all duration-500"></div>
+                    </div>
+                    <span className="text-2xl font-black text-white tracking-tight leading-none">{p.data.sales}</span>
+                  </div>
+
+                  <div className="flex items-end justify-between group/row">
+                    <div className="flex flex-col gap-1">
+                      <span className="text-[9px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] group-hover/row:text-white transition-colors">Faturamento Total</span>
+                      <div className="h-[1px] w-0 group-hover/row:w-10 bg-[#8B5CF6] transition-all duration-500"></div>
+                    </div>
+                    <div className="flex flex-col items-end">
+                      <span className="text-[8px] font-black text-[#8B5CF6] uppercase mb-1 tracking-widest">Bruto Estimado</span>
+                      <span className="text-xl font-black text-white tracking-tight leading-none bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">
+                        <span className="text-[#5b5b7b] text-xs mr-1">R$</span>
+                        {p.data.totalRevenue.toLocaleString('pt-BR', { maximumFractionDigits: 0 })}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* OVERLAY DECORATION */}
+                <div className="absolute inset-0 bg-gradient-to-b from-white/[0.02] to-transparent pointer-events-none"></div>
               </div>
             ))}
           </div>
@@ -3068,18 +3805,29 @@ const OperationSlider: React.FC<{
   suffix?: string;
   info?: string;
 }> = ({ icon, label, value, onChange, min, max, step = 1, prefix = '', suffix = '', info }) => (
-  <div className="flex flex-col gap-5">
+  <div className="flex flex-col gap-6 group/slider">
     <div className="flex items-center justify-between">
-      <div className="flex items-center gap-3">
-        <div className="text-[#3B82F6]">{icon}</div>
-        <span className="text-[13px] font-bold text-[#8d8d99] tracking-tight">{label}</span>
+      <div className="flex items-center gap-4">
+        <div className="w-10 h-10 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-[#3B82F6] shadow-lg group-hover/slider:scale-110 transition-transform">
+          {icon}
+        </div>
+        <div className="flex flex-col">
+          <span className="text-[13px] font-black text-white/90 uppercase tracking-tight">{label}</span>
+          {info && <span className="text-[9px] font-bold text-[#5b5b7b] uppercase tracking-wider">{info}</span>}
+        </div>
       </div>
-      <div className="px-4 py-1.5 bg-[#14151a] border border-[#1e1f26] rounded-xl text-xs font-black text-white">
+      <div className="px-5 py-2 bg-[#1E1B4B]/40 border border-[#3B82F6]/30 rounded-2xl text-[13px] font-black text-[#3B82F6] shadow-[0_0_20px_rgba(59,130,246,0.2)]">
         {prefix}{value}{suffix}
       </div>
     </div>
 
-    <div className="relative flex items-center h-6 group">
+    <div className="relative flex items-center h-8">
+      <div className="absolute inset-x-0 h-2 bg-white/5 rounded-full overflow-hidden">
+        <div
+          className="h-full bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] shadow-[0_0_15px_rgba(59,130,246,0.5)]"
+          style={{ width: `${((value - min) / (max - min)) * 100}%` }}
+        ></div>
+      </div>
       <input
         type="range"
         min={min}
@@ -3102,22 +3850,70 @@ const OperationSlider: React.FC<{
 // --- HACKS VIRAIS VIEW ---
 const HacksViraisView: React.FC<{ hacks: HackItem[], onSelectHack: (id: string) => void }> = ({ hacks, onSelectHack }) => {
   return (
-    <main className="max-w-[1400px] mx-auto px-6 py-12">
-      <div className="mb-14">
-        <h1 className="text-[44px] font-black text-white tracking-tighter mb-2 leading-none uppercase">
-          Hacks Virais
-        </h1>
-        <p className="text-[#8d8d99] text-base font-medium opacity-80">
-          Toque para explorar os estilos de vídeo que estão dominando o TikTok e batendo 2.000 seguidores em dias.
-        </p>
+    <main className="max-w-[1500px] mx-auto px-6 py-12 md:py-16 relative">
+      {/* RADICAL ASYMMETRIC HEADER - SYNCED WITH VIRAL SECTIONS */}
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-16 relative z-10 bg-[#0B0B0E]/30 backdrop-blur-3xl p-10 rounded-[48px] border border-white/5 shadow-2xl overflow-hidden group">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#3B82F6]/5 via-transparent to-[#8B5CF6]/5 opacity-50"></div>
+
+        {/* LEFT: TYPOGRAPHY SCULPTURE & PULSE */}
+        <div className="flex flex-col gap-6 flex-1 min-w-[400px] relative z-20">
+          <div className="relative">
+            {/* ARCHITECTURAL STATUS LINE */}
+            <div className="flex items-center gap-4 mb-4">
+              <div className="h-[1px] w-8 bg-gradient-to-r from-[#FACC15] to-transparent"></div>
+              <span className="text-[9px] font-black text-[#FACC15] tracking-[0.4em] uppercase">Intelligence Matrix Active</span>
+              <div className="flex gap-1">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="w-1 h-1 bg-[#FACC15]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
+                ))}
+              </div>
+            </div>
+
+            <div className="relative">
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none">
+                <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent uppercase">Hacks</span>
+                <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent uppercase">Virais</span>
+              </h1>
+            </div>
+          </div>
+
+          <p className="text-[#8d8d99] text-sm md:text-base font-medium max-w-sm leading-relaxed border-l border-white/10 pl-6">
+            Mapeamento de <span className="text-white">padrões comportamentais</span> que romperam as barreiras algoritmas globais.
+          </p>
+        </div>
+
+        {/* RIGHT: SYNERGIC STATS CLUSTER */}
+        <div className="flex items-center justify-center lg:justify-end gap-6 flex-1 relative z-20">
+          <div className="relative group">
+            <div className="absolute inset-0 bg-[#FACC15]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            <div className="w-40 h-40 backdrop-blur-3xl bg-white/[0.03] border border-white/10 rounded-[40px] p-6 flex flex-col items-center justify-center shadow-2xl transition-all duration-500 group-hover:scale-105">
+              <Zap className="w-6 h-6 text-[#FACC15] mb-2 opacity-50" />
+              <span className="text-4xl font-black text-white tracking-tighter mb-1">98%</span>
+              <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">PRECISÃO</span>
+            </div>
+          </div>
+
+          <div className="relative group hidden sm:block">
+            <div className="absolute inset-0 bg-[#3B82F6]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            <div className="w-32 h-32 backdrop-blur-3xl bg-white/[0.02] border border-white/5 rounded-[32px] p-6 flex flex-col items-center justify-center shadow-xl transition-all duration-500 group-hover:scale-105">
+              <TrendingUp className="w-5 h-5 text-[#3B82F6] mb-2 opacity-30" />
+              <span className="text-2xl font-black text-white tracking-tighter mb-1">+2K</span>
+              <span className="text-[7px] font-black text-[#5b5b7b] uppercase tracking-[0.2em]">DAY GAINS</span>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+        {/* AMBIANT BACKGROUND GLOWS */}
+        <div className="absolute top-1/4 -left-20 w-[400px] h-[400px] bg-[#3B82F6]/10 blur-[120px] rounded-full -z-10 pointer-events-none"></div>
+        <div className="absolute bottom-1/4 -right-20 w-[400px] h-[400px] bg-[#8B5CF6]/10 blur-[120px] rounded-full -z-10 pointer-events-none"></div>
+
         {hacks.map((hack) => (
           <div
             key={hack.id}
             onClick={() => onSelectHack(hack.id)}
-            className={`relative aspect-[3/4.5] rounded-[40px] overflow-hidden group cursor-pointer border transition-all duration-500 shadow-2xl ${hack.isHighlighted ? 'border-[#3B82F6] ring-1 ring-[#3B82F6]/40' : 'border-white/5 bg-[#14151a] hover:border-white/20'}`}
+            className="group relative aspect-[3/4.5] bg-[#0B0B0E]/40 backdrop-blur-2xl border border-white/5 rounded-[48px] overflow-hidden cursor-pointer transition-all duration-500 hover:border-[#3B82F6]/40 hover:shadow-[0_40px_80px_rgba(0,0,0,0.6)] hover:-translate-y-2"
           >
             {hack.image.endsWith('.mp4') ? (
               <video
@@ -3126,51 +3922,68 @@ const HacksViraisView: React.FC<{ hacks: HackItem[], onSelectHack: (id: string) 
                 loop
                 muted
                 playsInline
-                className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
               />
             ) : (
-              <img src={hack.image} className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700" alt={hack.title} />
+              <img
+                src={hack.image}
+                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                alt={hack.title}
+              />
             )}
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
 
-            {/* Emoji Badge */}
-            <div className="absolute top-8 left-8 w-12 h-12 bg-[#0b0c10]/40 backdrop-blur-md rounded-2xl flex items-center justify-center border border-white/10 shadow-xl">
-              <span className="text-xl">{hack.icon}</span>
+            {/* GRADIENT OVERLAYS */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0E] via-transparent to-black/20 opacity-80 group-hover:opacity-60 transition-opacity"></div>
+
+            {/* SCAN LINE ANIMATION */}
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#3B82F6] to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[scan-line_3s_linear_infinite] z-20"></div>
+
+            {/* EMOJI BADGE - PREMIUM POD */}
+            <div className="absolute top-8 left-8 w-14 h-14 bg-white/5 backdrop-blur-xl rounded-[20px] flex items-center justify-center border border-white/10 shadow-2xl transform transition-transform group-hover:rotate-12">
+              <span className="text-2xl drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">{hack.icon}</span>
             </div>
 
-            {/* Content Bottom */}
-            <div className="absolute bottom-10 left-10 right-10 flex flex-col gap-3">
-              <h3 className={`text-[28px] font-black text-white tracking-tight leading-tight ${hack.isHighlighted ? '' : 'mb-2'}`}>
-                {hack.title}
-              </h3>
+            {/* CONTENT CLUSTER */}
+            <div className="absolute bottom-10 left-10 right-10 flex flex-col gap-4 z-30">
+              <div className="space-y-2">
+                <div className="flex items-center gap-3">
+                  <div className="w-1 h-8 bg-gradient-to-b from-[#3B82F6] to-transparent"></div>
+                  <h3 className="text-3xl font-black text-white tracking-tighter leading-[0.9] uppercase group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-white/60 transition-all">
+                    {hack.title}
+                  </h3>
+                </div>
 
-              {hack.description && (
-                <p className="text-[#8d8d99] text-sm font-medium leading-relaxed mb-6 opacity-80">
-                  {hack.description}
-                </p>
-              )}
+                {hack.description && (
+                  <p className="text-[#8d8d99] text-[13px] font-medium leading-relaxed line-clamp-2 pl-4 border-l border-white/5 group-hover:border-[#3B82F6]/30 transition-colors">
+                    {hack.description}
+                  </p>
+                )}
+              </div>
 
               {hack.isHighlighted && (
-                <div className="flex items-center gap-3 group/link">
-                  <span className="text-[11px] font-black text-[#3B82F6] uppercase tracking-[0.2em]">VER HACKS AGORA</span>
-                  <div className="h-[1px] w-12 bg-[#3B82F6] opacity-60"></div>
+                <div className="flex items-center gap-4 mt-2 group/btn">
+                  <div className="relative h-12 flex-1">
+                    <div className="absolute inset-0 bg-[#3B82F6] rounded-2xl opacity-80 group-hover/btn:opacity-100 transition-opacity blur-[2px]"></div>
+                    <div className="absolute inset-0 bg-white/10 rounded-2xl border border-white/20"></div>
+                    <div className="relative h-full flex items-center justify-center gap-3 px-6">
+                      <span className="text-[10px] font-black text-white uppercase tracking-[0.2em]">Acessar Matrix</span>
+                      <Zap className="w-3 h-3 text-white animate-pulse" />
+                    </div>
+                  </div>
                 </div>
               )}
             </div>
 
             {hack.hasVeoBadge && (
-              <div className="absolute bottom-6 right-6">
-                <span className="text-[9px] font-black text-[#5b5b7b] uppercase tracking-[0.1em] opacity-40">Veo</span>
+              <div className="absolute top-8 right-8">
+                <div className="px-3 py-1 bg-white/5 backdrop-blur-sm rounded-full border border-white/10">
+                  <span className="text-[7px] font-black text-white/40 uppercase tracking-[0.2em]">Neural Veo</span>
+                </div>
               </div>
-            )}
-
-            {hack.isHighlighted && (
-              <div className="absolute inset-0 bg-gradient-to-b from-[#3B82F6]/[0.02] to-transparent pointer-events-none"></div>
             )}
           </div>
         ))}
       </div>
-
       <div className="h-24"></div>
     </main>
   );
@@ -3205,7 +4018,6 @@ const HacksViraisDetalheView: React.FC<{ hack: HackItem, onBack: () => void }> =
         style={{ backgroundColor: hack.bannerColor }}
       >
         {/* Decoration Gradient */}
-        <div className="absolute -right-20 -top-20 w-[400px] h-[400px] bg-white/5 blur-[120px] rounded-full"></div>
         <div className="absolute right-0 top-0 w-full h-full pointer-events-none">
           <div className="absolute right-12 top-12 opacity-10 blur-sm scale-150">
             <span className="text-[120px]">{hack.icon}</span>
@@ -3699,60 +4511,116 @@ const ComoCriarVideosUGCView: React.FC<{ onBack: () => void }> = ({ onBack }) =>
 // --- CREATOR ACADEMY VIEW (CLONED FROM ATTACHED IMAGES) ---
 const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = ({ onSelectModule }) => {
   return (
-    <main className="max-w-[1400px] mx-auto px-6 py-10 md:py-16 flex flex-col items-center">
-      {/* Title Section */}
-      <div className="text-center mb-16">
-        <h1 className="text-[48px] font-black text-white tracking-tighter mb-4 leading-none uppercase">Creator Academy</h1>
-        <p className="text-[#8d8d99] text-lg font-medium opacity-80">
-          O centro de conhecimento para escalar seu negócio no TikTok Shop.
-        </p>
-      </div>
+    <main className="max-w-[1500px] mx-auto px-6 py-12 md:py-16 relative">
+      {/* RADICAL ASYMMETRIC HEADER - KNOWLEDGE MATRIX SYNC */}
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-20 relative z-10 bg-[#0B0B0E]/30 backdrop-blur-3xl p-10 rounded-[48px] border border-white/5 shadow-2xl overflow-hidden group">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#3B82F6]/5 via-transparent to-[#8B5CF6]/5 opacity-50"></div>
 
-      {/* Hero Card */}
-      <div className="w-full relative bg-gradient-to-br from-[#16161A] via-[#1F2028] to-[#111114] border border-white/5 rounded-[48px] p-6 md:p-12 lg:p-20 overflow-hidden mb-24 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-16">
-        {/* Decoration */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#3B82F6]/5 to-transparent pointer-events-none"></div>
-        <div className="absolute right-[-100px] top-[-50px] w-[600px] h-[600px] bg-[#3B82F6]/10 blur-[150px] rounded-full pointer-events-none"></div>
+        {/* LEFT: TYPOGRAPHY SCULPTURE & PULSE */}
+        <div className="flex flex-col gap-6 flex-1 min-w-[400px] relative z-20">
+          <div className="relative">
+            {/* ARCHITECTURAL STATUS LINE */}
+            <div className="flex items-center gap-4 mb-4">
+              <div className="h-[1px] w-8 bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
+              <span className="text-[9px] font-black text-[#3B82F6] tracking-[0.4em] uppercase">Knowledge Matrix Syncing</span>
+              <div className="flex gap-1">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="w-1 h-1 bg-[#3B82F6]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
+                ))}
+              </div>
+            </div>
 
-        <div className="flex flex-col items-center lg:items-start max-w-2xl z-10">
-          <div className="flex items-center gap-3 px-5 py-2.5 bg-white/5 border border-white/10 rounded-full text-[10px] font-black text-white/50 uppercase tracking-[0.2em] mb-10">
-            <GraduationCap className="w-4 h-4 text-[#3B82F6]" />
-            Domine o TikTok Shop com aulas práticas e estratégias validadas.
+            <div className="relative">
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none">
+                <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent uppercase text-shadow-sm">Creator</span>
+                <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent uppercase">Academy</span>
+              </h1>
+            </div>
           </div>
 
-          <h2 className="text-[64px] font-black text-white tracking-tighter mb-8 leading-[0.9] text-center lg:text-left">
-            Guia Mestre de <br />
-            <span className="text-[#3B82F6]">TikTok Shop</span>
+          <p className="text-[#8d8d99] text-sm md:text-base font-medium max-w-sm leading-relaxed border-l border-white/10 pl-6">
+            O centro de <span className="text-white">inteligência cognitiva</span> para escalar sua operação no TikTok Shop com autoridade.
+          </p>
+        </div>
+
+        {/* RIGHT: SYNERGIC MODULE CLUSTER */}
+        <div className="flex items-center justify-center lg:justify-end gap-6 flex-1 relative z-20">
+          <div className="relative group">
+            <div className="absolute inset-0 bg-[#3B82F6]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            <div className="w-40 h-40 backdrop-blur-3xl bg-white/[0.03] border border-white/10 rounded-[40px] p-6 flex flex-col items-center justify-center shadow-2xl transition-all duration-500 group-hover:scale-105">
+              <BookOpen className="w-6 h-6 text-[#3B82F6] mb-2 opacity-50" />
+              <span className="text-4xl font-black text-white tracking-tighter mb-1">12</span>
+              <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">MÓDULOS</span>
+            </div>
+          </div>
+
+          <div className="relative group hidden sm:block">
+            <div className="absolute inset-0 bg-[#8B5CF6]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            <div className="w-32 h-32 backdrop-blur-3xl bg-white/[0.02] border border-white/5 rounded-[32px] p-6 flex flex-col items-center justify-center shadow-xl transition-all duration-500 group-hover:scale-105">
+              <Award className="w-5 h-5 text-[#8B5CF6] mb-2 opacity-30" />
+              <span className="text-2xl font-black text-white tracking-tighter mb-1">GOLD</span>
+              <span className="text-[7px] font-black text-[#5b5b7b] uppercase tracking-[0.2em]">ACCESS LEVEL</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Hero Card - ATMOSPHERIC REVIVAL */}
+      <div className="w-full relative bg-[#0B0B0E]/60 backdrop-blur-3xl border border-white/5 rounded-[64px] p-12 lg:p-20 overflow-hidden mb-32 shadow-[0_40px_100px_rgba(0,0,0,0.8)] flex flex-col lg:flex-row items-center justify-between gap-16 group">
+        {/* ATMOSPHERIC GLOWS */}
+        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#3B82F6] to-transparent opacity-30"></div>
+        <div className="absolute -left-40 top-1/2 -translate-y-1/2 w-80 h-80 bg-[#3B82F6]/10 blur-[120px] rounded-full pointer-events-none group-hover:opacity-100 transition-opacity animate-pulse"></div>
+
+        <div className="flex flex-col items-center lg:items-start max-w-2xl z-10">
+          <div className="flex items-center gap-3 px-6 py-3 bg-white/5 border border-white/10 rounded-full text-[10px] font-black text-[#3B82F6] uppercase tracking-[0.3em] mb-12 shadow-xl backdrop-blur-md">
+            <GraduationCap className="w-4 h-4" />
+            Estratégias de Elite Validadas
+          </div>
+
+          <h2 className="text-[64px] md:text-[84px] font-black text-white tracking-tighter mb-10 leading-[0.85] text-center lg:text-left">
+            Guia Mestre <br />
+            <span className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] bg-clip-text text-transparent uppercase">TikTok Shop</span>
           </h2>
 
-          <p className="text-[#8d8d99] text-xl font-medium mb-12 leading-relaxed text-center lg:text-left max-w-xl">
-            Explore as diretrizes oficiais e os atalhos validados para construir um ecossistema de vendas lucrativo.
+          <p className="text-[#8d8d99] text-lg md:text-xl font-medium mb-14 leading-relaxed text-center lg:text-left max-w-xl pl-6 border-l-2 border-[#3B82F6]/20 group-hover:border-[#3B82F6]/60 transition-colors">
+            O roadmap definitivo para dominar diretrizes e <span className="text-white">atalhos lucrativos</span> de um ecossistema de alta conversão.
           </p>
 
-          <button className="bg-white/10 hover:bg-white/20 border border-white/10 text-white px-6 md:px-10 py-5 rounded-2xl text-base font-black flex items-center gap-3 transition-all backdrop-blur-xl shadow-2xl">
-            COMEÇAR JORNADA
-            <ArrowRight className="w-5 h-5 text-[#3B82F6]" />
+          <button className="relative group/btn overflow-hidden h-16 px-12 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/10 transition-all hover:scale-[1.03] active:scale-95 shadow-2xl">
+            <div className="absolute inset-0 bg-[#3B82F6]/80 group-hover/btn:bg-[#3B82F6] transition-colors translate-y-full group-hover/btn:translate-y-0 duration-500"></div>
+            <div className="relative z-10 flex items-center gap-4 text-white font-black text-sm uppercase tracking-widest">
+              Começar Jornada
+              <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-2 transition-transform" />
+            </div>
           </button>
         </div>
 
-        {/* Illustration Placeholder */}
-        <div className="relative w-full max-w-[400px] aspect-square z-10 flex items-center justify-center">
-          <div className="absolute inset-0 bg-white/5 border border-white/10 rounded-[56px] shadow-inner rotate-3"></div>
-          <div className="relative w-full h-full bg-[#1c1c21] border border-white/10 rounded-[56px] shadow-2xl flex flex-col items-center justify-center -rotate-3 overflow-hidden">
-            <Rocket className="w-40 h-40 text-[#3B82F6]/20 mb-[-20px]" />
-            <div className="absolute bottom-[-20px] right-[-20px] opacity-10">
-              <LayoutGrid className="w-40 h-40 text-white" />
+        {/* ILLUSTRATION POD - CINEMATIC VERSION */}
+        <div className="relative w-full max-w-[450px] aspect-square z-10 flex items-center justify-center">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#3B82F6]/20 to-[#8B5CF6]/20 blur-[60px] rounded-full opacity-40 group-hover:opacity-60 transition-opacity"></div>
+          <div className="absolute inset-4 bg-white/5 border border-white/10 rounded-[64px] backdrop-blur-2xl shadow-inner group-hover:rotate-6 transition-transform duration-1000"></div>
+          <div className="relative w-full h-full bg-[#0B0B0E]/80 border border-white/10 rounded-[64px] shadow-2xl flex flex-col items-center justify-center group-hover:-rotate-3 transition-transform duration-1000 overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.1),transparent)]"></div>
+            <Rocket className="w-48 h-48 text-[#3B82F6] opacity-30 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700 filter drop-shadow-[0_0_30px_rgba(59,130,246,0.5)]" />
+            <div className="absolute bottom-10 right-10 opacity-20">
+              <LayoutGrid className="w-20 h-20 text-white animate-spin-slow" />
             </div>
           </div>
         </div>
       </div>
 
       {/* Module 1 */}
-      <div className="w-full mb-24">
-        <div className="flex items-center gap-5 mb-12">
-          <h2 className="text-[28px] font-black text-white tracking-tighter uppercase leading-none">Módulo 1</h2>
-          <span className="text-[11px] font-black text-[#3B82F6] uppercase tracking-[0.4em] pt-1">PASSOS INICIAIS</span>
-          <div className="flex-1 h-[1px] bg-white/5 ml-4"></div>
+      <div className="w-full mb-28 relative">
+        <div className="flex items-center gap-6 mb-16 relative">
+          <div className="flex items-center gap-4">
+            <div className="w-2 h-10 bg-gradient-to-b from-[#3B82F6] to-transparent"></div>
+            <h2 className="text-3xl font-black text-white tracking-tighter uppercase leading-none">Módulo 1</h2>
+          </div>
+          <div className="flex items-center gap-4 border-l border-white/10 pl-6 pt-1">
+            <div className="w-1.5 h-1.5 bg-[#3B82F6] rounded-full animate-pulse"></div>
+            <span className="text-[11px] font-black text-[#8d8d99] uppercase tracking-[0.4em]">Active Learning Path</span>
+          </div>
+          <div className="flex-1 h-[1px] bg-gradient-to-r from-white/10 to-transparent ml-4"></div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
@@ -3775,11 +4643,17 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
       </div>
 
       {/* Module 2 */}
-      <div className="w-full mb-32">
-        <div className="flex items-center gap-5 mb-12">
-          <h2 className="text-[28px] font-black text-white tracking-tighter uppercase leading-none">Módulo 2</h2>
-          <span className="text-[11px] font-black text-[#3B82F6] uppercase tracking-[0.4em] pt-1">IA & CONTEÚDO</span>
-          <div className="flex-1 h-[1px] bg-white/5 ml-4"></div>
+      <div className="w-full mb-32 relative">
+        <div className="flex items-center gap-6 mb-16 relative">
+          <div className="flex items-center gap-4">
+            <div className="w-2 h-10 bg-gradient-to-b from-[#8B5CF6] to-transparent"></div>
+            <h2 className="text-3xl font-black text-white tracking-tighter uppercase leading-none">Módulo 2</h2>
+          </div>
+          <div className="flex items-center gap-4 border-l border-white/10 pl-6 pt-1">
+            <div className="w-1.5 h-1.5 bg-[#8B5CF6] rounded-full animate-pulse"></div>
+            <span className="text-[11px] font-black text-[#8d8d99] uppercase tracking-[0.4em]">Expansion Vectors</span>
+          </div>
+          <div className="flex-1 h-[1px] bg-gradient-to-r from-white/10 to-transparent ml-4"></div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
@@ -3797,25 +4671,39 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
         </div>
       </div>
 
-      {/* Support Section */}
-      <div className="w-full relative bg-[#1c1c21]/50 border border-white/5 rounded-[48px] p-6 md:p-12 lg:p-20 overflow-hidden shadow-2xl flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12">
-        <div className="flex flex-col items-center md:items-start text-center md:text-left z-10">
-          <span className="px-5 py-2 bg-white/5 border border-white/10 rounded-full text-[9px] font-black text-white/40 uppercase tracking-[0.3em] mb-8">Canal Oferecido</span>
-          <h3 className="text-[52px] font-black text-white tracking-tighter leading-[0.9] mb-8">
+      {/* Support Section - FLAGSHIP STANDARD */}
+      <div className="w-full relative bg-[#0B0B0E]/60 backdrop-blur-3xl border border-white/10 rounded-[64px] p-12 lg:p-20 overflow-hidden shadow-2xl flex flex-col md:flex-row items-center justify-between gap-12 group">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#8B5CF6]/5 to-transparent pointer-events-none"></div>
+        <div className="absolute -right-40 bottom-0 w-[500px] h-[500px] bg-[#8B5CF6]/5 blur-[120px] rounded-full pointer-events-none group-hover:bg-[#8B5CF6]/10 transition-colors"></div>
+
+        <div className="flex flex-col items-center md:items-start text-center md:text-left z-10 max-w-lg">
+          <div className="flex items-center gap-3 px-5 py-2 bg-white/5 border border-white/10 rounded-full text-[9px] font-black text-[#8B5CF6] uppercase tracking-[0.3em] mb-10 shadow-lg">
+            <Star className="w-3 h-3" />
+            Knowledge Support Matrix
+          </div>
+          <h3 className="text-[52px] md:text-[64px] font-black text-white tracking-tighter leading-[0.85] mb-10 uppercase">
             Dúvidas ou <br />
-            <span className="text-[#3B82F6]">Dificuldades?</span>
+            <span className="bg-gradient-to-r from-[#3B82F6] to-[#d946ef] bg-clip-text text-transparent">Dificuldades?</span>
           </h3>
-          <p className="text-[#8d8d99] text-lg font-medium opacity-80 max-w-sm leading-relaxed">
-            Nossa equipe de especialistas está pronta para ajudar você a destravar seus resultados.
+          <p className="text-[#8d8d99] text-lg font-medium opacity-80 leading-relaxed pl-6 border-l-2 border-white/10 group-hover:border-[#8B5CF6]/30 transition-colors">
+            Nossa equipe de especialistas está operando em <span className="text-white">synch-time</span> para destravar seus resultados.
           </p>
         </div>
 
-        <div className="flex flex-col items-center md:items-end gap-6 z-10">
-          <button className="bg-[#3B82F6] hover:bg-[#4338ca] text-white px-6 md:px-10 py-5 rounded-2xl text-base font-black flex items-center gap-3 transition-all shadow-[0_20px_50px_rgba(81,66,245,0.3)] hover:scale-[1.03]">
-            <Mail className="w-6 h-6" />
-            Contatar Suporte
+        <div className="flex flex-col items-center md:items-end gap-10 z-10 w-full md:w-auto">
+          <button className="relative group/mail h-20 w-full md:w-[320px] rounded-2xl overflow-hidden transition-all hover:scale-[1.03] active:scale-95 shadow-3xl">
+            <div className="absolute inset-0 bg-[#3B82F6] shadow-[0_20px_50px_rgba(59,130,246,0.4)]"></div>
+            <div className="absolute inset-0 bg-black translate-y-full group-hover/mail:translate-y-0 transition-transform duration-500"></div>
+            <div className="relative h-full flex items-center justify-center gap-4 px-10">
+              <Mail className="w-6 h-6 text-white" />
+              <span className="text-sm font-black text-white uppercase tracking-[0.2em]">Contatar Suporte</span>
+            </div>
           </button>
-          <span className="text-[11px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">SUPORTETRENDFYAPP@GMAIL.COM</span>
+
+          <div className="flex flex-col items-center md:items-end gap-2 px-4 py-2 bg-white/5 border border-white/5 rounded-2xl backdrop-blur-md">
+            <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.4em] opacity-40">Direct Intelligence Channel</span>
+            <span className="text-[11px] font-black text-white/80 uppercase tracking-[0.3em]">SUPORTETRENDFYAPP@GMAIL.COM</span>
+          </div>
         </div>
       </div>
 
@@ -3827,22 +4715,41 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
 const AcademyCard: React.FC<{ title: string, description: string, isHighlighted?: boolean, onClick?: () => void }> = ({ title, description, isHighlighted, onClick }) => (
   <div
     onClick={onClick}
-    className={`bg-[#14151a] border rounded-[40px] p-6 md:p-10 flex flex-col justify-between group hover:border-[#3B82F6]/30 transition-all shadow-2xl h-[340px] cursor-pointer ${isHighlighted ? 'border-[#3B82F6]/20 ring-1 ring-[#3B82F6]/10' : 'border-white/5'}`}
+    className={`relative group h-[380px] cursor-pointer rounded-[48px] overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_40px_80px_rgba(0,0,0,0.6)] border transition-all ${isHighlighted ? 'border-[#3B82F6]/30 bg-[#0B0B0E]/60' : 'border-white/5 bg-[#0B0B0E]/40 hover:border-white/10'}`}
   >
-    <div className="flex flex-col items-start gap-5 md:gap-8">
-      <div className={`w-14 h-14 rounded-2xl flex items-center justify-center border border-white/5 transition-all shadow-xl ${isHighlighted ? 'bg-[#3B82F6] text-white' : 'bg-[#24242a] text-[#3B82F6]'}`}>
-        <FileText className="w-6 h-6" />
-      </div>
-      <div className="flex flex-col gap-4">
-        <h4 className="text-[22px] font-black text-white tracking-tight leading-[1.2] group-hover:text-[#3B82F6] transition-colors">{title}</h4>
-        <p className="text-[#8d8d99] text-sm font-medium leading-relaxed opacity-70 group-hover:opacity-100 transition-opacity">{description}</p>
-      </div>
-    </div>
+    {/* GLASS LAYER */}
+    <div className="absolute inset-0 backdrop-blur-3xl"></div>
 
-    <div className="flex items-center justify-between pt-10 border-t border-white/5 mt-auto">
-      <span className="text-[11px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] group-hover:text-white transition-colors">Ler Artigo</span>
-      <div className={`w-10 h-10 rounded-full border border-white/10 flex items-center justify-center transition-all group-hover:scale-110 ${isHighlighted ? 'bg-[#3B82F6] text-white border-none' : 'bg-white/5 text-[#5b5b7b] group-hover:text-white group-hover:bg-[#3B82F6]/10'}`}>
-        <ChevronRight className="w-5 h-5" />
+    {/* SCAN LINE ANIMATION */}
+    <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#3B82F6] to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[scan-line_3s_linear_infinite] z-20"></div>
+
+    <div className="relative z-10 p-10 h-full flex flex-col justify-between">
+      <div className="flex flex-col gap-8">
+        <div className={`w-16 h-16 rounded-[24px] flex items-center justify-center border transition-all duration-500 shadow-2xl ${isHighlighted ? 'bg-[#3B82F6] border-white/20 text-white rotate-6' : 'bg-white/5 border-white/10 text-[#3B82F6] group-hover:rotate-12 group-hover:bg-[#3B82F6]/10'}`}>
+          <FileText className="w-7 h-7" />
+        </div>
+
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
+            <div className={`w-1 h-6 transition-all duration-500 ${isHighlighted ? 'bg-white' : 'bg-[#3B82F6]/40 group-hover:bg-[#3B82F6]'}`}></div>
+            <h4 className="text-2xl font-black text-white tracking-tighter leading-tight uppercase group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-white/60 transition-all">
+              {title}
+            </h4>
+          </div>
+          <p className="text-[#8d8d99] text-sm font-medium leading-relaxed opacity-70 group-hover:opacity-100 transition-opacity pl-4">
+            {description}
+          </p>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between pt-8 border-t border-white/5">
+        <div className="flex items-center gap-4">
+          <div className="w-2 h-2 rounded-full bg-[#3B82F6] animate-pulse"></div>
+          <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] group-hover:text-white transition-colors">Acessar Módulo</span>
+        </div>
+        <div className={`w-12 h-12 rounded-2xl border flex items-center justify-center transition-all duration-500 group-hover:scale-110 shadow-xl ${isHighlighted ? 'bg-[#3B82F6] border-white/20 text-white' : 'bg-white/5 border-white/10 text-[#3B82F6] group-hover:bg-[#3B82F6] group-hover:text-white'}`}>
+          <ChevronRight className="w-6 h-6" />
+        </div>
       </div>
     </div>
   </div>
@@ -3854,79 +4761,136 @@ const GaleriaAvataresView: React.FC<{ onGoToMyAvatars: () => void; onCreateNew: 
   const [hoveredAvatarId, setHoveredAvatarId] = useState<string | null>(null);
 
   const avatars: AvatarItem[] = [
-    { id: 'av1', name: 'Ana', role: 'Lifestyle Creator', image: 'https://i.imgur.com/hrGOGFM.png', hoverImage: 'https://www.trendfyai.space/avatars/ana.gif', description: 'Ana é especialista em vlogs de lifestyle e rotina, perfeita para unboxings autênticos.' },
-    { id: 'av2', name: 'Fernanda', role: 'Beauty Expert', image: 'https://i.imgur.com/3mnJIzU.png', hoverImage: 'https://www.trendfyai.space/avatars/fernanda.gif', description: 'Fernanda domina o nicho de beleza e maquiagem, trazendo elegância e autoridade.' },
-    { id: 'av3', name: 'Carla', role: 'Fashion Specialist', image: 'https://i.imgur.com/gu8PLki.png', hoverImage: 'https://www.trendfyai.space/avatars/carla.gif', description: 'Carla é expert em moda e tendências, ideal para provadores e looks do dia.' },
-    { id: 'av4', name: 'Juliana', role: 'Home & Decor', image: 'https://i.imgur.com/gPcVAPz.png', hoverImage: 'https://www.trendfyai.space/avatars/juliana.gif', description: 'Juliana foca em organização e decoração de casa, ideal para utilidades domésticas.' },
-    { id: 'av5', name: 'Laura', role: 'Health & Wellness', image: 'https://i.imgur.com/rhvUP8G.png', hoverImage: 'https://www.trendfyai.space/avatars/laura.gif', description: 'Laura traz dicas de saúde e bem-estar, perfeita para produtos naturais e fitness.' },
-    { id: 'av6', name: 'Maria', role: 'Daily Vlog', image: 'https://i.imgur.com/6vg7fRq.png', hoverImage: 'https://www.trendfyai.space/avatars/maria.gif', description: 'Maria compartilha sua rotina diária, gerando forte conexão e confiança com o público.' },
-    { id: 'av7', name: 'Fábio', role: 'Tech Reviewer', image: 'https://i.imgur.com/5ymF1nv.png', hoverImage: 'https://www.trendfyai.space/avatars/fabio.gif', description: 'Fábio é especialista em reviews de tecnologia e gadgets, com visual moderno e técnico.' },
-    { id: 'av8', name: 'Henrique', role: 'Gadget Enthusiast', image: 'https://i.imgur.com/WDsko8P.png', hoverImage: 'https://www.trendfyai.space/avatars/henrique.gif', description: 'Henrique adora testar novidades tecnológicas com um visual despojado e autêntico.' },
-    { id: 'av9', name: 'Marcos', role: 'Fitness Coach', image: 'https://i.imgur.com/2NxpAmW.png', hoverImage: 'https://www.trendfyai.space/avatars/marcos.gif', description: 'Marcos é o avatar ideal para suplementos e equipamentos esportivos, transmitindo energia.' },
-    { id: 'av10', name: 'Matheus', role: 'Business & Finance', image: 'https://i.imgur.com/8LQB3BC.png', hoverImage: 'https://www.trendfyai.space/avatars/matheus.gif', description: 'Com visual executivo, Matheus é perfeito para cursos, ferramentas SaaS e consultorias.' },
-    { id: 'av11', name: 'Miguel', role: 'Cook & Foodie', image: 'https://i.imgur.com/loBeA7L.png', hoverImage: 'https://www.trendfyai.space/avatars/miguel.gif', description: 'Miguel traz autoridade e sabor para reviews de produtos de cozinha e alimentação.' },
-    { id: 'av12', name: 'Pedro', role: 'Lifestyle & Travel', image: 'https://i.imgur.com/Bziwg0O.png', hoverImage: 'https://www.trendfyai.space/avatars/pedro.gif', description: 'Pedro foca em lifestyle e viagens, ideal para produtos de uso externo e aventura.' },
+    { id: 'av1', name: 'Ana', role: 'Lifestyle Creator', image: 'https://i.imgur.com/hrGOGFM.png', hoverImage: 'https://www.trendlyai.space/avatars/ana.gif', description: 'Ana é especialista em vlogs de lifestyle e rotina, perfeita para unboxings autênticos.' },
+    { id: 'av2', name: 'Fernanda', role: 'Beauty Expert', image: 'https://i.imgur.com/3mnJIzU.png', hoverImage: 'https://www.trendlyai.space/avatars/fernanda.gif', description: 'Fernanda domina o nicho de beleza e maquiagem, trazendo elegância e autoridade.' },
+    { id: 'av3', name: 'Carla', role: 'Fashion Specialist', image: 'https://i.imgur.com/gu8PLki.png', hoverImage: 'https://www.trendlyai.space/avatars/carla.gif', description: 'Carla é expert em moda e tendências, ideal para provadores e looks do dia.' },
+    { id: 'av4', name: 'Juliana', role: 'Home & Decor', image: 'https://i.imgur.com/gPcVAPz.png', hoverImage: 'https://www.trendlyai.space/avatars/juliana.gif', description: 'Juliana foca em organização e decoração de casa, ideal para utilidades domésticas.' },
+    { id: 'av5', name: 'Laura', role: 'Health & Wellness', image: 'https://i.imgur.com/rhvUP8G.png', hoverImage: 'https://www.trendlyai.space/avatars/laura.gif', description: 'Laura traz dicas de saúde e bem-estar, perfeita para produtos naturais e fitness.' },
+    { id: 'av6', name: 'Maria', role: 'Daily Vlog', image: 'https://i.imgur.com/6vg7fRq.png', hoverImage: 'https://www.trendlyai.space/avatars/maria.gif', description: 'Maria compartilha sua rotina diária, gerando forte conexão e confiança com o público.' },
+    { id: 'av7', name: 'Fábio', role: 'Tech Reviewer', image: 'https://i.imgur.com/5ymF1nv.png', hoverImage: 'https://www.trendlyai.space/avatars/fabio.gif', description: 'Fábio é especialista em reviews de tecnologia e gadgets, com visual moderno e técnico.' },
+    { id: 'av8', name: 'Henrique', role: 'Gadget Enthusiast', image: 'https://i.imgur.com/WDsko8P.png', hoverImage: 'https://www.trendlyai.space/avatars/henrique.gif', description: 'Henrique adora testar novidades tecnológicas com um visual despojado e autêntico.' },
+    { id: 'av9', name: 'Marcos', role: 'Fitness Coach', image: 'https://i.imgur.com/2NxpAmW.png', hoverImage: 'https://www.trendlyai.space/avatars/marcos.gif', description: 'Marcos é o avatar ideal para suplementos e equipamentos esportivos, transmitindo energia.' },
+    { id: 'av10', name: 'Matheus', role: 'Business & Finance', image: 'https://i.imgur.com/8LQB3BC.png', hoverImage: 'https://www.trendlyai.space/avatars/matheus.gif', description: 'Com visual executivo, Matheus é perfeito para cursos, ferramentas SaaS e consultorias.' },
+    { id: 'av11', name: 'Miguel', role: 'Cook & Foodie', image: 'https://i.imgur.com/loBeA7L.png', hoverImage: 'https://www.trendlyai.space/avatars/miguel.gif', description: 'Miguel traz autoridade e sabor para reviews de produtos de cozinha e alimentação.' },
+    { id: 'av12', name: 'Pedro', role: 'Lifestyle & Travel', image: 'https://i.imgur.com/Bziwg0O.png', hoverImage: 'https://www.trendlyai.space/avatars/pedro.gif', description: 'Pedro foca em lifestyle e viagens, ideal para produtos de uso externo e aventura.' },
   ];
 
   return (
-    <main className="max-w-[1400px] mx-auto px-6 py-12 relative">
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-5 md:gap-8">
-        <div>
-          <h1 className="text-[44px] font-black text-[#3B82F6] tracking-tighter mb-4 leading-none">
-            Galeria de Avatares
-          </h1>
-          <p className="text-[#8d8d99] text-lg font-medium opacity-80">
-            Escolha um avatar profissional ou crie o seu próprio com IA.
+    <main className="max-w-[1500px] mx-auto px-6 py-12 md:py-16 relative">
+      {/* RADICAL ASYMMETRIC HEADER - REFINED SPACING */}
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-16 relative z-10 bg-[#0B0B0E]/20 backdrop-blur-sm p-8 rounded-[48px] border border-white/5 shadow-2xl">
+
+        {/* LEFT: TYPOGRAPHY SCULPTURE & PULSE */}
+        <div className="flex flex-col gap-6 flex-1 min-w-[400px]">
+          <div className="relative group">
+            {/* ARCHITECTURAL STATUS LINE */}
+            <div className="flex items-center gap-4 mb-4">
+              <div className="h-[1px] w-8 bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
+              <span className="text-[9px] font-black text-[#3B82F6] tracking-[0.4em] uppercase">Neural Hub Active</span>
+              <div className="flex gap-1">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="w-1 h-1 bg-[#3B82F6]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
+                ))}
+              </div>
+            </div>
+
+            <div className="relative">
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none text-center lg:text-left">
+                <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent">Galeria de</span>
+                <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent">Avatares</span>
+              </h1>
+            </div>
+          </div>
+
+          <p className="text-[#8d8d99] text-sm md:text-base font-medium max-w-sm leading-relaxed border-l border-white/10 pl-6 text-center lg:text-left mx-auto lg:mx-0">
+            Escolha um avatar profissional ou utilize nossa <span className="text-white">rede neural</span> para sintetizar sua própria identidade digital do zero.
           </p>
         </div>
 
-        <div className="flex items-center gap-4">
+        {/* RIGHT: ACTION CLUSTER */}
+        <div className="flex flex-wrap items-center justify-center lg:justify-end gap-6 flex-[1.2]">
           <button
             onClick={onGoToMyAvatars}
-            className="px-6 py-4 bg-[#14151a] border border-[#1e1f26] rounded-2xl flex items-center gap-3 text-sm font-black text-white hover:bg-[#24242a] transition-all relative"
+            className="group relative h-16 px-8 rounded-full overflow-hidden transition-all duration-500 hover:scale-105 active:scale-95 shadow-2xl"
           >
-            <User className="w-5 h-5 text-[#5b5b7b]" />
-            Meus Avatares
-            <span className="w-5 h-5 bg-[#3B82F6] rounded-full flex items-center justify-center text-[10px] font-black text-white ml-1">1</span>
+            <div className="absolute inset-0 rounded-full bg-white/[0.03] backdrop-blur-3xl border border-white/10 transition-colors group-hover:bg-white/[0.08] group-hover:border-white/20"></div>
+            <div className="relative z-10 flex items-center gap-4">
+              <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/5 group-hover:border-[#3B82F6]/30 group-hover:bg-[#3B82F6]/10 transition-all shadow-inner">
+                <User className="w-5 h-5 text-[#3B82F6]" />
+              </div>
+              <div className="flex flex-col items-start gap-0">
+                <span className="text-[9px] font-black text-[#5b5b7b] uppercase tracking-[0.25em]">Coleção Privada</span>
+                <span className="text-[13px] font-black text-white uppercase tracking-tighter">Meus Avatares</span>
+              </div>
+              <div className="ml-1 w-6 h-6 bg-[#3B82F6]/20 border border-[#3B82F6]/30 rounded-full flex items-center justify-center backdrop-blur-md">
+                <span className="text-[9px] font-black text-[#3B82F6] tabular-nums tracking-tighter">1</span>
+              </div>
+            </div>
           </button>
+
           <button
             onClick={onCreateNew}
-            className="px-8 py-4 bg-[#3B82F6] rounded-2xl flex items-center gap-3 text-sm font-black text-white hover:bg-[#4338ca] transition-all shadow-[0_10px_30px_rgba(81,66,245,0.2)]"
+            className="group relative h-16 px-10 rounded-full overflow-hidden transition-all duration-500 hover:scale-105 active:scale-95 shadow-[0_20px_60px_rgba(59,130,246,0.15)]"
           >
-            <Sparkles className="w-5 h-5" />
-            Criar do Zero
+            <div className="absolute inset-0 rounded-full bg-[#3B82F6]/10 backdrop-blur-3xl border border-[#3B82F6]/30 group-hover:bg-[#3B82F6]/20 transition-all"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[tech-shimmer_3s_infinite]"></div>
+
+            <div className="relative z-10 flex items-center gap-4">
+              <div className="w-10 h-10 rounded-full bg-[#3B82F6]/20 flex items-center justify-center backdrop-blur-sm border border-white/20 shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                <Sparkles className="w-5 h-5 text-white" />
+              </div>
+              <div className="flex flex-col items-start gap-0">
+                <span className="text-[9px] font-black text-[#3B82F6] uppercase tracking-[0.25em] opacity-80">Rede Neural</span>
+                <span className="text-[13px] font-black text-white uppercase tracking-tighter">Criar do Zero</span>
+              </div>
+            </div>
           </button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 md:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         {avatars.map((avatar) => (
           <div
             key={avatar.id}
             onClick={() => setSelectedAvatar(avatar)}
             onMouseEnter={() => setHoveredAvatarId(avatar.id)}
             onMouseLeave={() => setHoveredAvatarId(null)}
-            className="relative aspect-[3/4.5] rounded-[32px] overflow-hidden group cursor-pointer border border-white/5 bg-[#14151a] hover:border-[#3B82F6]/40 transition-all duration-500 shadow-2xl"
+            className="relative aspect-[3/4.5] rounded-[40px] overflow-hidden group cursor-pointer border border-white/5 bg-[#0B0B0E] hover:border-[#3B82F6]/60 transition-all duration-700 shadow-2xl"
           >
-            <img
-              src={hoveredAvatarId === avatar.id && avatar.hoverImage ? avatar.hoverImage : avatar.image}
-              className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
-              alt="Avatar"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
-
-            <div className="absolute bottom-8 left-8">
-              <span className="text-2xl font-black text-white tracking-tight block mb-1">
-                {avatar.name}
-              </span>
-              <span className="text-xs font-bold text-[#8d8d99] uppercase tracking-widest">
-                {avatar.role}
-              </span>
+            {/* IMAGE CONTAINER WITH PARALLAX-ISH ZOOM */}
+            <div className="absolute inset-0 transition-transform duration-1000 group-hover:scale-110">
+              <img
+                src={hoveredAvatarId === avatar.id && avatar.hoverImage ? avatar.hoverImage : avatar.image}
+                className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700"
+                alt={avatar.name}
+              />
             </div>
 
-            <div className="absolute top-6 right-6 w-10 h-10 bg-[#0b0c10]/40 backdrop-blur-md rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all border border-white/10 scale-90 group-hover:scale-100">
-              <Plus className="w-5 h-5 text-white" />
+            {/* SYNERGETIC OVERLAY GRADIENT */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0E] via-transparent to-transparent opacity-90 group-hover:opacity-100 transition-opacity"></div>
+
+            {/* GLASS INFO POD */}
+            <div className="absolute bottom-6 left-6 right-6">
+              <div className="backdrop-blur-xl bg-white/[0.03] border border-white/10 rounded-[30px] p-6 transform transition-all duration-500 group-hover:translate-y-[-10px] group-hover:bg-[#3B82F6]/10 group-hover:border-[#3B82F6]/30">
+                <span className="text-2xl font-black text-white tracking-tighter block mb-1 uppercase">
+                  {avatar.name}
+                </span>
+                <div className="flex items-center gap-3">
+                  <div className="w-1.5 h-1.5 bg-[#3B82F6] rounded-full animate-pulse shadow-[0_0_8px_#3B82F6]"></div>
+                  <span className="text-[10px] font-black text-[#8d8d99] uppercase tracking-[0.2em] group-hover:text-white/60 transition-colors">
+                    {avatar.role}
+                  </span>
+                </div>
+              </div>
             </div>
+
+            {/* ACTION FLOATING BUTTON */}
+            <div className="absolute top-6 right-6 w-12 h-12 bg-white/5 backdrop-blur-xl rounded-2xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all border border-white/10 translate-y-2 group-hover:translate-y-0 duration-500 group-hover:bg-[#3B82F6]">
+              <Plus className="w-6 h-6 text-white" />
+            </div>
+
+            {/* SCANNING LINE EFFECT - SUBTLE */}
+            <div className="absolute inset-0 bg-gradient-to-b from-[#3B82F6]/20 via-transparent to-transparent h-[10%] w-full -translate-y-full group-hover:animate-[scanline_3s_linear_infinite] pointer-events-none"></div>
           </div>
         ))}
       </div>
@@ -4234,36 +5198,74 @@ const GaleriaPromptsView: React.FC = () => {
   const filteredPrompts = activeTab === 'todos' ? prompts : prompts.filter(p => favorites.includes(p.id));
 
   return (
-    <main className="max-w-[1400px] mx-auto px-6 py-12 relative">
-      <div className="flex items-center gap-4 mb-12">
-        <button
-          onClick={() => setActiveTab('todos')}
-          className={`px-6 py-3 rounded-xl flex items-center gap-2 text-sm font-bold transition-all ${activeTab === 'todos' ? 'bg-[#3B82F6] text-white shadow-[0_10px_20px_rgba(81,66,245,0.3)]' : 'bg-[#14151a] text-[#8d8d99] border border-[#1e1f26] hover:bg-[#24242a]'}`}
-        >
-          <Sparkles className="w-4 h-4" />
-          Todos os Prompts
-        </button>
-        <button
-          onClick={() => setActiveTab('favoritos')}
-          className={`px-6 py-3 rounded-xl flex items-center gap-2 text-sm font-bold transition-all ${activeTab === 'favoritos' ? 'bg-[#3B82F6] text-white shadow-[0_10px_20px_rgba(81,66,245,0.3)]' : 'bg-[#14151a] text-[#8d8d99] border border-[#1e1f26] hover:bg-[#24242a]'}`}
-        >
-          <Heart className="w-4 h-4" />
-          Favoritos
-        </button>
+    <main className="max-w-[1500px] mx-auto px-6 py-12 md:py-16 relative">
+      {/* RADICAL ASYMMETRIC HEADER - SYNCED WITH VIRAL SECTIONS */}
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-16 relative z-10 bg-[#0B0B0E]/30 backdrop-blur-3xl p-10 rounded-[48px] border border-white/5 shadow-2xl">
+
+        {/* LEFT: TYPOGRAPHY SCULPTURE & PULSE */}
+        <div className="flex flex-col gap-6 flex-1 min-w-[400px]">
+          <div className="relative group">
+            {/* ARCHITECTURAL STATUS LINE */}
+            <div className="flex items-center gap-4 mb-4">
+              <div className="h-[1px] w-8 bg-gradient-to-r from-[#8B5CF6] to-transparent"></div>
+              <span className="text-[9px] font-black text-[#8B5CF6] tracking-[0.4em] uppercase">Neural Synthesis Engine</span>
+              <div className="flex gap-1">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="w-1 h-1 bg-[#8B5CF6]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
+                ))}
+              </div>
+            </div>
+
+            <div className="relative">
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none">
+                <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent">Galeria de</span>
+                <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent">Prompts</span>
+              </h1>
+            </div>
+          </div>
+
+          <p className="text-[#8d8d99] text-sm md:text-base font-medium max-w-sm leading-relaxed border-l border-white/10 pl-6">
+            Compilado técnico de <span className="text-white">prompts neurais</span> otimizados para materializar estéticas virais de alto impacto.
+          </p>
+        </div>
+
+        {/* RIGHT: FILTER ACTION CLUSTER (CAPSULE STYLE) */}
+        <div className="flex flex-wrap items-center justify-center lg:justify-end gap-4 flex-[0.8]">
+          <button
+            onClick={() => setActiveTab('todos')}
+            className={`group relative h-14 min-w-[160px] px-8 rounded-full overflow-hidden transition-all duration-500 hover:scale-105 active:scale-95 shadow-2xl`}
+          >
+            <div className={`absolute inset-0 rounded-full transition-all duration-500 ${activeTab === 'todos' ? 'bg-[#8B5CF6] shadow-[0_0_30px_rgba(139,92,246,0.3)] border border-white/20' : 'bg-white/[0.03] backdrop-blur-3xl border border-white/10 group-hover:bg-white/[0.08]'}`}></div>
+            <div className="relative z-10 flex items-center justify-center gap-3 w-full">
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${activeTab === 'todos' ? 'bg-white/20' : 'bg-white/5 border border-white/5 group-hover:border-[#8B5CF6]/30'}`}>
+                <Sparkles className={`w-4 h-4 ${activeTab === 'todos' ? 'text-white' : 'text-[#8B5CF6]'}`} />
+              </div>
+              <span className={`text-xs font-black uppercase tracking-widest ${activeTab === 'todos' ? 'text-white' : 'text-[#8d8d99] group-hover:text-white'}`}>
+                Todos
+              </span>
+            </div>
+          </button>
+
+          <button
+            onClick={() => setActiveTab('favoritos')}
+            className={`group relative h-14 min-w-[160px] px-8 rounded-full overflow-hidden transition-all duration-500 hover:scale-105 active:scale-95 shadow-2xl`}
+          >
+            <div className={`absolute inset-0 rounded-full transition-all duration-500 ${activeTab === 'favoritos' ? 'bg-[#3B82F6] shadow-[0_0_30px_rgba(59,130,246,0.3)] border border-white/20' : 'bg-white/[0.03] backdrop-blur-3xl border border-white/10 group-hover:bg-white/[0.08]'}`}></div>
+            <div className="relative z-10 flex items-center justify-center gap-3 w-full">
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${activeTab === 'favoritos' ? 'bg-white/20' : 'bg-white/5 border border-white/5 group-hover:border-[#3B82F6]/30'}`}>
+                <Heart className={`w-4 h-4 ${activeTab === 'favoritos' ? 'text-white' : 'text-[#3B82F6]'}`} />
+              </div>
+              <span className={`text-xs font-black uppercase tracking-widest ${activeTab === 'favoritos' ? 'text-white' : 'text-[#8d8d99] group-hover:text-white'}`}>
+                Favoritos
+              </span>
+            </div>
+          </button>
+        </div>
       </div>
 
-      <div className="mb-12">
-        <h1 className="text-[44px] font-black text-white tracking-tighter mb-2 leading-none">
-          Galeria de Prompts
-        </h1>
-        <p className="text-[#8d8d99] text-lg font-medium opacity-80">
-          Prompts prontos para gerar vídeos e imagens
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {filteredPrompts.map((item) => (
-          <div key={item.id} className="bg-[#14151a] border border-[#1e1f26] rounded-[32px] overflow-hidden flex flex-col group transition-all hover:border-[#3B82F6]/30">
+          <div key={item.id} className="relative group bg-[#0B0B0E]/40 backdrop-blur-2xl border border-white/5 rounded-[40px] overflow-hidden flex flex-col transition-all duration-500 hover:border-[#3B82F6]/30 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
             <div className="relative aspect-[3/4.5] overflow-hidden">
               {item.gif.endsWith('.mp4') ? (
                 <video
@@ -4272,54 +5274,50 @@ const GaleriaPromptsView: React.FC = () => {
                   loop
                   muted
                   playsInline
-                  className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-all duration-500"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
               ) : (
                 <img
                   src={item.gif}
-                  className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-all duration-500"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   alt={item.title}
                 />
               )}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent"></div>
+              {/* SCAN LINE ANIMATION */}
+              <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#3B82F6] to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[scan-line_2s_linear_infinite] z-20"></div>
+
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0E] via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
 
               <button
                 onClick={() => toggleFavorite(item.id)}
-                className="absolute top-6 right-6 w-10 h-10 bg-[#0b0c10]/40 backdrop-blur-md rounded-full flex items-center justify-center border border-white/10 hover:bg-[#0b0c10]/60 transition-all"
+                className="absolute top-6 right-6 w-12 h-12 bg-black/40 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/10 hover:bg-[#3B82F6] hover:border-[#3B82F6] transition-all duration-300 z-30"
               >
-                <Heart className={`w-5 h-5 ${favorites.includes(item.id) ? 'fill-[#3B82F6] text-[#3B82F6]' : 'text-white'}`} />
+                <Heart className={`w-5 h-5 ${favorites.includes(item.id) ? 'fill-white text-white' : 'text-white'}`} />
               </button>
 
-              <div className="absolute bottom-6 left-6 right-6">
-                <h3 className="text-xl font-black text-white mb-2 leading-tight">
-                  {item.title}
-                </h3>
-                <p className="text-xs font-medium text-[#8d8d99] leading-relaxed line-clamp-2">
-                  {item.description}
-                </p>
+              <div className="absolute bottom-6 left-6 right-6 z-30">
+                <div className="mb-4">
+                  <h3 className="text-xl font-black text-white tracking-tighter mb-1 uppercase line-clamp-2">{item.title}</h3>
+                  <p className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.2em]">{item.description}</p>
+                </div>
+
+                <button
+                  onClick={() => copyToClipboard(item.id, item.prompt)}
+                  className="w-full h-12 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/10 flex items-center justify-center gap-3 hover:bg-[#3B82F6] hover:border-[#3B82F6] transition-all group/btn shadow-xl"
+                >
+                  {copiedId === item.id ? (
+                    <>
+                      <Check className="w-4 h-4 text-white" />
+                      <span className="text-[10px] font-black text-white uppercase tracking-widest">Copiado!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-4 h-4 text-[#3B82F6] group-hover/btn:text-white transition-colors" />
+                      <span className="text-[10px] font-black text-white uppercase tracking-widest">Copiar Prompt</span>
+                    </>
+                  )}
+                </button>
               </div>
-            </div>
-
-            <div className="p-6">
-              <button
-                onClick={() => copyToClipboard(item.id, item.prompt)}
-                className={`w-full py-4 rounded-2xl flex items-center justify-center gap-3 text-sm font-black transition-all duration-300 ${copiedId === item.id
-                  ? 'bg-[#10b981] text-white border-transparent'
-                  : 'bg-[#14151a] border border-[#1e1f26] text-white hover:bg-[#24242a] group/btn'
-                  }`}
-              >
-                {copiedId === item.id ? (
-                  <>
-                    <CheckCircle2 className="w-5 h-5" />
-                    Copiado!
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-5 h-5 text-[#5b5b7b] group-hover/btn:text-[#3B82F6] transition-colors" />
-                    Copiar Prompt
-                  </>
-                )}
-              </button>
             </div>
           </div>
         ))}

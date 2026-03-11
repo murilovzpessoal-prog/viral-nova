@@ -986,7 +986,54 @@ const FeatureExploreCard: React.FC<{ icon: React.ReactNode, title: string, descr
 );
 
 // --- PRODUCTS PAGE VIEW ---
-const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => (
+const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => {
+  const [viewMode, setViewMode] = useState<'radar' | 'mapa'>('radar');
+
+  // Build niche map: group products by category
+  const nicheMap = products.reduce((acc, p) => {
+    const cat = p.category || 'Outros';
+    if (!acc[cat]) acc[cat] = [];
+    acc[cat].push(p);
+    return acc;
+  }, {} as Record<string, ProductViral[]>);
+
+  const nicheList = (Object.entries(nicheMap) as [string, ProductViral[]][]).sort((a, b) => b[1].length - a[1].length);
+
+  const nicheColors: Record<string, { gradient: string; accent: string; glow: string }> = {
+    'Casa & Cozinha':      { gradient: 'from-[#00b37e]/20 to-transparent', accent: '#00b37e', glow: '0_0_30px_rgba(0,179,126,0.15)' },
+    'Beleza':              { gradient: 'from-[#d946ef]/20 to-transparent', accent: '#d946ef', glow: '0_0_30px_rgba(217,70,239,0.15)' },
+    'Moda Fitness':        { gradient: 'from-[#3B82F6]/20 to-transparent', accent: '#3B82F6', glow: '0_0_30px_rgba(59,130,246,0.15)' },
+    'Moda Masculina':      { gradient: 'from-[#8B5CF6]/20 to-transparent', accent: '#8B5CF6', glow: '0_0_30px_rgba(139,92,246,0.15)' },
+    'Acessórios':          { gradient: 'from-[#f59e0b]/20 to-transparent', accent: '#f59e0b', glow: '0_0_30px_rgba(245,158,11,0.15)' },
+    'Perfumaria':          { gradient: 'from-[#ec4899]/20 to-transparent', accent: '#ec4899', glow: '0_0_30px_rgba(236,72,153,0.15)' },
+    'Eletrônicos':         { gradient: 'from-[#06b6d4]/20 to-transparent', accent: '#06b6d4', glow: '0_0_30px_rgba(6,182,212,0.15)' },
+    'Livros':              { gradient: 'from-[#84cc16]/20 to-transparent', accent: '#84cc16', glow: '0_0_30px_rgba(132,204,22,0.15)' },
+    'Calçados':            { gradient: 'from-[#f97316]/20 to-transparent', accent: '#f97316', glow: '0_0_30px_rgba(249,115,22,0.15)' },
+    'Esportes':            { gradient: 'from-[#14b8a6]/20 to-transparent', accent: '#14b8a6', glow: '0_0_30px_rgba(20,184,166,0.15)' },
+    'Ferramentas':         { gradient: 'from-[#ef4444]/20 to-transparent', accent: '#ef4444', glow: '0_0_30px_rgba(239,68,68,0.15)' },
+    'Saúde & Beleza':      { gradient: 'from-[#a855f7]/20 to-transparent', accent: '#a855f7', glow: '0_0_30px_rgba(168,85,247,0.15)' },
+    'Beleza & Perfumaria': { gradient: 'from-[#e879f9]/20 to-transparent', accent: '#e879f9', glow: '0_0_30px_rgba(232,121,249,0.15)' },
+  };
+
+  const getColor = (cat: string) => nicheColors[cat] || { gradient: 'from-[#8B5CF6]/20 to-transparent', accent: '#8B5CF6', glow: '0_0_30px_rgba(139,92,246,0.15)' };
+
+  const totalRevenue = (prods: ProductViral[]) => {
+    return prods.reduce((sum, p) => {
+      if (!p.revenue) return sum;
+      // Format: "R$ 6.014.334,12" → remove "R$ ", remove ".", replace "," with "."
+      const cleaned = p.revenue.replace('R$ ', '').replace(/\./g, '').replace(',', '.');
+      const val = parseFloat(cleaned);
+      return isNaN(val) ? sum : sum + val;
+    }, 0);
+  };
+
+  const formatRevenue = (val: number) => {
+    if (val >= 1_000_000) return `R$ ${(val / 1_000_000).toFixed(1)}M`;
+    if (val >= 1_000) return `R$ ${(val / 1_000).toFixed(0)}K`;
+    return `R$ ${val.toFixed(0)}`;
+  };
+
+  return (
   <main className="max-w-[1500px] mx-auto px-6 py-12 md:py-16 relative">
 
     <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-16 relative z-10 bg-[#0B0B0E]/20 backdrop-blur-sm p-8 rounded-[48px] border border-white/5 shadow-2xl">
@@ -1067,13 +1114,13 @@ const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => (
     {/* TOOLBAR - RE-ALIGN TO GRID */}
     <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-16 relative z-20 px-4">
       <div className="flex items-center gap-4">
-        <button className="relative px-8 py-4 rounded-[20px] bg-white text-black font-black uppercase text-[10px] tracking-widest shadow-2xl hover:scale-105 transition-all flex items-center gap-2.5">
+        <button onClick={() => setViewMode('radar')} className={`relative px-8 py-4 rounded-[20px] font-black uppercase text-[10px] tracking-widest shadow-2xl hover:scale-105 transition-all flex items-center gap-2.5 ${viewMode === 'radar' ? 'bg-white text-black' : 'bg-[#16161A]/60 backdrop-blur-xl border border-white/5 text-[#5b5b7b] hover:text-white'}`}>
           <LayoutGrid className="w-4 h-4" />
-          MASTER LIST
+          RADAR
         </button>
-        <button className="px-8 py-4 rounded-[20px] bg-[#16161A]/60 backdrop-blur-xl border border-white/5 text-[#5b5b7b] font-black uppercase text-[10px] tracking-widest hover:text-white transition-all flex items-center gap-2.5">
+        <button onClick={() => setViewMode('mapa')} className={`px-8 py-4 rounded-[20px] font-black uppercase text-[10px] tracking-widest hover:text-white transition-all flex items-center gap-2.5 ${viewMode === 'mapa' ? 'bg-white text-black shadow-2xl' : 'bg-[#16161A]/60 backdrop-blur-xl border border-white/5 text-[#5b5b7b]'}`}>
           <Sparkles className="w-4 h-4" />
-          NICHE MAP
+          MAPA DE NICHOS
         </button>
       </div>
 
@@ -1101,13 +1148,99 @@ const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => (
       </div>
     </div>
 
-    <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-8">
-      {products.map((p) => (
-        <ViralCard key={p.id} product={p} />
-      ))}
-    </div>
+    {viewMode === 'radar' ? (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-8">
+        {products.map((p) => (
+          <ViralCard key={p.id} product={p} />
+        ))}
+      </div>
+    ) : (
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        {nicheList.map(([category, prods]) => {
+          const color = getColor(category);
+          const rev = totalRevenue(prods);
+          return (
+            <div
+              key={category}
+              className="relative bg-[#0B0B0E]/40 backdrop-blur-2xl border border-white/5 rounded-[40px] overflow-hidden p-8 flex flex-col gap-6 transition-all duration-500 hover:border-white/10 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] group"
+              style={{ boxShadow: `0 0 0 0 transparent` }}
+            >
+              {/* BG GRADIENT */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${color.gradient} opacity-30 pointer-events-none rounded-[40px]`}></div>
+
+              {/* HEADER */}
+              <div className="relative z-10 flex items-start justify-between">
+                <div>
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: color.accent }}></div>
+                    <span className="text-[9px] font-black uppercase tracking-[0.3em]" style={{ color: color.accent }}>Nicho Ativo</span>
+                  </div>
+                  <h3 className="text-2xl font-black text-white tracking-tighter leading-tight">{category}</h3>
+                </div>
+                <div className="flex flex-col items-end gap-1">
+                  <span className="text-[9px] font-black text-[#5b5b7b] uppercase tracking-widest">Volume</span>
+                  <span className="text-xl font-black tabular-nums" style={{ color: color.accent }}>{formatRevenue(rev)}</span>
+                </div>
+              </div>
+
+              {/* STATS ROW */}
+              <div className="relative z-10 flex items-center gap-4">
+                <div className="flex-1 bg-white/[0.03] border border-white/5 rounded-2xl px-4 py-3 flex flex-col items-center gap-1">
+                  <span className="text-2xl font-black text-white">{prods.length}</span>
+                  <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-widest">Produtos</span>
+                </div>
+                <div className="flex-1 bg-white/[0.03] border border-white/5 rounded-2xl px-4 py-3 flex flex-col items-center gap-1">
+                  <span className="text-2xl font-black text-white">{prods.filter(p => p.highDemand).length > 0 ? prods.filter(p => p.highDemand).length : '—'}</span>
+                  <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-widest">Hot 🔥</span>
+                </div>
+                <div className="flex-1 bg-white/[0.03] border border-white/5 rounded-2xl px-4 py-3 flex flex-col items-center gap-1">
+                  <span className="text-[13px] font-black text-white">#{prods[0]?.rank ?? '—'}</span>
+                  <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-widest">Top Rank</span>
+                </div>
+              </div>
+
+              {/* MINI PRODUCT THUMBNAILS */}
+              <div className="relative z-10 flex items-center gap-3">
+                {prods.slice(0, 4).map((p, i) => (
+                  <div key={p.id} className="relative group/thumb">
+                    <img
+                      src={p.image}
+                      alt={p.title}
+                      className="w-14 h-14 rounded-2xl object-cover border border-white/10 group-hover/thumb:border-white/30 transition-all"
+                    />
+                    <div className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full text-[8px] font-black flex items-center justify-center border border-black" style={{ backgroundColor: color.accent, color: '#000' }}>
+                      #{p.rank}
+                    </div>
+                  </div>
+                ))}
+                {prods.length > 4 && (
+                  <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
+                    <span className="text-xs font-black text-[#5b5b7b]">+{prods.length - 4}</span>
+                  </div>
+                )}
+              </div>
+
+              {/* HEAT BAR */}
+              <div className="relative z-10">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-widest">Potencial do Nicho</span>
+                  <span className="text-[8px] font-black uppercase tracking-widest" style={{ color: color.accent }}>{Math.min(99, Math.round((prods.length / products.length) * 100 * 5 + 40))}%</span>
+                </div>
+                <div className="h-1 bg-white/5 rounded-full overflow-hidden">
+                  <div
+                    className="h-full rounded-full transition-all duration-1000"
+                    style={{ width: `${Math.min(99, Math.round((prods.length / products.length) * 100 * 5 + 40))}%`, backgroundColor: color.accent }}
+                  ></div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    )}
   </main>
-);
+  );
+};
 
 const ViralCard: React.FC<{ product: ProductViral }> = ({ product }) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -1196,6 +1329,17 @@ const ViralCard: React.FC<{ product: ProductViral }> = ({ product }) => {
 
 
 const VideosView: React.FC = () => {
+  const [videoFilter, setVideoFilter] = React.useState<'all' | 'revenue' | 'sales' | 'favorites'>('all');
+  const [favorites, setFavorites] = React.useState<string[]>(() => {
+    try { return JSON.parse(localStorage.getItem('vp_fav_videos') || '[]'); } catch { return []; }
+  });
+  const toggleFavorite = (id: string) => {
+    setFavorites(prev => {
+      const next = prev.includes(id) ? prev.filter(f => f !== id) : [...prev, id];
+      localStorage.setItem('vp_fav_videos', JSON.stringify(next));
+      return next;
+    });
+  };
   const baseVideos: VideoViral[] = [
     {
       id: 'v1',
@@ -1681,11 +1825,34 @@ const VideosView: React.FC = () => {
     }
   ];
 
-  const videoData: VideoViral[] = Array.from({ length: 40 }, (_, i) => ({
+  const allVideoData: VideoViral[] = Array.from({ length: 40 }, (_, i) => ({
     ...baseVideos[i % baseVideos.length],
     id: `v${i + 1}`,
     rank: i + 1
   }));
+
+  const parseRevenue = (rev: string) => {
+    if (!rev) return 0;
+    const cleaned = rev.replace('R$ ', '').replace(/\./g, '').replace(',', '.');
+    return parseFloat(cleaned) || 0;
+  };
+  const parseSales = (sales: string) => {
+    if (!sales) return 0;
+    const match = sales.match(/[\d]+/);
+    return match ? parseInt(match[0]) : 0;
+  };
+
+  const videoData = (() => {
+    let data = [...allVideoData];
+    if (videoFilter === 'revenue') {
+      data = [...data].sort((a, b) => parseRevenue(b.revenue6h) - parseRevenue(a.revenue6h));
+    } else if (videoFilter === 'sales') {
+      data = [...data].sort((a, b) => parseSales(b.sales6h) - parseSales(a.sales6h));
+    } else if (videoFilter === 'favorites') {
+      data = data.filter(v => favorites.includes(v.id));
+    }
+    return data;
+  })();
 
   return (
     <main className="max-w-[1500px] mx-auto px-6 py-12 md:py-16 relative">
@@ -1788,24 +1955,32 @@ const VideosView: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex items-center gap-3 mb-12 px-2">
-        <button className="bg-[#3B82F6] text-white px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-[0.15em] flex items-center gap-2 shadow-lg shadow-[#3B82F6]/20 hover:scale-[1.03] transition-all">
+      <div className="flex items-center gap-3 mb-12 px-2 flex-wrap">
+        <button onClick={() => setVideoFilter('all')} className={`px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-[0.15em] flex items-center gap-2 hover:scale-[1.03] transition-all ${videoFilter === 'all' ? 'bg-[#3B82F6] text-white shadow-lg shadow-[#3B82F6]/20' : 'bg-[#14151a] border border-[#1e1f26] text-[#8d8d99] hover:border-[#44444f] hover:text-white'}`}>
           <LayoutGrid className="w-4 h-4" /> Todos os Vídeos
         </button>
-        <button className="bg-[#14151a] border border-[#1e1f26] text-[#8d8d99] px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-[0.15em] flex items-center gap-2 hover:border-[#44444f] hover:text-white transition-all">
+        <button onClick={() => setVideoFilter('revenue')} className={`px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-[0.15em] flex items-center gap-2 hover:scale-[1.03] transition-all ${videoFilter === 'revenue' ? 'bg-[#00b37e] text-white shadow-lg shadow-[#00b37e]/20' : 'bg-[#14151a] border border-[#1e1f26] text-[#8d8d99] hover:border-[#44444f] hover:text-white'}`}>
           <DollarSign className="w-4 h-4" /> Mais Faturados
         </button>
-        <button className="bg-[#14151a] border border-[#1e1f26] text-[#8d8d99] px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-[0.15em] flex items-center gap-2 hover:border-[#44444f] hover:text-white transition-all">
+        <button onClick={() => setVideoFilter('sales')} className={`px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-[0.15em] flex items-center gap-2 hover:scale-[1.03] transition-all ${videoFilter === 'sales' ? 'bg-[#8B5CF6] text-white shadow-lg shadow-[#8B5CF6]/20' : 'bg-[#14151a] border border-[#1e1f26] text-[#8d8d99] hover:border-[#44444f] hover:text-white'}`}>
           <ShoppingBag className="w-4 h-4" /> Mais Vendidos
         </button>
-        <button className="bg-[#14151a] border border-[#1e1f26] text-[#8d8d99] px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-[0.15em] flex items-center gap-2 hover:border-[#44444f] hover:text-white transition-all">
-          <Bookmark className="w-4 h-4" /> Favoritos
+        <button onClick={() => setVideoFilter('favorites')} className={`px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-[0.15em] flex items-center gap-2 hover:scale-[1.03] transition-all ${videoFilter === 'favorites' ? 'bg-[#f59e0b] text-white shadow-lg shadow-[#f59e0b]/20' : 'bg-[#14151a] border border-[#1e1f26] text-[#8d8d99] hover:border-[#44444f] hover:text-white'}`}>
+          <Bookmark className="w-4 h-4" /> Favoritos {favorites.length > 0 && <span className="ml-1 bg-white/20 text-[9px] px-1.5 py-0.5 rounded-full">{favorites.length}</span>}
         </button>
       </div>
 
+      {videoFilter === 'favorites' && videoData.length === 0 && (
+        <div className="flex flex-col items-center justify-center py-24 gap-4">
+          <Bookmark className="w-12 h-12 text-[#5b5b7b]" />
+          <p className="text-[#5b5b7b] font-black uppercase tracking-widest text-sm">Nenhum vídeo favoritado ainda</p>
+          <button onClick={() => setVideoFilter('all')} className="text-[#3B82F6] text-sm font-black hover:underline">Ver todos os vídeos</button>
+        </div>
+      )}
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10">
         {videoData.map((video) => (
-          <VideoCard key={video.id} video={video} />
+          <VideoCard key={video.id} video={video} isFavorite={favorites.includes(video.id)} onToggleFavorite={toggleFavorite} />
         ))}
       </div>
     </main>
@@ -1875,79 +2050,38 @@ const ScriptModal: React.FC<{ isOpen: boolean; onClose: () => void; video: Video
   );
 };
 
-const VideoCard: React.FC<{ video: VideoViral }> = ({ video }) => {
+
+
+const VideoCard: React.FC<{ video: VideoViral; isFavorite?: boolean; onToggleFavorite?: (id: string) => void }> = ({ video, isFavorite = false, onToggleFavorite }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const videoRef = React.useRef<HTMLVideoElement>(null);
 
-  const handlePlay = () => {
-    setIsPlaying(true);
-    if (videoRef.current) {
-      videoRef.current.play();
-    }
+  const togglePlay = () => {
+    setIsPlaying(!isPlaying);
   };
 
   const renderVideo = () => {
-    let resolvedTiktokId = video.tiktokId;
-    if (!resolvedTiktokId && video.directVideoUrl && video.directVideoUrl.includes('tiktok.com')) {
-      const match = video.directVideoUrl.match(/\/video\/(\d+)/);
-      if (match) resolvedTiktokId = match[1];
-    }
-    if (!resolvedTiktokId && video.videoUrl && video.videoUrl.includes('tiktok.com')) {
-      const match = video.videoUrl.match(/\/video\/(\d+)/);
-      if (match) resolvedTiktokId = match[1];
-    }
-
-    if (video.directVideoUrl && !video.directVideoUrl.includes("tiktok.com")) {
-      return (
-        <video
-          ref={videoRef}
-          src={video.directVideoUrl}
-          className="absolute inset-0 w-full h-full object-cover"
-          controls={isPlaying}
-          playsInline
-          autoPlay
-          muted
-          loop
-          onClick={(e) => e.stopPropagation()}
-        />
-      );
-    }
-    if (resolvedTiktokId) {
-      return (
-        <iframe
-          src={`https://www.tiktok.com/embed/v2/${resolvedTiktokId}?autoplay=1`}
-          className="absolute inset-0 w-full h-full border-0 object-cover"
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-        ></iframe>
-      );
-    }
-
-    const imgurVideoSrc = video.thumbnail
+    const videoSrc = video.thumbnail
       ? video.thumbnail
         .replace('i.imgur.com/', 'i.imgur.com/')
         .replace(/\.(jpg|jpeg|png|gif|webp)(\?.*)?$/, '.mp4')
       : null;
 
-    if (imgurVideoSrc) {
+    if (videoSrc) {
       return (
         <video
           ref={videoRef}
-          src={imgurVideoSrc}
-          className="absolute inset-0 w-full h-full object-cover scale-[1.2]"
-          controls={false}
+          src={videoSrc}
+          className="absolute inset-0 w-full h-full object-cover"
           playsInline
           autoPlay
-          muted
           loop
+          muted={false}
           onClick={(e) => {
             e.stopPropagation();
-            setIsPlaying(!isPlaying);
-            if (videoRef.current) {
-              isPlaying ? videoRef.current.pause() : videoRef.current.play();
-            }
+            togglePlay();
           }}
         />
       );
@@ -1958,16 +2092,17 @@ const VideoCard: React.FC<{ video: VideoViral }> = ({ video }) => {
   return (
     <div className="flex flex-col group h-full">
       <div
-        className="relative aspect-[9/16] bg-[#14151a] border border-[#1e1f26] rounded-[48px] overflow-hidden cursor-pointer shadow-2xl"
-        onClick={() => (video.tiktokId || video.videoUrl || video.directVideoUrl) && handlePlay()}
+        className="relative aspect-[9/16] bg-[#14151a] border border-[#1e1f26] rounded-[48px] overflow-hidden cursor-pointer shadow-2xl hover:border-[#3B82F6]/30 transition-all"
+        onClick={togglePlay}
       >
-        {isPlaying && (video.tiktokId || video.videoUrl || video.directVideoUrl) ? (
+        {isPlaying ? (
           renderVideo()
         ) : (
           <>
             <img src={video.thumbnail} alt="" className="w-full h-full object-cover scale-[1.2] group-hover:scale-[1.25] transition-transform duration-1000 opacity-90 group-hover:opacity-100" />
 
             <div className="absolute top-8 left-8 w-12 h-12 bg-[#000000]/70 backdrop-blur-2xl rounded-2xl flex items-center justify-center text-lg font-black text-white/90 border border-white/10 shadow-2xl z-10">#{video.rank}</div>
+
 
             <div className="absolute inset-0 flex items-center justify-center z-10">
               <div className="w-24 h-24 bg-[#0b0c10]/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 group-hover:scale-110 transition-transform shadow-2xl">
@@ -2041,9 +2176,12 @@ const VideoCard: React.FC<{ video: VideoViral }> = ({ video }) => {
           </button>
         </div>
 
-        <button className="w-full bg-[#1c1c1f] hover:bg-[#24242a] text-[#8d8d99] hover:text-white py-5 rounded-2xl flex items-center justify-center gap-3 transition-all font-black text-[15px] group/fav">
-          <Bookmark className="w-5 h-5 group-hover/fav:fill-white transition-all" />
-          Favoritar Vídeo
+        <button
+          onClick={() => onToggleFavorite && onToggleFavorite(video.id)}
+          className={`w-full py-5 rounded-2xl flex items-center justify-center gap-3 transition-all font-black text-[15px] ${isFavorite ? 'bg-[#f59e0b] text-white shadow-lg shadow-[#f59e0b]/20' : 'bg-[#1c1c1f] hover:bg-[#24242a] text-[#8d8d99] hover:text-white'}`}
+        >
+          <Bookmark className={`w-5 h-5 transition-all ${isFavorite ? 'fill-current text-white' : 'group-hover/fav:fill-white'}`} />
+          {isFavorite ? 'Favoritado ✓' : 'Favoritar Vídeo'}
         </button>
 
         <ScriptModal
@@ -5401,100 +5539,197 @@ const MeusAvataresView: React.FC<{ avatars: CustomAvatar[]; onAddAvatar: (a: Cus
   };
 
   return (
-    <main className="max-w-[1400px] mx-auto px-6 py-6 md:py-10 flex flex-col min-h-[70vh]">
+    <main className="max-w-[1500px] mx-auto px-6 py-12 md:py-16 relative">
       <input type="file" ref={uploadRef} className="hidden" accept="image/*" onChange={handleUpload} />
 
-      {/* Upper Navigation and Header Row */}
-      <div className="flex flex-col gap-6 mb-12">
-        <button
-          onClick={onBack}
-          className="flex items-center gap-2 text-[#5b5b7b] hover:text-white transition-colors text-sm font-bold w-fit"
-        >
-          <ChevronLeft className="w-4 h-4" />
-          Voltar para Galeria
-        </button>
+      {/* ARCHITECTURAL HEADER — SYNCED WITH PROJECT PATTERN */}
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-16 relative z-10 bg-[#0B0B0E]/30 backdrop-blur-3xl p-10 rounded-[48px] border border-white/5 shadow-2xl">
 
-        <div className="flex items-end justify-between">
-          <div>
-            <h1 className="text-[44px] font-black text-white tracking-tighter mb-2 leading-none">
-              Meus Avatares
-            </h1>
-            <p className="text-[#8d8d99] text-lg font-medium opacity-80">
-              Avatares que você criou do zero com IA.
-            </p>
+        {/* LEFT: TYPOGRAPHY SCULPTURE */}
+        <div className="flex flex-col gap-6 flex-1 min-w-[320px]">
+          <div className="relative group">
+            {/* STATUS LINE */}
+            <div className="flex items-center gap-4 mb-4">
+              <button
+                onClick={onBack}
+                className="flex items-center gap-2 text-[#5b5b7b] hover:text-white transition-colors text-xs font-black uppercase tracking-widest w-fit group/back"
+              >
+                <div className="w-6 h-6 bg-white/5 border border-white/10 rounded-full flex items-center justify-center group-hover/back:bg-white/10 transition-all">
+                  <ChevronLeft className="w-3 h-3" />
+                </div>
+                Voltar
+              </button>
+              <div className="h-[1px] w-6 bg-gradient-to-r from-[#8B5CF6] to-transparent"></div>
+              <span className="text-[9px] font-black text-[#8B5CF6] tracking-[0.4em] uppercase">Neural Avatar Studio</span>
+              <div className="flex gap-1">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="w-1 h-1 bg-[#8B5CF6]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
+                ))}
+              </div>
+            </div>
+
+            <div className="relative">
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none">
+                <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent">Meus</span>
+                <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent">Avatares</span>
+              </h1>
+            </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => uploadRef.current?.click()}
-              className="px-6 py-3.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl flex items-center gap-2 text-sm font-black text-white transition-all"
-            >
-              <Upload className="w-4 h-4" />
-              Upload de Foto
-            </button>
-            <button
-              onClick={onCreateNew}
-              className="px-8 py-4 bg-[#3B82F6] hover:bg-[#4338ca] rounded-2xl flex items-center gap-3 text-sm font-black text-white transition-all shadow-[0_10px_30px_rgba(81,66,245,0.2)]"
-            >
-              <Sparkles className="w-5 h-5" />
-              Criar Novo
-            </button>
-          </div>
+          <p className="text-[#8d8d99] text-sm md:text-base font-medium max-w-sm leading-relaxed border-l border-white/10 pl-6">
+            Avatares que você criou do <span className="text-white">zero com IA</span> e as fotos que você fez upload.
+          </p>
+        </div>
+
+        {/* RIGHT: ACTION CLUSTER (CAPSULE STYLE) */}
+        <div className="flex flex-wrap items-center justify-center lg:justify-end gap-4 flex-[0.7]">
+          <button
+            onClick={() => uploadRef.current?.click()}
+            className="group relative h-14 min-w-[180px] px-8 rounded-full overflow-hidden transition-all duration-500 hover:scale-105 active:scale-95 shadow-2xl"
+          >
+            <div className="absolute inset-0 rounded-full transition-all duration-500 bg-white/[0.03] backdrop-blur-3xl border border-white/10 group-hover:bg-white/[0.08]"></div>
+            <div className="relative z-10 flex items-center justify-center gap-3 w-full">
+              <div className="w-8 h-8 rounded-full flex items-center justify-center transition-all bg-white/5 border border-white/5 group-hover:border-[#8B5CF6]/30">
+                <Upload className="w-4 h-4 text-[#8B5CF6]" />
+              </div>
+              <span className="text-xs font-black uppercase tracking-widest text-[#8d8d99] group-hover:text-white transition-colors">
+                Upload de Foto
+              </span>
+            </div>
+          </button>
+
+          <button
+            onClick={onCreateNew}
+            className="group relative h-14 min-w-[180px] px-8 rounded-full overflow-hidden transition-all duration-500 hover:scale-105 active:scale-95 shadow-2xl"
+          >
+            <div className="absolute inset-0 rounded-full transition-all duration-500 bg-[#3B82F6] shadow-[0_0_30px_rgba(59,130,246,0.3)] border border-white/20"></div>
+            <div className="relative z-10 flex items-center justify-center gap-3 w-full">
+              <div className="w-8 h-8 rounded-full flex items-center justify-center bg-white/20">
+                <Sparkles className="w-4 h-4 text-white" />
+              </div>
+              <span className="text-xs font-black uppercase tracking-widest text-white">
+                Criar Novo
+              </span>
+            </div>
+          </button>
         </div>
       </div>
 
+      {/* CONTENT */}
       {avatars.length > 0 ? (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {avatars.map((av) => (
-            <div key={av.id} className="relative group/av rounded-[32px] overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-500">
-              <div className="aspect-[3.5/4.5] relative">
-                <img src={av.image} className="w-full h-full object-cover" alt={av.name} />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0E] via-[#0B0B0E]/20 to-transparent opacity-80"></div>
-                <div className="absolute bottom-5 left-5 right-5">
-                  <h3 className="text-lg font-black text-white tracking-tighter uppercase">{av.name}</h3>
-                </div>
-                {/* Action buttons — show on hover */}
-                <div className="absolute top-0 inset-x-0 p-4 flex justify-between items-start opacity-0 group-hover/av:opacity-100 transition-opacity duration-300">
-                  <button onClick={() => handleDownload(av)} className="w-9 h-9 bg-[#14151a]/90 border border-white/10 rounded-full flex items-center justify-center hover:bg-[#3B82F6] hover:border-[#3B82F6] transition-all" title="Baixar">
+            <div key={av.id} className="relative group/av bg-[#0B0B0E]/40 backdrop-blur-2xl border border-white/5 rounded-[40px] overflow-hidden flex flex-col transition-all duration-500 hover:border-[#3B82F6]/30 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
+              <div className="relative aspect-[3/4.5] overflow-hidden">
+                <img src={av.image} className="w-full h-full object-cover transition-transform duration-700 group-hover/av:scale-110" alt={av.name} />
+
+                {/* SCAN LINE ANIMATION */}
+                <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#3B82F6] to-transparent opacity-0 group-hover/av:opacity-100 group-hover/av:animate-[scan-line_2s_linear_infinite] z-20"></div>
+
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0E] via-[#0B0B0E]/20 to-transparent opacity-80 group-hover/av:opacity-60 transition-opacity"></div>
+
+                {/* ACTION BUTTONS ON HOVER */}
+                <div className="absolute top-5 right-5 left-5 flex justify-between items-start opacity-0 group-hover/av:opacity-100 transition-all duration-300 z-30">
+                  <button
+                    onClick={() => handleDownload(av)}
+                    className="w-10 h-10 bg-black/60 backdrop-blur-xl border border-white/10 rounded-full flex items-center justify-center hover:bg-[#3B82F6] hover:border-[#3B82F6] transition-all hover:scale-110 shadow-xl"
+                    title="Baixar"
+                  >
                     <Download className="w-4 h-4 text-white" />
                   </button>
-                  <button onClick={() => onDeleteAvatar(av.id)} className="w-9 h-9 bg-[#14151a]/90 border border-white/10 rounded-full flex items-center justify-center hover:bg-red-500 hover:border-red-500 transition-all" title="Excluir">
+                  <button
+                    onClick={() => onDeleteAvatar(av.id)}
+                    className="w-10 h-10 bg-black/60 backdrop-blur-xl border border-white/10 rounded-full flex items-center justify-center hover:bg-red-500 hover:border-red-500 transition-all hover:scale-110 shadow-xl"
+                    title="Excluir"
+                  >
                     <Trash2 className="w-4 h-4 text-white" />
                   </button>
+                </div>
+
+                {/* AVATAR NAME BADGE */}
+                <div className="absolute bottom-6 left-5 right-5 z-30">
+                  <div className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl px-4 py-3">
+                    <h3 className="text-sm font-black text-white tracking-tighter uppercase truncate">{av.name}</h3>
+                    <span className="text-[9px] font-black text-[#3B82F6] uppercase tracking-[0.2em]">Avatar IA</span>
+                  </div>
                 </div>
               </div>
             </div>
           ))}
         </div>
       ) : (
-        <div className="flex-1 flex flex-col items-center justify-center py-12 md:py-20">
-          <div className="w-[88px] h-[88px] bg-[#14151a] border border-[#1e1f26] rounded-full flex items-center justify-center mb-10 shadow-2xl">
-            <User className="w-10 h-10 text-[#5b5b7b]" />
-          </div>
+        /* ── PREMIUM EMPTY STATE ── */
+        <div className="flex flex-col items-center justify-center py-8">
+          <div className="w-full max-w-3xl bg-[#0B0B0E]/30 backdrop-blur-3xl border border-white/5 rounded-[48px] p-12 md:p-20 flex flex-col items-center text-center shadow-2xl relative overflow-hidden">
 
-          <h2 className="text-[22px] font-black text-white tracking-tight mb-4 text-center">
-            Nenhum avatar ainda
-          </h2>
+            {/* BACKGROUND GLOW */}
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-[#3B82F6]/5 rounded-full blur-[80px]"></div>
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] bg-[#8B5CF6]/8 rounded-full blur-[40px]"></div>
+            </div>
 
-          <p className="text-[#8d8d99] text-base font-medium mb-12 text-center max-w-[420px] leading-relaxed">
-            Faça upload de uma foto sua ou crie um avatar personalizado com IA.
-          </p>
+            {/* ANIMATED ICON */}
+            <div className="relative mb-10 z-10">
+              <div className="w-36 h-36 rounded-full border border-[#3B82F6]/10 flex items-center justify-center animate-pulse" style={{ animationDuration: '3s' }}>
+                <div className="w-24 h-24 rounded-full border border-[#8B5CF6]/20 flex items-center justify-center animate-pulse" style={{ animationDuration: '2s', animationDelay: '0.5s' }}>
+                  <div className="w-16 h-16 bg-[#14151a] border border-[#1e1f26] rounded-full flex items-center justify-center shadow-2xl">
+                    <User className="w-7 h-7 text-[#5b5b7b]" />
+                  </div>
+                </div>
+              </div>
+              <div className="absolute top-2 right-4 w-2 h-2 bg-[#3B82F6]/50 rounded-full animate-ping" style={{ animationDuration: '2s' }}></div>
+              <div className="absolute bottom-4 left-3 w-1.5 h-1.5 bg-[#8B5CF6]/50 rounded-full animate-ping" style={{ animationDuration: '2.5s', animationDelay: '0.7s' }}></div>
+            </div>
 
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => uploadRef.current?.click()}
-              className="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-[24px] flex items-center gap-3 text-base font-black text-white transition-all"
-            >
-              <Upload className="w-5 h-5" />
-              Upload de Foto
-            </button>
-            <button
-              onClick={onCreateNew}
-              className="px-10 py-5 bg-[#3B82F6] hover:bg-[#4338ca] rounded-[24px] flex items-center gap-3 text-[15px] font-black text-white transition-all shadow-[0_15px_40px_rgba(81,66,245,0.25)] hover:scale-[1.03] active:scale-[0.98]"
-            >
-              <Sparkles className="w-5 h-5" />
-              Criar com IA
-            </button>
+            {/* BADGE */}
+            <div className="flex items-center gap-2 mb-6 z-10">
+              <div className="h-[1px] w-8 bg-gradient-to-r from-transparent to-[#3B82F6]"></div>
+              <span className="text-[9px] font-black text-[#3B82F6] tracking-[0.4em] uppercase px-3 py-1.5 rounded-full border border-[#3B82F6]/20 bg-[#3B82F6]/5">Neural Ready</span>
+              <div className="h-[1px] w-8 bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
+            </div>
+
+            <h2 className="text-3xl md:text-4xl font-black text-white tracking-tighter mb-4 z-10">
+              Nenhum avatar ainda
+            </h2>
+
+            <p className="text-[#8d8d99] text-base font-medium mb-14 max-w-[380px] leading-relaxed z-10">
+              Faça <span className="text-white font-black">upload de uma foto</span> sua ou gere um avatar <span className="text-[#3B82F6] font-black">hiper-realista com IA</span>.
+            </p>
+
+            {/* ACTION CARDS */}
+            <div className="flex flex-col sm:flex-row items-stretch gap-6 w-full max-w-xl z-10">
+              <button
+                onClick={() => uploadRef.current?.click()}
+                className="group flex-1 bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-white/20 rounded-[28px] p-8 flex flex-col items-center gap-4 transition-all duration-500 hover:scale-[1.02] active:scale-[0.98] backdrop-blur-xl"
+              >
+                <div className="w-14 h-14 rounded-2xl bg-[#14151a] border border-white/10 flex items-center justify-center group-hover:border-[#8B5CF6]/30 transition-all group-hover:shadow-[0_0_20px_rgba(139,92,246,0.1)]">
+                  <Upload className="w-6 h-6 text-[#8B5CF6] group-hover:scale-110 transition-transform" />
+                </div>
+                <div className="text-center">
+                  <span className="block text-sm font-black text-white uppercase tracking-widest mb-1">Upload de Foto</span>
+                  <span className="text-[10px] text-[#5b5b7b] font-medium">PNG, JPG, WEBP</span>
+                </div>
+              </button>
+
+              <div className="flex sm:flex-col items-center justify-center gap-2 shrink-0">
+                <div className="h-[1px] w-6 sm:h-6 sm:w-[1px] bg-white/10"></div>
+                <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-widest">ou</span>
+                <div className="h-[1px] w-6 sm:h-6 sm:w-[1px] bg-white/10"></div>
+              </div>
+
+              <button
+                onClick={onCreateNew}
+                className="group flex-1 bg-[#3B82F6]/10 hover:bg-[#3B82F6]/15 border border-[#3B82F6]/20 hover:border-[#3B82F6]/40 rounded-[28px] p-8 flex flex-col items-center gap-4 transition-all duration-500 hover:scale-[1.02] active:scale-[0.98] backdrop-blur-xl hover:shadow-[0_10px_40px_rgba(59,130,246,0.1)]"
+              >
+                <div className="w-14 h-14 rounded-2xl bg-[#3B82F6]/20 border border-[#3B82F6]/30 flex items-center justify-center group-hover:shadow-[0_0_25px_rgba(59,130,246,0.25)] transition-all">
+                  <Sparkles className="w-6 h-6 text-[#3B82F6] group-hover:scale-110 transition-transform" />
+                </div>
+                <div className="text-center">
+                  <span className="block text-sm font-black text-white uppercase tracking-widest mb-1">Criar com IA</span>
+                  <span className="text-[10px] text-[#3B82F6]/70 font-medium">Hiper-realista</span>
+                </div>
+              </button>
+            </div>
           </div>
         </div>
       )}

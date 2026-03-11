@@ -586,8 +586,8 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
           <div className="absolute left-0 top-0 bottom-0 w-[280px] bg-[#0b0c10] border-r border-[#1e1f26] flex flex-col pt-6 px-6">
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-2 cursor-pointer" onClick={() => { setIsMobileMenuOpen(false); setCurrentPage('explorar'); }}>
-                <img src="https://i.imgur.com/hkRPBxg.png" alt="Trendfy Logo" className="w-10 h-10 object-contain" />
-                <span className="text-xl font-black text-white">Trendfy</span>
+                <img src="/logo.png" alt="Viralpulse Logo" className="w-8 h-8 object-contain" />
+                <span className="text-xl font-black text-white">Viralpulse</span>
               </div>
               <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 text-[#8d8d99] hover:text-white rounded-lg hover:bg-[#1f2026]">
                 <X className="w-5 h-5" />
@@ -625,15 +625,14 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
               <Menu className="w-6 h-6" />
             </button>
             <div className="flex items-center gap-2 group cursor-pointer mr-auto" onClick={() => { setIsMobileMenuOpen(false); setCurrentPage('explorar'); }}>
-              <div className="w-14 h-14 bg-transparent flex items-center justify-center">
+              <div className="flex items-center justify-center">
                 <img
-                  src="https://i.imgur.com/hkRPBxg.png"
-                  alt="Trendfy Logo"
-                  className="w-12 h-12 object-contain"
-                  referrerPolicy="no-referrer"
+                  src="/logo.png"
+                  alt="Viralpulse Logo"
+                  className="w-10 h-10 object-contain"
                 />
               </div>
-              <span className="text-[22px] font-black tracking-tighter text-white">Trendfy</span>
+              <span className="text-[22px] font-black tracking-tighter text-white">Viralpulse</span>
             </div>
 
             {/* Navigation Links Grouped closer to Right Actions */}
@@ -983,10 +982,10 @@ const FeatureExploreCard: React.FC<{ icon: React.ReactNode, title: string, descr
 const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => (
   <main className="max-w-[1500px] mx-auto px-6 py-12 md:py-16 relative">
 
-    <div className="flex flex-col lg:flex-row items-center lg:items-center justify-between gap-10 lg:gap-8 mb-16 relative z-10 bg-[#0B0B0E]/20 backdrop-blur-sm p-6 lg:p-8 rounded-[40px] lg:rounded-[48px] border border-white/5">
+    <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-16 relative z-10 bg-[#0B0B0E]/20 backdrop-blur-sm p-8 rounded-[48px] border border-white/5 shadow-2xl">
 
       {/* LEFT: TYPOGRAPHY SCULPTURE & PULSE */}
-      <div className="flex flex-col gap-6 flex-1 w-full lg:min-w-[400px] items-center lg:items-start text-center lg:text-left">
+      <div className="flex flex-col gap-6 flex-1 min-w-[400px]">
         <div className="relative group">
           {/* ARCHITECTURAL STATUS LINE */}
           <div className="flex items-center gap-4 mb-4">
@@ -1000,56 +999,56 @@ const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => (
           </div>
 
           <div className="relative">
-            <h1 className="text-[42px] xs:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9] lg:leading-[0.85] select-none">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none">
               <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent">Produtos</span>
               <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent">Virais</span>
             </h1>
           </div>
         </div>
 
-        <p className="text-[#8d8d99] text-sm md:text-base font-medium max-w-sm leading-relaxed lg:border-l border-white/10 lg:pl-6">
+        <p className="text-[#8d8d99] text-sm md:text-base font-medium max-w-sm leading-relaxed border-l border-white/10 pl-6">
           Nossa rede neural minera <span className="text-white">trilhões de signals</span> para materializar oportunidades de escala global.
         </p>
       </div>
 
       {/* RIGHT: COMPACT METRICS GRID */}
-      <div className="grid grid-cols-2 lg:flex lg:flex-wrap items-center justify-center lg:justify-end gap-4 lg:gap-6 flex-1 lg:flex-[1.5] w-full lg:w-auto">
+      <div className="flex flex-wrap items-center justify-center lg:justify-end gap-6 flex-[1.5]">
         {/* NEW DETECTED (ORGANIC FROSTED) */}
-        <div className="relative group w-full xs:w-auto flex justify-center lg:block">
+        <div className="relative group">
           <div className="absolute inset-0 bg-[#3B82F6]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-          <div className="w-full xs:w-36 h-36 lg:w-40 lg:h-40 backdrop-blur-3xl bg-white/[0.03] border border-white/10 rounded-[30px] lg:rounded-[40px] p-5 lg:p-6 flex flex-col items-center justify-center shadow-2xl transition-all duration-500 group-hover:scale-105">
-            <Package className="w-5 h-5 lg:w-6 lg:h-6 text-[#3B82F6] mb-2 opacity-50" />
-            <span className="text-3xl lg:text-4xl font-black text-white tracking-tighter mb-1">18</span>
-            <span className="text-[7.5px] lg:text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">HITS HOJE</span>
+          <div className="w-40 h-40 backdrop-blur-3xl bg-white/[0.03] border border-white/10 rounded-[40px] p-6 flex flex-col items-center justify-center shadow-2xl transition-all duration-500 group-hover:scale-105">
+            <Package className="w-6 h-6 text-[#3B82F6] mb-2 opacity-50" />
+            <span className="text-4xl font-black text-white tracking-tighter mb-1">18</span>
+            <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">HITS HOJE</span>
           </div>
         </div>
 
         {/* REVENUE ORB (DYNAMIC) */}
-        <div className="relative group w-full xs:w-auto flex justify-center lg:block">
+        <div className="relative group">
           <div className="absolute inset-x-0 -bottom-6 h-12 bg-[#00b37e]/10 blur-3xl rounded-full opacity-40"></div>
-          <div className="w-full xs:w-36 h-36 lg:w-48 lg:h-48 backdrop-blur-3xl bg-[#0B0B0E]/60 border border-white/10 rounded-[30px] lg:rounded-full p-5 lg:p-8 flex flex-col items-center justify-center shadow-2xl relative overflow-hidden group-hover:border-[#00b37e]/30 transition-all group-hover:scale-105">
+          <div className="w-48 h-48 backdrop-blur-3xl bg-[#0B0B0E]/60 border border-white/10 rounded-full p-8 flex flex-col items-center justify-center shadow-2xl relative overflow-hidden group-hover:border-[#00b37e]/30 transition-all group-hover:scale-105">
             <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#00b37e]/10 to-transparent pointer-events-none"></div>
-            <TrendingUp className="w-4 h-4 lg:w-5 lg:h-5 text-[#00b37e] mb-1 animate-bounce" />
+            <TrendingUp className="w-5 h-5 text-[#00b37e] mb-1 animate-bounce" />
             <div className="flex items-baseline gap-0.5">
-              <span className="text-[10px] lg:text-xs font-black text-[#00b37e]/40">R$</span>
-              <span className="text-3xl lg:text-4xl font-black text-[#00b37e] tracking-tighter tabular-nums drop-shadow-[0_0_15px_rgba(0,179,126,0.3)]">3.9M</span>
+              <span className="text-xs font-black text-[#00b37e]/40">R$</span>
+              <span className="text-4xl font-black text-[#00b37e] tracking-tighter tabular-nums drop-shadow-[0_0_15px_rgba(0,179,126,0.3)]">3.9M</span>
             </div>
-            <span className="text-[7.5px] lg:text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.4em] mt-1 text-center">VOLUME REAL</span>
+            <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.4em] mt-1 text-center">VOLUME REAL</span>
           </div>
         </div>
 
         {/* ACCURACY SPHERE (SCIFI DATA ORB) */}
-        <div className="relative group col-span-2 lg:col-span-1 flex justify-center mt-2 lg:mt-0">
-          <div className="w-32 h-32 lg:w-40 lg:h-40 flex items-center justify-center p-2 group-hover:scale-105 transition-all">
+        <div className="relative group">
+          <div className="w-40 h-40 flex items-center justify-center p-2 group-hover:scale-105 transition-all">
             <div className="absolute inset-0 bg-[#8B5CF6]/10 blur-3xl rounded-full animate-pulse"></div>
             <div className="relative w-full h-full flex items-center justify-center rounded-full border border-white/5 bg-[#0B0B0E]/40 backdrop-blur-md">
               <svg className="absolute inset-0 w-full h-full transform -rotate-90">
                 <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="1" fill="transparent" className="text-white/5" />
-                <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="6 lg:8" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#8B5CF6] transition-all duration-1000 opacity-20" />
+                <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="8" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#8B5CF6] transition-all duration-1000 opacity-20" />
                 <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="2" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#8B5CF6] shadow-[0_0_20px_#8B5CF6]" />
               </svg>
               <div className="flex flex-col items-center">
-                <span className="text-2xl lg:text-3xl font-black text-white tracking-tighter">98<span className="text-xs text-[#5b5b7b]">%</span></span>
+                <span className="text-3xl font-black text-white tracking-tighter">98<span className="text-xs text-[#5b5b7b]">%</span></span>
                 <span className="text-[7px] font-black text-[#8B5CF6] uppercase tracking-[0.2em]">Accuracy</span>
               </div>
             </div>
@@ -1684,8 +1683,8 @@ const VideosView: React.FC = () => {
   return (
     <main className="max-w-[1500px] mx-auto px-6 py-12 md:py-16 relative">
 
-      <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between gap-10 lg:gap-8 mb-16 relative z-10 bg-[#0B0B0E]/20 backdrop-blur-sm p-6 lg:p-8 rounded-[40px] lg:rounded-[48px] border border-white/5">
-        <div className="flex flex-col gap-6 flex-1 w-full lg:min-w-[400px] items-center lg:items-start text-center lg:text-left">
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-16 relative z-10 bg-[#0B0B0E]/20 backdrop-blur-sm p-8 rounded-[48px] border border-white/5 shadow-2xl">
+        <div className="flex flex-col gap-6 flex-1 min-w-[400px]">
           <div className="relative group">
             <div className="flex items-center gap-4 mb-4">
               <div className="h-[1px] w-8 bg-gradient-to-r from-[#00b37e] to-transparent"></div>
@@ -1697,55 +1696,55 @@ const VideosView: React.FC = () => {
               </div>
             </div>
             <div className="relative">
-              <h1 className="text-[42px] xs:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9] lg:leading-[0.85] select-none">
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none">
                 <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent">Vídeos</span>
                 <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent transform translate-x-1">Virais</span>
               </h1>
             </div>
           </div>
-          <p className="text-[#8d8d99] text-sm md:text-base font-medium max-w-sm leading-relaxed lg:border-l border-white/10 lg:pl-6">
+          <p className="text-[#8d8d99] text-sm md:text-base font-medium max-w-sm leading-relaxed border-l border-white/10 pl-6">
             Análise cinemática de <span className="text-white">engagement patterns</span> para identificar os criativos que dominam o feed global.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 lg:flex lg:flex-wrap items-center justify-center lg:justify-end gap-4 lg:gap-6 flex-1 lg:flex-[1.5] w-full lg:w-auto">
+        <div className="flex flex-wrap items-center justify-center lg:justify-end gap-6 flex-[1.5]">
           {/* HIT COUNT (ORGANIC FROSTED) */}
-          <div className="relative group w-full xs:w-auto flex justify-center lg:block">
+          <div className="relative group">
             <div className="absolute inset-0 bg-[#3B82F6]/10 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-            <div className="w-full xs:w-36 h-36 lg:w-40 lg:h-40 backdrop-blur-3xl bg-white/[0.03] border border-white/10 rounded-[30px] lg:rounded-[40px] p-5 lg:p-6 flex flex-col items-center justify-center shadow-2xl transition-all duration-500 group-hover:scale-105">
-              <Zap className="w-5 h-5 lg:w-6 lg:h-6 text-[#3B82F6] mb-2 opacity-50 animate-bounce" />
-              <span className="text-3xl lg:text-4xl font-black text-white tracking-tighter mb-1">40</span>
-              <span className="text-[7.5px] lg:text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">HITS HOJE</span>
+            <div className="w-40 h-40 backdrop-blur-3xl bg-white/[0.03] border border-white/10 rounded-[40px] p-6 flex flex-col items-center justify-center shadow-2xl transition-all duration-500 group-hover:scale-105">
+              <Zap className="w-6 h-6 text-[#3B82F6] mb-2 opacity-50 animate-bounce" />
+              <span className="text-4xl font-black text-white tracking-tighter mb-1">40</span>
+              <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">HITS HOJE</span>
             </div>
           </div>
 
           {/* REVENUE ORB (DYNAMIC) */}
-          <div className="relative group w-full xs:w-auto flex justify-center lg:block">
+          <div className="relative group">
             <div className="absolute inset-x-0 -bottom-6 h-12 bg-[#00b37e]/10 blur-3xl rounded-full opacity-40"></div>
-            <div className="w-full xs:w-36 h-36 lg:w-48 lg:h-48 backdrop-blur-3xl bg-[#0B0B0E]/60 border border-white/10 rounded-[30px] lg:rounded-full p-5 lg:p-8 flex flex-col items-center justify-center shadow-2xl relative overflow-hidden group-hover:border-[#00b37e]/30 transition-all group-hover:scale-105">
+            <div className="w-48 h-48 backdrop-blur-3xl bg-[#0B0B0E]/60 border border-white/10 rounded-full p-8 flex flex-col items-center justify-center shadow-2xl relative overflow-hidden group-hover:border-[#00b37e]/30 transition-all group-hover:scale-105">
               <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#00b37e]/10 to-transparent pointer-events-none"></div>
-              <Activity className="w-4 h-4 lg:w-5 lg:h-5 text-[#00b37e] mb-1 animate-bounce" />
+              <Activity className="w-5 h-5 text-[#00b37e] mb-1 animate-bounce" />
               <div className="flex items-baseline gap-0.5">
-                <span className="text-[10px] lg:text-xs font-black text-[#00b37e]/40">R$</span>
-                <span className="text-3xl lg:text-4xl font-black text-[#00b37e] tracking-tighter tabular-nums drop-shadow-[0_0_15px_rgba(0,179,126,0.3)]">1.2M</span>
+                <span className="text-xs font-black text-[#00b37e]/40">R$</span>
+                <span className="text-4xl font-black text-[#00b37e] tracking-tighter tabular-nums drop-shadow-[0_0_15px_rgba(0,179,126,0.3)]">1.2M</span>
               </div>
-              <span className="text-[7.5px] lg:text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.4em] mt-1 text-center">VOLUME REAL</span>
+              <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.4em] mt-1 text-center">VOLUME REAL</span>
             </div>
           </div>
 
           {/* ENGAGEMENT SPHERE (SCIFI DATA ORB) */}
-          <div className="relative group col-span-2 lg:col-span-1 flex justify-center mt-2 lg:mt-0">
-            <div className="w-32 h-32 lg:w-40 lg:h-40 flex items-center justify-center p-2 group-hover:scale-105 transition-all">
+          <div className="relative group">
+            <div className="w-40 h-40 flex items-center justify-center p-2 group-hover:scale-105 transition-all">
               <div className="absolute inset-0 bg-[#8B5CF6]/10 blur-3xl rounded-full animate-pulse"></div>
               <div className="relative w-full h-full flex items-center justify-center rounded-full border border-white/5 bg-[#0B0B0E]/40 backdrop-blur-md">
                 <svg className="absolute inset-0 w-full h-full transform -rotate-90">
                   <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="1" fill="transparent" className="text-white/5" />
-                  <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="6 lg:8" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#8B5CF6] transition-all duration-1000 opacity-20" />
+                  <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="8" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#8B5CF6] transition-all duration-1000 opacity-20" />
                   <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="2" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#8B5CF6] shadow-[0_0_20px_#8B5CF6]" />
                 </svg>
                 <div className="flex flex-col items-center">
-                  <Target className="w-4 h-4 lg:w-5 lg:h-5 text-[#8B5CF6] mb-1 opacity-50 animate-pulse" />
-                  <span className="text-2xl lg:text-3xl font-black text-white tracking-tighter">99<span className="text-xs text-[#5b5b7b]">%</span></span>
+                  <Target className="w-5 h-5 text-[#8B5CF6] mb-1 opacity-50 animate-pulse" />
+                  <span className="text-3xl font-black text-white tracking-tighter">99<span className="text-xs text-[#5b5b7b]">%</span></span>
                 </div>
               </div>
             </div>
@@ -4180,7 +4179,7 @@ const PassosIniciaisView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
           <section className="flex flex-col gap-4">
             <h2 className="text-xl font-black text-white tracking-tight uppercase">BEM-VINDO AO TRENDFY APP</h2>
             <p className="text-[#8d8d99] text-base font-medium leading-relaxed max-w-3xl">
-              O Trendfy é sua ferramenta definitiva para dominar o TikTok Shop. Nosso objetivo é fornecer dados, criativos e conhecimento para você escalar suas vendas.
+              O Viralpulse é sua ferramenta definitiva para dominar o TikTok Shop. Nosso objetivo é fornecer dados, criativos e conhecimento para você escalar suas vendas.
             </p>
           </section>
 
@@ -5724,7 +5723,7 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             )}
 
             <p className="text-[#8d8d99] text-[13px] font-medium text-center leading-relaxed">
-              Nós criamos o prompt fotorrealista perfeito. Basta colar no Grok, gerar a imagem e trazer de volta para o Trendfy.
+              Nós criamos o prompt fotorrealista perfeito. Basta colar no Grok, gerar a imagem e trazer de volta para o Viralpulse.
             </p>
 
             {/* Checklist Section */}

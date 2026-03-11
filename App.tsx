@@ -201,15 +201,15 @@ const ConfiguracoesView: React.FC<ConfiguracoesViewProps> = ({ profileImage, onI
       <div className="flex flex-col items-center mb-12">
         <div
           onClick={() => fileInputRef.current?.click()}
-          className="w-24 h-24 bg-[#3B82F6] rounded-full flex items-center justify-center text-[#7f5af0]xl font-black text-white shadow-2xl mb-6 relative group cursor-pointer overflow-hidden border-4 border-[#1a1a1e]"
+          className="w-28 h-28 bg-gradient-to-br from-[#8B5CF6] to-[#d946ef] rounded-full flex items-center justify-center text-4xl font-black text-white shadow-[0_0_40px_rgba(139,92,246,0.3)] mb-8 relative group cursor-pointer overflow-hidden border-4 border-white/10 backdrop-blur-xl transition-all hover:scale-105 active:scale-95"
         >
           {profileImage ? (
             <img src={profileImage} alt="Profile" className="w-full h-full object-cover" />
           ) : (
             "N"
           )}
-          <div className="absolute inset-0 bg-[#0b0c10]/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-            <Camera className="w-8 h-8 text-white" />
+          <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm">
+            <Camera className="w-8 h-8 text-white animate-in zoom-in duration-300" />
           </div>
           <input
             type="file"
@@ -226,79 +226,88 @@ const ConfiguracoesView: React.FC<ConfiguracoesViewProps> = ({ profileImage, onI
       {/* Cards Section */}
       <div className="w-full flex flex-col gap-6">
         {/* Personal Info Card */}
-        <div className="bg-[#14151a] border border-[#1e1f26] rounded-[32px] p-5 md:p-8 shadow-2xl">
-          <div className="flex items-center gap-3 mb-8">
-            <User className="w-5 h-5 text-[#8d8d99]" />
-            <h2 className="text-lg font-black text-white tracking-tight">{t('informacoesPessoais')}</h2>
+        <div className="bg-white/[0.02] border border-white/5 backdrop-blur-[20px] rounded-[40px] p-6 md:p-10 shadow-2xl relative overflow-hidden group/card hover:border-white/10 transition-all">
+          <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#8B5CF6]/50 to-transparent"></div>
+          <div className="flex items-center gap-4 mb-10">
+            <div className="w-10 h-10 rounded-2xl bg-[#8B5CF6]/10 flex items-center justify-center">
+              <User className="w-5 h-5 text-[#8B5CF6]" />
+            </div>
+            <h2 className="text-xl font-black text-white tracking-tight">{t('informacoesPessoais')}</h2>
           </div>
 
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-2.5">
               <label className="text-[11px] font-black text-[#8d8d99] uppercase tracking-widest">{t('nome')}</label>
-              <div className="flex gap-3">
-                <div className="relative flex-1">
+              <div className="flex gap-4">
+                <div className="relative flex-1 group">
                   <input
                     type="text"
                     defaultValue="nicklousstefanianrj6"
-                    className="w-full bg-[#14151a] border border-[#1e1f26] rounded-2xl py-4 px-6 text-sm text-white focus:outline-none focus:border-[#3B82F6]/40 transition-colors"
+                    className="w-full bg-white/[0.03] border border-white/5 rounded-2xl py-5 px-6 text-[15px] text-white focus:outline-none focus:border-[#8B5CF6]/40 focus:ring-4 focus:ring-[#8B5CF6]/10 transition-all font-medium"
                   />
                 </div>
-                <button className="px-6 py-4 bg-[#3B82F6]/10 border border-[#3B82F6]/20 text-[#3B82F6] rounded-2xl text-xs font-black uppercase tracking-widest hover:bg-[#3B82F6]/20 transition-all">
+                <button className="px-8 py-5 bg-white/[0.03] border border-white/10 text-white rounded-2xl text-[13px] font-black uppercase tracking-widest hover:bg-[#8B5CF6] hover:border-[#8B5CF6] transition-all hover:shadow-[0_0_20px_rgba(139,92,246,0.2)]">
                   {t('editar')}
                 </button>
               </div>
             </div>
 
             <div className="flex flex-col gap-2.5">
-              <label className="text-[11px] font-black text-[#8d8d99] uppercase tracking-widest">{t('email')}</label>
+              <label className="text-[11px] font-black text-[#8d8d99] uppercase tracking-widest leading-none ml-1">{t('email')}</label>
               <div className="relative">
                 <input
                   type="email"
                   defaultValue="nicklousstefanianrj6@gmail.com"
                   readOnly
-                  className="w-full bg-[#14151a] border border-[#1e1f26] rounded-2xl py-4 px-6 text-sm text-[#5b5b7b] cursor-not-allowed"
+                  className="w-full bg-white/[0.01] border border-white/5 rounded-2xl py-5 px-6 text-[15px] text-[#5b5b7b] cursor-not-allowed font-medium"
                 />
               </div>
-              <p className="text-[10px] font-medium text-[#5b5b7b] tracking-tight">{t('emailNaoAlterado')}</p>
+              <div className="flex items-center gap-2 ml-1">
+                <div className="w-1 h-1 rounded-full bg-[#5b5b7b]"></div>
+                <p className="text-[10px] font-medium text-[#5b5b7b] tracking-wider uppercase">{t('emailNaoAlterado')}</p>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Security Card */}
-        <div className="bg-[#14151a] border border-[#1e1f26] rounded-[32px] p-5 md:p-8 shadow-2xl">
-          <div className="flex items-center gap-3 mb-8">
-            <Lock className="w-5 h-5 text-[#8d8d99]" />
-            <h2 className="text-lg font-black text-white tracking-tight">{t('seguranca')}</h2>
+        <div className="bg-white/[0.02] border border-white/5 backdrop-blur-[20px] rounded-[40px] p-6 md:p-10 shadow-2xl relative overflow-hidden group/card hover:border-white/10 transition-all">
+          <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#d946ef]/50 to-transparent"></div>
+          <div className="flex items-center gap-4 mb-10">
+            <div className="w-10 h-10 rounded-2xl bg-[#d946ef]/10 flex items-center justify-center">
+              <Lock className="w-5 h-5 text-[#d946ef]" />
+            </div>
+            <h2 className="text-xl font-black text-white tracking-tight">{t('seguranca')}</h2>
           </div>
 
           <div className="flex flex-col gap-6">
             <div className="flex flex-col gap-2.5">
-              <label className="text-[11px] font-black text-[#8d8d99] uppercase tracking-widest">{t('novaSenha')}</label>
+              <label className="text-[11px] font-black text-[#8d8d99] uppercase tracking-widest ml-1">{t('novaSenha')}</label>
               <input
                 type="password"
                 placeholder={t('placeholderSenha')}
-                className="w-full bg-[#14151a] border border-[#1e1f26] rounded-2xl py-4 px-6 text-sm text-white placeholder:text-[#44444f] focus:outline-none focus:border-[#3B82F6]/40 transition-colors"
+                className="w-full bg-white/[0.03] border border-white/5 rounded-2xl py-5 px-6 text-[15px] text-white placeholder:text-[#44444f] focus:outline-none focus:border-[#d946ef]/40 focus:ring-4 focus:ring-[#d946ef]/10 transition-all font-medium"
               />
             </div>
 
             <div className="flex flex-col gap-2.5">
-              <label className="text-[11px] font-black text-[#8d8d99] uppercase tracking-widest">{t('confirmarSenha')}</label>
+              <label className="text-[11px] font-black text-[#8d8d99] uppercase tracking-widest ml-1">{t('confirmarSenha')}</label>
               <input
                 type="password"
                 placeholder={t('placeholderConfirmar')}
-                className="w-full bg-[#14151a] border border-[#1e1f26] rounded-2xl py-4 px-6 text-sm text-white placeholder:text-[#44444f] focus:outline-none focus:border-[#3B82F6]/40 transition-colors"
+                className="w-full bg-white/[0.03] border border-white/5 rounded-2xl py-5 px-6 text-[15px] text-white placeholder:text-[#44444f] focus:outline-none focus:border-[#d946ef]/40 focus:ring-4 focus:ring-[#d946ef]/10 transition-all font-medium"
               />
             </div>
 
-            <button className="w-full bg-[#3B82F6] hover:bg-[#4338ca] text-white py-5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all shadow-lg shadow-[#3B82F6]/20 active:scale-[0.98]">
+            <button className="w-full bg-gradient-to-r from-[#8B5CF6] to-[#d946ef] hover:scale-[1.02] text-white py-5 rounded-2xl font-black text-[15px] uppercase tracking-widest transition-all shadow-[0_10px_30px_rgba(139,92,246,0.3)] active:scale-[0.98]">
               {t('atualizarSenha')}
             </button>
           </div>
         </div>
 
         {/* Logout Button */}
-        <button className="w-full bg-[#16161A] border border-[#2C2D38] text-[#3B82F6] py-5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all hover:bg-[#3B82F6]/5 flex items-center justify-center gap-3">
-          <LogOut className="w-5 h-5" />
+        <button className="w-full bg-white/[0.02] border border-white/5 text-[#d946ef]/80 py-5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all hover:bg-[#d946ef]/5 hover:border-[#d946ef]/20 flex items-center justify-center gap-3 group/logout">
+          <LogOut className="w-5 h-5 group-hover/logout:-translate-x-1 transition-transform" />
           {t('sair')}
         </button>
       </div>
@@ -312,8 +321,8 @@ const ConfiguracoesView: React.FC<ConfiguracoesViewProps> = ({ profileImage, onI
 const GlobalBackground: React.FC = () => (
   <div className="fixed inset-0 pointer-events-none overflow-hidden z-[0]">
     {/* Mesh Gradients */}
-    <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-[#3B82F6]/10 blur-[120px] rounded-full animate-[pulse-soft_8s_infinite] mix-blend-screen"></div>
-    <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-[#8B5CF6]/10 blur-[120px] rounded-full animate-[pulse-soft_12s_infinite_reverse] mix-blend-screen"></div>
+    <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-[#8B5CF6]/10 blur-[120px] rounded-full animate-[pulse-soft_8s_infinite] mix-blend-screen"></div>
+    <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-[#d946ef]/10 blur-[120px] rounded-full animate-[pulse-soft_12s_infinite_reverse] mix-blend-screen"></div>
 
     {/* Digital Grid with Perspective */}
     <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30 transform perspective-[1000px] rotateX-[20deg] origin-top scale-110"></div>
@@ -321,13 +330,13 @@ const GlobalBackground: React.FC = () => (
     {/* Neural Particles (Digital Dust) */}
     <div className="absolute inset-0 opacity-20">
       <div className="absolute top-[20%] left-[15%] w-1 h-1 bg-white rounded-full animate-pulse shadow-[0_0_8px_white]"></div>
-      <div className="absolute top-[45%] left-[85%] w-1 h-1 bg-[#3B82F6] rounded-full animate-pulse shadow-[0_0_8px_#3B82F6] delay-700"></div>
-      <div className="absolute top-[75%] left-[25%] w-1 h-1 bg-[#8B5CF6] rounded-full animate-pulse shadow-[0_0_8px_#8B5CF6] delay-1000"></div>
+      <div className="absolute top-[45%] left-[85%] w-1 h-1 bg-[#8B5CF6] rounded-full animate-pulse shadow-[0_0_8px_#8B5CF6] delay-700"></div>
+      <div className="absolute top-[75%] left-[25%] w-1 h-1 bg-[#d946ef] rounded-full animate-pulse shadow-[0_0_8px_#d946ef] delay-1000"></div>
       <div className="absolute top-[15%] left-[65%] w-1 h-1 bg-white rounded-full animate-pulse shadow-[0_0_8px_white] delay-300"></div>
     </div>
 
     {/* Scanning Line Effect */}
-    <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#3B82F6]/20 to-transparent animate-[scanline_10s_linear_infinite]"></div>
+    <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#8B5CF6]/20 to-transparent animate-[scanline_10s_linear_infinite]"></div>
   </div>
 );
 
@@ -598,7 +607,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
           <div className="absolute left-0 top-0 bottom-0 w-[280px] bg-[#0b0c10] border-r border-[#1e1f26] flex flex-col pt-6 px-6">
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-2 cursor-pointer" onClick={() => { setIsMobileMenuOpen(false); setCurrentPage('explorar'); }}>
-                <img src="/logo.png" alt="Viralpulse Logo" className="w-8 h-8 object-contain" />
+                <img src="/logo.png" alt="Viralpulse Logo" className="w-6 h-6 object-contain" />
                 <span className="text-xl font-black text-white">Viralpulse</span>
               </div>
               <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 text-[#8d8d99] hover:text-white rounded-lg hover:bg-[#1f2026]">
@@ -641,7 +650,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
                 <img
                   src="/logo.png"
                   alt="Viralpulse Logo"
-                  className="w-10 h-10 object-contain"
+                  className="w-6 h-6 object-contain"
                 />
               </div>
               <span className="text-[22px] font-black tracking-tighter text-white">Viralpulse</span>
@@ -1956,7 +1965,7 @@ const VideosView: React.FC = () => {
       </div>
 
       <div className="flex items-center gap-3 mb-12 px-2 flex-wrap">
-        <button onClick={() => setVideoFilter('all')} className={`px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-[0.15em] flex items-center gap-2 hover:scale-[1.03] transition-all ${videoFilter === 'all' ? 'bg-[#3B82F6] text-white shadow-lg shadow-[#3B82F6]/20' : 'bg-[#14151a] border border-[#1e1f26] text-[#8d8d99] hover:border-[#44444f] hover:text-white'}`}>
+        <button onClick={() => setVideoFilter('all')} className={`px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-[0.15em] flex items-center gap-2 hover:scale-[1.03] transition-all ${videoFilter === 'all' ? 'bg-[#8B5CF6] text-white shadow-lg shadow-[#8B5CF6]/20' : 'bg-[#14151a] border border-[#1e1f26] text-[#8d8d99] hover:border-[#44444f] hover:text-white'}`}>
           <LayoutGrid className="w-4 h-4" /> Todos os Vídeos
         </button>
         <button onClick={() => setVideoFilter('revenue')} className={`px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-[0.15em] flex items-center gap-2 hover:scale-[1.03] transition-all ${videoFilter === 'revenue' ? 'bg-[#00b37e] text-white shadow-lg shadow-[#00b37e]/20' : 'bg-[#14151a] border border-[#1e1f26] text-[#8d8d99] hover:border-[#44444f] hover:text-white'}`}>
@@ -1974,7 +1983,7 @@ const VideosView: React.FC = () => {
         <div className="flex flex-col items-center justify-center py-24 gap-4">
           <Bookmark className="w-12 h-12 text-[#5b5b7b]" />
           <p className="text-[#5b5b7b] font-black uppercase tracking-widest text-sm">Nenhum vídeo favoritado ainda</p>
-          <button onClick={() => setVideoFilter('all')} className="text-[#3B82F6] text-sm font-black hover:underline">Ver todos os vídeos</button>
+          <button onClick={() => setVideoFilter('all')} className="text-[#8B5CF6] text-sm font-black hover:underline">Ver todos os vídeos</button>
         </div>
       )}
 
@@ -2017,15 +2026,15 @@ const ScriptModal: React.FC<{ isOpen: boolean; onClose: () => void; video: Video
         <div className="p-5 md:p-8 flex flex-col gap-5 md:gap-8">
           <div className="flex flex-col gap-6">
             <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-[#1F2028] flex items-center justify-center text-[#3B82F6] font-black text-sm shrink-0 mt-0.5">1</div>
+              <div className="w-8 h-8 rounded-full bg-[#1F2028] flex items-center justify-center text-[#8B5CF6] font-black text-sm shrink-0 mt-0.5">1</div>
               <p className="text-[#8d8d99] text-[15px] font-medium leading-relaxed">Clique no botão abaixo para copiar o link do vídeo.</p>
             </div>
             <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-[#1F2028] flex items-center justify-center text-[#3B82F6] font-black text-sm shrink-0 mt-0.5">2</div>
+              <div className="w-8 h-8 rounded-full bg-[#1F2028] flex items-center justify-center text-[#8B5CF6] font-black text-sm shrink-0 mt-0.5">2</div>
               <p className="text-[#8d8d99] text-[15px] font-medium leading-relaxed">O site Transcript24 abrirá em uma nova aba.</p>
             </div>
             <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-[#1F2028] flex items-center justify-center text-[#3B82F6] font-black text-sm shrink-0 mt-0.5">3</div>
+              <div className="w-8 h-8 rounded-full bg-[#1F2028] flex items-center justify-center text-[#8B5CF6] font-black text-sm shrink-0 mt-0.5">3</div>
               <p className="text-[#8d8d99] text-[15px] font-medium leading-relaxed">Cole o link no site para gerar o script completo.</p>
             </div>
           </div>
@@ -2033,7 +2042,7 @@ const ScriptModal: React.FC<{ isOpen: boolean; onClose: () => void; video: Video
           <div className="flex flex-col gap-4">
             <button
               onClick={handleCopyAndOpen}
-              className="w-full bg-[#3B82F6] hover:bg-[#4338ca] text-white py-5 rounded-2xl flex items-center justify-center gap-3 transition-all font-black text-[15px] shadow-lg shadow-[#3B82F6]/20"
+              className="w-full bg-[#8B5CF6] hover:bg-[#7c3aed] text-white py-5 rounded-2xl flex items-center justify-center gap-3 transition-all font-black text-[15px] shadow-lg shadow-[#8B5CF6]/20"
             >
               <Copy className="w-5 h-5" /> Copiar Link e Abrir Site
             </button>
@@ -2092,7 +2101,7 @@ const VideoCard: React.FC<{ video: VideoViral; isFavorite?: boolean; onToggleFav
   return (
     <div className="flex flex-col group h-full">
       <div
-        className="relative aspect-[9/16] bg-[#14151a] border border-[#1e1f26] rounded-[48px] overflow-hidden cursor-pointer shadow-2xl hover:border-[#3B82F6]/30 transition-all"
+        className="relative aspect-[9/16] bg-[#14151a] border border-[#1e1f26] rounded-[48px] overflow-hidden cursor-pointer shadow-2xl hover:border-[#8B5CF6]/30 transition-all"
         onClick={togglePlay}
       >
         {isPlaying ? (
@@ -2106,7 +2115,7 @@ const VideoCard: React.FC<{ video: VideoViral; isFavorite?: boolean; onToggleFav
 
             <div className="absolute inset-0 flex items-center justify-center z-10">
               <div className="w-24 h-24 bg-[#0b0c10]/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 group-hover:scale-110 transition-transform shadow-2xl">
-                <div className="w-16 h-16 bg-[#3B82F6] rounded-full flex items-center justify-center shadow-2xl shadow-[#3B82F6]/50">
+                <div className="w-16 h-16 bg-[#8B5CF6] rounded-full flex items-center justify-center shadow-2xl shadow-[#8B5CF6]/50">
                   <Play className="w-8 h-8 text-white fill-current translate-x-1" />
                 </div>
               </div>
@@ -5543,7 +5552,7 @@ const MeusAvataresView: React.FC<{ avatars: CustomAvatar[]; onAddAvatar: (a: Cus
       <input type="file" ref={uploadRef} className="hidden" accept="image/*" onChange={handleUpload} />
 
       {/* ARCHITECTURAL HEADER — SYNCED WITH PROJECT PATTERN */}
-      <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-16 relative z-10 bg-[#0B0B0E]/30 backdrop-blur-3xl p-10 rounded-[48px] border border-white/5 shadow-2xl">
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-8 relative z-10 bg-[#0B0B0E]/30 backdrop-blur-3xl p-10 rounded-[48px] border border-white/5 shadow-2xl">
 
         {/* LEFT: TYPOGRAPHY SCULPTURE */}
         <div className="flex flex-col gap-6 flex-1 min-w-[320px]">
@@ -5659,7 +5668,7 @@ const MeusAvataresView: React.FC<{ avatars: CustomAvatar[]; onAddAvatar: (a: Cus
         </div>
       ) : (
         /* ── PREMIUM EMPTY STATE ── */
-        <div className="flex flex-col items-center justify-center py-8">
+        <div className="flex flex-col items-center justify-center pt-0 pb-10">
           <div className="w-full max-w-3xl bg-[#0B0B0E]/30 backdrop-blur-3xl border border-white/5 rounded-[48px] p-12 md:p-20 flex flex-col items-center text-center shadow-2xl relative overflow-hidden">
 
             {/* BACKGROUND GLOW */}

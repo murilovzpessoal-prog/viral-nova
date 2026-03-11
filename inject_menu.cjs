@@ -38,7 +38,7 @@ const mobileMenuOverlay = `
             <div className="absolute left-0 top-0 bottom-0 w-[280px] bg-[#0b0c10] border-r border-[#1e1f26] flex flex-col pt-6 px-6">
               <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-2 cursor-pointer" onClick={() => { setIsMobileMenuOpen(false); setCurrentPage('explorar'); }}>
-                  <img src="/logo.png" alt="Viralpulse Logo" className="w-7 h-7 object-contain" />
+                  <img src="/logo.png" alt="Viralpulse Logo" className="w-5 h-5 object-contain" />
                   <span className="text-xl font-black text-white">Viralpulse</span>
                 </div>
                 <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 text-[#8d8d99] hover:text-white rounded-lg hover:bg-[#1f2026]">

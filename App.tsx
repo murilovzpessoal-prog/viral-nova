@@ -713,7 +713,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
 
               {/* Right Actions */}
               <div className="flex items-center gap-3">
-                <button className="flex items-center gap-2 px-5 py-2.5 bg-[#3B82F6] text-white rounded-lg text-xs font-black hover:bg-[#2563EB] transition-all shadow-[0_0_20px_rgba(59,130,246,0.3)]">
+                <button className="hidden sm:flex items-center gap-2 px-4 py-2 border border-[#222226] text-[#3B82F6] rounded-lg text-xs font-black hover:bg-[#3B82F6]/5 transition-all">
                   <Download className="w-4 h-4" />
                   {t('baixarApp')}
                 </button>
@@ -751,14 +751,14 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
                   onClick={() => setCurrentPage('configuracoes')}
                   className="flex items-center gap-2.5 bg-[#14151a] pl-1.5 pr-3 py-1.5 rounded-full border border-[#1e1f26] cursor-pointer hover:border-[#3B82F6]/30 transition-all"
                 >
-                  <div className="w-7 h-7 bg-[#3B82F6] rounded-full flex items-center justify-center text-[11px] font-black text-white shadow-lg shadow-[#3B82F6]/20 overflow-hidden">
+                  <div className="w-7 h-7 bg-gradient-to-br from-[#3B82F6] to-[#8B5CF6] rounded-full flex items-center justify-center text-[11px] font-black text-white shadow-lg shadow-[#3B82F6]/20 overflow-hidden">
                     {userProfileImage ? (
                       <img src={userProfileImage} alt="User" className="w-full h-full object-cover" />
                     ) : (
                       "N"
                     )}
                   </div>
-                  <span className="text-xs font-black text-[#8d8d99] uppercase tracking-tight">{t('usuario')}</span>
+                  <span className="text-xs font-black text-white uppercase tracking-tight">{t('usuario')}</span>
                 </div>
               </div>
             </div>

@@ -45,14 +45,25 @@ const mobileMenuOverlay = `
                   <X className="w-5 h-5" />
                 </button>
               </div>
-              <nav className="flex flex-col gap-4">
-                {['explorar', 'produtos', 'videos', 'criadores'].map((page) => (
+              <nav className="flex flex-col gap-3 py-4 overflow-y-auto max-h-[70vh]">
+                {[
+                  { id: 'explorar', label: t('explorar') },
+                  { id: 'produtos', label: t('produtos') },
+                  { id: 'videos', label: t('videos') },
+                  { id: 'criadores', label: t('criadores') },
+                  { id: 'ugc-criador', label: t('ugcCriador') },
+                  { id: 'galeria-avatares', label: t('galeriaAvatares') },
+                  { id: 'galeria-prompts', label: t('galeriaPrompts') },
+                  { id: 'previsibilidade-receita', label: t('previsibilidadeReceita') },
+                  { id: 'hacks-virais', label: t('hacksVirais') },
+                  { id: 'creator-academy', label: t('creatorAcademy') }
+                ].map((item) => (
                   <button
-                    key={page}
-                    onClick={() => { setCurrentPage(page as any); setIsMobileMenuOpen(false); }}
-                    className={\`text-left text-base font-semibold py-3 px-4 rounded-xl transition-all \${currentPage === page ? 'text-white bg-[#3B82F6]' : 'text-[#8d8d99] hover:text-white hover:bg-[#1f2026]'}\`}
+                    key={item.id}
+                    onClick={() => { setCurrentPage(item.id); setIsMobileMenuOpen(false); }}
+                    className={\`text-left text-sm font-semibold py-3 px-4 rounded-xl transition-all \${currentPage === item.id ? 'text-white bg-[#8B5CF6]' : 'text-[#8d8d99] hover:text-white hover:bg-[#1f2026]'}\`}
                   >
-                    {t(page)}
+                    {item.label}
                   </button>
                 ))}
               </nav>

@@ -54,6 +54,7 @@ import {
   Layout,
   MousePointer2,
   X,
+  Upload,
   User,
   Type,
   Lock,
@@ -330,6 +331,8 @@ const GlobalBackground: React.FC = () => (
   </div>
 );
 
+interface CustomAvatar { id: string; name: string; image: string; }
+
 const App: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [currentPage, setCurrentPage] = useState<'explorar' | 'produtos' | 'videos' | 'criadores' | 'ugc-criador' | 'galeria-avatares' | 'galeria-prompts' | 'meus-avatares' | 'criar-avatar' | 'previsibilidade-receita' | 'hacks-virais' | 'hacks-virais-detalhe' | 'creator-academy' | 'passos-iniciais' | 'como-se-afiliar' | 'regras-e-restricoes' | 'como-criar-avatar-ia' | 'como-criar-videos-ugc' | 'configuracoes'>('explorar');
@@ -337,6 +340,15 @@ const App: React.FC = () => {
   const [userProfileImage, setUserProfileImage] = useState<string | null>(null);
   const [language, setLanguage] = useState<Language>('pt');
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
+  const [customAvatars, setCustomAvatars] = useState<CustomAvatar[]>([]);
+
+  const handleAddCustomAvatar = (avatar: CustomAvatar) => {
+    setCustomAvatars(prev => [...prev, avatar]);
+  };
+
+  const handleDeleteCustomAvatar = (id: string) => {
+    setCustomAvatars(prev => prev.filter(a => a.id !== id));
+  };
 
   const t = (key: TranslationKey) => translations[language][key] || key;
 
@@ -759,10 +771,10 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
           {currentPage === 'produtos' && <ProductsView products={viralProducts} />}
           {currentPage === 'videos' && <VideosView />}
           {currentPage === 'criadores' && <CreatorsView />}
-          {currentPage === 'ugc-criador' && <UGCCreatorView viralProducts={viralProducts} exploreTopProducts={exploreTopProducts} />}
+          {currentPage === 'ugc-criador' && <UGCCreatorView viralProducts={viralProducts} exploreTopProducts={exploreTopProducts} customAvatars={customAvatars} onAddCustomAvatar={handleAddCustomAvatar} onDeleteCustomAvatar={handleDeleteCustomAvatar} />}
           {currentPage === 'galeria-avatares' && <GaleriaAvataresView onGoToMyAvatars={() => setCurrentPage('meus-avatares')} onCreateNew={() => setCurrentPage('criar-avatar')} />}
           {currentPage === 'galeria-prompts' && <GaleriaPromptsView />}
-          {currentPage === 'meus-avatares' && <MeusAvataresView onBack={() => setCurrentPage('galeria-avatares')} onCreateNew={() => setCurrentPage('criar-avatar')} />}
+          {currentPage === 'meus-avatares' && <MeusAvataresView avatars={customAvatars} onAddAvatar={handleAddCustomAvatar} onDeleteAvatar={handleDeleteCustomAvatar} onBack={() => setCurrentPage('galeria-avatares')} onCreateNew={() => setCurrentPage('criar-avatar')} />}
           {currentPage === 'criar-avatar' && <CriarAvatarView onBack={() => setCurrentPage('galeria-avatares')} />}
           {currentPage === 'previsibilidade-receita' && <PrevisibilidadeReceitaView />}
           {currentPage === 'hacks-virais' && <HacksViraisView hacks={hacks} onSelectHack={handleSelectHack} />}
@@ -2294,14 +2306,13 @@ const CreatorRow: React.FC<{ creator: CreatorViral }> = ({ creator }) => (
 );
 
 // --- UGC CREATOR VIEW (MULTI-STEP) ---
-const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProducts: ProductExplore[] }> = ({ viralProducts, exploreTopProducts }) => {
+const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProducts: ProductExplore[], customAvatars: CustomAvatar[], onAddCustomAvatar: (a: CustomAvatar) => void, onDeleteCustomAvatar: (id: string) => void }> = ({ viralProducts, exploreTopProducts, customAvatars, onAddCustomAvatar, onDeleteCustomAvatar }) => {
   const [step, setStep] = useState(1);
   const [selectedStyle, setSelectedStyle] = useState<string | null>('influencer');
   const [selectedInfluencer, setSelectedInfluencer] = useState<string | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'mulheres' | 'homens' | 'meus-avatares'>('mulheres');
 
-  const [myAvatar, setMyAvatar] = useState<{ id: string, name: string, image: string } | null>(null);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -2309,8 +2320,9 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setMyAvatar({ id: 'my-avatar-1', name: 'Meu Avatar 1', image: reader.result as string });
-        setSelectedInfluencer('my-avatar-1');
+        const newAvatar: CustomAvatar = { id: `custom-${Date.now()}`, name: `Meu Avatar ${customAvatars.length + 1}`, image: reader.result as string };
+        onAddCustomAvatar(newAvatar);
+        setSelectedInfluencer(newAvatar.id);
       };
       reader.readAsDataURL(file);
     }
@@ -2739,29 +2751,33 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                 ))}
 
                 {activeTab === 'meus-avatares' && (
-                  <div className="col-span-full py-12 flex flex-col items-center justify-center border-[2px] border-dashed border-white/5 rounded-[56px] bg-white/[0.01] relative overflow-hidden group/new">
+                  <div className={`col-span-full border-[2px] border-dashed border-white/5 rounded-[56px] bg-white/[0.01] relative overflow-hidden group/new ${customAvatars.length > 0 ? 'p-8' : 'py-12 flex flex-col items-center justify-center'}`}>
                     <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handleImageUpload} />
                     <div className="absolute inset-0 bg-gradient-to-br from-[#3B82F6]/10 via-transparent to-transparent opacity-0 group-hover/new:opacity-100 transition-opacity duration-1000"></div>
-                    
-                    {myAvatar ? (
-                      <div className="flex flex-col items-center z-10 w-full max-w-sm">
-                        <div 
-                          className={`relative aspect-[3.5/4.5] w-full max-w-[280px] rounded-[40px] overflow-hidden border-2 mb-8 transition-all duration-700 cursor-pointer ${selectedInfluencer === myAvatar.id ? 'border-[#3B82F6] shadow-[0_0_50px_rgba(59,130,246,0.3)] scale-[1.02]' : 'border-white/10 hover:border-white/30'}`}
-                          onClick={() => setSelectedInfluencer(myAvatar.id)}
-                        >
-                          <img src={myAvatar.image} className="w-full h-full object-cover" alt="Meu Avatar" />
-                          <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0E] via-[#0B0B0E]/20 to-transparent opacity-70"></div>
-                          <div className="absolute bottom-6 left-6 right-6">
-                            <h3 className="text-2xl font-black text-white tracking-tighter uppercase">{myAvatar.name}</h3>
-                          </div>
-                          {selectedInfluencer === myAvatar.id && (
-                            <div className="absolute top-6 right-6 w-10 h-10 bg-[#3B82F6] rounded-full flex items-center justify-center border-2 border-white/40 shadow-[0_0_20px_#3B82F6]">
-                              <Check className="w-6 h-6 text-white" strokeWidth={4} />
+
+                    {customAvatars.length > 0 ? (
+                      <div className="flex flex-col gap-6 z-10 relative">
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                          {customAvatars.map((av) => (
+                            <div key={av.id} className={`relative aspect-[3.5/4.5] rounded-[32px] overflow-hidden border-2 cursor-pointer transition-all duration-700 ${selectedInfluencer === av.id ? 'border-[#3B82F6] shadow-[0_0_40px_rgba(59,130,246,0.3)] scale-[1.02]' : 'border-white/10 hover:border-white/30'}`} onClick={() => setSelectedInfluencer(av.id)}>
+                              <img src={av.image} className="w-full h-full object-cover" alt={av.name} />
+                              <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0E] via-[#0B0B0E]/20 to-transparent opacity-70"></div>
+                              <div className="absolute bottom-4 left-4 right-4">
+                                <h3 className="text-base font-black text-white tracking-tighter uppercase">{av.name}</h3>
+                              </div>
+                              <button onClick={(e) => { e.stopPropagation(); onDeleteCustomAvatar(av.id); if (selectedInfluencer === av.id) setSelectedInfluencer(null); }} className="absolute top-3 right-3 w-7 h-7 bg-red-500/80 rounded-full flex items-center justify-center hover:bg-red-500 transition-all z-20">
+                                <Trash2 className="w-3.5 h-3.5 text-white" />
+                              </button>
+                              {selectedInfluencer === av.id && (
+                                <div className="absolute top-3 left-3 w-7 h-7 bg-[#3B82F6] rounded-full flex items-center justify-center border border-white/40 shadow-[0_0_15px_#3B82F6]">
+                                  <Check className="w-4 h-4 text-white" strokeWidth={3} />
+                                </div>
+                              )}
                             </div>
-                          )}
+                          ))}
                         </div>
-                        <button onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click(); }} className="px-8 py-3 bg-white/5 text-white rounded-[24px] text-sm font-black hover:bg-white/10 transition-all border border-white/10">
-                          Trocar Imagem
+                        <button onClick={() => fileInputRef.current?.click()} className="self-center px-10 py-4 bg-white/5 text-white rounded-[24px] text-sm font-black hover:bg-white/10 transition-all border border-white/10 flex items-center gap-2 z-10 relative">
+                          <Plus className="w-4 h-4" /> Adicionar Avatar
                         </button>
                       </div>
                     ) : (
@@ -5368,9 +5384,31 @@ const GaleriaPromptsView: React.FC = () => {
 };
 
 // --- MEUS AVATARES VIEW ---
-const MeusAvataresView: React.FC<{ onBack: () => void; onCreateNew: () => void }> = ({ onBack, onCreateNew }) => {
+const MeusAvataresView: React.FC<{ avatars: CustomAvatar[]; onAddAvatar: (a: CustomAvatar) => void; onDeleteAvatar: (id: string) => void; onBack: () => void; onCreateNew: () => void }> = ({ avatars, onAddAvatar, onDeleteAvatar, onBack, onCreateNew }) => {
+  const uploadRef = React.useRef<HTMLInputElement>(null);
+
+  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        onAddAvatar({ id: `custom-${Date.now()}`, name: `Meu Avatar ${avatars.length + 1}`, image: reader.result as string });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleDownload = (av: CustomAvatar) => {
+    const a = document.createElement('a');
+    a.href = av.image;
+    a.download = `${av.name}.png`;
+    a.click();
+  };
+
   return (
     <main className="max-w-[1400px] mx-auto px-6 py-6 md:py-10 flex flex-col min-h-[70vh]">
+      <input type="file" ref={uploadRef} className="hidden" accept="image/*" onChange={handleUpload} />
+
       {/* Upper Navigation and Header Row */}
       <div className="flex flex-col gap-6 mb-12">
         <button
@@ -5391,38 +5429,80 @@ const MeusAvataresView: React.FC<{ onBack: () => void; onCreateNew: () => void }
             </p>
           </div>
 
-          <button
-            onClick={onCreateNew}
-            className="px-8 py-4 bg-[#3B82F6] hover:bg-[#4338ca] rounded-2xl flex items-center gap-3 text-sm font-black text-white transition-all shadow-[0_10px_30px_rgba(81,66,245,0.2)]"
-          >
-            <Sparkles className="w-5 h-5" />
-            Criar Novo
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => uploadRef.current?.click()}
+              className="px-6 py-3.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl flex items-center gap-2 text-sm font-black text-white transition-all"
+            >
+              <Upload className="w-4 h-4" />
+              Upload de Foto
+            </button>
+            <button
+              onClick={onCreateNew}
+              className="px-8 py-4 bg-[#3B82F6] hover:bg-[#4338ca] rounded-2xl flex items-center gap-3 text-sm font-black text-white transition-all shadow-[0_10px_30px_rgba(81,66,245,0.2)]"
+            >
+              <Sparkles className="w-5 h-5" />
+              Criar Novo
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Empty State Section - Perfectly Cloned from Screenshot */}
-      <div className="flex-1 flex flex-col items-center justify-center py-12 md:py-20">
-        <div className="w-[88px] h-[88px] bg-[#14151a] border border-[#1e1f26] rounded-full flex items-center justify-center mb-10 shadow-2xl">
-          <User className="w-10 h-10 text-[#5b5b7b]" />
+      {avatars.length > 0 ? (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {avatars.map((av) => (
+            <div key={av.id} className="relative group/av rounded-[32px] overflow-hidden border border-white/10 hover:border-white/20 transition-all duration-500">
+              <div className="aspect-[3.5/4.5] relative">
+                <img src={av.image} className="w-full h-full object-cover" alt={av.name} />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0E] via-[#0B0B0E]/20 to-transparent opacity-80"></div>
+                <div className="absolute bottom-5 left-5 right-5">
+                  <h3 className="text-lg font-black text-white tracking-tighter uppercase">{av.name}</h3>
+                </div>
+                {/* Action buttons — show on hover */}
+                <div className="absolute top-0 inset-x-0 p-4 flex justify-between items-start opacity-0 group-hover/av:opacity-100 transition-opacity duration-300">
+                  <button onClick={() => handleDownload(av)} className="w-9 h-9 bg-[#14151a]/90 border border-white/10 rounded-full flex items-center justify-center hover:bg-[#3B82F6] hover:border-[#3B82F6] transition-all" title="Baixar">
+                    <Download className="w-4 h-4 text-white" />
+                  </button>
+                  <button onClick={() => onDeleteAvatar(av.id)} className="w-9 h-9 bg-[#14151a]/90 border border-white/10 rounded-full flex items-center justify-center hover:bg-red-500 hover:border-red-500 transition-all" title="Excluir">
+                    <Trash2 className="w-4 h-4 text-white" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
+      ) : (
+        <div className="flex-1 flex flex-col items-center justify-center py-12 md:py-20">
+          <div className="w-[88px] h-[88px] bg-[#14151a] border border-[#1e1f26] rounded-full flex items-center justify-center mb-10 shadow-2xl">
+            <User className="w-10 h-10 text-[#5b5b7b]" />
+          </div>
 
-        <h2 className="text-[22px] font-black text-white tracking-tight mb-4 text-center">
-          Nenhum avatar criado ainda
-        </h2>
+          <h2 className="text-[22px] font-black text-white tracking-tight mb-4 text-center">
+            Nenhum avatar ainda
+          </h2>
 
-        <p className="text-[#8d8d99] text-base font-medium mb-12 text-center max-w-[420px] leading-relaxed">
-          Crie seu primeiro avatar personalizado e ele aparecerá aqui.
-        </p>
+          <p className="text-[#8d8d99] text-base font-medium mb-12 text-center max-w-[420px] leading-relaxed">
+            Faça upload de uma foto sua ou crie um avatar personalizado com IA.
+          </p>
 
-        <button
-          onClick={onCreateNew}
-          className="px-6 md:px-10 py-5 bg-[#3B82F6] hover:bg-[#4338ca] rounded-[24px] flex items-center gap-3 text-[15px] font-black text-white transition-all shadow-[0_15px_40px_rgba(81,66,245,0.25)] hover:scale-[1.03] active:scale-[0.98]"
-        >
-          <Sparkles className="w-5 h-5" />
-          Criar Primeiro Avatar
-        </button>
-      </div>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => uploadRef.current?.click()}
+              className="px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-[24px] flex items-center gap-3 text-base font-black text-white transition-all"
+            >
+              <Upload className="w-5 h-5" />
+              Upload de Foto
+            </button>
+            <button
+              onClick={onCreateNew}
+              className="px-10 py-5 bg-[#3B82F6] hover:bg-[#4338ca] rounded-[24px] flex items-center gap-3 text-[15px] font-black text-white transition-all shadow-[0_15px_40px_rgba(81,66,245,0.25)] hover:scale-[1.03] active:scale-[0.98]"
+            >
+              <Sparkles className="w-5 h-5" />
+              Criar com IA
+            </button>
+          </div>
+        </div>
+      )}
 
       <div className="h-24"></div>
     </main>

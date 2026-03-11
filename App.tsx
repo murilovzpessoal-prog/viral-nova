@@ -655,28 +655,28 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
                   className={`text-sm font-semibold transition-colors relative h-full flex items-center px-2 ${currentPage === 'explorar' ? 'text-white' : 'text-[#8d8d99] hover:text-white'}`}
                 >
                   {t('explorar')}
-                  {currentPage === 'explorar' && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#3B82F6] rounded-t-sm"></span>}
+                  {currentPage === 'explorar' && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#8B5CF6] rounded-t-sm"></span>}
                 </button>
                 <button
                   onClick={() => setCurrentPage('produtos')}
                   className={`text-sm font-semibold transition-colors relative h-full flex items-center px-2 ${currentPage === 'produtos' ? 'text-white' : 'text-[#8d8d99] hover:text-white'}`}
                 >
                   {t('produtos')}
-                  {currentPage === 'produtos' && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#3B82F6] rounded-t-sm"></span>}
+                  {currentPage === 'produtos' && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#8B5CF6] rounded-t-sm"></span>}
                 </button>
                 <button
                   onClick={() => setCurrentPage('videos')}
                   className={`text-sm font-semibold transition-colors relative h-full flex items-center px-2 ${currentPage === 'videos' ? 'text-white' : 'text-[#8d8d99] hover:text-white'}`}
                 >
                   {t('videos')}
-                  {currentPage === 'videos' && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#3B82F6] rounded-t-sm"></span>}
+                  {currentPage === 'videos' && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#8B5CF6] rounded-t-sm"></span>}
                 </button>
                 <button
                   onClick={() => setCurrentPage('criadores')}
                   className={`text-sm font-semibold transition-colors relative h-full flex items-center px-2 ${currentPage === 'criadores' ? 'text-white' : 'text-[#8d8d99] hover:text-white'}`}
                 >
                   {t('criadores')}
-                  {currentPage === 'criadores' && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#3B82F6] rounded-t-sm"></span>}
+                  {currentPage === 'criadores' && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#8B5CF6] rounded-t-sm"></span>}
                 </button>
 
                 {/* FERRAMENTAS DROPDOWN (HOVER) */}
@@ -684,7 +684,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
                   <div className="flex items-center gap-1">
                     <span className={`text-sm font-semibold transition-colors relative h-full flex items-center ${['ugc-criador', 'galeria-avatares', 'meus-avatares', 'criar-avatar', 'previsibilidade-receita', 'hacks-virais', 'hacks-virais-detalhe'].includes(currentPage) ? 'text-white' : 'text-[#8d8d99] group-hover:text-white'}`}>
                       {t('ferramentas')}
-                      {['ugc-criador', 'galeria-avatares', 'meus-avatares', 'criar-avatar', 'previsibilidade-receita', 'hacks-virais', 'hacks-virais-detalhe'].includes(currentPage) && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#3B82F6] rounded-t-sm"></span>}
+                      {['ugc-criador', 'galeria-avatares', 'meus-avatares', 'criar-avatar', 'previsibilidade-receita', 'hacks-virais', 'hacks-virais-detalhe'].includes(currentPage) && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#8B5CF6] rounded-t-sm"></span>}
                     </span>
                     <ChevronRight className="w-3.5 h-3.5 text-[#8d8d99] rotate-90 group-hover:text-white transition-colors" />
                   </div>
@@ -704,7 +704,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
                   className={`text-sm font-semibold transition-colors relative h-full flex items-center px-2 ${currentPage === 'creator-academy' ? 'text-white' : 'text-[#8d8d99] hover:text-white'}`}
                 >
                   {t('creatorAcademy')}
-                  {currentPage === 'creator-academy' && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#3B82F6] rounded-t-sm"></span>}
+                  {currentPage === 'creator-academy' && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#8B5CF6] rounded-t-sm"></span>}
                 </button>
               </nav>
 
@@ -713,7 +713,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
 
               {/* Right Actions */}
               <div className="flex items-center gap-3">
-                <button className="hidden sm:flex items-center gap-2 px-4 py-2 border border-[#222226] text-[#3B82F6] rounded-lg text-xs font-black hover:bg-[#3B82F6]/5 transition-all">
+                <button className="hidden sm:flex items-center gap-2 px-4 py-2 border border-[#8B5CF6]/40 text-[#8B5CF6] rounded-lg text-xs font-black hover:bg-[#8B5CF6]/5 transition-all">
                   <Download className="w-4 h-4" />
                   {t('baixarApp')}
                 </button>
@@ -741,17 +741,12 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
                   )}
                 </div>
 
-                <div className="flex items-center p-1 bg-[#14151a] border border-[#1e1f26] rounded-full w-12 h-6 relative cursor-pointer">
-                  <div className="w-4 h-4 bg-[#3B82F6] rounded-full translate-x-5 transition-transform flex items-center justify-center shadow-lg">
-                    <Moon className="w-2.5 h-2.5 text-white" />
-                  </div>
-                </div>
 
                 <div
                   onClick={() => setCurrentPage('configuracoes')}
                   className="flex items-center gap-2.5 bg-[#14151a] pl-1.5 pr-3 py-1.5 rounded-full border border-[#1e1f26] cursor-pointer hover:border-[#3B82F6]/30 transition-all"
                 >
-                  <div className="w-7 h-7 bg-gradient-to-br from-[#3B82F6] to-[#8B5CF6] rounded-full flex items-center justify-center text-[11px] font-black text-white shadow-lg shadow-[#3B82F6]/20 overflow-hidden">
+                  <div className="w-7 h-7 bg-[#8B5CF6] rounded-full flex items-center justify-center text-[11px] font-black text-white shadow-lg shadow-[#8B5CF6]/30 overflow-hidden">
                     {userProfileImage ? (
                       <img src={userProfileImage} alt="User" className="w-full h-full object-cover" />
                     ) : (
@@ -2643,7 +2638,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                   <h2 className="text-3xl font-black text-white tracking-tighter uppercase mb-1">Selecionar Identidade</h2>
                   <div className="flex items-center gap-2">
                     <div className="w-1 h-3 bg-[#3B82F6] rounded-full"></div>
-                    <span className="text-[10px] font-black text-[#8d8d99] tracking-[0.4em] uppercase opacity-70">Hardware Slot Authentication</span>
+                    <span className="text-[10px] font-black text-[#8d8d99] tracking-[0.4em] uppercase opacity-70">Autenticação de Avatar</span>
                   </div>
                 </div>
 

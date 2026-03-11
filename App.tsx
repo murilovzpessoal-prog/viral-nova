@@ -701,7 +701,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
 
               {/* Right Actions */}
               <div className="flex items-center gap-3">
-                <button className="flex items-center gap-2 px-4 py-2 border border-[#2C2D38] text-[#3B82F6] rounded-lg text-xs font-black hover:bg-[#3B82F6]/5 transition-all">
+                <button className="flex items-center gap-2 px-5 py-2.5 bg-[#3B82F6] text-white rounded-lg text-xs font-black hover:bg-[#2563EB] transition-all shadow-[0_0_20px_rgba(59,130,246,0.3)]">
                   <Download className="w-4 h-4" />
                   {t('baixarApp')}
                 </button>
@@ -746,7 +746,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
                       "N"
                     )}
                   </div>
-                  <span className="text-xs font-black text-white uppercase tracking-tight">{t('usuario')}</span>
+                  <span className="text-xs font-black text-[#8d8d99] uppercase tracking-tight">{t('usuario')}</span>
                 </div>
               </div>
             </div>
@@ -2301,6 +2301,21 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'mulheres' | 'homens' | 'meus-avatares'>('mulheres');
 
+  const [myAvatar, setMyAvatar] = useState<{ id: string, name: string, image: string } | null>(null);
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setMyAvatar({ id: 'my-avatar-1', name: 'Meu Avatar 1', image: reader.result as string });
+        setSelectedInfluencer('my-avatar-1');
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   // Step 3 state (formerly Step 4)
   const [selectedScenario, setSelectedScenario] = useState<string | null>(null);
   const [selectedVideoModel, setSelectedVideoModel] = useState<string | null>(null);
@@ -2613,7 +2628,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
             <>
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-12 relative z-10">
                 <div className="flex flex-col">
-                  <h2 className="text-3xl font-black text-white tracking-tighter uppercase mb-1">Select Identity</h2>
+                  <h2 className="text-3xl font-black text-white tracking-tighter uppercase mb-1">Selecionar Identidade</h2>
                   <div className="flex items-center gap-2">
                     <div className="w-1 h-3 bg-[#3B82F6] rounded-full"></div>
                     <span className="text-[10px] font-black text-[#8d8d99] tracking-[0.4em] uppercase opacity-70">Hardware Slot Authentication</span>
@@ -2724,21 +2739,48 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                 ))}
 
                 {activeTab === 'meus-avatares' && (
-                  <div className="col-span-full py-24 flex flex-col items-center justify-center border-[2px] border-dashed border-white/5 rounded-[56px] bg-white/[0.01] relative overflow-hidden group/new">
+                  <div className="col-span-full py-12 flex flex-col items-center justify-center border-[2px] border-dashed border-white/5 rounded-[56px] bg-white/[0.01] relative overflow-hidden group/new">
+                    <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handleImageUpload} />
                     <div className="absolute inset-0 bg-gradient-to-br from-[#3B82F6]/10 via-transparent to-transparent opacity-0 group-hover/new:opacity-100 transition-opacity duration-1000"></div>
-                    <div className="relative w-32 h-32 mb-10">
-                      <div className="absolute inset-0 bg-[#3B82F6]/20 blur-3xl rounded-full animate-pulse"></div>
-                      <div className="relative w-full h-full bg-[#0B0B0E] rounded-full flex items-center justify-center border border-white/10 shadow-2xl group-hover/new:scale-110 transition-transform duration-700">
-                        <Plus className="w-16 h-16 text-[#3B82F6] animate-pulse" />
+                    
+                    {myAvatar ? (
+                      <div className="flex flex-col items-center z-10 w-full max-w-sm">
+                        <div 
+                          className={`relative aspect-[3.5/4.5] w-full max-w-[280px] rounded-[40px] overflow-hidden border-2 mb-8 transition-all duration-700 cursor-pointer ${selectedInfluencer === myAvatar.id ? 'border-[#3B82F6] shadow-[0_0_50px_rgba(59,130,246,0.3)] scale-[1.02]' : 'border-white/10 hover:border-white/30'}`}
+                          onClick={() => setSelectedInfluencer(myAvatar.id)}
+                        >
+                          <img src={myAvatar.image} className="w-full h-full object-cover" alt="Meu Avatar" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0E] via-[#0B0B0E]/20 to-transparent opacity-70"></div>
+                          <div className="absolute bottom-6 left-6 right-6">
+                            <h3 className="text-2xl font-black text-white tracking-tighter uppercase">{myAvatar.name}</h3>
+                          </div>
+                          {selectedInfluencer === myAvatar.id && (
+                            <div className="absolute top-6 right-6 w-10 h-10 bg-[#3B82F6] rounded-full flex items-center justify-center border-2 border-white/40 shadow-[0_0_20px_#3B82F6]">
+                              <Check className="w-6 h-6 text-white" strokeWidth={4} />
+                            </div>
+                          )}
+                        </div>
+                        <button onClick={(e) => { e.stopPropagation(); fileInputRef.current?.click(); }} className="px-8 py-3 bg-white/5 text-white rounded-[24px] text-sm font-black hover:bg-white/10 transition-all border border-white/10">
+                          Trocar Imagem
+                        </button>
                       </div>
-                    </div>
-                    <p className="text-[#8d8d99] text-xl font-medium tracking-tight mb-10 relative z-10 max-w-[400px] text-center leading-relaxed">Não foram detectadas <span className="text-white">assinaturas neurais</span> personalizadas nesta unidade de processamento.</p>
-                    <button className="px-12 py-5 bg-[#3B82F6] text-white rounded-[24px] text-base font-black hover:bg-[#2563EB] transition-all relative z-10 shadow-[0_15px_30px_rgba(59,130,246,0.3)] hover:scale-105 active:scale-95 group/btn">
-                      <span className="relative z-10 uppercase tracking-[0.2em] flex items-center gap-3">
-                        Initialize Bio-Upload
-                        <ChevronRight className="w-6 h-6 group-hover/btn:translate-x-2 transition-transform" />
-                      </span>
-                    </button>
+                    ) : (
+                      <>
+                        <div className="relative w-32 h-32 mb-10 cursor-pointer" onClick={() => fileInputRef.current?.click()}>
+                          <div className="absolute inset-0 bg-[#3B82F6]/20 blur-3xl rounded-full animate-pulse"></div>
+                          <div className="relative w-full h-full bg-[#0B0B0E] rounded-full flex items-center justify-center border border-white/10 shadow-2xl group-hover/new:scale-110 transition-transform duration-700">
+                            <Plus className="w-16 h-16 text-[#3B82F6] animate-pulse" />
+                          </div>
+                        </div>
+                        <p className="text-[#8d8d99] text-xl font-medium tracking-tight mb-10 relative z-10 max-w-[400px] text-center leading-relaxed">Nenhum <span className="text-white">avatar personalizado</span> detectado nesta conta.</p>
+                        <button onClick={() => fileInputRef.current?.click()} className="px-12 py-5 bg-[#3B82F6] text-white rounded-[24px] text-base font-black hover:bg-[#2563EB] transition-all relative z-10 shadow-[0_15px_30px_rgba(59,130,246,0.3)] hover:scale-105 active:scale-95 group/btn">
+                          <span className="relative z-10 uppercase tracking-[0.2em] flex items-center gap-3">
+                            Fazer Upload
+                            <ChevronRight className="w-6 h-6 group-hover/btn:translate-x-2 transition-transform" />
+                          </span>
+                        </button>
+                      </>
+                    )}
                   </div>
                 )}
               </div>

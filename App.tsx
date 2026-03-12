@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import { translations, Language, TranslationKey } from './src/translations';
+import { supabase } from './src/lib/supabase';
 import {
   Search,
   Flame,
@@ -359,9 +360,81 @@ const App: React.FC = () => {
     setCustomAvatars(prev => prev.filter(a => a.id !== id));
   };
 
-  const t = (key: TranslationKey) => translations[language][key] || key;
+  const t = (key: TranslationKey) => {
+    if (!translations[language]) return key;
+    return translations[language][key] || key;
+  };
 
-  const viralProducts: ProductViral[] = [
+  const [session, setSession] = useState<any>(null);
+  const [profile, setProfile] = useState<any>(null);
+  const [videos, setVideos] = useState<VideoViral[]>([]);
+  const [creators, setCreators] = useState<CreatorViral[]>([]);
+  const [viralProducts, setViralProducts] = useState<ProductViral[]>([]);
+  const [exploreTopProducts, setExploreTopProducts] = useState<ProductExplore[]>([]);
+  const [hacks, setHacks] = useState<HackItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    if (session?.user) {
+      getProfile();
+    } else {
+      setProfile(null);
+    }
+  }, [session]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const getProfile = async () => {
+    if (!session?.user?.id) return;
+    const { data } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', session.user.id)
+      .single();
+    setProfile(data);
+  };
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      // KEEP UI VISUALLY INTACT: Force static data for component state
+      setViralProducts(STATIC_VIRAL_PRODUCTS);
+      setExploreTopProducts(STATIC_EXPLORE_PRODUCTS);
+      setHacks(STATIC_HACKS);
+
+      // Background Supabase Check (Non-Visual)
+      const { data: fetchedProducts } = await supabase
+        .from('products_viral')
+        .select('*')
+        .order('rank', { ascending: true });
+      
+      const { data: hacksData } = await supabase.from('hacks_virais').select('*');
+      
+      console.log('Supabase Connection Active:', { products: fetchedProducts?.length, hacks: hacksData?.length });
+
+    } catch (e) {
+      console.error('Supabase Error:', e);
+      // Fallback already set above
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const STATIC_VIRAL_PRODUCTS: ProductViral[] = [
     { id: 'p1', rank: 1, image: 'https://i.imgur.com/eDa6uiJ.jpeg', title: 'Copo Térmico Inox 1.2L', category: 'Casa & Cozinha', revenue: 'R$ 6.014.334,12', sales: '80.129', priceRange: 'R$ 49,99 - R$ 99,99', videoUrl: 'https://player.vimeo.com/video/1163502593', productUrl: 'https://www.tiktok.com/view/product/1731371603647497700?_svg=1&checksum=75c2d3deb6afe8e4f4c104e8be82135e8ea17f55ff61f149e05da81abf0aa8bb&encode_params=MIIBUQQM2QbYCJWuf0IyhpV3BIIBLQkfzGymx7uGAo38fjnJMWijj_2QCfJgk4ZAqCLaCSACvHMm__M1haOKR5jiJSF-OBqz0h4w9K1CPwItT4ceRq9anhD8fg7YgtXaWTTkZv5j1c64_Be2pqMjlm4FF0G2oG6c0eOCtUcgW6_AjydHi6FuYt1UF99GoS1XtYszZjY3A6i_8d7GtDBxJ_CYjHJMeydSC2f_7oNP5VPhi5yn-evQ4-7Ib8iC2r5BwVcsAlrnFoXA1NGrMFdPPnB2eM0X8Re3gDcCaE9_DWwAp3an2tn8SHpLGihFRCLcjl0a0Ko__ygmF5aR1nw0HDofNUzwdJR9Hh6ehRm6ym_6-MNHZD1olTup3vXoqkAligdGRc3Hwn8Si9OjwvtDhREKFtoEG3NELRg-Jw3hLXkpkawEEOPnIJNHaItWeWA1ruiDYCo%3D&og_info=%7B%22title%22%3A%22Copo+T%C3%A9rmico+Inox+Port%C3%A1til+1200ml%5C%2F1.2L+Garrafa+T%C3%A9rmica+Inoxid%C3%A1vel+com+Tampa+e+Canudo%22%2C%22image%22%3A%22https%3A%5C%2F%5C%2Fp16-oec-sg.ibyteimg.com%5C%2Ftos-alisg-i-aphluv4xwc-sg%5C%2Fe062e139eab84e96bd04eb88497f026a~tplv-aphluv4xwc-resize-webp%3A260%3A260.webp%3Fdr%3D15582%26t%3D555f072d%26ps%3D933b5bde%26shp%3D7745054a%26shcp%3D9b759fb9%26idc%3Dmy%26from%3D2001012042%22%7D&sec_user_id=MS4wLjABAAAAGPJ9HjGz6Iuay6qmfIsuPNuurOsZ-IcMREG54wV7FpCyZpLNFGNNgtpxlaqhiZJP&share_app_id=1233&share_link_id=C810C467-7EF4-40E5-B646-5958A95765C4&share_region=BR&social_share_type=15&timestamp=1770366654&trackParams=%7B%22enable_shop_tab_popup%22%3A1%2C%22device_id%22%3A%227506972083776636422%22%2C%22enter_from_info%22%3A%22product_share_outside%22%2C%22source_page_type%22%3A%22product_share%22%2C%22traffic_source_list%22%3A%5B%5D%7D&tt_from=copy&u_code=E6FIJC%3AL28K12M&ug_btm=b6880%2Cb6661&unique_id=joaovellini_&user_id=7203069836077974534&utm_campaign=client_share&utm_medium=ios&utm_source=copy' },
     { id: 'p2', rank: 2, image: 'https://i.imgur.com/xnQ3DH6.jpeg', title: 'Depilador Facial Sem Fio', category: 'Beleza', revenue: 'R$ 2.456.638,25', sales: '49.123', priceRange: 'R$ 39,90 - R$ 60,00', productUrl: 'https://www.tiktok.com/view/product/1731719322323224250?_svg=1&checksum=668849b05fc733209627499c9ec47c654d61c2a482df0ba7c3cb34bb6724ec44&encode_params=MIIBUQQMvET23bxNm2QjqibJBIIBLdtst_z7alI5XROmsELle8bp1DysYH7E4HS1XpJlZK0Oihp-Q-N2_L7zCZAKO_rADddA1c49Z07Lkkhia9Mnlqu8FuXDUVa3xSaxZ3PQfadWGx5uBKN-96gKu_psQNc0sgCmXhHwZ37QyS8wCJE1TvuFXuUI7KQfth-A5jMyT64VIMyxdb156ngEFhWafr4bsRM3A_Bx6FP0C2zc_P5yD1yfvs6NUZ_12I7GUVYQCZ8ko43AAbscoTaBP7As7_SOPeTjD4FL7Sk3JWv494FFfiHTW_FpQDYZciZuTX4RU-LZ7Eo2sGBT-z7-TBr5YpCv6E2CoQcm5nLmiCPwgH8_HH6z5-FbV5P8UH3bP92_dHLTtrXrcaWYiidzybfDBEAN7RjT0mi7s8ihTLXw5csEEBTReM8tbM2bvEkGkFhXo3s%3D&og_info=%7B%22title%22%3A%22Depilador+Removedor+De+Pelos++Facial+e+Corporal+Sem+fio+Recarreg%C3%A1vel%22%2C%22image%22%3A%22https%3A%5C%2F%5C%2Fp16-oec-va.ibyteimg.com%5C%2Ftos-maliva-i-o3syd03w52-us%5C%2Fb253310de5dc4d458dd1585a6639806e~tplv-o3syd03w52-resize-webp%3A260%3A260.webp%3Fdr%3D15582%26t%3D555f072d%26ps%3D933b5bde%26shp%3D7745054a%26shcp%3D9b759fb9%26idc%3Dmy%26from%3D2001012042%22%7D&sec_user_id=MS4wLjABAAAAGPJ9HjGz6Iuay6qmfIsuPNuurOsZ-IcMREG54wV7FpCyZpLNFGNNgtpxlaqhiZJP&share_app_id=1233&share_link_id=EB6C1551-8585-4679-9019-F81779B03419&share_region=BR&social_share_type=15&timestamp=1770366504&trackParams=%7B%22enable_shop_tab_popup%22%3A1%2C%22device_id%22%3A%227506972083776636422%22%2C%22enter_from_info%22%3A%22product_share_outside%22%2C%22source_page_type%22%3A%22product_share%22%2C%22traffic_source_list%22%3A%5B%5D%7D&tt_from=copy&u_code=E6FIJC%3AL28K12M&ug_btm=b6880%2Cb6661&unique_id=joaovellini_&user_id=7203069836077974534&utm_campaign=client_share&utm_medium=ios&utm_source=copy' },
     { id: 'p3', rank: 3, image: 'https://i.imgur.com/O9hmYqT.png', title: 'Máquina de Cortar Kemei', category: 'Eletrônicos', revenue: 'R$ 957.445,15', sales: '19.145', priceRange: 'R$ 39,99 - R$ 60,00', productUrl: 'https://www.tiktok.com/view/product/1731253116026651705?_svg=1&checksum=0842656a147b55044ea8e80e5a9c1555fee38b612d7c6856336016624660e78e&encode_params=MIIBUQQMcfl08MXU5PWWDpHTBIIBLZKaZnasNqVEYBLWe2AwbGWsO0y5M6YauiTlemvhGTpCTV7BSTMp-SWlPAEVMnzkJ3n305LCMa-x5Sf-JLCy_vGo9Uf3Ay2MDL6BouwXYPRzE-hRFPm21-zeWmSWtGcDrNaWy1xkjGo9-C5lXyBf1iMKn8qdU3jTyTM5pAGD6r2GbLXwuqUvqVjmmPH_ClfdiO9OB1l2e4fbiv1xG_3dJabLqKt8b7N44-aA9gQDtK-2-t-SwhHBXDOUkujQ3CdGw4Y-dvEysKUut3fsOtAQc4QNCZOyrF1k4hbgMuYCL8iYdiuPHXBJPYeAeEkVCQOfTvMxZB1nFp2yTWtmrpCFChd1zkaBdsq85StY0HJChpJZovXsRNdO_nlHpw53i39E9ONsSOirVZH8cL0WGFoEEDReDIHNm_k5qq0FVnI502g%3D&og_info=%7B%22title%22%3A%22M%C3%A1quina+Cortar+Kemei+Acabamento+Profissional+Sem+Fio+KM-032+bivolt+110~220V%22%2C%22image%22%3A%22https%3A%5C%2F%5C%2Fp16-oec-va.ibyteimg.com%5C%2Ftos-maliva-i-o3syd03w52-us%5C%2F7f39952cbc1642379c64861493571a29~tplv-o3syd03w52-resize-webp%3A260%3A260.webp%3Fdr%3D15582%26t%3D555f072d%26ps%3D933b5bde%26shp%3D7745054a%26shcp%3D9b759fb9%26idc%3Dmy%26from%3D2001012042%22%7D&sec_user_id=MS4wLjABAAAAGPJ9HjGz6Iuay6qmfIsuPNuurOsZ-IcMREG54wV7FpCyZpLNFGNNgtpxlaqhiZJP&share_app_id=1233&share_link_id=81F1B1BE-AC3B-42A0-A935-AAD2C38C96C7&share_region=BR&social_share_type=15&timestamp=1770365318&trackParams=%7B%22enable_shop_tab_popup%22%3A1%2C%22device_id%22%3A%227506972083776636422%22%2C%22enter_from_info%22%3A%22product_share_outside%22%2C%22source_page_type%22%3A%22product_share%22%2C%22traffic_source_list%22%3A%5B%5D%7D&tt_from=copy&u_code=E6FIJC%3AL28K12M&ug_btm=b6880%2Cb6661&unique_id=joaovellini_&user_id=7203069836077974534&utm_campaign=client_share&utm_medium=ios&utm_source=copy' },
@@ -392,14 +465,14 @@ const App: React.FC = () => {
 
 
 
-  const exploreTopProducts: ProductExplore[] = [
+  const STATIC_EXPLORE_PRODUCTS: ProductExplore[] = [
     { id: 'e1', rank: 3, image: 'https://i.imgur.com/91dJ7Xs.jpeg', title: 'Chinelo Slide Nuvem Confort', revenue: 'R$ 5.724.863,85', priceRange: 'R$ 29,99 - R$ 99,99', productUrl: 'https://www.tiktok.com/view/product/1734261789877372669?_svg=1&checksum=782f06b151ccfec8f9f200209e9a78123f28879ad4f943d4aada5addccd94a76&encode_params=MIIBUQQMqMWscggKYZLXadgABIIBLZovPpQKWt9KOIP2LSyf8b2iFMY6BroHwo3n3u9JMKsA7KrqnNd0nmcKe012FbFem7iYPq5KLdtB2t7u9KwfEiJZyxg3uDRdq5RJAEBQz_X4s6b7hO-zUKpCltuLowGL0TvF5xlatIXqDqWbZcRtClb2biCuDjCDc06LRHibmyKqfeQ_e5EIGhfV3ZgqWIEjmRKNPxuPo5-Ud7lEYcBGNCQY163gu6qoIuu_lxS58asgqFjV2eR_QdCt02pQeNajrgOAsHt3p9_ewOU509N3O_GBJkMRF_aSJvVBn1zZuxaUZHMrY3U--LiSe8GD2JL4V1dDokgERjaWnQZ0OMgcEmsNf6F3gjChKHxLV1lrxD1A2HN0hhEHMHl0gXtPCV6KkOmBf_euVUGS-3DpwQcEEJCGseP_AvM-cpKxqGsd88M%3D&og_info=%7B%22title%22%3A%22Chinelo+Slide+Unissex+Casual+Para+Uso+Di%C3%A1rio%22%2C%22image%22%3A%22https%3A%5C%2F%5C%2Fp16-oec-va.ibyteimg.com%5C%2Ftos-maliva-i-o3syd03w52-us%5C%2F9a4070e224bd4714942a9e5442d1a9e8~tplv-o3syd03w52-resize-webp%3A260%3A260.webp%3Fdr%3D15582%26t%3D555f072d%26ps%3D933b5bde%26shp%3D7745054a%26shcp%3D9b759fb9%26idc%3Dmy%26from%3D2001012042%22%7D&sec_user_id=MS4wLjABAAAAGPJ9HjGz6Iuay6qmfIsuPNuurOsZ-IcMREG54wV7FpCyZpLNFGNNgtpxlaqhiZJP&share_app_id=1233&share_link_id=74CCB9BD-343F-4637-AF44-6E10F308BC5E&share_region=BR&social_share_type=15&timestamp=1770366698&trackParams=%7B%22enable_shop_tab_popup%22%3A1%2C%22device_id%22%3A%227506972083776636422%22%2C%22enter_from_info%22%3A%22product_share_outside%22%2C%22source_page_type%22%3A%22product_share%22%2C%22traffic_source_list%22%3A%5B%5D%7D&tt_from=copy&u_code=E6FIJC%3AL28K12M&ug_btm=b6880%2Cb6661&unique_id=joaovellini_&user_id=7203069836077974534&utm_campaign=client_share&utm_medium=ios&utm_source=copy' },
     { id: 'e2', rank: 6, image: 'https://i.imgur.com/YiQXmBJ.jpeg', title: '365 Dias Amor com Deus', revenue: 'R$ 2.152.342,10', priceRange: 'R$ 25,90 - R$ 39,90', productUrl: 'https://www.tiktok.com/view/product/1732162437981636069?_svg=1&checksum=567705e88160d779881297dd947a81f8b98e059697272542909833078d5f220f&encode_params=MIIBUQQM5msiz6KiFuTbAcXkBIIBLQUWuYU4ggWLiRJDl1e5x7kxiPDg576eq9YYP_ec6jeXawka8PWur3x_nRlEX__i2GZ42zS6HYRAqe9RH6cjCdxGgAgDLQQVef0b3qszSDdkxugk5Ox01y1LofhDQ0u-_0ulNbxI8JaFe7UF8mAEGZ_m8_rcQtZ7fDRm7BgWIEtgaoaRnShjzsTQGOwZHs4Dt_hZAcepydP1ZQE65ys56K7Dp-EMFoGfSfGXlVFdLXVFxcRUDYAV-5A_xUNLBPomV3EOJd9LPQIaYwYKDlubEth5zQULGWyDPsLIHPM5iefyDFTlpDjSYPKFdqn2uT9SU2daWDoH2Sgc6Ma5L1Xfo3yblp1IddpZi1Xvo9p_Vl3mxE6b7p7v4_9I-kOfnVRmBs0CDELi7F5gsLy3lS0EEKSLGDeufV2NtUFVZ_hcaYw%3D&og_info=%7B%22title%22%3A%22365+Dias+Amor+com+Deus+-+Devocional%22%2C%22image%22%3A%22https%3A%5C%2F%5C%2Fp16-oec-sg.ibyteimg.com%5C%2Ftos-alisg-i-aphluv4xwc-sg%5C%2Fd81e85d400ea455d8b4fc4a2728a4306~tplv-aphluv4xwc-resize-webp%3A260%3A260.webp%3Fdr%3D15582%26t%3D555f072d%26ps%3D933b5bde%26shp%3D7745054a%26shcp%3D9b759fb9%26idc%3Dmy%26from%3D2001012042%22%7D&sec_user_id=MS4wLjABAAAAGPJ9HjGz6Iuay6qmfIsuPNuurOsZ-IcMREG54wV7FpCyZpLNFGNNgtpxlaqhiZJP&share_app_id=1233&share_link_id=33149E51-E61B-47B4-B554-18197CF36093&share_region=BR&social_share_type=15&timestamp=1770366614&trackParams=%7B%22enable_shop_tab_popup%22%3A1%2C%22device_id%22%3A%227506972083776636422%22%2C%22enter_from_info%22%3A%22product_share_outside%22%2C%22source_page_type%22%3A%22product_share%22%2C%22traffic_source_list%22%3A%5B%5D%7D&tt_from=copy&u_code=E6FIJC%3AL28K12M&ug_btm=b6880%2Cb6661&unique_id=joaovellini_&user_id=7203069836077974534&utm_campaign=client_share&utm_medium=ios&utm_source=copy' },
     { id: 'e3', rank: 9, image: 'https://i.imgur.com/9cNgCYt.png', title: 'Bolsa Feminina Couro Transversal', revenue: 'R$ 3.824.747,43', priceRange: 'R$ 42,60 - R$ 160,00', productUrl: 'https://www.tiktok.com/view/product/1733575637953513124?_svg=1&checksum=4cc83e293ba61e0c5492cd72e54092e74c22798bab45e2e6dfbe49a819e567cb&encode_params=MIIBUQQMZTrxD3u3pxYs5Yo-BIIBLZ-NdRLDuiJEtuLWj947Lg5Bcb5DP4BTzQJireUQbUOp3HYeCW5gXWcC9bRoIf_PLBFa1iqzH9V6iPWNxDzRBoSIHyZTfqFl1gvDTjzSo0j_KtiHDcuDpxrNnuwHjoTab9yzQzloY_Qypx8NRPBIs7HVTZYWy_lHImMFng2TEu-qnSm__1bx0kLrd1telGOmBuDNNjPUbC0oDwA7-wfY5T2cILdfp9tJtZRK98Ok5yf-O7TYgwJwpfWOWVWNkiWslTTkJYMJnI_CeBuLimebK1kpAm_1-w4O8fyCU4ttVnTZM_B56sEMPWo-Erxm71txY6MbDRetT8Brkx-YuyV4EGIpqq8XwZZM4eFQREb7_nazI0QqNoX4U8P0mly-tfD3259yJlYWBSO_yKeGxVgEEOcm8eiOcRvOcl839PcgTu4%3D&og_info=%7B%22title%22%3A%22Bolsa+Feminina+Com+Al%C3%A7a+Lateral+Transversal+De+Ombro+De+Couro+PU+T304+AF%22%2C%22image%22%3A%22https%3A%5C%2F%5C%2Fp16-oec-va.ibyteimg.com%5C%2Ftos-maliva-i-o3syd03w52-us%5C%2F26afd3c2d5b647ca86ff0528cbd2fb2a~tplv-o3syd03w52-resize-webp%3A260%3A260.webp%3Fdr%3D15582%26t%3D555f072d%26ps%3D933b5bde%26shp%3D7745054a%26shcp%3D9b759fb9%26idc%3Dmy%26from%3D2001012042%22%7D&sec_user_id=MS4wLjABAAAAGPJ9HjGz6Iuay6qmfIsuPNuurOsZ-IcMREG54wV7FpCyZpLNFGNNgtpxlaqhiZJP&share_app_id=1233&share_link_id=90ADDB6E-B00C-45B1-8E8C-965E441ED0D5&share_region=BR&social_share_type=15&timestamp=1770366471&trackParams=%7B%22enable_shop_tab_popup%22%3A1%2C%22device_id%22%3A%227506972083776636422%22%2C%22enter_from_info%22%3A%22product_share_outside%22%2C%22source_page_type%22%3A%22product_share%22%2C%22traffic_source_list%22%3A%5B%5D%7D&tt_from=copy&u_code=E6FIJC%3AL28K12M&ug_btm=b6880%2Cb6661&unique_id=joaovellini_&user_id=7203069836077974534&utm_campaign=client_share&utm_medium=ios&utm_source=copy' },
     { id: 'e4', rank: 12, image: 'https://i.imgur.com/4MEt6WH.jpeg', title: 'Parafusadeira Furadeira 48v', revenue: 'R$ 6.451.128,24', priceRange: 'R$ 260,99 - R$ 544,00', productUrl: 'https://www.tiktok.com/view/product/1733093661342074653?_svg=1&checksum=6852d6ef55eca09f8b136a146ed2c4b85d290d2163b2d9d6bed9cf3c818f7690&encode_params=MIIBUQQM7DrymndbQjI0Zt8YBIIBLXnc4OCrCJysRVcD-bVTP5UK5yV-rMctx-nohpvBLAqW13-8WDLB-xU4ppOtMDDtK-MkKy756A6euOtJVjDyU-Iv3N54gdCf51QUQ5d-YbEgd04YMN4Z9546Yb04lRyxTDpat467DU-MCIbTUzzBVv3VLiTLlyjLw4tMHoH1nFtSsdokxlGTxIHF9692a5qCewKyP0qnCxd7VKlwvfzemiJxJIbXdEkNeRsbvo8ySQubBdMm1TFmea9pw-MStQUw5326iuX1ITQky3Nh1Y8L3QlsUDWh_ElrznQJyqgUoULR0NUdGoJs6Gu8uOxG8O4x0dcQ0Mu43IK6eXEfuKrOKzT3Oe400W56wcM1Tv--JCrTcWIS89M0HHLKoX6mYgXpik0okJ2C_M76K0PLYPwEECfunb8nCLgCOtF6BlgHhEo%3D&og_info=%7B%22title%22%3A%22RHOVISTAR+Chave+de+Impacto+48V+Sem+Fio+%7C+Parafusadeira+e+Furadeira+3+em+1+%7C+2+Baterias+%7C+Alta+Pot%C3%AAncia%22%2C%22image%22%3A%22https%3A%5C%2F%5C%2Fp16-oec-sg.ibyteimg.com%5C%2Ftos-alisg-i-aphluv4xwc-sg%5C%2F4b08ada1b3044db0a5b772d57a4a4de1~tplv-aphluv4xwc-resize-webp%3A260%3A260.webp%3Fdr%3D15582%26t%3D555f072d%26ps%3D933b5bde%26shp%3D7745054a%26shcp%3D9b759fb9%26idc%3Dmy%26from%3D2001012042%22%7D&sec_user_id=MS4wLjABAAAAGPJ9HjGz6Iuay6qmfIsuPNuurOsZ-IcMREG54wV7FpCyZpLNFGNNgtpxlaqhiZJP&share_app_id=1233&share_link_id=903E3B6A-6D88-4FDE-8D74-1F3B2F039232&share_region=BR&social_share_type=15&timestamp=1770366342&trackParams=%7B%22enable_shop_tab_popup%22%3A1%2C%22device_id%22%3A%227506972083776636422%22%2C%22enter_from_info%22%3A%22product_share_outside%22%2C%22source_page_type%22%3A%22product_share%22%2C%22traffic_source_list%22%3A%5B%5D%7D&tt_from=copy&u_code=E6FIJC%3AL28K12M&ug_btm=b6880%2Cb6661&unique_id=joaovellini_&user_id=7203069836077974534&utm_campaign=client_share&utm_medium=ios&utm_source=copy' },
   ];
 
-  const hacks: HackItem[] = [
+  const STATIC_HACKS: HackItem[] = [
     {
       id: 'h1',
       title: 'Estilo Cartomante',
@@ -589,8 +662,7 @@ Camera POV from inside the house looking at him at the doorway. Slight handheld 
 
 Do not add subtitles. Do not add text overlays. Do not add background music. Do not translate the speech. Do not change the language. Do not create cinematic effects, halos, divine glow, or fantasy atmosphere. Must look like a real recorded person.`
       ],
-      tiktokUrl: 'https://www.tiktok.com/search?q=%23camisetacrista&t=1772204055086'
-    },
+    }
   ];
 
   const handleSelectHack = (id: string) => {

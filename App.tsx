@@ -431,7 +431,7 @@ const App: React.FC = () => {
     const publicUrl = await uploadImageToSupabase(file, 'avatars', session.user.id);
     if (publicUrl) {
       setUserProfileImage(publicUrl);
-      await supabase.from('profiles').update({ avatar_url: publicUrl }).eq('id', session.user.id);
+      await supabase.from('profiles').upsert({ id: session.user.id, avatar_url: publicUrl });
       getProfile(); // Refresh
     }
   };

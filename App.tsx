@@ -4,6 +4,7 @@ import { translations, Language, TranslationKey } from './src/translations';
 import { supabase } from './src/lib/supabase';
 import {
   Search,
+  Loader2,
   Flame,
   ChevronRight,
   Check,
@@ -351,6 +352,44 @@ const App: React.FC = () => {
   const [language, setLanguage] = useState<Language>('pt');
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   const [customAvatars, setCustomAvatars] = useState<CustomAvatar[]>([]);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [showIOSInstallGuide, setShowIOSInstallGuide] = useState(false);
+
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (e: any) => {
+      // Prevent the mini-infobar from appearing on mobile
+      e.preventDefault();
+      // Stash the event so it can be triggered later.
+      setDeferredPrompt(e);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+  }, []);
+
+  const handleInstallClick = async () => {
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
+    
+    if (isIOS) {
+      setShowIOSInstallGuide(true);
+      return;
+    }
+
+    if (!deferredPrompt) {
+      console.log('PWA installation prompt not available. Maybe already installed or unsupported.');
+      return;
+    }
+    
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    
+    if (outcome === 'accepted') {
+      console.log('User accepted the install prompt');
+    } else {
+      console.log('User dismissed the install prompt');
+    }
+    setDeferredPrompt(null);
+  };
 
   const handleAddCustomAvatar = (avatar: CustomAvatar) => {
     setCustomAvatars(prev => [...prev, avatar]);
@@ -805,7 +844,10 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
 
               {/* Right Actions */}
               <div className="flex items-center gap-3">
-                <button className="hidden sm:flex items-center gap-2 px-4 py-2 border border-[#8B5CF6]/40 text-[#8B5CF6] rounded-lg text-xs font-black hover:bg-[#8B5CF6]/5 transition-all">
+                <button 
+                  onClick={handleInstallClick}
+                  className="hidden sm:flex items-center gap-2 px-4 py-2 border border-[#8B5CF6]/40 text-[#8B5CF6] rounded-lg text-xs font-black hover:bg-[#8B5CF6]/5 transition-all"
+                >
                   <Download className="w-4 h-4" />
                   {t('baixarApp')}
                 </button>
@@ -934,7 +976,10 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
             placeholder="Pesquise por nicho, loja ou criador..."
             className="flex-1 bg-transparent text-white placeholder:text-[#5b5b7b] text-sm md:text-lg px-4 md:px-6 focus:outline-none w-full"
           />
-          <button className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] text-white h-full px-6 md:px-10 rounded-full font-black text-sm md:text-base tracking-wide shadow-lg hover:scale-[1.02] transition-transform flex items-center gap-2">
+          <button 
+            onClick={onGoToProducts}
+            className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] text-white h-full px-6 md:px-10 rounded-full font-black text-sm md:text-base tracking-wide shadow-lg hover:scale-[1.02] transition-transform flex items-center gap-2"
+          >
             Explorar
             <ArrowRight className="w-4 h-4 md:w-5 md:h-5 hidden sm:block" />
           </button>
@@ -2530,6 +2575,24 @@ const CreatorRow: React.FC<{ creator: CreatorViral }> = ({ creator }) => (
   </div>
 );
 
+const downloadImage = async (url: string, filename: string) => {
+  try {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const objectUrl = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = objectUrl;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(objectUrl);
+    document.body.removeChild(a);
+  } catch (error) {
+    console.error('Erro ao baixar a imagem:', error);
+    window.open(url, '_blank');
+  }
+};
+
 // --- UGC CREATOR VIEW (MULTI-STEP) ---
 const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProducts: ProductExplore[], customAvatars: CustomAvatar[], onAddCustomAvatar: (a: CustomAvatar) => void, onDeleteCustomAvatar: (id: string) => void }> = ({ viralProducts, exploreTopProducts, customAvatars, onAddCustomAvatar, onDeleteCustomAvatar }) => {
   const [step, setStep] = useState(1);
@@ -2567,6 +2630,12 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
   // Loading state
   const [isLoading, setIsLoading] = useState(false);
   const [loadingPhase, setLoadingPhase] = useState(0);
+
+  // Prompt View State
+  const [viewedPrompt, setViewedPrompt] = useState<{ title: string; text: string } | null>(null);
+  
+  // Generation State
+  const [isGeneratingScript, setIsGeneratingScript] = useState(false);
 
   const influencersWomen = [
     { id: 'w1', name: 'Ana', image: 'https://i.imgur.com/hrGOGFM.jpeg' },
@@ -3522,8 +3591,58 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                   <div className="w-8 h-[1px] bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
                   <h3 className="text-[11px] font-black text-white uppercase tracking-[0.5em]">Neural Script Engine</h3>
                 </div>
-                <button className="px-4 py-2 bg-[#3B82F6]/10 border border-[#3B82F6]/20 text-[#3B82F6] rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-[#3B82F6]/20 transition-all flex items-center gap-2">
-                  <Sparkles className="w-3 h-3" /> IA Optimization
+                <button 
+                  onClick={() => {
+                    setIsGeneratingScript(true);
+                    
+                    const influencer = allInfluencers.find(i => i.id === selectedInfluencer)?.name || 'Anônimo';
+                    const product = viralStepProducts.find(p => p.id === selectedProduct)?.title || 'Produto Neutro';
+                    const scenario = scenarios.find(s => s.id === selectedScenario)?.label || 'Cenário Padrão';
+                    const videoModel = videoModels.find(m => m.id === selectedVideoModel)?.title || 'Vídeo Padrão';
+                    const tone = tones.find(t => t.id === selectedTone)?.label || 'Normal';
+                    
+                    let numTakes = 1;
+                    if (selectedDuration === '2takes') numTakes = 2;
+                    if (selectedDuration === '3takes') numTakes = 3;
+                    if (selectedDuration === '4takes') numTakes = 4;
+                    if (selectedDuration === '5takes') numTakes = 5;
+
+                    setTimeout(() => {
+                      const generatedTakes = [];
+                      for (let i = 0; i < numTakes; i++) {
+                        if (numTakes === 1) {
+                          generatedTakes.push(`"Gente, eu testei esse ${product} e o resultado é surreal. Faz toda a diferença no dia a dia. Clica no link aqui embaixo pra garantir o seu antes que acabe o estoque!"`);
+                        } else if (numTakes === 2) {
+                          if (i === 0) generatedTakes.push(`"Você não vai acreditar no que o ${product} pode fazer por você! Eu testei e o resultado é simplesmente absurdo."`);
+                          if (i === 1) generatedTakes.push(`"A praticidade disso é surreal. Clica no link aqui embaixo antes que acabe o estoque, vai por mim!"`);
+                        } else if (numTakes === 3) {
+                          if (i === 0) generatedTakes.push(`"Se você ainda não conhece o ${product}, você tá perdendo tempo! O resultado que ele entrega logo no primeiro uso é impressionante."`);
+                          if (i === 1) generatedTakes.push(`"Olha só a qualidade e os pequenos detalhes. Ele resolve aquele problema clássico do dia a dia em segundos. Sério, é muito prático."`);
+                          if (i === 2) generatedTakes.push(`"Tá com um super desconto por tempo limitado! Clica no link aqui embaixo para comprar o seu, você vai me agradecer depois!"`);
+                        } else if (numTakes === 4) {
+                          if (i === 0) generatedTakes.push(`"Para tudo que você tá fazendo! Olha essa diferença surreal usando apenas o ${product}."`);
+                          if (i === 1) generatedTakes.push(`"Eu não acreditava quando vi na internet, mas é muito simples. Você usa de forma rápida e ele já resolve tudo na hora."`);
+                          if (i === 2) generatedTakes.push(`"A melhor parte é que a durabilidade e a praticidade são surreais. Já recomendei pra todo mundo da minha família."`);
+                          if (i === 3) generatedTakes.push(`"Não deixa pra depois, porque o estoque tá acabando rápido. Clica no link abaixo agora e aproveita!"`);
+                        } else {
+                          if (i === 0) generatedTakes.push(`"Eu só acreditei testando! Esse ${product} entregou um resultado muito acima da média."`);
+                          if (i === 1) generatedTakes.push(`"Sabe quando você tenta fazer de tudo e nada resolve? Pois é, isso aqui muda o jogo totalmente."`);
+                          if (i === 2) generatedTakes.push(`"Você só precisa aplicar e pronto. Em questão de alguns minutos, a diferença é cristalina. Olha isso!"`);
+                          if (i === 3) generatedTakes.push(`"Eu já joguei fora todas as outras opções que tinha em casa. A qualidade desse material vale cada centavo investido."`);
+                          if (i === 4) generatedTakes.push(`"Tá esperando o quê? Tem promoção rolando agora mesmo. Clica no link e garante o seu antes que suma do estoque!"`);
+                        }
+                      }
+                      setTakes(generatedTakes);
+                      setIsGeneratingScript(false);
+                    }, 1500); // 1.5s delay for effect
+                  }}
+                  disabled={isGeneratingScript}
+                  className="px-4 py-2 bg-[#3B82F6]/10 border border-[#3B82F6]/20 text-[#3B82F6] rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-[#3B82F6]/20 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                  {isGeneratingScript ? (
+                    <><Loader2 className="w-3 h-3 animate-spin" /> Processando...</>
+                  ) : (
+                    <><Sparkles className="w-3 h-3" /> IA Optimization</>
+                  )}
                 </button>
               </div>
 
@@ -3649,7 +3768,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                   <button
                     onClick={() => {
                       const url = allInfluencers.find(i => i.id === selectedInfluencer)?.image || allInfluencers[0].image;
-                      window.open(url, '_blank');
+                      downloadImage(url, `avatar_${selectedInfluencer || 'modelo'}.png`);
                     }}
                     className="w-full py-4 bg-white hover:bg-[#3B82F6] text-black hover:text-white rounded-2xl text-xs font-black uppercase tracking-widest transition-all flex items-center justify-center gap-3 shadow-lg active:scale-95"
                   >
@@ -3672,12 +3791,12 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                 <div className="p-5">
                   <div className="mb-4">
                     <span className="text-[10px] font-bold text-[#5b5b7b] uppercase tracking-widest">Produto Selecionado</span>
-                    <p className="text-white font-bold text-sm">Corte PNG (Transparente)</p>
+                    <p className="text-white font-bold text-sm truncate max-w-[200px]" title={viralStepProducts.find(p => p.id === selectedProduct)?.title || 'Produto'}>{viralStepProducts.find(p => p.id === selectedProduct)?.title || 'Produto'}</p>
                   </div>
                   <button
                     onClick={() => {
                       const url = viralStepProducts.find(p => p.id === selectedProduct)?.image || viralStepProducts[0].image;
-                      window.open(url, '_blank');
+                      downloadImage(url, `produto_${selectedProduct || 'item'}.png`);
                     }}
                     className="w-full py-4 bg-white/5 hover:bg-white/10 text-white rounded-2xl text-xs font-black uppercase tracking-widest border border-white/5 transition-all flex items-center justify-center gap-3 active:scale-95"
                   >
@@ -3729,14 +3848,81 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                                 <div className="w-1.5 h-1.5 rounded-full bg-[#00b37e] animate-pulse shadow-[0_0_8px_#00b37e]"></div>
                                 <span className="text-[10px] font-black text-white/40 uppercase tracking-widest">Take {idx + 1} / {takes.length}</span>
                               </div>
-                              <button className="text-[10px] font-black text-[#3B82F6] uppercase tracking-widest hover:underline opacity-60 hover:opacity-100 transition-opacity">
+                              <button 
+                                onClick={() => {
+                                  const productName = viralStepProducts.find(p => p.id === selectedProduct)?.title || 'Product';
+                                  const generoVoz = voiceGender === 'fem' ? 'Female' : 'Male';
+                                  const tomVoz = selectedStepTone || 'Standard';
+                                  const cenarioAcao = scenarios.find(s => s.id === selectedScenario)?.label || 'Clean, well-lit environment';
+                                  
+                                  const masterPrompt = `[CORE INSTRUCTIONS FOR GOOGLE VEO 3]
+You have been provided with two reference images attached:
+1. Avatar Reference (the digital influencer/model who will guide this video)
+2. Product Reference (${productName})
+
+[VISUAL SETTING & ENVIRONMENT]
+- Background/Environment: ${cenarioAcao}
+- Lighting: Cinematic, soft diffused lighting, highlighting the subject and product naturally with high-end commercial quality.
+- Camera & Framing: 4K resolution, 35mm lens equivalent, shallow depth of field (subtle bokeh) for a premium UGC look. The framing should focus clearly on the Avatar's upper body and the product.
+
+[AUDIO & VOICE CONFIGURATION]
+- Voice Gender: ${generoVoz}
+- Voice Tone/Modulation: ${tomVoz}
+- Audio Quality: Studio-grade, noise-free, crisp vocal clarity.
+
+[ACTION & CINEMATIC DIRECTION]
+Generate a hyper-realistic, photorealistic video where the Avatar (from image 1) is naturally holding, interacting with, and showcasing the Product (from image 2). 
+- The Avatar must look directly into the camera with an engaging, charismatic eye contact and realistic micro-expressions.
+- The product must be clearly visible, accurately matching the reference image in shape, color, and texture.
+- Ensure flawless, realistic hand articulation when the Avatar is holding the product. The movements must feel authentic and native to a high-converting TikTok/Reels ad style.
+
+[SCRIPT & LIP-SYNC (PORTUGUESE)]
+Make the Avatar speak EXACTLY the following script in Portuguese with perfect, seamless lip-sync matching the syllables flawlessly:
+
+"${text || takes[idx]}"`;
+                                  
+                                  setViewedPrompt({ title: `TAKE ${idx + 1} — Prompt Completo`, text: masterPrompt });
+                                }}
+                                className="text-[10px] font-black text-[#3B82F6] uppercase tracking-widest hover:underline opacity-60 hover:opacity-100 transition-opacity"
+                              >
                                 [Ver Prompt]
                               </button>
                             </div>
 
                             <button
                               onClick={() => {
-                                navigator.clipboard.writeText(text);
+                                const productName = viralStepProducts.find(p => p.id === selectedProduct)?.title || 'Product';
+                                const generoVoz = voiceGender === 'fem' ? 'Female' : 'Male';
+                                const tomVoz = selectedStepTone || 'Standard';
+                                const cenarioAcao = scenarios.find(s => s.id === selectedScenario)?.label || 'Clean, well-lit environment';
+                                
+                                const masterPrompt = `[CORE INSTRUCTIONS FOR GOOGLE VEO 3]
+You have been provided with two reference images attached:
+1. Avatar Reference (the digital influencer/model who will guide this video)
+2. Product Reference (${productName})
+
+[VISUAL SETTING & ENVIRONMENT]
+- Background/Environment: ${cenarioAcao}
+- Lighting: Cinematic, soft diffused lighting, highlighting the subject and product naturally with high-end commercial quality.
+- Camera & Framing: 4K resolution, 35mm lens equivalent, shallow depth of field (subtle bokeh) for a premium UGC look. The framing should focus clearly on the Avatar's upper body and the product.
+
+[AUDIO & VOICE CONFIGURATION]
+- Voice Gender: ${generoVoz}
+- Voice Tone/Modulation: ${tomVoz}
+- Audio Quality: Studio-grade, noise-free, crisp vocal clarity.
+
+[ACTION & CINEMATIC DIRECTION]
+Generate a hyper-realistic, photorealistic video where the Avatar (from image 1) is naturally holding, interacting with, and showcasing the Product (from image 2). 
+- The Avatar must look directly into the camera with an engaging, charismatic eye contact and realistic micro-expressions.
+- The product must be clearly visible, accurately matching the reference image in shape, color, and texture.
+- Ensure flawless, realistic hand articulation when the Avatar is holding the product. The movements must feel authentic and native to a high-converting TikTok/Reels ad style.
+
+[SCRIPT & LIP-SYNC (PORTUGUESE)]
+Make the Avatar speak EXACTLY the following script in Portuguese with perfect, seamless lip-sync matching the syllables flawlessly:
+
+"${text || takes[idx]}"`;
+                                
+                                navigator.clipboard.writeText(masterPrompt);
                               }}
                               className="w-full flex items-center justify-center gap-3 py-4 bg-[#2a2b33] hover:bg-[#3B82F6] text-white/50 hover:text-white rounded-2xl text-[12px] font-black uppercase tracking-widest transition-all active:scale-95 group/btn"
                             >
@@ -3755,7 +3941,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                     <div className="flex-1">
                       <h4 className="text-xl font-bold text-white mb-8 uppercase tracking-tight">Finalizar no Veo 3</h4>
 
-                      <button className="w-full py-6 bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] hover:scale-[1.02] text-white rounded-3xl font-black text-lg flex items-center justify-center gap-4 shadow-[0_20px_40px_rgba(59,130,246,0.3)] transition-all active:scale-[0.98] group/final">
+                      <button onClick={() => window.open('https://labs.google/flow/about', '_blank')} className="w-full py-6 bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] hover:scale-[1.02] text-white rounded-3xl font-black text-lg flex items-center justify-center gap-4 shadow-[0_20px_40px_rgba(59,130,246,0.3)] transition-all active:scale-[0.98] group/final">
                         <Video className="w-7 h-7" />
                         ABRIR VEO STUDIO
                         <ExternalLink className="w-5 h-5 opacity-40 group-hover/final:opacity-100 transition-opacity" />
@@ -3764,6 +3950,58 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* PROMPT PREVIEW MODAL */}
+      {viewedPrompt && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => setViewedPrompt(null)}></div>
+          <div className="relative bg-[#0B0B0E] border border-white/10 rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div className="flex items-center justify-between p-6 border-b border-white/10 bg-white/[0.02]">
+              <div className="flex items-center gap-3">
+                <FileText className="w-5 h-5 text-[#3B82F6]" />
+                <h3 className="text-xl font-bold text-white uppercase tracking-tight">{viewedPrompt.title}</h3>
+              </div>
+              <button onClick={() => setViewedPrompt(null)} className="p-2 hover:bg-white/10 rounded-full transition-colors">
+                <X className="w-5 h-5 text-white/50 hover:text-white" />
+              </button>
+            </div>
+            
+            <div className="p-6 overflow-y-auto custom-scrollbar flex-1">
+              <div className="bg-black/50 border border-white/5 rounded-2xl p-6 relative group/content">
+                <p className="text-white/80 font-medium leading-relaxed whitespace-pre-wrap select-all selection:bg-[#3B82F6]/30 selection:text-white">
+                  {viewedPrompt.text}
+                </p>
+                
+                {/* Floating copy button inside content area */}
+                <div className="absolute top-4 right-4 opacity-0 group-hover/content:opacity-100 transition-opacity">
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(viewedPrompt.text);
+                    }}
+                    className="flex items-center gap-2 px-3 py-1.5 bg-[#3B82F6]/20 border border-[#3B82F6]/30 hover:bg-[#3B82F6] text-[#3B82F6] hover:text-white rounded-lg text-xs font-bold uppercase transition-all shadow-lg"
+                  >
+                    <ArrowRight className="w-3 h-3" />
+                    Copiar
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <div className="p-6 border-t border-white/10 bg-white/[0.02] flex justify-end">
+              <button 
+                onClick={() => {
+                  navigator.clipboard.writeText(viewedPrompt.text);
+                  setViewedPrompt(null);
+                }}
+                className="flex items-center justify-center gap-3 px-8 py-4 bg-[#3B82F6] hover:bg-[#2563eb] text-white rounded-2xl font-black uppercase tracking-widest transition-all hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_20px_rgba(59,130,246,0.3)]"
+              >
+                Copiar e Fechar
+                <ArrowRight className="w-4 h-4" />
+              </button>
             </div>
           </div>
         </div>
@@ -6202,6 +6440,42 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
       </div>
 
       <div className="h-24"></div>
+
+      {/* iOS PWA Install Guide Modal */}
+      {showIOSInstallGuide && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-300">
+          <div className="bg-[#14151a] border border-[#1e1f26] rounded-2xl w-full max-w-sm p-6 relative shadow-[0_30px_60px_rgba(0,0,0,0.8)]">
+            <button onClick={() => setShowIOSInstallGuide(false)} className="absolute top-4 right-4 text-[#8d8d99] hover:text-white transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div className="flex flex-col items-center text-center gap-4 mt-2">
+              <div className="w-16 h-16 bg-[#8B5CF6]/10 rounded-full flex items-center justify-center mb-2 shadow-[0_0_20px_rgba(139,92,246,0.2)] border border-[#8B5CF6]/20">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#8B5CF6]"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              </div>
+              <h2 className="text-xl font-black text-white">Instale o Viralpulse</h2>
+              <p className="text-sm text-[#8d8d99] mb-4">Para concluir a instalação no seu iPhone/iPad, siga os passos rápidos abaixo:</p>
+              
+              <div className="w-full space-y-4 text-left bg-[#0B0B0E]/50 p-4 rounded-xl border border-white/5">
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-full bg-[#1e1f26] flex items-center justify-center shrink-0 border border-white/10 font-black text-xs text-[#8B5CF6]">1</div>
+                  <p className="text-sm text-white/90 pt-1 leading-relaxed">Toque no ícone de <strong>Compartilhar</strong> (quadradinho com seta para cima) na barra inferior do Safari.</p>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-full bg-[#1e1f26] flex items-center justify-center shrink-0 border border-white/10 font-black text-xs text-[#8B5CF6]">2</div>
+                  <p className="text-sm text-white/90 pt-1 leading-relaxed">Role o menu para baixo e toque em <strong>"Adicionar à Tela de Início"</strong>.</p>
+                </div>
+              </div>
+              
+              <button 
+                onClick={() => setShowIOSInstallGuide(false)} 
+                className="mt-6 w-full py-4 bg-gradient-to-r from-[#8B5CF6] to-[#6D28D9] text-white font-black rounded-xl hover:scale-[1.02] transition-transform shadow-lg shadow-[#8B5CF6]/20 uppercase tracking-widest text-xs"
+              >
+                Eu Entendi
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 };

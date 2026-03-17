@@ -15947,7 +15947,21 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
               children: item.label
             },
             item.id
-          )) })
+          )) }),
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "mt-auto pb-6 pt-4 border-t border-[#1e1f26]", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
+            "button",
+            {
+              onClick: () => {
+                setIsMobileMenuOpen(false);
+                handleInstallClick();
+              },
+              className: "w-full flex items-center justify-center gap-2 px-4 py-3 border border-[#8B5CF6]/40 bg-[#8B5CF6]/5 text-[#8B5CF6] rounded-xl text-sm font-black hover:bg-[#8B5CF6]/10 transition-all",
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Download, { className: "w-5 h-5" }),
+                t("baixarApp")
+              ]
+            }
+          ) })
         ] })
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "min-h-screen bg-[#0b0c10] text-[#e1e1e6] selection:bg-[#3B82F6]/30 flex flex-col relative", children: [

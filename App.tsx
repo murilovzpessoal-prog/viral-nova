@@ -777,6 +777,20 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
                 </button>
               ))}
             </nav>
+
+            {/* Mobile App Install Button */}
+            <div className="mt-auto pb-6 pt-4 border-t border-[#1e1f26]">
+              <button 
+                onClick={() => {
+                  setIsMobileMenuOpen(false);
+                  handleInstallClick();
+                }}
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 border border-[#8B5CF6]/40 bg-[#8B5CF6]/5 text-[#8B5CF6] rounded-xl text-sm font-black hover:bg-[#8B5CF6]/10 transition-all"
+              >
+                <Download className="w-5 h-5" />
+                {t('baixarApp')}
+              </button>
+            </div>
           </div>
         </div>
       )}

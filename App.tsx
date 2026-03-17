@@ -2,6 +2,7 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import { translations, Language, TranslationKey } from './src/translations';
 import { supabase } from './src/lib/supabase';
+import { Login } from './src/Login';
 import {
   Search,
   Loader2,
@@ -180,9 +181,10 @@ interface PromptItem {
 interface ConfiguracoesViewProps {
   profileImage: string | null;
   onImageUpload: (imageUrl: string) => void;
+  onLogout: () => void;
 }
 
-const ConfiguracoesView: React.FC<ConfiguracoesViewProps> = ({ profileImage, onImageUpload }) => {
+const ConfiguracoesView: React.FC<ConfiguracoesViewProps> = ({ profileImage, onImageUpload, onLogout }) => {
   const { t } = useTranslation();
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
@@ -308,7 +310,10 @@ const ConfiguracoesView: React.FC<ConfiguracoesViewProps> = ({ profileImage, onI
         </div>
 
         {/* Logout Button */}
-        <button className="w-full bg-white/[0.02] border border-white/5 text-[#d946ef]/80 py-5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all hover:bg-[#d946ef]/5 hover:border-[#d946ef]/20 flex items-center justify-center gap-3 group/logout">
+        <button 
+          onClick={onLogout}
+          className="w-full bg-white/[0.02] border border-white/5 text-[#d946ef]/80 py-5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all hover:bg-[#d946ef]/5 hover:border-[#d946ef]/20 flex items-center justify-center gap-3 group/logout"
+        >
           <LogOut className="w-5 h-5 group-hover/logout:-translate-x-1 transition-transform" />
           {t('sair')}
         </button>
@@ -391,6 +396,15 @@ const App: React.FC = () => {
     setDeferredPrompt(null);
   };
 
+  const handleLogout = async () => {
+    try {
+      await supabase.auth.signOut();
+      window.location.reload(); // Simple reload handles redirection to index's auth state or whatever blocks unauthenticated views
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
+
   const handleAddCustomAvatar = (avatar: CustomAvatar) => {
     setCustomAvatars(prev => [...prev, avatar]);
   };
@@ -412,14 +426,17 @@ const App: React.FC = () => {
   const [exploreTopProducts, setExploreTopProducts] = useState<ProductExplore[]>([]);
   const [hacks, setHacks] = useState<HackItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isAuthChecking, setIsAuthChecking] = useState(true);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
+      setIsAuthChecking(false);
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session);
+      setIsAuthChecking(false);
     });
 
     return () => subscription.unsubscribe();
@@ -709,6 +726,19 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
     setCurrentPage('hacks-virais-detalhe');
   };
 
+  if (isAuthChecking) {
+    return (
+      <div className="min-h-screen bg-[#0B0B0E] flex flex-col gap-4 items-center justify-center">
+        <Loader2 className="w-8 h-8 text-[#8B5CF6] animate-spin" />
+        <span className="text-[#8d8d99] text-sm font-medium tracking-widest uppercase">Autenticando...</span>
+      </div>
+    );
+  }
+
+  if (!session) {
+    return <Login />;
+  }
+
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>
       {/* Mobile Sidebar Overlay */}
@@ -918,11 +948,49 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
             <ConfiguracoesView
               profileImage={userProfileImage}
               onImageUpload={(url) => setUserProfileImage(url)}
+              onLogout={handleLogout}
             />
           )}
         </div>
 
       </div>
+
+      {/* iOS PWA Install Guide Modal */}
+      {showIOSInstallGuide && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-300">
+          <div className="bg-[#14151a] border border-[#1e1f26] rounded-2xl w-full max-w-sm p-6 relative shadow-[0_30px_60px_rgba(0,0,0,0.8)]">
+            <button onClick={() => setShowIOSInstallGuide(false)} className="absolute top-4 right-4 text-[#8d8d99] hover:text-white transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            <div className="flex flex-col items-center text-center gap-4 mt-2">
+              <div className="w-16 h-16 bg-[#8B5CF6]/10 rounded-full flex items-center justify-center mb-2 shadow-[0_0_20px_rgba(139,92,246,0.2)] border border-[#8B5CF6]/20">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#8B5CF6]"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              </div>
+              <h2 className="text-xl font-black text-white">Instale o Viralpulse</h2>
+              <p className="text-sm text-[#8d8d99] mb-4">Para concluir a instalação no seu iPhone/iPad, siga os passos rápidos abaixo:</p>
+              
+              <div className="w-full space-y-4 text-left bg-[#0B0B0E]/50 p-4 rounded-xl border border-white/5">
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-full bg-[#1e1f26] flex items-center justify-center shrink-0 border border-white/10 font-black text-xs text-[#8B5CF6]">1</div>
+                  <p className="text-sm text-white/90 pt-1 leading-relaxed">Toque no ícone de <strong>Compartilhar</strong> (quadradinho com seta para cima) na barra inferior do Safari.</p>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 rounded-full bg-[#1e1f26] flex items-center justify-center shrink-0 border border-white/10 font-black text-xs text-[#8B5CF6]">2</div>
+                  <p className="text-sm text-white/90 pt-1 leading-relaxed">Role o menu para baixo e toque em <strong>"Adicionar à Tela de Início"</strong>.</p>
+                </div>
+              </div>
+              
+              <button 
+                onClick={() => setShowIOSInstallGuide(false)} 
+                className="mt-6 w-full py-4 bg-gradient-to-r from-[#8B5CF6] to-[#6D28D9] text-white font-black rounded-xl hover:scale-[1.02] transition-transform shadow-lg shadow-[#8B5CF6]/20 uppercase tracking-widest text-xs"
+              >
+                Eu Entendi
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </LanguageContext.Provider>
   );
 };
@@ -6441,41 +6509,6 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
 
       <div className="h-24"></div>
 
-      {/* iOS PWA Install Guide Modal */}
-      {showIOSInstallGuide && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-300">
-          <div className="bg-[#14151a] border border-[#1e1f26] rounded-2xl w-full max-w-sm p-6 relative shadow-[0_30px_60px_rgba(0,0,0,0.8)]">
-            <button onClick={() => setShowIOSInstallGuide(false)} className="absolute top-4 right-4 text-[#8d8d99] hover:text-white transition-colors">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
-            <div className="flex flex-col items-center text-center gap-4 mt-2">
-              <div className="w-16 h-16 bg-[#8B5CF6]/10 rounded-full flex items-center justify-center mb-2 shadow-[0_0_20px_rgba(139,92,246,0.2)] border border-[#8B5CF6]/20">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#8B5CF6]"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-              </div>
-              <h2 className="text-xl font-black text-white">Instale o Viralpulse</h2>
-              <p className="text-sm text-[#8d8d99] mb-4">Para concluir a instalação no seu iPhone/iPad, siga os passos rápidos abaixo:</p>
-              
-              <div className="w-full space-y-4 text-left bg-[#0B0B0E]/50 p-4 rounded-xl border border-white/5">
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-[#1e1f26] flex items-center justify-center shrink-0 border border-white/10 font-black text-xs text-[#8B5CF6]">1</div>
-                  <p className="text-sm text-white/90 pt-1 leading-relaxed">Toque no ícone de <strong>Compartilhar</strong> (quadradinho com seta para cima) na barra inferior do Safari.</p>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-[#1e1f26] flex items-center justify-center shrink-0 border border-white/10 font-black text-xs text-[#8B5CF6]">2</div>
-                  <p className="text-sm text-white/90 pt-1 leading-relaxed">Role o menu para baixo e toque em <strong>"Adicionar à Tela de Início"</strong>.</p>
-                </div>
-              </div>
-              
-              <button 
-                onClick={() => setShowIOSInstallGuide(false)} 
-                className="mt-6 w-full py-4 bg-gradient-to-r from-[#8B5CF6] to-[#6D28D9] text-white font-black rounded-xl hover:scale-[1.02] transition-transform shadow-lg shadow-[#8B5CF6]/20 uppercase tracking-widest text-xs"
-              >
-                Eu Entendi
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </main>
   );
 };

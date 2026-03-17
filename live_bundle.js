@@ -18075,13 +18075,13 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
             ] })
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col items-end gap-3", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center gap-4 text-right", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center gap-3 md:gap-4 text-right", children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]", children: "Process Stage" }),
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-baseline gap-1", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-4xl font-black text-white tracking-tighter tabular-nums", children: "02" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-xl font-black text-[#1e1f26]", children: "//" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-xl font-black text-[#5b5b7b] tabular-nums", children: "04" })
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[8px] md:text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] md:tracking-[0.3em]", children: "Process Stage" }),
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-baseline gap-1 justify-end", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-3xl md:text-4xl font-black text-white tracking-tighter tabular-nums", children: "02" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-lg md:text-xl font-black text-[#1e1f26]", children: "//" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-lg md:text-xl font-black text-[#5b5b7b] tabular-nums", children: "04" })
                 ] })
               ] }),
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
@@ -18174,18 +18174,18 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
       ] }),
       step === 3 && /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "w-full max-w-[1200px] bg-[#0B0B0E]/90 backdrop-blur-3xl border border-white/10 rounded-[32px] md:rounded-[64px] p-5 md:p-16 shadow-[0_0_100px_rgba(0,0,0,0.5)] flex flex-col relative overflow-hidden animate-in fade-in zoom-in-95 duration-1000", children: [
         /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 relative z-10", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex flex-col gap-2", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("h1", { className: "text-5xl font-black text-white tracking-tighter uppercase leading-none", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex flex-col gap-2", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("h1", { className: "text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-none", children: [
             "Configura\xE7\xE3o ",
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[#3B82F6]", children: "do V\xEDdeo" })
           ] }) }),
-          /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col items-end gap-3", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center gap-4 text-right", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col items-end gap-3 mt-4 md:mt-0", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center gap-3 md:gap-4 text-right", children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]", children: "Process Stage" }),
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-baseline gap-1", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-4xl font-black text-white tracking-tighter tabular-nums", children: "03" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-xl font-black text-[#1e1f26]", children: "//" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-xl font-black text-[#5b5b7b] tabular-nums", children: "04" })
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[8px] md:text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] md:tracking-[0.3em]", children: "Process Stage" }),
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-baseline gap-1 justify-end", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-3xl md:text-4xl font-black text-white tracking-tighter tabular-nums", children: "03" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-lg md:text-xl font-black text-[#1e1f26]", children: "//" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-lg md:text-xl font-black text-[#5b5b7b] tabular-nums", children: "04" })
                 ] })
               ] }),
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
@@ -18335,7 +18335,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
         /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 relative z-10", children: [
           /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col gap-2", children: [
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex items-center gap-3 opacity-0", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "px-3 py-1 bg-[#3B82F6]/10 border border-[#3B82F6]/30 rounded-full", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[10px] font-black text-[#3B82F6] uppercase tracking-widest", children: "." }) }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("h1", { className: "text-5xl font-black text-white tracking-tighter uppercase leading-none", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("h1", { className: "text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-none", children: [
               "Roteiro ",
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[#3B82F6]", children: "& Voz" })
             ] })
@@ -18343,11 +18343,11 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
           /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col items-end gap-3", children: [
             /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center gap-4 text-right", children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]", children: "Process Stage" }),
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[8px] md:text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] md:tracking-[0.3em]", children: "Process Stage" }),
                 /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-baseline gap-1", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-4xl font-black text-white tracking-tighter tabular-nums", children: "04" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-xl font-black text-[#1e1f26]", children: "//" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-xl font-black text-[#5b5b7b] tabular-nums", children: "04" })
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-3xl md:text-4xl font-black text-white tracking-tighter tabular-nums", children: "04" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-lg md:text-xl font-black text-[#1e1f26]", children: "//" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-lg md:text-xl font-black text-[#5b5b7b] tabular-nums", children: "04" })
                 ] })
               ] }),
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(

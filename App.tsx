@@ -3215,13 +3215,13 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
             </div>
 
             <div className="flex flex-col items-end gap-3">
-              <div className="flex items-center gap-4 text-right">
+              <div className="flex items-center gap-3 md:gap-4 text-right">
                 <div className="flex flex-col">
-                  <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">Process Stage</span>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-black text-white tracking-tighter tabular-nums">02</span>
-                    <span className="text-xl font-black text-[#1e1f26]">//</span>
-                    <span className="text-xl font-black text-[#5b5b7b] tabular-nums">04</span>
+                  <span className="text-[8px] md:text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] md:tracking-[0.3em]">Process Stage</span>
+                  <div className="flex items-baseline gap-1 justify-end">
+                    <span className="text-3xl md:text-4xl font-black text-white tracking-tighter tabular-nums">02</span>
+                    <span className="text-lg md:text-xl font-black text-[#1e1f26]">//</span>
+                    <span className="text-lg md:text-xl font-black text-[#5b5b7b] tabular-nums">04</span>
                   </div>
                 </div>
                 <button
@@ -3350,19 +3350,19 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
           {/* HOLOGRAPHIC STAGE HEADER */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 relative z-10">
             <div className="flex flex-col gap-2">
-              <h1 className="text-5xl font-black text-white tracking-tighter uppercase leading-none">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-none">
                 Configuração <span className="text-[#3B82F6]">do Vídeo</span>
               </h1>
             </div>
 
-            <div className="flex flex-col items-end gap-3">
-              <div className="flex items-center gap-4 text-right">
+            <div className="flex flex-col items-end gap-3 mt-4 md:mt-0">
+              <div className="flex items-center gap-3 md:gap-4 text-right">
                 <div className="flex flex-col">
-                  <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">Process Stage</span>
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-black text-white tracking-tighter tabular-nums">03</span>
-                    <span className="text-xl font-black text-[#1e1f26]">//</span>
-                    <span className="text-xl font-black text-[#5b5b7b] tabular-nums">04</span>
+                  <span className="text-[8px] md:text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] md:tracking-[0.3em]">Process Stage</span>
+                  <div className="flex items-baseline gap-1 justify-end">
+                    <span className="text-3xl md:text-4xl font-black text-white tracking-tighter tabular-nums">03</span>
+                    <span className="text-lg md:text-xl font-black text-[#1e1f26]">//</span>
+                    <span className="text-lg md:text-xl font-black text-[#5b5b7b] tabular-nums">04</span>
                   </div>
                 </div>
                 <button
@@ -3575,7 +3575,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                   <span className="text-[10px] font-black text-[#3B82F6] uppercase tracking-widest">.</span>
                 </div>
               </div>
-              <h1 className="text-5xl font-black text-white tracking-tighter uppercase leading-none">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-none">
                 Roteiro <span className="text-[#3B82F6]">& Voz</span>
               </h1>
             </div>
@@ -3583,11 +3583,11 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
             <div className="flex flex-col items-end gap-3">
               <div className="flex items-center gap-4 text-right">
                 <div className="flex flex-col">
-                  <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">Process Stage</span>
+                  <span className="text-[8px] md:text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] md:tracking-[0.3em]">Process Stage</span>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-black text-white tracking-tighter tabular-nums">04</span>
-                    <span className="text-xl font-black text-[#1e1f26]">//</span>
-                    <span className="text-xl font-black text-[#5b5b7b] tabular-nums">04</span>
+                    <span className="text-3xl md:text-4xl font-black text-white tracking-tighter tabular-nums">04</span>
+                    <span className="text-lg md:text-xl font-black text-[#1e1f26]">//</span>
+                    <span className="text-lg md:text-xl font-black text-[#5b5b7b] tabular-nums">04</span>
                   </div>
                 </div>
                 <button

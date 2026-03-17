@@ -4768,23 +4768,23 @@ const PassosIniciaisView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
       </button>
 
       <div className="max-w-4xl">
-        <h1 className="text-[40px] font-black text-white tracking-tighter mb-4 leading-tight">Passos iniciais</h1>
-        <p className="text-[#8d8d99] text-lg font-medium opacity-80 mb-12 italic">
+        <h1 className="text-[28px] md:text-[40px] font-black text-white tracking-tighter mb-4 leading-tight">Passos iniciais</h1>
+        <p className="text-[#8d8d99] text-sm md:text-lg font-medium opacity-80 mb-8 md:mb-12 italic">
           Tudo o que você precisa saber para começar do jeito certo.
         </p>
 
         <div className="flex flex-col gap-6 md:gap-12">
           {/* Section 1 */}
           <section className="flex flex-col gap-4">
-            <h2 className="text-xl font-black text-white tracking-tight uppercase">BEM-VINDO AO TRENDFY APP</h2>
-            <p className="text-[#8d8d99] text-base font-medium leading-relaxed max-w-3xl">
+            <h2 className="text-lg md:text-xl font-black text-white tracking-tight uppercase">BEM-VINDO AO TRENDFY APP</h2>
+            <p className="text-[#8d8d99] text-sm md:text-base font-medium leading-relaxed max-w-3xl">
               O Viralpulse é sua ferramenta definitiva para dominar o TikTok Shop. Nosso objetivo é fornecer dados, criativos e conhecimento para você escalar suas vendas.
             </p>
           </section>
 
           {/* Section 2 */}
           <section className="flex flex-col gap-6">
-            <h2 className="text-xl font-black text-white tracking-tight uppercase">PRIMEIROS PASSOS</h2>
+            <h2 className="text-lg md:text-xl font-black text-white tracking-tight uppercase">PRIMEIROS PASSOS</h2>
 
             <div className="flex flex-col gap-4">
               {[
@@ -4797,7 +4797,7 @@ const PassosIniciaisView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                   <div className="w-5 h-5 rounded-full bg-[#3B82F6]/10 border border-[#3B82F6]/20 flex items-center justify-center shrink-0">
                     <Check className="w-3 h-3 text-[#3B82F6]" />
                   </div>
-                  <span className="text-[#e1e1e6] text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity">{item}</span>
+                  <span className="text-[#e1e1e6] text-xs sm:text-sm md:text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity">{item}</span>
                 </div>
               ))}
             </div>
@@ -4809,7 +4809,7 @@ const PassosIniciaisView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             <div className="w-12 h-12 bg-[#f59e0b] rounded-xl flex items-center justify-center shrink-0 shadow-[0_10px_30px_rgba(245,158,11,0.2)]">
               <AlertCircle className="w-6 h-6 text-white" />
             </div>
-            <p className="text-[#f59e0b] text-base font-black leading-snug tracking-tight">
+            <p className="text-[#f59e0b] text-sm md:text-base font-black leading-snug tracking-tight">
               IMPORTANTE: O sucesso no TikTok Shop depende de consistência e análise de dados, não de sorte.
             </p>
           </div>
@@ -4837,16 +4837,16 @@ const ComoSeAfiliarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
       </button>
 
       <div className="max-w-4xl">
-        <h1 className="text-[40px] font-black text-white tracking-tighter mb-4 leading-tight">Como se afiliar no TikTok Shop</h1>
-        <p className="text-[#8d8d99] text-lg font-medium opacity-80 mb-12 italic">
+        <h1 className="text-[28px] md:text-[40px] font-black text-white tracking-tighter mb-4 leading-tight">Como se afiliar no TikTok Shop</h1>
+        <p className="text-[#8d8d99] text-sm md:text-lg font-medium opacity-80 mb-8 md:mb-12 italic">
           Passo a passo detalhado para sua primeira afiliação.
         </p>
 
         <div className="flex flex-col gap-6 md:gap-12">
           {/* Section 1 */}
           <section className="flex flex-col gap-4">
-            <h2 className="text-xl font-black text-white tracking-tight uppercase">REQUISITOS PARA AFILIAÇÃO</h2>
-            <p className="text-[#8d8d99] text-base font-medium leading-relaxed max-w-3xl">
+            <h2 className="text-lg md:text-xl font-black text-white tracking-tight uppercase">REQUISITOS PARA AFILIAÇÃO</h2>
+            <p className="text-[#8d8d99] text-sm md:text-base font-medium leading-relaxed max-w-3xl">
               Para começar a vender como afiliado, você precisa atender a certos critérios básicos do TikTok.
             </p>
 
@@ -4860,7 +4860,7 @@ const ComoSeAfiliarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                   <div className="w-5 h-5 rounded-full bg-[#3B82F6]/10 border border-[#3B82F6]/20 flex items-center justify-center shrink-0">
                     <Check className="w-3 h-3 text-[#3B82F6]" />
                   </div>
-                  <span className="text-[#e1e1e6] text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity">{item}</span>
+                  <span className="text-[#e1e1e6] text-xs sm:text-sm md:text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity">{item}</span>
                 </div>
               ))}
             </div>
@@ -4868,7 +4868,7 @@ const ComoSeAfiliarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
 
           {/* Section 2 */}
           <section className="flex flex-col gap-6">
-            <h2 className="text-xl font-black text-white tracking-tight uppercase">PASSO A PASSO NO APP</h2>
+            <h2 className="text-lg md:text-xl font-black text-white tracking-tight uppercase">PASSO A PASSO NO APP</h2>
 
             <div className="flex flex-col gap-4">
               {[
@@ -4878,8 +4878,8 @@ const ComoSeAfiliarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                 "Siga as instruções de inscrição e aguarde a aprovação."
               ].map((item, idx) => (
                 <div key={idx} className="flex items-start gap-3 group">
-                  <span className="text-[#3B82F6] text-base font-black pt-0.5">{idx + 1}.</span>
-                  <span className="text-[#e1e1e6] text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity">{item}</span>
+                  <span className="text-[#3B82F6] text-sm md:text-base font-black pt-0.5">{idx + 1}.</span>
+                  <span className="text-[#e1e1e6] text-xs sm:text-sm md:text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity">{item}</span>
                 </div>
               ))}
             </div>
@@ -4891,7 +4891,7 @@ const ComoSeAfiliarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             <div className="w-12 h-12 bg-[#f59e0b] rounded-xl flex items-center justify-center shrink-0 shadow-[0_10px_30px_rgba(245,158,11,0.2)]">
               <AlertCircle className="w-6 h-6 text-white" />
             </div>
-            <p className="text-[#f59e0b] text-base font-black leading-snug tracking-tight">
+            <p className="text-[#f59e0b] text-sm md:text-base font-black leading-snug tracking-tight">
               DICA: Escolha nichos que você já domina para facilitar a criação de conteúdo autêntico.
             </p>
           </div>
@@ -4919,23 +4919,23 @@ const RegrasERestricoesView: React.FC<{ onBack: () => void }> = ({ onBack }) => 
       </button>
 
       <div className="max-w-4xl">
-        <h1 className="text-[40px] font-black text-white tracking-tighter mb-4 leading-tight">Regras e restrições importantes de conhecer</h1>
-        <p className="text-[#8d8d99] text-lg font-medium opacity-80 mb-12 italic">
+        <h1 className="text-[28px] md:text-[40px] font-black text-white tracking-tighter mb-4 leading-tight">Regras e restrições importantes de conhecer</h1>
+        <p className="text-[#8d8d99] text-sm md:text-lg font-medium opacity-80 mb-8 md:mb-12 italic">
           Evite bloqueios e penalidades conhecendo as diretrizes.
         </p>
 
         <div className="flex flex-col gap-6 md:gap-12">
           {/* Section 1 */}
           <section className="flex flex-col gap-4">
-            <h2 className="text-xl font-black text-white tracking-tight uppercase">DIRETRIZES DE CONTEÚDO</h2>
-            <p className="text-[#8d8d99] text-base font-medium leading-relaxed max-w-3xl">
+            <h2 className="text-lg md:text-xl font-black text-white tracking-tight uppercase">DIRETRIZES DE CONTEÚDO</h2>
+            <p className="text-[#8d8d99] text-sm md:text-base font-medium leading-relaxed max-w-3xl">
               O TikTok é rigoroso quanto à qualidade e autenticidade. Violar regras pode resultar em "Shadowban" ou suspensão da conta.
             </p>
           </section>
 
           {/* Section 2 */}
           <section className="flex flex-col gap-6">
-            <h2 className="text-xl font-black text-white tracking-tight uppercase">O QUE NÃO FAZER</h2>
+            <h2 className="text-lg md:text-xl font-black text-white tracking-tight uppercase">O QUE NÃO FAZER</h2>
 
             <div className="flex flex-col gap-4 mt-2">
               {[
@@ -4948,7 +4948,7 @@ const RegrasERestricoesView: React.FC<{ onBack: () => void }> = ({ onBack }) => 
                   <div className="w-5 h-5 rounded-full bg-[#3B82F6]/10 border border-[#3B82F6]/20 flex items-center justify-center shrink-0">
                     <Check className="w-3 h-3 text-[#3B82F6]" />
                   </div>
-                  <p className="text-[#e1e1e6] text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity">
+                  <p className="text-[#e1e1e6] text-xs sm:text-sm md:text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity">
                     <span className="font-bold">{item.title}</span> {item.desc}
                   </p>
                 </div>
@@ -4962,7 +4962,7 @@ const RegrasERestricoesView: React.FC<{ onBack: () => void }> = ({ onBack }) => 
             <div className="w-12 h-12 bg-[#f59e0b] rounded-xl flex items-center justify-center shrink-0 shadow-[0_10px_30px_rgba(245,158,11,0.2)]">
               <AlertCircle className="w-6 h-6 text-white" />
             </div>
-            <p className="text-[#f59e0b] text-base font-black leading-snug tracking-tight">
+            <p className="text-[#f59e0b] text-sm md:text-base font-black leading-snug tracking-tight">
               CUIDADO: Links externos na bio ou nos comentários podem diminuir o alcance do seu vídeo.
             </p>
           </div>
@@ -4998,15 +4998,15 @@ const ComoCriarAvatarIAView: React.FC<{ onBack: () => void }> = ({ onBack }) => 
         <div className="flex flex-col gap-6 md:gap-12">
           {/* Section 1 */}
           <section className="flex flex-col gap-4">
-            <h2 className="text-xl font-black text-white tracking-tight uppercase">UTILIZANDO A FERRAMENTA DE AVATAR</h2>
-            <p className="text-[#8d8d99] text-base font-medium leading-relaxed max-w-3xl">
+            <h2 className="text-lg md:text-xl font-black text-white tracking-tight uppercase">UTILIZANDO A FERRAMENTA DE AVATAR</h2>
+            <p className="text-[#8d8d99] text-sm md:text-base font-medium leading-relaxed max-w-3xl">
               Nossa IA permite gerar apresentadores que falam seu roteiro com expressões naturais.
             </p>
           </section>
 
           {/* Section 2 */}
           <section className="flex flex-col gap-6">
-            <h2 className="text-xl font-black text-white tracking-tight uppercase">FLUXO DE TRABALHO</h2>
+            <h2 className="text-lg md:text-xl font-black text-white tracking-tight uppercase">FLUXO DE TRABALHO</h2>
 
             <div className="flex flex-col gap-4 mt-2">
               {[
@@ -5019,12 +5019,12 @@ const ComoCriarAvatarIAView: React.FC<{ onBack: () => void }> = ({ onBack }) => 
                   <div className="w-5 h-5 rounded-full bg-[#3B82F6]/10 border border-[#3B82F6]/20 flex items-center justify-center shrink-0">
                     <Check className="w-3 h-3 text-[#3B82F6]" />
                   </div>
-                  <span className="text-[#e1e1e6] text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity">{item}</span>
+                  <span className="text-[#e1e1e6] text-xs sm:text-sm md:text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity">{item}</span>
                 </div>
               ))}
             </div>
 
-            <p className="text-[#8d8d99] text-base font-medium leading-relaxed max-w-3xl italic mt-4">
+            <p className="text-[#8d8d99] text-sm md:text-base font-medium leading-relaxed max-w-3xl italic mt-4">
               Lembre-se de manter o roteiro conciso (entre 15 a 45 segundos) para reter a atenção do espectador no TikTok.
             </p>
           </section>
@@ -5060,15 +5060,15 @@ const ComoCriarVideosUGCView: React.FC<{ onBack: () => void }> = ({ onBack }) =>
         <div className="flex flex-col gap-6 md:gap-12">
           {/* Section 1 */}
           <section className="flex flex-col gap-4">
-            <h2 className="text-xl font-black text-white tracking-tight uppercase">CRIAÇÃO DE VÍDEOS UGC</h2>
-            <p className="text-[#8d8d99] text-base font-medium leading-relaxed max-w-3xl">
+            <h2 className="text-lg md:text-xl font-black text-white tracking-tight uppercase">CRIAÇÃO DE VÍDEOS UGC</h2>
+            <p className="text-[#8d8d99] text-sm md:text-base font-medium leading-relaxed max-w-3xl">
               User Generated Content (UGC) é o formato que mais converte hoje. Nossa ferramenta automatiza a estrutura desses vídeos.
             </p>
           </section>
 
           {/* Section 2 */}
           <section className="flex flex-col gap-6">
-            <h2 className="text-xl font-black text-white tracking-tight uppercase">CONFIGURANDO SEU VÍDEO</h2>
+            <h2 className="text-lg md:text-xl font-black text-white tracking-tight uppercase">CONFIGURANDO SEU VÍDEO</h2>
 
             <div className="flex flex-col gap-4 mt-2">
               {[
@@ -5081,7 +5081,7 @@ const ComoCriarVideosUGCView: React.FC<{ onBack: () => void }> = ({ onBack }) =>
                   <div className="w-5 h-5 rounded-full bg-[#3B82F6]/10 border border-[#3B82F6]/20 flex items-center justify-center shrink-0">
                     <Check className="w-3 h-3 text-[#3B82F6]" />
                   </div>
-                  <span className="text-[#e1e1e6] text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity">{item}</span>
+                  <span className="text-[#e1e1e6] text-xs sm:text-sm md:text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity">{item}</span>
                 </div>
               ))}
             </div>
@@ -5093,7 +5093,7 @@ const ComoCriarVideosUGCView: React.FC<{ onBack: () => void }> = ({ onBack }) =>
             <div className="w-12 h-12 bg-[#f59e0b] rounded-xl flex items-center justify-center shrink-0 shadow-[0_10px_30px_rgba(245,158,11,0.2)]">
               <AlertCircle className="w-6 h-6 text-white" />
             </div>
-            <p className="text-[#f59e0b] text-base font-black leading-snug tracking-tight">
+            <p className="text-[#f59e0b] text-sm md:text-base font-black leading-snug tracking-tight">
               ESTRATÉGIA: O "Gancho" (os primeiros 3 segundos) é a parte mais importante do seu vídeo UGC.
             </p>
           </div>

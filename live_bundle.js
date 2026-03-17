@@ -19351,15 +19351,15 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "max-w-4xl", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h1", { className: "text-[40px] font-black text-white tracking-tighter mb-4 leading-tight", children: "Passos iniciais" }),
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#8d8d99] text-lg font-medium opacity-80 mb-12 italic", children: "Tudo o que voc\xEA precisa saber para come\xE7ar do jeito certo." }),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h1", { className: "text-[28px] md:text-[40px] font-black text-white tracking-tighter mb-4 leading-tight", children: "Passos iniciais" }),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#8d8d99] text-sm md:text-lg font-medium opacity-80 mb-8 md:mb-12 italic", children: "Tudo o que voc\xEA precisa saber para come\xE7ar do jeito certo." }),
         /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col gap-6 md:gap-12", children: [
           /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("section", { className: "flex flex-col gap-4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "text-xl font-black text-white tracking-tight uppercase", children: "BEM-VINDO AO TRENDFY APP" }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#8d8d99] text-base font-medium leading-relaxed max-w-3xl", children: "O Viralpulse \xE9 sua ferramenta definitiva para dominar o TikTok Shop. Nosso objetivo \xE9 fornecer dados, criativos e conhecimento para voc\xEA escalar suas vendas." })
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "text-lg md:text-xl font-black text-white tracking-tight uppercase", children: "BEM-VINDO AO TRENDFY APP" }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#8d8d99] text-sm md:text-base font-medium leading-relaxed max-w-3xl", children: "O Viralpulse \xE9 sua ferramenta definitiva para dominar o TikTok Shop. Nosso objetivo \xE9 fornecer dados, criativos e conhecimento para voc\xEA escalar suas vendas." })
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("section", { className: "flex flex-col gap-6", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "text-xl font-black text-white tracking-tight uppercase", children: "PRIMEIROS PASSOS" }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "text-lg md:text-xl font-black text-white tracking-tight uppercase", children: "PRIMEIROS PASSOS" }),
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex flex-col gap-4", children: [
               "Configure seu perfil completo no app.",
               "Conecte sua conta do TikTok para sincronizar dados.",
@@ -19367,13 +19367,13 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
               "Familiarize-se com a calculadora de proje\xE7\xE3o de lucros."
             ].map((item, idx) => /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center gap-3 group", children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-5 h-5 rounded-full bg-[#3B82F6]/10 border border-[#3B82F6]/20 flex items-center justify-center shrink-0", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Check, { className: "w-3 h-3 text-[#3B82F6]" }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[#e1e1e6] text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity", children: item })
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[#e1e1e6] text-xs sm:text-sm md:text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity", children: item })
             ] }, idx)) })
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "mt-2 p-6 bg-gradient-to-br from-[#1e1508] to-[#111114] border border-[#f59e0b]/20 rounded-[24px] flex items-center gap-5 shadow-2xl relative overflow-hidden", children: [
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "absolute top-0 right-0 w-24 h-24 bg-[#f59e0b]/5 blur-[50px] rounded-full" }),
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-12 h-12 bg-[#f59e0b] rounded-xl flex items-center justify-center shrink-0 shadow-[0_10px_30px_rgba(245,158,11,0.2)]", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(CircleAlert, { className: "w-6 h-6 text-white" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#f59e0b] text-base font-black leading-snug tracking-tight", children: "IMPORTANTE: O sucesso no TikTok Shop depende de consist\xEAncia e an\xE1lise de dados, n\xE3o de sorte." })
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#f59e0b] text-sm md:text-base font-black leading-snug tracking-tight", children: "IMPORTANTE: O sucesso no TikTok Shop depende de consist\xEAncia e an\xE1lise de dados, n\xE3o de sorte." })
           ] })
         ] })
       ] }),
@@ -19394,40 +19394,40 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "max-w-4xl", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h1", { className: "text-[40px] font-black text-white tracking-tighter mb-4 leading-tight", children: "Como se afiliar no TikTok Shop" }),
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#8d8d99] text-lg font-medium opacity-80 mb-12 italic", children: "Passo a passo detalhado para sua primeira afilia\xE7\xE3o." }),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h1", { className: "text-[28px] md:text-[40px] font-black text-white tracking-tighter mb-4 leading-tight", children: "Como se afiliar no TikTok Shop" }),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#8d8d99] text-sm md:text-lg font-medium opacity-80 mb-8 md:mb-12 italic", children: "Passo a passo detalhado para sua primeira afilia\xE7\xE3o." }),
         /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col gap-6 md:gap-12", children: [
           /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("section", { className: "flex flex-col gap-4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "text-xl font-black text-white tracking-tight uppercase", children: "REQUISITOS PARA AFILIA\xC7\xC3O" }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#8d8d99] text-base font-medium leading-relaxed max-w-3xl", children: "Para come\xE7ar a vender como afiliado, voc\xEA precisa atender a certos crit\xE9rios b\xE1sicos do TikTok." }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "text-lg md:text-xl font-black text-white tracking-tight uppercase", children: "REQUISITOS PARA AFILIA\xC7\xC3O" }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#8d8d99] text-sm md:text-base font-medium leading-relaxed max-w-3xl", children: "Para come\xE7ar a vender como afiliado, voc\xEA precisa atender a certos crit\xE9rios b\xE1sicos do TikTok." }),
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex flex-col gap-4 mt-2", children: [
               "Ter uma conta ativa com mais de 1.000 seguidores (ou usar uma conta Business/Seller).",
               "Ser maior de 18 anos.",
               "Ter publicado v\xEDdeos nos \xFAltimos 30 dias."
             ].map((item, idx) => /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center gap-3 group", children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-5 h-5 rounded-full bg-[#3B82F6]/10 border border-[#3B82F6]/20 flex items-center justify-center shrink-0", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Check, { className: "w-3 h-3 text-[#3B82F6]" }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[#e1e1e6] text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity", children: item })
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[#e1e1e6] text-xs sm:text-sm md:text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity", children: item })
             ] }, idx)) })
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("section", { className: "flex flex-col gap-6", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "text-xl font-black text-white tracking-tight uppercase", children: "PASSO A PASSO NO APP" }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "text-lg md:text-xl font-black text-white tracking-tight uppercase", children: "PASSO A PASSO NO APP" }),
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex flex-col gap-4", children: [
               "V\xE1 ao seu perfil e clique no menu de tr\xEAs linhas.",
               'Selecione "Ferramentas do Criador".',
               'Clique em "TikTok Shop para Criadores".',
               "Siga as instru\xE7\xF5es de inscri\xE7\xE3o e aguarde a aprova\xE7\xE3o."
             ].map((item, idx) => /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-start gap-3 group", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("span", { className: "text-[#3B82F6] text-base font-black pt-0.5", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("span", { className: "text-[#3B82F6] text-sm md:text-base font-black pt-0.5", children: [
                 idx + 1,
                 "."
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[#e1e1e6] text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity", children: item })
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[#e1e1e6] text-xs sm:text-sm md:text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity", children: item })
             ] }, idx)) })
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "mt-2 p-6 bg-gradient-to-br from-[#1e1508] to-[#111114] border border-[#f59e0b]/20 rounded-[24px] flex items-center gap-5 shadow-2xl relative overflow-hidden", children: [
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "absolute top-0 right-0 w-24 h-24 bg-[#f59e0b]/5 blur-[50px] rounded-full" }),
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-12 h-12 bg-[#f59e0b] rounded-xl flex items-center justify-center shrink-0 shadow-[0_10px_30px_rgba(245,158,11,0.2)]", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(CircleAlert, { className: "w-6 h-6 text-white" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#f59e0b] text-base font-black leading-snug tracking-tight", children: "DICA: Escolha nichos que voc\xEA j\xE1 domina para facilitar a cria\xE7\xE3o de conte\xFAdo aut\xEAntico." })
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#f59e0b] text-sm md:text-base font-black leading-snug tracking-tight", children: "DICA: Escolha nichos que voc\xEA j\xE1 domina para facilitar a cria\xE7\xE3o de conte\xFAdo aut\xEAntico." })
           ] })
         ] })
       ] }),
@@ -19448,15 +19448,15 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "max-w-4xl", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h1", { className: "text-[40px] font-black text-white tracking-tighter mb-4 leading-tight", children: "Regras e restri\xE7\xF5es importantes de conhecer" }),
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#8d8d99] text-lg font-medium opacity-80 mb-12 italic", children: "Evite bloqueios e penalidades conhecendo as diretrizes." }),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h1", { className: "text-[28px] md:text-[40px] font-black text-white tracking-tighter mb-4 leading-tight", children: "Regras e restri\xE7\xF5es importantes de conhecer" }),
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#8d8d99] text-sm md:text-lg font-medium opacity-80 mb-8 md:mb-12 italic", children: "Evite bloqueios e penalidades conhecendo as diretrizes." }),
         /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col gap-6 md:gap-12", children: [
           /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("section", { className: "flex flex-col gap-4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "text-xl font-black text-white tracking-tight uppercase", children: "DIRETRIZES DE CONTE\xDADO" }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#8d8d99] text-base font-medium leading-relaxed max-w-3xl", children: 'O TikTok \xE9 rigoroso quanto \xE0 qualidade e autenticidade. Violar regras pode resultar em "Shadowban" ou suspens\xE3o da conta.' })
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "text-lg md:text-xl font-black text-white tracking-tight uppercase", children: "DIRETRIZES DE CONTE\xDADO" }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#8d8d99] text-sm md:text-base font-medium leading-relaxed max-w-3xl", children: 'O TikTok \xE9 rigoroso quanto \xE0 qualidade e autenticidade. Violar regras pode resultar em "Shadowban" ou suspens\xE3o da conta.' })
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("section", { className: "flex flex-col gap-6", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "text-xl font-black text-white tracking-tight uppercase", children: "O QUE N\xC3O FAZER" }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "text-lg md:text-xl font-black text-white tracking-tight uppercase", children: "O QUE N\xC3O FAZER" }),
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex flex-col gap-4 mt-2", children: [
               { title: "Spam de v\xEDdeos:", desc: "N\xE3o poste o mesmo v\xEDdeo m\xFAltiplas vezes." },
               { title: "Conte\xFAdo de baixa qualidade:", desc: "V\xEDdeos pixelados ou sem \xE1udio claro s\xE3o penalizados." },
@@ -19464,7 +19464,7 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
               { title: "Direitos Autorais:", desc: "Use apenas m\xFAsicas da biblioteca comercial do TikTok." }
             ].map((item, idx) => /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center gap-3 group", children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-5 h-5 rounded-full bg-[#3B82F6]/10 border border-[#3B82F6]/20 flex items-center justify-center shrink-0", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Check, { className: "w-3 h-3 text-[#3B82F6]" }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("p", { className: "text-[#e1e1e6] text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("p", { className: "text-[#e1e1e6] text-xs sm:text-sm md:text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity", children: [
                 /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "font-bold", children: item.title }),
                 " ",
                 item.desc
@@ -19474,7 +19474,7 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
           /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "mt-2 p-6 bg-gradient-to-br from-[#1e1508] to-[#111114] border border-[#f59e0b]/20 rounded-[24px] flex items-center gap-5 shadow-2xl relative overflow-hidden", children: [
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "absolute top-0 right-0 w-24 h-24 bg-[#f59e0b]/5 blur-[50px] rounded-full" }),
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-12 h-12 bg-[#f59e0b] rounded-xl flex items-center justify-center shrink-0 shadow-[0_10px_30px_rgba(245,158,11,0.2)]", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(CircleAlert, { className: "w-6 h-6 text-white" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#f59e0b] text-base font-black leading-snug tracking-tight", children: "CUIDADO: Links externos na bio ou nos coment\xE1rios podem diminuir o alcance do seu v\xEDdeo." })
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#f59e0b] text-sm md:text-base font-black leading-snug tracking-tight", children: "CUIDADO: Links externos na bio ou nos coment\xE1rios podem diminuir o alcance do seu v\xEDdeo." })
           ] })
         ] })
       ] }),
@@ -19499,11 +19499,11 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
         /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#8d8d99] text-base md:text-lg font-medium opacity-80 mb-8 md:mb-12 italic", children: "Use intelig\xEAncia artificial para criar apresentadores humanos e realistas." }),
         /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col gap-6 md:gap-12", children: [
           /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("section", { className: "flex flex-col gap-4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "text-xl font-black text-white tracking-tight uppercase", children: "UTILIZANDO A FERRAMENTA DE AVATAR" }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#8d8d99] text-base font-medium leading-relaxed max-w-3xl", children: "Nossa IA permite gerar apresentadores que falam seu roteiro com express\xF5es naturais." })
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "text-lg md:text-xl font-black text-white tracking-tight uppercase", children: "UTILIZANDO A FERRAMENTA DE AVATAR" }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#8d8d99] text-sm md:text-base font-medium leading-relaxed max-w-3xl", children: "Nossa IA permite gerar apresentadores que falam seu roteiro com express\xF5es naturais." })
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("section", { className: "flex flex-col gap-6", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "text-xl font-black text-white tracking-tight uppercase", children: "FLUXO DE TRABALHO" }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "text-lg md:text-xl font-black text-white tracking-tight uppercase", children: "FLUXO DE TRABALHO" }),
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex flex-col gap-4 mt-2", children: [
               'Acesse o menu "Avatar Galeria".',
               'Selecione um dos presets validados (como a "Fernanda" ou o "Marcos").',
@@ -19511,9 +19511,9 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
               'Insira seu roteiro final e clique em "Gerar Avatar".'
             ].map((item, idx) => /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center gap-3 group", children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-5 h-5 rounded-full bg-[#3B82F6]/10 border border-[#3B82F6]/20 flex items-center justify-center shrink-0", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Check, { className: "w-3 h-3 text-[#3B82F6]" }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[#e1e1e6] text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity", children: item })
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[#e1e1e6] text-xs sm:text-sm md:text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity", children: item })
             ] }, idx)) }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#8d8d99] text-base font-medium leading-relaxed max-w-3xl italic mt-4", children: "Lembre-se de manter o roteiro conciso (entre 15 a 45 segundos) para reter a aten\xE7\xE3o do espectador no TikTok." })
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#8d8d99] text-sm md:text-base font-medium leading-relaxed max-w-3xl italic mt-4", children: "Lembre-se de manter o roteiro conciso (entre 15 a 45 segundos) para reter a aten\xE7\xE3o do espectador no TikTok." })
           ] })
         ] })
       ] }),
@@ -19538,11 +19538,11 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
         /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#8d8d99] text-base md:text-lg font-medium opacity-80 mb-8 md:mb-12 italic", children: "Aprenda a criar roteiros e v\xEDdeos que vendem usando nossa ferramenta." }),
         /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col gap-6 md:gap-12", children: [
           /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("section", { className: "flex flex-col gap-4", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "text-xl font-black text-white tracking-tight uppercase", children: "CRIA\xC7\xC3O DE V\xCDDEOS UGC" }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#8d8d99] text-base font-medium leading-relaxed max-w-3xl", children: "User Generated Content (UGC) \xE9 o formato que mais converte hoje. Nossa ferramenta automatiza a estrutura desses v\xEDdeos." })
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "text-lg md:text-xl font-black text-white tracking-tight uppercase", children: "CRIA\xC7\xC3O DE V\xCDDEOS UGC" }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#8d8d99] text-sm md:text-base font-medium leading-relaxed max-w-3xl", children: "User Generated Content (UGC) \xE9 o formato que mais converte hoje. Nossa ferramenta automatiza a estrutura desses v\xEDdeos." })
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("section", { className: "flex flex-col gap-6", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "text-xl font-black text-white tracking-tight uppercase", children: "CONFIGURANDO SEU V\xCDDEO" }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "text-lg md:text-xl font-black text-white tracking-tight uppercase", children: "CONFIGURANDO SEU V\xCDDEO" }),
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex flex-col gap-4 mt-2", children: [
               'Escolha o Tipo de V\xEDdeo: "Influencer" para conex\xE3o ou "POV" para foco no produto.',
               'Selecione o Cen\xE1rio: Use "Quarto Aconchegante" para produtos de est\xE9tica ou "Cozinha" para utens\xEDlios.',
@@ -19550,13 +19550,13 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
               "Gere o Roteiro via IA e fa\xE7a os ajustes finais antes da produ\xE7\xE3o."
             ].map((item, idx) => /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center gap-3 group", children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-5 h-5 rounded-full bg-[#3B82F6]/10 border border-[#3B82F6]/20 flex items-center justify-center shrink-0", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Check, { className: "w-3 h-3 text-[#3B82F6]" }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[#e1e1e6] text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity", children: item })
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[#e1e1e6] text-xs sm:text-sm md:text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity", children: item })
             ] }, idx)) })
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "mt-2 p-6 bg-gradient-to-br from-[#1e1508] to-[#111114] border border-[#f59e0b]/20 rounded-[24px] flex items-center gap-5 shadow-2xl relative overflow-hidden", children: [
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "absolute top-0 right-0 w-24 h-24 bg-[#f59e0b]/5 blur-[50px] rounded-full" }),
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-12 h-12 bg-[#f59e0b] rounded-xl flex items-center justify-center shrink-0 shadow-[0_10px_30px_rgba(245,158,11,0.2)]", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(CircleAlert, { className: "w-6 h-6 text-white" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#f59e0b] text-base font-black leading-snug tracking-tight", children: 'ESTRAT\xC9GIA: O "Gancho" (os primeiros 3 segundos) \xE9 a parte mais importante do seu v\xEDdeo UGC.' })
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#f59e0b] text-sm md:text-base font-black leading-snug tracking-tight", children: 'ESTRAT\xC9GIA: O "Gancho" (os primeiros 3 segundos) \xE9 a parte mais importante do seu v\xEDdeo UGC.' })
           ] })
         ] })
       ] }),

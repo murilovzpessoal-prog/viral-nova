@@ -19741,7 +19741,7 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col items-center md:items-end gap-2 px-4 py-2 bg-white/5 border border-white/5 rounded-2xl backdrop-blur-md", children: [
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.4em] opacity-40", children: "Direct Intelligence Channel" }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[11px] font-black text-white/80 uppercase tracking-[0.3em]", children: "SUPORTETRENDFYAPP@GMAIL.COM" })
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[10px] md:text-[11px] font-black text-white/80 uppercase tracking-[0.1em] md:tracking-[0.3em] overflow-hidden truncate max-w-[280px] md:max-w-none", children: "VIRALPULSE.SUPORTE@GMAIL.COM" })
           ] })
         ] })
       ] }),

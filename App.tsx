@@ -5299,7 +5299,7 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
 
           <div className="flex flex-col items-center md:items-end gap-2 px-4 py-2 bg-white/5 border border-white/5 rounded-2xl backdrop-blur-md">
             <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.4em] opacity-40">Direct Intelligence Channel</span>
-            <span className="text-[11px] font-black text-white/80 uppercase tracking-[0.3em]">SUPORTETRENDFYAPP@GMAIL.COM</span>
+            <span className="text-[10px] md:text-[11px] font-black text-white/80 uppercase tracking-[0.1em] md:tracking-[0.3em] overflow-hidden truncate max-w-[280px] md:max-w-none">VIRALPULSE.SUPORTE@GMAIL.COM</span>
           </div>
         </div>
       </div>

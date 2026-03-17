@@ -16379,14 +16379,14 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
     };
     return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("main", { className: "max-w-[1500px] mx-auto px-4 md:px-6 py-8 md:py-16 relative", children: [
       /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col lg:flex-row items-center justify-between gap-8 mb-10 md:mb-16 relative z-10 bg-[#0B0B0E]/20 backdrop-blur-sm p-4 sm:p-6 md:p-8 rounded-[32px] md:rounded-[48px] border border-white/5 shadow-2xl", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col gap-6 flex-1 min-w-[400px]", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col gap-6 flex-1 min-w-0 lg:min-w-[400px]", children: [
           /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "relative group", children: [
             /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center gap-4 mb-4", children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "h-[1px] w-8 bg-gradient-to-r from-[#00b37e] to-transparent" }),
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[9px] font-black text-[#00b37e] tracking-[0.4em] uppercase", children: "System Pulse Active" }),
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex gap-1", children: [1, 2, 3].map((i) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-1 h-1 bg-[#00b37e]/40 rounded-full animate-pulse", style: { animationDelay: `${i * 200}ms` } }, i)) })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "relative", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("h1", { className: "text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none text-center lg:text-left", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "relative", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("h1", { className: "text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none text-left pl-1", children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent", children: "Produtos" }),
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent", children: "Virais" })
             ] }) })
@@ -19102,14 +19102,14 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
     return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("main", { className: "max-w-[1500px] mx-auto px-4 md:px-6 py-8 md:py-16 relative", children: [
       /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col lg:flex-row items-center justify-between gap-8 mb-10 md:mb-16 relative z-10 bg-[#0B0B0E]/30 backdrop-blur-3xl p-6 md:p-10 rounded-[32px] md:rounded-[48px] border border-white/5 shadow-2xl overflow-hidden group", children: [
         /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "absolute inset-0 bg-gradient-to-br from-[#3B82F6]/5 via-transparent to-[#8B5CF6]/5 opacity-50" }),
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col gap-6 flex-1 min-w-[400px] relative z-20", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col gap-6 flex-1 min-w-0 lg:min-w-[400px] relative z-20", children: [
           /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "relative", children: [
             /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center gap-4 mb-4", children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "h-[1px] w-8 bg-gradient-to-r from-[#FACC15] to-transparent" }),
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[9px] font-black text-[#FACC15] tracking-[0.4em] uppercase", children: "Intelligence Matrix Active" }),
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex gap-1", children: [1, 2, 3].map((i) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-1 h-1 bg-[#FACC15]/40 rounded-full animate-pulse", style: { animationDelay: `${i * 200}ms` } }, i)) })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "relative", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("h1", { className: "text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "relative", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("h1", { className: "text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none pl-1", children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent uppercase", children: "Hacks" }),
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent uppercase", children: "Virais" })
             ] }) })
@@ -20151,15 +20151,15 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
     };
     const filteredPrompts = activeTab === "todos" ? prompts : prompts.filter((p) => favorites.includes(p.id));
     return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("main", { className: "max-w-[1500px] mx-auto px-6 py-12 md:py-16 relative", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col lg:flex-row items-center justify-between gap-8 mb-16 relative z-10 bg-[#0B0B0E]/30 backdrop-blur-3xl p-10 rounded-[48px] border border-white/5 shadow-2xl", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col gap-6 flex-1 min-w-[400px]", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col lg:flex-row items-center justify-between gap-8 mb-16 relative z-10 bg-[#0B0B0E]/30 backdrop-blur-3xl p-6 sm:p-8 md:p-10 rounded-[32px] md:rounded-[48px] border border-white/5 shadow-2xl overflow-hidden", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col gap-6 flex-1 min-w-0 lg:min-w-[400px]", children: [
           /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "relative group", children: [
             /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center gap-4 mb-4", children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "h-[1px] w-8 bg-gradient-to-r from-[#8B5CF6] to-transparent" }),
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[9px] font-black text-[#8B5CF6] tracking-[0.4em] uppercase", children: "Neural Synthesis Engine" }),
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex gap-1", children: [1, 2, 3].map((i) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-1 h-1 bg-[#8B5CF6]/40 rounded-full animate-pulse", style: { animationDelay: `${i * 200}ms` } }, i)) })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "relative", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("h1", { className: "text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "relative", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("h1", { className: "text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none pl-1", children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent", children: "Galeria de" }),
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent", children: "Prompts" })
             ] }) })

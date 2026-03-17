@@ -1244,7 +1244,7 @@ const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => {
     <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-10 md:mb-16 relative z-10 bg-[#0B0B0E]/20 backdrop-blur-sm p-4 sm:p-6 md:p-8 rounded-[32px] md:rounded-[48px] border border-white/5 shadow-2xl">
 
       {/* LEFT: TYPOGRAPHY SCULPTURE & PULSE */}
-      <div className="flex flex-col gap-6 flex-1 min-w-[400px]">
+      <div className="flex flex-col gap-6 flex-1 min-w-0 lg:min-w-[400px]">
         <div className="relative group">
           {/* ARCHITECTURAL STATUS LINE */}
           <div className="flex items-center gap-4 mb-4">
@@ -1258,7 +1258,7 @@ const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => {
           </div>
 
           <div className="relative">
-            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none text-center lg:text-left">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none text-left pl-1">
               <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent">Produtos</span>
               <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent">Virais</span>
             </h1>
@@ -4439,7 +4439,7 @@ const HacksViraisView: React.FC<{ hacks: HackItem[], onSelectHack: (id: string) 
         <div className="absolute inset-0 bg-gradient-to-br from-[#3B82F6]/5 via-transparent to-[#8B5CF6]/5 opacity-50"></div>
 
         {/* LEFT: TYPOGRAPHY SCULPTURE & PULSE */}
-        <div className="flex flex-col gap-6 flex-1 min-w-[400px] relative z-20">
+        <div className="flex flex-col gap-6 flex-1 min-w-0 lg:min-w-[400px] relative z-20">
           <div className="relative">
             {/* ARCHITECTURAL STATUS LINE */}
             <div className="flex items-center gap-4 mb-4">
@@ -4453,7 +4453,7 @@ const HacksViraisView: React.FC<{ hacks: HackItem[], onSelectHack: (id: string) 
             </div>
 
             <div className="relative">
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none pl-1">
                 <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent uppercase">Hacks</span>
                 <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent uppercase">Virais</span>
               </h1>
@@ -5783,10 +5783,10 @@ const GaleriaPromptsView: React.FC = () => {
   return (
     <main className="max-w-[1500px] mx-auto px-6 py-12 md:py-16 relative">
       {/* RADICAL ASYMMETRIC HEADER - SYNCED WITH VIRAL SECTIONS */}
-      <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-16 relative z-10 bg-[#0B0B0E]/30 backdrop-blur-3xl p-10 rounded-[48px] border border-white/5 shadow-2xl">
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-16 relative z-10 bg-[#0B0B0E]/30 backdrop-blur-3xl p-6 sm:p-8 md:p-10 rounded-[32px] md:rounded-[48px] border border-white/5 shadow-2xl overflow-hidden">
 
         {/* LEFT: TYPOGRAPHY SCULPTURE & PULSE */}
-        <div className="flex flex-col gap-6 flex-1 min-w-[400px]">
+        <div className="flex flex-col gap-6 flex-1 min-w-0 lg:min-w-[400px]">
           <div className="relative group">
             {/* ARCHITECTURAL STATUS LINE */}
             <div className="flex items-center gap-4 mb-4">
@@ -5800,7 +5800,7 @@ const GaleriaPromptsView: React.FC = () => {
             </div>
 
             <div className="relative">
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none pl-1">
                 <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent">Galeria de</span>
                 <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent">Prompts</span>
               </h1>

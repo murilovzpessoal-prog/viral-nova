@@ -14532,13 +14532,29 @@ ${suffix}`;
   if (shouldShowDeprecationWarning()) console.warn("\u26A0\uFE0F  Node.js 18 and below are deprecated and will no longer be supported in future versions of @supabase/supabase-js. Please upgrade to Node.js 20 or later. For more information, visit: https://github.com/orgs/supabase/discussions/37217");
 
   // src/lib/supabase.ts
-  var import_meta = {};
-  var supabaseUrl = import_meta.env.VITE_SUPABASE_URL;
-  var supabaseAnonKey = import_meta.env.VITE_SUPABASE_ANON_KEY;
+  var supabaseUrl = "https://hjdsjswzousmwwwhvhtt.supabase.co";
+  var supabaseAnonKey = "sb_publishable_sIk3O7ovCJp2OzOtvzcDWg_I-FR4aTy";
   if (!supabaseUrl || !supabaseAnonKey) {
     console.error("Supabase credentials missing. Check your .env file.");
   }
   var supabase = createClient(supabaseUrl, supabaseAnonKey);
+  var uploadImageToSupabase = async (file, bucketName, userId) => {
+    try {
+      const fileExt = file.name.split(".").pop();
+      const fileName = `${userId}-${Math.random().toString(36).substring(2, 15)}.${fileExt}`;
+      const filePath = `${fileName}`;
+      const { error: uploadError } = await supabase.storage.from(bucketName).upload(filePath, file, { upsert: true });
+      if (uploadError) {
+        console.error("Error uploading image:", uploadError);
+        return null;
+      }
+      const { data } = supabase.storage.from(bucketName).getPublicUrl(filePath);
+      return data.publicUrl;
+    } catch (error) {
+      console.error("Exception uploading image:", error);
+      return null;
+    }
+  };
 
   // src/Login.tsx
   var import_react3 = __toESM(require_react(), 1);
@@ -15434,14 +15450,13 @@ ${suffix}`;
   var ConfiguracoesView = ({ profileImage, onImageUpload, onLogout }) => {
     const { t } = useTranslation();
     const fileInputRef = import_react4.default.useRef(null);
-    const handleImageChange = (e) => {
+    const [isUploading, setIsUploading] = (0, import_react4.useState)(false);
+    const handleImageChange = async (e) => {
       const file = e.target.files?.[0];
       if (file) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          onImageUpload(reader.result);
-        };
-        reader.readAsDataURL(file);
+        setIsUploading(true);
+        await onImageUpload(file);
+        setIsUploading(false);
       }
     };
     return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("main", { className: "max-w-[800px] mx-auto px-6 py-10 md:py-16 flex flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-700", children: [
@@ -15449,11 +15464,11 @@ ${suffix}`;
         /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
           "div",
           {
-            onClick: () => fileInputRef.current?.click(),
+            onClick: () => !isUploading && fileInputRef.current?.click(),
             className: "w-28 h-28 bg-gradient-to-br from-[#8B5CF6] to-[#d946ef] rounded-full flex items-center justify-center text-4xl font-black text-white shadow-[0_0_40px_rgba(139,92,246,0.3)] mb-8 relative group cursor-pointer overflow-hidden border-4 border-white/10 backdrop-blur-xl transition-all hover:scale-105 active:scale-95",
             children: [
-              profileImage ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("img", { src: profileImage, alt: "Profile", className: "w-full h-full object-cover" }) : "N",
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Camera, { className: "w-8 h-8 text-white animate-in zoom-in duration-300" }) }),
+              isUploading ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "animate-spin w-8 h-8 border-4 border-white/20 border-t-white rounded-full" }) : profileImage ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("img", { src: profileImage, alt: "Profile", className: "w-full h-full object-cover" }) : "N",
+              !isUploading && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Camera, { className: "w-8 h-8 text-white animate-in zoom-in duration-300" }) }),
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
                 "input",
                 {
@@ -15614,11 +15629,29 @@ ${suffix}`;
         console.error("Error logging out:", error);
       }
     };
-    const handleAddCustomAvatar = (avatar) => {
-      setCustomAvatars((prev) => [...prev, avatar]);
+    const handleAddCustomAvatar = async (file) => {
+      if (!session?.user?.id) return null;
+      const publicUrl = await uploadImageToSupabase(file, "custom-avatars", session.user.id);
+      if (!publicUrl) return null;
+      const newAvatar = { id: `custom-${Date.now()}`, name: `Meu Avatar ${customAvatars.length + 1}`, image: publicUrl };
+      const newAvatars = [...customAvatars, newAvatar];
+      setCustomAvatars(newAvatars);
+      await supabase.auth.updateUser({ data: { custom_avatars: newAvatars } });
+      return newAvatar;
     };
-    const handleDeleteCustomAvatar = (id) => {
-      setCustomAvatars((prev) => prev.filter((a) => a.id !== id));
+    const handleDeleteCustomAvatar = async (id) => {
+      const newAvatars = customAvatars.filter((a) => a.id !== id);
+      setCustomAvatars(newAvatars);
+      await supabase.auth.updateUser({ data: { custom_avatars: newAvatars } });
+    };
+    const handleProfileImageUpload = async (file) => {
+      if (!session?.user?.id) return;
+      const publicUrl = await uploadImageToSupabase(file, "avatars", session.user.id);
+      if (publicUrl) {
+        setUserProfileImage(publicUrl);
+        await supabase.from("profiles").update({ avatar_url: publicUrl }).eq("id", session.user.id);
+        getProfile();
+      }
     };
     const t = (key) => {
       if (!translations[language]) return key;
@@ -15658,6 +15691,10 @@ ${suffix}`;
       if (!session?.user?.id) return;
       const { data } = await supabase.from("profiles").select("*").eq("id", session.user.id).single();
       setProfile(data);
+      if (data?.avatar_url) setUserProfileImage(data.avatar_url);
+      if (session.user.user_metadata?.custom_avatars) {
+        setCustomAvatars(session.user.user_metadata.custom_avatars);
+      }
     };
     const fetchData = async () => {
       setIsLoading(true);
@@ -17648,17 +17685,17 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
     const [selectedInfluencer, setSelectedInfluencer] = (0, import_react4.useState)(null);
     const [selectedProduct, setSelectedProduct] = (0, import_react4.useState)(null);
     const [activeTab, setActiveTab] = (0, import_react4.useState)("mulheres");
+    const [isUploading, setIsUploading] = (0, import_react4.useState)(false);
     const fileInputRef = import_react4.default.useRef(null);
-    const handleImageUpload = (e) => {
+    const handleImageUpload = async (e) => {
       const file = e.target.files?.[0];
       if (file) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const newAvatar = { id: `custom-${Date.now()}`, name: `Meu Avatar ${customAvatars.length + 1}`, image: reader.result };
-          onAddCustomAvatar(newAvatar);
+        setIsUploading(true);
+        const newAvatar = await onAddCustomAvatar(file);
+        if (newAvatar) {
           setSelectedInfluencer(newAvatar.id);
-        };
-        reader.readAsDataURL(file);
+        }
+        setIsUploading(false);
       }
     };
     const [selectedScenario, setSelectedScenario] = (0, import_react4.useState)(null);
@@ -18034,23 +18071,24 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
                   }, className: "absolute top-3 right-3 w-7 h-7 bg-red-500/80 rounded-full flex items-center justify-center hover:bg-red-500 transition-all z-20", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Trash2, { className: "w-3.5 h-3.5 text-white" }) }),
                   selectedInfluencer === av.id && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "absolute top-3 left-3 w-7 h-7 bg-[#3B82F6] rounded-full flex items-center justify-center border border-white/40 shadow-[0_0_15px_#3B82F6]", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Check, { className: "w-4 h-4 text-white", strokeWidth: 3 }) })
                 ] }, av.id)) }),
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("button", { onClick: () => fileInputRef.current?.click(), className: "self-center px-10 py-4 bg-white/5 text-white rounded-[24px] text-sm font-black hover:bg-white/10 transition-all border border-white/10 flex items-center gap-2 z-10 relative", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Plus, { className: "w-4 h-4" }),
-                  " Adicionar Avatar"
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("button", { onClick: () => !isUploading && fileInputRef.current?.click(), className: "self-center px-10 py-4 bg-white/5 text-white rounded-[24px] text-sm font-black hover:bg-white/10 transition-all border border-white/10 flex items-center gap-2 z-10 relative disabled:opacity-50", children: [
+                  isUploading ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "animate-spin w-4 h-4 border-2 border-t-white border-white/30 rounded-full" }) : /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Plus, { className: "w-4 h-4" }),
+                  isUploading ? "Adicionando..." : "Adicionar Avatar"
                 ] })
               ] }) : /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(import_jsx_runtime2.Fragment, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "relative w-32 h-32 mb-10 cursor-pointer", onClick: () => fileInputRef.current?.click(), children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "absolute inset-0 bg-[#3B82F6]/20 blur-3xl rounded-full animate-pulse" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "relative w-full h-full bg-[#0B0B0E] rounded-full flex items-center justify-center border border-white/10 shadow-2xl group-hover/new:scale-110 transition-transform duration-700", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Plus, { className: "w-16 h-16 text-[#3B82F6] animate-pulse" }) })
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("button", { onClick: () => !isUploading && fileInputRef.current?.click(), className: "group relative w-full aspect-[3.5/4.5] rounded-[32px] border-2 border-dashed border-white/20 bg-white/[0.02] hover:bg-white/[0.05] hover:border-[#3B82F6]/50 transition-all cursor-pointer flex flex-col items-center justify-center gap-4 overflow-hidden disabled:opacity-50", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "absolute inset-0 bg-gradient-to-t from-[#3B82F6]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" }),
+                  isUploading ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-14 h-14 rounded-full flex items-center justify-center animate-spin", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-8 h-8 border-4 border-t-white border-[#3B82F6]/30 rounded-full" }) }) : /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-14 h-14 rounded-full bg-[#3B82F6]/20 border border-[#3B82F6]/40 flex items-center justify-center group-hover:scale-110 group-hover:bg-[#3B82F6] transition-all relative z-10", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Plus, { className: "w-6 h-6 text-white" }) }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-xs font-black text-white uppercase tracking-widest group-hover:text-[#3B82F6] transition-colors relative z-10", children: isUploading ? "Carregando..." : "Adicionar Avatar" })
                 ] }),
                 /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("p", { className: "text-[#8d8d99] text-xl font-medium tracking-tight mb-10 relative z-10 max-w-[400px] text-center leading-relaxed", children: [
                   "Nenhum ",
                   /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-white", children: "avatar personalizado" }),
                   " detectado nesta conta."
                 ] }),
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { onClick: () => fileInputRef.current?.click(), className: "px-12 py-5 bg-[#3B82F6] text-white rounded-[24px] text-base font-black hover:bg-[#2563EB] transition-all relative z-10 shadow-[0_15px_30px_rgba(59,130,246,0.3)] hover:scale-105 active:scale-95 group/btn", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("span", { className: "relative z-10 uppercase tracking-[0.2em] flex items-center gap-3", children: [
-                  "Fazer Upload",
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(ChevronRight, { className: "w-6 h-6 group-hover/btn:translate-x-2 transition-transform" })
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("button", { onClick: () => !isUploading && fileInputRef.current?.click(), className: "px-12 py-5 bg-[#3B82F6] text-white rounded-[24px] text-base font-black hover:bg-[#2563EB] transition-all relative z-10 shadow-[0_15px_30px_rgba(59,130,246,0.3)] hover:scale-105 active:scale-95 group/btn disabled:opacity-50", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("span", { className: "relative z-10 uppercase tracking-[0.2em] flex items-center gap-3", children: [
+                  isUploading ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "animate-spin w-5 h-5 border-2 border-t-white border-white/30 rounded-full" }) : /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Upload, { className: "w-5 h-5" }),
+                  isUploading ? "Processando..." : "Fazer Upload"
                 ] }) })
               ] })
             ] })
@@ -20270,14 +20308,13 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
   };
   var MeusAvataresView = ({ avatars, onAddAvatar, onDeleteAvatar, onBack, onCreateNew }) => {
     const uploadRef = import_react4.default.useRef(null);
-    const handleUpload = (e) => {
+    const [isUploading, setIsUploading] = (0, import_react4.useState)(false);
+    const handleUpload = async (e) => {
       const file = e.target.files?.[0];
       if (file) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          onAddAvatar({ id: `custom-${Date.now()}`, name: `Meu Avatar ${avatars.length + 1}`, image: reader.result });
-        };
-        reader.readAsDataURL(file);
+        setIsUploading(true);
+        await onAddAvatar(file);
+        setIsUploading(false);
       }
     };
     const handleDownload = (av) => {

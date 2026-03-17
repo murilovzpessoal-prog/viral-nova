@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import { translations, Language, TranslationKey } from './src/translations';
-import { supabase } from './src/lib/supabase';
+import { supabase, uploadImageToSupabase } from './src/lib/supabase';
 import { Login } from './src/Login';
 import {
   Search,
@@ -180,22 +180,21 @@ interface PromptItem {
 // --- CONFIGURAÇÕES VIEW ---
 interface ConfiguracoesViewProps {
   profileImage: string | null;
-  onImageUpload: (imageUrl: string) => void;
+  onImageUpload: (file: File) => Promise<void>;
   onLogout: () => void;
 }
 
 const ConfiguracoesView: React.FC<ConfiguracoesViewProps> = ({ profileImage, onImageUpload, onLogout }) => {
   const { t } = useTranslation();
   const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const [isUploading, setIsUploading] = useState(false);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        onImageUpload(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      setIsUploading(true);
+      await onImageUpload(file);
+      setIsUploading(false);
     }
   };
 
@@ -204,17 +203,21 @@ const ConfiguracoesView: React.FC<ConfiguracoesViewProps> = ({ profileImage, onI
       {/* Header Section */}
       <div className="flex flex-col items-center mb-12">
         <div
-          onClick={() => fileInputRef.current?.click()}
+          onClick={() => !isUploading && fileInputRef.current?.click()}
           className="w-28 h-28 bg-gradient-to-br from-[#8B5CF6] to-[#d946ef] rounded-full flex items-center justify-center text-4xl font-black text-white shadow-[0_0_40px_rgba(139,92,246,0.3)] mb-8 relative group cursor-pointer overflow-hidden border-4 border-white/10 backdrop-blur-xl transition-all hover:scale-105 active:scale-95"
         >
-          {profileImage ? (
+          {isUploading ? (
+            <div className="animate-spin w-8 h-8 border-4 border-white/20 border-t-white rounded-full"></div>
+          ) : profileImage ? (
             <img src={profileImage} alt="Profile" className="w-full h-full object-cover" />
           ) : (
             "N"
           )}
-          <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm">
-            <Camera className="w-8 h-8 text-white animate-in zoom-in duration-300" />
-          </div>
+          {!isUploading && (
+            <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-sm">
+              <Camera className="w-8 h-8 text-white animate-in zoom-in duration-300" />
+            </div>
+          )}
           <input
             type="file"
             ref={fileInputRef}
@@ -405,12 +408,32 @@ const App: React.FC = () => {
     }
   };
 
-  const handleAddCustomAvatar = (avatar: CustomAvatar) => {
-    setCustomAvatars(prev => [...prev, avatar]);
+  const handleAddCustomAvatar = async (file: File): Promise<CustomAvatar | null> => {
+    if (!session?.user?.id) return null;
+    const publicUrl = await uploadImageToSupabase(file, 'custom-avatars', session.user.id);
+    if (!publicUrl) return null;
+    
+    const newAvatar: CustomAvatar = { id: `custom-${Date.now()}`, name: `Meu Avatar ${customAvatars.length + 1}`, image: publicUrl };
+    const newAvatars = [...customAvatars, newAvatar];
+    setCustomAvatars(newAvatars);
+    await supabase.auth.updateUser({ data: { custom_avatars: newAvatars } });
+    return newAvatar;
   };
 
-  const handleDeleteCustomAvatar = (id: string) => {
-    setCustomAvatars(prev => prev.filter(a => a.id !== id));
+  const handleDeleteCustomAvatar = async (id: string) => {
+    const newAvatars = customAvatars.filter(a => a.id !== id);
+    setCustomAvatars(newAvatars);
+    await supabase.auth.updateUser({ data: { custom_avatars: newAvatars } });
+  };
+
+  const handleProfileImageUpload = async (file: File) => {
+    if (!session?.user?.id) return;
+    const publicUrl = await uploadImageToSupabase(file, 'avatars', session.user.id);
+    if (publicUrl) {
+      setUserProfileImage(publicUrl);
+      await supabase.from('profiles').update({ avatar_url: publicUrl }).eq('id', session.user.id);
+      getProfile(); // Refresh
+    }
   };
 
   const t = (key: TranslationKey) => {
@@ -462,6 +485,10 @@ const App: React.FC = () => {
       .eq('id', session.user.id)
       .single();
     setProfile(data);
+    if (data?.avatar_url) setUserProfileImage(data.avatar_url);
+    if (session.user.user_metadata?.custom_avatars) {
+      setCustomAvatars(session.user.user_metadata.custom_avatars);
+    }
   };
 
   const fetchData = async () => {
@@ -2676,25 +2703,25 @@ const downloadImage = async (url: string, filename: string) => {
 };
 
 // --- UGC CREATOR VIEW (MULTI-STEP) ---
-const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProducts: ProductExplore[], customAvatars: CustomAvatar[], onAddCustomAvatar: (a: CustomAvatar) => void, onDeleteCustomAvatar: (id: string) => void }> = ({ viralProducts, exploreTopProducts, customAvatars, onAddCustomAvatar, onDeleteCustomAvatar }) => {
+const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProducts: ProductExplore[], customAvatars: CustomAvatar[], onAddCustomAvatar: (file: File) => Promise<CustomAvatar | null>, onDeleteCustomAvatar: (id: string) => void }> = ({ viralProducts, exploreTopProducts, customAvatars, onAddCustomAvatar, onDeleteCustomAvatar }) => {
   const [step, setStep] = useState(1);
   const [selectedStyle, setSelectedStyle] = useState<string | null>('influencer');
   const [selectedInfluencer, setSelectedInfluencer] = useState<string | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'mulheres' | 'homens' | 'meus-avatares'>('mulheres');
+  const [isUploading, setIsUploading] = useState(false);
 
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const newAvatar: CustomAvatar = { id: `custom-${Date.now()}`, name: `Meu Avatar ${customAvatars.length + 1}`, image: reader.result as string };
-        onAddCustomAvatar(newAvatar);
+      setIsUploading(true);
+      const newAvatar = await onAddCustomAvatar(file);
+      if (newAvatar) {
         setSelectedInfluencer(newAvatar.id);
-      };
-      reader.readAsDataURL(file);
+      }
+      setIsUploading(false);
     }
   };
 
@@ -3152,23 +3179,31 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                             </div>
                           ))}
                         </div>
-                        <button onClick={() => fileInputRef.current?.click()} className="self-center px-10 py-4 bg-white/5 text-white rounded-[24px] text-sm font-black hover:bg-white/10 transition-all border border-white/10 flex items-center gap-2 z-10 relative">
-                          <Plus className="w-4 h-4" /> Adicionar Avatar
+                        <button onClick={() => !isUploading && fileInputRef.current?.click()} className="self-center px-10 py-4 bg-white/5 text-white rounded-[24px] text-sm font-black hover:bg-white/10 transition-all border border-white/10 flex items-center gap-2 z-10 relative disabled:opacity-50">
+                          {isUploading ? <div className="animate-spin w-4 h-4 border-2 border-t-white border-white/30 rounded-full"></div> : <Plus className="w-4 h-4" />}
+                          {isUploading ? 'Adicionando...' : 'Adicionar Avatar'}
                         </button>
                       </div>
                     ) : (
                       <>
-                        <div className="relative w-32 h-32 mb-10 cursor-pointer" onClick={() => fileInputRef.current?.click()}>
-                          <div className="absolute inset-0 bg-[#3B82F6]/20 blur-3xl rounded-full animate-pulse"></div>
-                          <div className="relative w-full h-full bg-[#0B0B0E] rounded-full flex items-center justify-center border border-white/10 shadow-2xl group-hover/new:scale-110 transition-transform duration-700">
-                            <Plus className="w-16 h-16 text-[#3B82F6] animate-pulse" />
-                          </div>
-                        </div>
+                        <button onClick={() => !isUploading && fileInputRef.current?.click()} className="group relative w-full aspect-[3.5/4.5] rounded-[32px] border-2 border-dashed border-white/20 bg-white/[0.02] hover:bg-white/[0.05] hover:border-[#3B82F6]/50 transition-all cursor-pointer flex flex-col items-center justify-center gap-4 overflow-hidden disabled:opacity-50">
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#3B82F6]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                          {isUploading ? (
+                            <div className="w-14 h-14 rounded-full flex items-center justify-center animate-spin">
+                              <div className="w-8 h-8 border-4 border-t-white border-[#3B82F6]/30 rounded-full"></div>
+                            </div>
+                          ) : (
+                            <div className="w-14 h-14 rounded-full bg-[#3B82F6]/20 border border-[#3B82F6]/40 flex items-center justify-center group-hover:scale-110 group-hover:bg-[#3B82F6] transition-all relative z-10">
+                              <Plus className="w-6 h-6 text-white" />
+                            </div>
+                          )}
+                          <span className="text-xs font-black text-white uppercase tracking-widest group-hover:text-[#3B82F6] transition-colors relative z-10">{isUploading ? 'Carregando...' : 'Adicionar Avatar'}</span>
+                        </button>
                         <p className="text-[#8d8d99] text-xl font-medium tracking-tight mb-10 relative z-10 max-w-[400px] text-center leading-relaxed">Nenhum <span className="text-white">avatar personalizado</span> detectado nesta conta.</p>
-                        <button onClick={() => fileInputRef.current?.click()} className="px-12 py-5 bg-[#3B82F6] text-white rounded-[24px] text-base font-black hover:bg-[#2563EB] transition-all relative z-10 shadow-[0_15px_30px_rgba(59,130,246,0.3)] hover:scale-105 active:scale-95 group/btn">
+                        <button onClick={() => !isUploading && fileInputRef.current?.click()} className="px-12 py-5 bg-[#3B82F6] text-white rounded-[24px] text-base font-black hover:bg-[#2563EB] transition-all relative z-10 shadow-[0_15px_30px_rgba(59,130,246,0.3)] hover:scale-105 active:scale-95 group/btn disabled:opacity-50">
                           <span className="relative z-10 uppercase tracking-[0.2em] flex items-center gap-3">
-                            Fazer Upload
-                            <ChevronRight className="w-6 h-6 group-hover/btn:translate-x-2 transition-transform" />
+                            {isUploading ? <div className="animate-spin w-5 h-5 border-2 border-t-white border-white/30 rounded-full"></div> : <Upload className="w-5 h-5" />}
+                            {isUploading ? 'Processando...' : 'Fazer Upload'}
                           </span>
                         </button>
                       </>
@@ -5924,18 +5959,16 @@ const GaleriaPromptsView: React.FC = () => {
   );
 };
 
-// --- MEUS AVATARES VIEW ---
-const MeusAvataresView: React.FC<{ avatars: CustomAvatar[]; onAddAvatar: (a: CustomAvatar) => void; onDeleteAvatar: (id: string) => void; onBack: () => void; onCreateNew: () => void }> = ({ avatars, onAddAvatar, onDeleteAvatar, onBack, onCreateNew }) => {
+const MeusAvataresView: React.FC<{ avatars: CustomAvatar[]; onAddAvatar: (file: File) => Promise<CustomAvatar | null>; onDeleteAvatar: (id: string) => void; onBack: () => void; onCreateNew: () => void }> = ({ avatars, onAddAvatar, onDeleteAvatar, onBack, onCreateNew }) => {
   const uploadRef = React.useRef<HTMLInputElement>(null);
+  const [isUploading, setIsUploading] = useState(false);
 
-  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        onAddAvatar({ id: `custom-${Date.now()}`, name: `Meu Avatar ${avatars.length + 1}`, image: reader.result as string });
-      };
-      reader.readAsDataURL(file);
+      setIsUploading(true);
+      await onAddAvatar(file);
+      setIsUploading(false);
     }
   };
 

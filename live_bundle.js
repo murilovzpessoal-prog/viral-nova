@@ -18627,30 +18627,30 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
               ] })
             ] })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "lg:col-span-8", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "bg-[#14151a]/60 backdrop-blur-3xl border border-white/5 rounded-[48px] p-8 md:p-14 shadow-2xl relative overflow-hidden group/station h-full", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center gap-4 mb-16 relative z-10", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-12 h-12 rounded-2xl bg-[#3B82F6]/10 border border-[#3B82F6]/30 flex items-center justify-center shadow-[0_0_20px_rgba(59,130,246,0.2)]", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Sparkles, { className: "w-6 h-6 text-[#3B82F6]" }) }),
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h3", { className: "text-3xl font-black text-white uppercase tracking-tight", children: "Esta\xE7\xE3o de Trabalho" })
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "lg:col-span-8", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "bg-[#14151a]/60 backdrop-blur-3xl border border-white/5 rounded-[32px] md:rounded-[48px] p-5 md:p-14 shadow-2xl relative overflow-hidden group/station h-full", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center gap-4 mb-8 md:mb-16 relative z-10", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-10 h-10 md:w-12 md:h-12 rounded-[14px] md:rounded-2xl bg-[#3B82F6]/10 border border-[#3B82F6]/30 flex items-center justify-center shadow-[0_0_20px_rgba(59,130,246,0.2)] shrink-0", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Sparkles, { className: "w-5 h-5 md:w-6 md:h-6 text-[#3B82F6]" }) }),
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h3", { className: "text-2xl md:text-3xl font-black text-white uppercase tracking-tight leading-tight", children: "Esta\xE7\xE3o de Trabalho" })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col gap-16 relative", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col gap-10 md:gap-16 relative", children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "absolute left-[13px] top-6 bottom-6 w-[1.5px] bg-gradient-to-b from-[#3B82F6]/50 via-white/5 to-white/5" }),
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-start gap-8 relative z-10 group/step", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-[26px] h-[26px] bg-black border-2 border-[#3B82F6] rounded-full flex items-center justify-center text-[10px] font-black text-[#3B82F6] shadow-[0_0_15px_rgba(59,130,246,0.4)] group-hover/step:scale-110 transition-transform", children: "1" }),
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex-1", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h4", { className: "text-xl font-bold text-white mb-2 uppercase tracking-tight", children: "Salvar Refer\xEAncias Visuais" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#5b5b7b] text-sm font-medium leading-relaxed uppercase tracking-wider", children: "Clique nas imagens ao lado para baixar os assets." })
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-start gap-4 md:gap-8 relative z-10 group/step", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-[26px] h-[26px] bg-black border-2 border-[#3B82F6] rounded-full flex items-center justify-center text-[10px] font-black text-[#3B82F6] shadow-[0_0_15px_rgba(59,130,246,0.4)] group-hover/step:scale-110 transition-transform shrink-0", children: "1" }),
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex-1 mt-0.5", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h4", { className: "text-lg md:text-xl font-bold text-white mb-1.5 md:mb-2 uppercase tracking-tight leading-tight", children: "Salvar Refer\xEAncias Visuais" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("p", { className: "text-[#5b5b7b] text-xs md:text-sm font-medium leading-relaxed uppercase tracking-wider", children: "Clique nas imagens ao lado para baixar os assets." })
                 ] })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-start gap-8 relative z-10 group/step", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-[26px] h-[26px] bg-black border-2 border-white/10 rounded-full flex items-center justify-center text-[10px] font-black text-white/40 shadow-xl group-hover/step:border-[#3B82F6]/50 group-hover/step:text-[#3B82F6] transition-all", children: "2" }),
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex-1", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h4", { className: "text-xl font-bold text-white mb-2 uppercase tracking-tight", children: "Roteiro de Dire\xE7\xE3o (Veo 3)" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("p", { className: "text-[#5b5b7b] text-sm font-medium leading-relaxed uppercase tracking-wider mb-8", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-start gap-4 md:gap-8 relative z-10 group/step", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-[26px] h-[26px] bg-black border-2 border-white/10 rounded-full flex items-center justify-center text-[10px] font-black text-white/40 shadow-xl group-hover/step:border-[#3B82F6]/50 group-hover/step:text-[#3B82F6] transition-all shrink-0", children: "2" }),
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex-1 mt-0.5", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h4", { className: "text-lg md:text-xl font-bold text-white mb-1.5 md:mb-2 uppercase tracking-tight leading-tight", children: "Roteiro de Dire\xE7\xE3o (Veo 3)" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("p", { className: "text-[#5b5b7b] text-xs md:text-sm font-medium leading-relaxed uppercase tracking-wider mb-6 md:mb-8", children: [
                     takes.length,
                     " takes de 8 segundos cada. Gere cada v\xEDdeo separadamente e junte na edi\xE7\xE3o."
                   ] }),
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex flex-col gap-5", children: takes.map((text, idx) => /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "bg-black/40 border border-white/5 rounded-[28px] p-6 flex flex-col gap-5 group/take transition-all hover:bg-black/60 hover:border-[#3B82F6]/30 shadow-lg", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center justify-between", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex flex-col gap-4 md:gap-5", children: takes.map((text, idx) => /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "bg-black/40 border border-white/5 rounded-[20px] md:rounded-[28px] p-4 md:p-6 flex flex-col gap-4 md:gap-5 group/take transition-all hover:bg-black/60 hover:border-[#3B82F6]/30 shadow-lg", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-0", children: [
                       /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center gap-3", children: [
                         /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-1.5 h-1.5 rounded-full bg-[#00b37e] animate-pulse shadow-[0_0_8px_#00b37e]" }),
                         /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("span", { className: "text-[10px] font-black text-white/40 uppercase tracking-widest", children: [

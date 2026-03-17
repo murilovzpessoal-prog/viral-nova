@@ -3877,41 +3877,41 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
 
             {/* Coluna da Direita: Estação de Trabalho (8 cols) */}
             <div className="lg:col-span-8">
-              <div className="bg-[#14151a]/60 backdrop-blur-3xl border border-white/5 rounded-[48px] p-8 md:p-14 shadow-2xl relative overflow-hidden group/station h-full">
+              <div className="bg-[#14151a]/60 backdrop-blur-3xl border border-white/5 rounded-[32px] md:rounded-[48px] p-5 md:p-14 shadow-2xl relative overflow-hidden group/station h-full">
                 {/* Cabeçalho Tech */}
-                <div className="flex items-center gap-4 mb-16 relative z-10">
-                  <div className="w-12 h-12 rounded-2xl bg-[#3B82F6]/10 border border-[#3B82F6]/30 flex items-center justify-center shadow-[0_0_20px_rgba(59,130,246,0.2)]">
-                    <Sparkles className="w-6 h-6 text-[#3B82F6]" />
+                <div className="flex items-center gap-4 mb-8 md:mb-16 relative z-10">
+                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-[14px] md:rounded-2xl bg-[#3B82F6]/10 border border-[#3B82F6]/30 flex items-center justify-center shadow-[0_0_20px_rgba(59,130,246,0.2)] shrink-0">
+                    <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-[#3B82F6]" />
                   </div>
-                  <h3 className="text-3xl font-black text-white uppercase tracking-tight">Estação de Trabalho</h3>
+                  <h3 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight leading-tight">Estação de Trabalho</h3>
                 </div>
 
-                <div className="flex flex-col gap-16 relative">
+                <div className="flex flex-col gap-10 md:gap-16 relative">
                   {/* Linha Vertical de Conexão */}
                   <div className="absolute left-[13px] top-6 bottom-6 w-[1.5px] bg-gradient-to-b from-[#3B82F6]/50 via-white/5 to-white/5"></div>
 
                   {/* PASSO 01: SALVAR REFERÊNCIAS */}
-                  <div className="flex items-start gap-8 relative z-10 group/step">
-                    <div className="w-[26px] h-[26px] bg-black border-2 border-[#3B82F6] rounded-full flex items-center justify-center text-[10px] font-black text-[#3B82F6] shadow-[0_0_15px_rgba(59,130,246,0.4)] group-hover/step:scale-110 transition-transform">1</div>
-                    <div className="flex-1">
-                      <h4 className="text-xl font-bold text-white mb-2 uppercase tracking-tight">Salvar Referências Visuais</h4>
-                      <p className="text-[#5b5b7b] text-sm font-medium leading-relaxed uppercase tracking-wider">Clique nas imagens ao lado para baixar os assets.</p>
+                  <div className="flex items-start gap-4 md:gap-8 relative z-10 group/step">
+                    <div className="w-[26px] h-[26px] bg-black border-2 border-[#3B82F6] rounded-full flex items-center justify-center text-[10px] font-black text-[#3B82F6] shadow-[0_0_15px_rgba(59,130,246,0.4)] group-hover/step:scale-110 transition-transform shrink-0">1</div>
+                    <div className="flex-1 mt-0.5">
+                      <h4 className="text-lg md:text-xl font-bold text-white mb-1.5 md:mb-2 uppercase tracking-tight leading-tight">Salvar Referências Visuais</h4>
+                      <p className="text-[#5b5b7b] text-xs md:text-sm font-medium leading-relaxed uppercase tracking-wider">Clique nas imagens ao lado para baixar os assets.</p>
                     </div>
                   </div>
 
                   {/* PASSO 02: ROTEIRO DE DIREÇÃO */}
-                  <div className="flex items-start gap-8 relative z-10 group/step">
-                    <div className="w-[26px] h-[26px] bg-black border-2 border-white/10 rounded-full flex items-center justify-center text-[10px] font-black text-white/40 shadow-xl group-hover/step:border-[#3B82F6]/50 group-hover/step:text-[#3B82F6] transition-all">2</div>
-                    <div className="flex-1">
-                      <h4 className="text-xl font-bold text-white mb-2 uppercase tracking-tight">Roteiro de Direção (Veo 3)</h4>
-                      <p className="text-[#5b5b7b] text-sm font-medium leading-relaxed uppercase tracking-wider mb-8">
+                  <div className="flex items-start gap-4 md:gap-8 relative z-10 group/step">
+                    <div className="w-[26px] h-[26px] bg-black border-2 border-white/10 rounded-full flex items-center justify-center text-[10px] font-black text-white/40 shadow-xl group-hover/step:border-[#3B82F6]/50 group-hover/step:text-[#3B82F6] transition-all shrink-0">2</div>
+                    <div className="flex-1 mt-0.5">
+                      <h4 className="text-lg md:text-xl font-bold text-white mb-1.5 md:mb-2 uppercase tracking-tight leading-tight">Roteiro de Direção (Veo 3)</h4>
+                      <p className="text-[#5b5b7b] text-xs md:text-sm font-medium leading-relaxed uppercase tracking-wider mb-6 md:mb-8">
                         {takes.length} takes de 8 segundos cada. Gere cada vídeo separadamente e junte na edição.
                       </p>
 
-                      <div className="flex flex-col gap-5">
+                      <div className="flex flex-col gap-4 md:gap-5">
                         {takes.map((text, idx) => (
-                          <div key={idx} className="bg-black/40 border border-white/5 rounded-[28px] p-6 flex flex-col gap-5 group/take transition-all hover:bg-black/60 hover:border-[#3B82F6]/30 shadow-lg">
-                            <div className="flex items-center justify-between">
+                          <div key={idx} className="bg-black/40 border border-white/5 rounded-[20px] md:rounded-[28px] p-4 md:p-6 flex flex-col gap-4 md:gap-5 group/take transition-all hover:bg-black/60 hover:border-[#3B82F6]/30 shadow-lg">
+                            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-0">
                               <div className="flex items-center gap-3">
                                 <div className="w-1.5 h-1.5 rounded-full bg-[#00b37e] animate-pulse shadow-[0_0_8px_#00b37e]"></div>
                                 <span className="text-[10px] font-black text-white/40 uppercase tracking-widest">Take {idx + 1} / {takes.length}</span>

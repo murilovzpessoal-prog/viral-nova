@@ -988,7 +988,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
           {currentPage === 'configuracoes' && (
             <ConfiguracoesView
               profileImage={userProfileImage}
-              onImageUpload={(url) => setUserProfileImage(url)}
+              onImageUpload={handleProfileImageUpload}
               onLogout={handleLogout}
             />
           )}

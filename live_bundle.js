@@ -16178,7 +16178,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
             ConfiguracoesView,
             {
               profileImage: userProfileImage,
-              onImageUpload: (url) => setUserProfileImage(url),
+              onImageUpload: handleProfileImageUpload,
               onLogout: handleLogout
             }
           )

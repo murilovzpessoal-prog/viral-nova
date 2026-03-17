@@ -19783,19 +19783,19 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
     ];
     return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("main", { className: "max-w-[1500px] mx-auto px-6 py-12 md:py-16 relative", children: [
       /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col lg:flex-row items-center justify-between gap-8 mb-16 relative z-10 bg-[#0B0B0E]/20 backdrop-blur-sm p-8 rounded-[48px] border border-white/5 shadow-2xl", children: [
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col gap-6 flex-1 min-w-[400px]", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col gap-6 flex-1 min-w-0 lg:min-w-[400px]", children: [
           /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "relative group", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center gap-4 mb-4", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "h-[1px] w-8 bg-gradient-to-r from-[#3B82F6] to-transparent" }),
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-wrap items-center gap-3 sm:gap-4 mb-4 justify-center lg:justify-start", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "hidden sm:block h-[1px] w-8 bg-gradient-to-r from-[#3B82F6] to-transparent" }),
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[9px] font-black text-[#3B82F6] tracking-[0.4em] uppercase", children: "Neural Hub Active" }),
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex gap-1", children: [1, 2, 3].map((i) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-1 h-1 bg-[#3B82F6]/40 rounded-full animate-pulse", style: { animationDelay: `${i * 200}ms` } }, i)) })
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex gap-1 shrink-0", children: [1, 2, 3].map((i) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-1 h-1 bg-[#3B82F6]/40 rounded-full animate-pulse", style: { animationDelay: `${i * 200}ms` } }, i)) })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "relative", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("h1", { className: "text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none text-center lg:text-left", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "relative", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("h1", { className: "text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none text-center lg:text-left pl-1 lg:pl-0", children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent", children: "Galeria de" }),
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent", children: "Avatares" })
             ] }) })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("p", { className: "text-[#8d8d99] text-sm md:text-base font-medium max-w-sm leading-relaxed border-l border-white/10 pl-6 text-center lg:text-left mx-auto lg:mx-0", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("p", { className: "text-[#8d8d99] text-sm md:text-base font-medium max-w-sm leading-relaxed border-l border-white/10 pl-4 lg:pl-6 text-center lg:text-left mx-auto lg:mx-0", children: [
             "Escolha um avatar profissional ou utilize nossa ",
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-white", children: "rede neural" }),
             " para sintetizar sua pr\xF3pria identidade digital do zero."

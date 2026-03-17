@@ -5364,13 +5364,13 @@ const GaleriaAvataresView: React.FC<{ onGoToMyAvatars: () => void; onCreateNew: 
       <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-16 relative z-10 bg-[#0B0B0E]/20 backdrop-blur-sm p-8 rounded-[48px] border border-white/5 shadow-2xl">
 
         {/* LEFT: TYPOGRAPHY SCULPTURE & PULSE */}
-        <div className="flex flex-col gap-6 flex-1 min-w-[400px]">
+        <div className="flex flex-col gap-6 flex-1 min-w-0 lg:min-w-[400px]">
           <div className="relative group">
             {/* ARCHITECTURAL STATUS LINE */}
-            <div className="flex items-center gap-4 mb-4">
-              <div className="h-[1px] w-8 bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-4 justify-center lg:justify-start">
+              <div className="hidden sm:block h-[1px] w-8 bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
               <span className="text-[9px] font-black text-[#3B82F6] tracking-[0.4em] uppercase">Neural Hub Active</span>
-              <div className="flex gap-1">
+              <div className="flex gap-1 shrink-0">
                 {[1, 2, 3].map((i) => (
                   <div key={i} className="w-1 h-1 bg-[#3B82F6]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
                 ))}
@@ -5378,14 +5378,14 @@ const GaleriaAvataresView: React.FC<{ onGoToMyAvatars: () => void; onCreateNew: 
             </div>
 
             <div className="relative">
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none text-center lg:text-left">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none text-center lg:text-left pl-1 lg:pl-0">
                 <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent">Galeria de</span>
                 <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent">Avatares</span>
               </h1>
             </div>
           </div>
 
-          <p className="text-[#8d8d99] text-sm md:text-base font-medium max-w-sm leading-relaxed border-l border-white/10 pl-6 text-center lg:text-left mx-auto lg:mx-0">
+          <p className="text-[#8d8d99] text-sm md:text-base font-medium max-w-sm leading-relaxed border-l border-white/10 pl-4 lg:pl-6 text-center lg:text-left mx-auto lg:mx-0">
             Escolha um avatar profissional ou utilize nossa <span className="text-white">rede neural</span> para sintetizar sua própria identidade digital do zero.
           </p>
         </div>

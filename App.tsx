@@ -5117,12 +5117,12 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
         <div className="flex flex-col gap-6 flex-1 min-w-[400px] relative z-20">
           <div className="relative">
             {/* ARCHITECTURAL STATUS LINE */}
-            <div className="flex items-center gap-4 mb-4">
-              <div className="h-[1px] w-8 bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
-              <span className="text-[9px] font-black text-[#3B82F6] tracking-[0.4em] uppercase">Knowledge Matrix Syncing</span>
+            <div className="flex items-center justify-center lg:justify-start gap-3 sm:gap-4 mb-4">
+              <div className="hidden sm:block h-[1px] w-8 bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
+              <span className="text-[7px] sm:text-[9px] font-black text-[#3B82F6] tracking-[0.2em] sm:tracking-[0.4em] uppercase text-center">Knowledge Matrix Syncing</span>
               <div className="flex gap-1">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="w-1 h-1 bg-[#3B82F6]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
+                  <div key={i} className="w-0.5 h-0.5 sm:w-1 sm:h-1 bg-[#3B82F6]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
                 ))}
               </div>
             </div>
@@ -5135,7 +5135,7 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
             </div>
           </div>
 
-          <p className="text-[#8d8d99] text-sm md:text-base font-medium max-w-sm leading-relaxed border-l border-white/10 pl-6">
+          <p className="text-[#8d8d99] text-xs sm:text-sm md:text-base font-medium max-w-sm leading-relaxed border-l-0 lg:border-l border-white/10 pl-0 lg:pl-6 text-center lg:text-left mx-auto lg:mx-0">
             O centro de <span className="text-white">inteligência cognitiva</span> para escalar sua operação no TikTok Shop com autoridade.
           </p>
         </div>

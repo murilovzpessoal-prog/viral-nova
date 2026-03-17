@@ -19569,17 +19569,17 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
         /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "absolute inset-0 bg-gradient-to-br from-[#3B82F6]/5 via-transparent to-[#8B5CF6]/5 opacity-50" }),
         /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col gap-6 flex-1 min-w-[400px] relative z-20", children: [
           /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "relative", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center gap-4 mb-4", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "h-[1px] w-8 bg-gradient-to-r from-[#3B82F6] to-transparent" }),
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[9px] font-black text-[#3B82F6] tracking-[0.4em] uppercase", children: "Knowledge Matrix Syncing" }),
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex gap-1", children: [1, 2, 3].map((i) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-1 h-1 bg-[#3B82F6]/40 rounded-full animate-pulse", style: { animationDelay: `${i * 200}ms` } }, i)) })
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center justify-center lg:justify-start gap-3 sm:gap-4 mb-4", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "hidden sm:block h-[1px] w-8 bg-gradient-to-r from-[#3B82F6] to-transparent" }),
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[7px] sm:text-[9px] font-black text-[#3B82F6] tracking-[0.2em] sm:tracking-[0.4em] uppercase text-center", children: "Knowledge Matrix Syncing" }),
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex gap-1", children: [1, 2, 3].map((i) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-0.5 h-0.5 sm:w-1 sm:h-1 bg-[#3B82F6]/40 rounded-full animate-pulse", style: { animationDelay: `${i * 200}ms` } }, i)) })
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "relative", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("h1", { className: "text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none text-center lg:text-left", children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent uppercase text-shadow-sm", children: "Creator" }),
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent uppercase", children: "Academy" })
             ] }) })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("p", { className: "text-[#8d8d99] text-sm md:text-base font-medium max-w-sm leading-relaxed border-l border-white/10 pl-6", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("p", { className: "text-[#8d8d99] text-xs sm:text-sm md:text-base font-medium max-w-sm leading-relaxed border-l-0 lg:border-l border-white/10 pl-0 lg:pl-6 text-center lg:text-left mx-auto lg:mx-0", children: [
             "O centro de ",
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-white", children: "intelig\xEAncia cognitiva" }),
             " para escalar sua opera\xE7\xE3o no TikTok Shop com autoridade."

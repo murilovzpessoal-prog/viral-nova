@@ -5110,7 +5110,7 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
   return (
     <main className="max-w-[1500px] mx-auto px-4 md:px-6 py-8 md:py-16 relative">
       {/* RADICAL ASYMMETRIC HEADER - KNOWLEDGE MATRIX SYNC */}
-      <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-10 md:mb-20 relative z-10 bg-[#0B0B0E]/30 backdrop-blur-3xl p-6 md:p-10 rounded-[32px] md:rounded-[48px] border border-white/5 shadow-2xl overflow-hidden group">
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-6 md:gap-8 mb-10 md:mb-20 relative z-10 bg-[#0B0B0E]/30 backdrop-blur-3xl p-5 md:p-10 rounded-[28px] md:rounded-[48px] border border-white/5 shadow-2xl overflow-hidden group">
         <div className="absolute inset-0 bg-gradient-to-br from-[#3B82F6]/5 via-transparent to-[#8B5CF6]/5 opacity-50"></div>
 
         {/* LEFT: TYPOGRAPHY SCULPTURE & PULSE */}
@@ -5128,7 +5128,7 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
             </div>
 
             <div className="relative">
-              <h1 className="text-4xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none text-center lg:text-left">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none text-center lg:text-left">
                 <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent uppercase text-shadow-sm">Creator</span>
                 <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent uppercase">Academy</span>
               </h1>
@@ -5141,13 +5141,13 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
         </div>
 
         {/* RIGHT: SYNERGIC MODULE CLUSTER */}
-        <div className="flex items-center justify-center lg:justify-end gap-6 flex-1 relative z-20">
+        <div className="flex items-center justify-center lg:justify-end gap-4 md:gap-6 w-full lg:flex-1 relative z-20">
           <div className="relative group">
             <div className="absolute inset-0 bg-[#3B82F6]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-            <div className="w-40 h-40 backdrop-blur-3xl bg-white/[0.03] border border-white/10 rounded-[40px] p-6 flex flex-col items-center justify-center shadow-2xl transition-all duration-500 group-hover:scale-105">
-              <BookOpen className="w-6 h-6 text-[#3B82F6] mb-2 opacity-50" />
-              <span className="text-4xl font-black text-white tracking-tighter mb-1">12</span>
-              <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">MÓDULOS</span>
+            <div className="w-32 h-32 md:w-40 md:h-40 backdrop-blur-3xl bg-white/[0.03] border border-white/10 rounded-[32px] md:rounded-[40px] p-5 md:p-6 flex flex-col items-center justify-center shadow-2xl transition-all duration-500 group-hover:scale-105">
+              <BookOpen className="w-5 h-5 md:w-6 md:h-6 text-[#3B82F6] mb-2 opacity-50" />
+              <span className="text-3xl md:text-4xl font-black text-white tracking-tighter mb-1">12</span>
+              <span className="text-[7px] md:text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">MÓDULOS</span>
             </div>
           </div>
 
@@ -5163,27 +5163,27 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
       </div>
 
       {/* Hero Card - ATMOSPHERIC REVIVAL */}
-      <div className="w-full relative bg-[#0B0B0E]/60 backdrop-blur-3xl border border-white/5 rounded-[40px] md:rounded-[64px] p-6 md:p-12 lg:p-20 overflow-hidden mb-16 md:mb-32 shadow-[0_40px_100px_rgba(0,0,0,0.8)] flex flex-col lg:flex-row items-center justify-between gap-10 md:gap-16 group">
+      <div className="w-full relative bg-[#0B0B0E]/60 backdrop-blur-3xl border border-white/5 rounded-[32px] md:rounded-[64px] p-5 md:p-12 lg:p-20 overflow-hidden mb-12 md:mb-32 shadow-[0_40px_100px_rgba(0,0,0,0.8)] flex flex-col lg:flex-row items-center justify-between gap-8 md:gap-16 group">
         {/* ATMOSPHERIC GLOWS */}
         <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#3B82F6] to-transparent opacity-30"></div>
         <div className="absolute -left-40 top-1/2 -translate-y-1/2 w-80 h-80 bg-[#3B82F6]/10 blur-[120px] rounded-full pointer-events-none group-hover:opacity-100 transition-opacity animate-pulse"></div>
 
-        <div className="flex flex-col items-center lg:items-start max-w-2xl z-10">
-          <div className="flex items-center gap-3 px-6 py-3 bg-white/5 border border-white/10 rounded-full text-[10px] font-black text-[#3B82F6] uppercase tracking-[0.3em] mb-12 shadow-xl backdrop-blur-md">
-            <GraduationCap className="w-4 h-4" />
+        <div className="flex flex-col items-center lg:items-start w-full lg:max-w-2xl z-10">
+          <div className="flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2.5 md:py-3 bg-white/5 border border-white/10 rounded-full text-[9px] md:text-[10px] font-black text-[#3B82F6] uppercase tracking-[0.2em] md:tracking-[0.3em] mb-8 md:mb-12 shadow-xl backdrop-blur-md">
+            <GraduationCap className="w-3.5 h-3.5 md:w-4 md:h-4" />
             Estratégias de Elite Validadas
           </div>
 
-          <h2 className="text-[40px] md:text-[84px] font-black text-white tracking-tighter mb-8 md:mb-10 leading-[0.85] text-center lg:text-left">
+          <h2 className="text-4xl sm:text-5xl md:text-[84px] font-black text-white tracking-tighter mb-6 md:mb-10 leading-[0.85] text-center lg:text-left">
             Guia Mestre <br />
-            <span className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] bg-clip-text text-transparent uppercase">TikTok Shop</span>
+            <span className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] bg-clip-text text-transparent uppercase break-words">TikTok Shop</span>
           </h2>
 
-          <p className="text-[#8d8d99] text-lg md:text-xl font-medium mb-14 leading-relaxed text-center lg:text-left max-w-xl pl-6 border-l-2 border-[#3B82F6]/20 group-hover:border-[#3B82F6]/60 transition-colors">
+          <p className="text-[#8d8d99] text-sm sm:text-base md:text-xl font-medium mb-10 md:mb-14 leading-relaxed text-center lg:text-left w-full lg:max-w-xl pl-4 md:pl-6 border-l-2 border-[#3B82F6]/20 group-hover:border-[#3B82F6]/60 transition-colors">
             O roadmap definitivo para dominar diretrizes e <span className="text-white">atalhos lucrativos</span> de um ecossistema de alta conversão.
           </p>
 
-          <button className="relative group/btn overflow-hidden h-16 px-12 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/10 transition-all hover:scale-[1.03] active:scale-95 shadow-2xl">
+          <button className="relative group/btn overflow-hidden h-14 md:h-16 px-8 md:px-12 rounded-[20px] md:rounded-2xl bg-white/10 backdrop-blur-xl border border-white/10 transition-all hover:scale-[1.03] active:scale-95 shadow-2xl w-full sm:w-auto">
             <div className="absolute inset-0 bg-[#3B82F6]/80 group-hover/btn:bg-[#3B82F6] transition-colors translate-y-full group-hover/btn:translate-y-0 duration-500"></div>
             <div className="relative z-10 flex items-center gap-4 text-white font-black text-sm uppercase tracking-widest">
               Começar Jornada
@@ -5269,20 +5269,20 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
       </div>
 
       {/* Support Section - FLAGSHIP STANDARD */}
-      <div className="w-full relative bg-[#0B0B0E]/60 backdrop-blur-3xl border border-white/10 rounded-[64px] p-12 lg:p-20 overflow-hidden shadow-2xl flex flex-col md:flex-row items-center justify-between gap-12 group">
+      <div className="w-full relative bg-[#0B0B0E]/60 backdrop-blur-3xl border border-white/10 rounded-[32px] md:rounded-[64px] p-6 md:p-12 lg:p-20 overflow-hidden shadow-2xl flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 group">
         <div className="absolute inset-0 bg-gradient-to-br from-[#8B5CF6]/5 to-transparent pointer-events-none"></div>
         <div className="absolute -right-40 bottom-0 w-[500px] h-[500px] bg-[#8B5CF6]/5 blur-[120px] rounded-full pointer-events-none group-hover:bg-[#8B5CF6]/10 transition-colors"></div>
 
-        <div className="flex flex-col items-center md:items-start text-center md:text-left z-10 max-w-lg">
-          <div className="flex items-center gap-3 px-5 py-2 bg-white/5 border border-white/10 rounded-full text-[9px] font-black text-[#8B5CF6] uppercase tracking-[0.3em] mb-10 shadow-lg">
-            <Star className="w-3 h-3" />
+        <div className="flex flex-col items-center md:items-start text-center md:text-left z-10 w-full lg:max-w-lg">
+          <div className="flex items-center gap-2 md:gap-3 px-4 md:px-5 py-2 bg-white/5 border border-white/10 rounded-full text-[8px] md:text-[9px] font-black text-[#8B5CF6] uppercase tracking-[0.2em] md:tracking-[0.3em] mb-6 md:mb-10 shadow-lg">
+            <Star className="w-2.5 h-2.5 md:w-3 md:h-3" />
             Knowledge Support Matrix
           </div>
-          <h3 className="text-[52px] md:text-[64px] font-black text-white tracking-tighter leading-[0.85] mb-10 uppercase">
+          <h3 className="text-4xl sm:text-5xl md:text-[64px] font-black text-white tracking-tighter leading-[0.85] mb-6 md:mb-10 uppercase">
             Dúvidas ou <br />
-            <span className="bg-gradient-to-r from-[#3B82F6] to-[#d946ef] bg-clip-text text-transparent">Dificuldades?</span>
+            <span className="bg-gradient-to-r from-[#3B82F6] to-[#d946ef] bg-clip-text text-transparent break-words">Dificuldades?</span>
           </h3>
-          <p className="text-[#8d8d99] text-lg font-medium opacity-80 leading-relaxed pl-6 border-l-2 border-white/10 group-hover:border-[#8B5CF6]/30 transition-colors">
+          <p className="text-[#8d8d99] text-sm sm:text-base md:text-lg font-medium opacity-80 leading-relaxed pl-4 md:pl-6 border-l-2 border-white/10 group-hover:border-[#8B5CF6]/30 transition-colors">
             Nossa equipe de especialistas está operando em <span className="text-white">synch-time</span> para destravar seus resultados.
           </p>
         </div>
@@ -5312,7 +5312,7 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
 const AcademyCard: React.FC<{ title: string, description: string, isHighlighted?: boolean, onClick?: () => void }> = ({ title, description, isHighlighted, onClick }) => (
   <div
     onClick={onClick}
-    className={`relative group h-[380px] cursor-pointer rounded-[48px] overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_40px_80px_rgba(0,0,0,0.6)] border transition-all ${isHighlighted ? 'border-[#3B82F6]/30 bg-[#0B0B0E]/60' : 'border-white/5 bg-[#0B0B0E]/40 hover:border-white/10'}`}
+    className={`relative group h-[260px] md:h-[380px] cursor-pointer rounded-[32px] md:rounded-[48px] overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_40px_80px_rgba(0,0,0,0.6)] border transition-all ${isHighlighted ? 'border-[#3B82F6]/30 bg-[#0B0B0E]/60' : 'border-white/5 bg-[#0B0B0E]/40 hover:border-white/10'}`}
   >
     {/* GLASS LAYER */}
     <div className="absolute inset-0 backdrop-blur-3xl"></div>
@@ -5320,20 +5320,20 @@ const AcademyCard: React.FC<{ title: string, description: string, isHighlighted?
     {/* SCAN LINE ANIMATION */}
     <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#3B82F6] to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[scan-line_3s_linear_infinite] z-20"></div>
 
-    <div className="relative z-10 p-10 h-full flex flex-col justify-between">
-      <div className="flex flex-col gap-8">
-        <div className={`w-16 h-16 rounded-[24px] flex items-center justify-center border transition-all duration-500 shadow-2xl ${isHighlighted ? 'bg-[#3B82F6] border-white/20 text-white rotate-6' : 'bg-white/5 border-white/10 text-[#3B82F6] group-hover:rotate-12 group-hover:bg-[#3B82F6]/10'}`}>
-          <FileText className="w-7 h-7" />
+    <div className="relative z-10 p-6 md:p-10 h-full flex flex-col justify-between">
+      <div className="flex flex-col gap-4 md:gap-8">
+        <div className={`w-10 h-10 md:w-16 md:h-16 rounded-[16px] md:rounded-[24px] flex items-center justify-center border transition-all duration-500 shadow-2xl shrink-0 ${isHighlighted ? 'bg-[#3B82F6] border-white/20 text-white rotate-6' : 'bg-white/5 border-white/10 text-[#3B82F6] group-hover:rotate-12 group-hover:bg-[#3B82F6]/10'}`}>
+          <FileText className="w-5 h-5 md:w-7 md:h-7" />
         </div>
 
-        <div className="space-y-4">
-          <div className="flex items-center gap-3">
-            <div className={`w-1 h-6 transition-all duration-500 ${isHighlighted ? 'bg-white' : 'bg-[#3B82F6]/40 group-hover:bg-[#3B82F6]'}`}></div>
-            <h4 className="text-2xl font-black text-white tracking-tighter leading-tight uppercase group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-white/60 transition-all">
+        <div className="space-y-3 md:space-y-4">
+          <div className="flex items-center gap-2 md:gap-3">
+            <div className={`w-1 h-5 md:h-6 transition-all duration-500 shrink-0 ${isHighlighted ? 'bg-white' : 'bg-[#3B82F6]/40 group-hover:bg-[#3B82F6]'}`}></div>
+            <h4 className="text-[18px] md:text-2xl font-black text-white tracking-tighter leading-tight uppercase group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-white/60 transition-all">
               {title}
             </h4>
           </div>
-          <p className="text-[#8d8d99] text-sm font-medium leading-relaxed opacity-70 group-hover:opacity-100 transition-opacity pl-4">
+          <p className="text-[#8d8d99] text-xs md:text-sm font-medium leading-relaxed md:leading-relaxed opacity-70 group-hover:opacity-100 transition-opacity pl-3 md:pl-4">
             {description}
           </p>
         </div>

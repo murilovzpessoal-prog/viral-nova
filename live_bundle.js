@@ -18746,14 +18746,14 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
                   ] }, idx)) })
                 ] })
               ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-start gap-8 relative z-10 group/step", children: [
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-[26px] h-[26px] bg-black border-2 border-white/10 rounded-full flex items-center justify-center text-[10px] font-black text-white/40 shadow-xl group-hover/step:border-[#3B82F6]/50 group-hover/step:text-[#3B82F6] transition-all", children: "3" }),
-                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex-1", children: [
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h4", { className: "text-xl font-bold text-white mb-8 uppercase tracking-tight", children: "Finalizar no Veo 3" }),
-                  /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("button", { onClick: () => window.open("https://labs.google/flow/about", "_blank"), className: "w-full py-6 bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] hover:scale-[1.02] text-white rounded-3xl font-black text-lg flex items-center justify-center gap-4 shadow-[0_20px_40px_rgba(59,130,246,0.3)] transition-all active:scale-[0.98] group/final", children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Video, { className: "w-7 h-7" }),
-                    "ABRIR VEO STUDIO",
-                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(ExternalLink, { className: "w-5 h-5 opacity-40 group-hover/final:opacity-100 transition-opacity" })
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-start gap-4 md:gap-8 relative z-10 group/step", children: [
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-[26px] h-[26px] bg-black border-2 border-white/10 rounded-full flex items-center justify-center text-[10px] font-black text-white/40 shadow-xl group-hover/step:border-[#3B82F6]/50 group-hover/step:text-[#3B82F6] transition-all shrink-0", children: "3" }),
+                /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex-1 mt-0.5", children: [
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h4", { className: "text-lg md:text-xl font-bold text-white mb-4 md:mb-8 uppercase tracking-tight leading-tight", children: "Finalizar no Veo 3" }),
+                  /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("button", { onClick: () => window.open("https://labs.google/flow/about", "_blank"), className: "w-full py-4 md:py-6 px-4 bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] hover:scale-[1.02] text-white rounded-[20px] md:rounded-3xl font-black text-sm sm:text-base md:text-lg flex items-center justify-center gap-2 md:gap-4 shadow-[0_20px_40px_rgba(59,130,246,0.3)] transition-all active:scale-[0.98] group/final", children: [
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Video, { className: "w-5 h-5 md:w-7 md:h-7 shrink-0" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { children: "ABRIR VEO STUDIO" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(ExternalLink, { className: "w-4 h-4 md:w-5 md:h-5 opacity-40 group-hover/final:opacity-100 transition-opacity shrink-0" })
                   ] })
                 ] })
               ] })

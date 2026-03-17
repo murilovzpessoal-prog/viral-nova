@@ -15952,28 +15952,28 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "min-h-screen bg-[#0b0c10] text-[#e1e1e6] selection:bg-[#3B82F6]/30 flex flex-col relative", children: [
         currentPage !== "explorar" && /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(GlobalBackground, {}),
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("header", { className: "h-[88px] border-b-2 border-white/10 bg-[#0b0c10] flex items-center sticky top-0 z-50 transition-all duration-300", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "max-w-[1400px] w-full mx-auto px-6 flex items-center h-full", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("header", { className: "h-[72px] bg-[#0B0B0E]/80 backdrop-blur-xl border-b border-white/5 sticky top-0 z-[100]", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "max-w-[1400px] w-full mx-auto px-3 sm:px-4 md:px-6 flex items-center h-full", children: [
           /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
             "button",
             {
-              className: "lg:hidden mr-4 p-2 -ml-2 text-white hover:bg-[#1f2026] rounded-lg transition-colors",
+              className: "lg:hidden mr-2 md:mr-4 p-1 md:p-2 -ml-2 text-white hover:bg-[#1f2026] rounded-lg transition-colors shrink-0",
               onClick: () => setIsMobileMenuOpen(!isMobileMenuOpen),
-              children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Menu, { className: "w-6 h-6" })
+              children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Menu, { className: "w-5 h-5 md:w-6 md:h-6" })
             }
           ),
-          /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center gap-2 group cursor-pointer mr-auto", onClick: () => {
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center gap-1.5 md:gap-2 group cursor-pointer mr-auto min-w-0", onClick: () => {
             setIsMobileMenuOpen(false);
             setCurrentPage("explorar");
           }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex items-center justify-center", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex items-center justify-center shrink-0", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(
               "img",
               {
                 src: "/logo.png",
                 alt: "Viralpulse Logo",
-                className: "w-6 h-6 object-contain"
+                className: "w-5 h-5 md:w-6 md:h-6 object-contain"
               }
             ) }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[22px] font-black tracking-tighter text-white", children: "Viralpulse" })
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[17px] sm:text-[20px] md:text-[22px] font-black tracking-tighter text-white truncate", children: "Viralpulse" })
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center gap-5 md:gap-8 h-full", children: [
             /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("nav", { className: "hidden lg:flex items-center gap-5 h-full", children: [
@@ -16050,7 +16050,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
               )
             ] }),
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-[1.5px] h-6 bg-[#33333a] mx-1" }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center gap-3", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center gap-1.5 sm:gap-2 md:gap-3 shrink-0", children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)(
                 "button",
                 {
@@ -16067,11 +16067,11 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
                   "div",
                   {
                     onClick: () => setIsLangMenuOpen(!isLangMenuOpen),
-                    className: "flex items-center gap-2 px-3 py-1.5 bg-[#14151a] rounded-lg border border-[#1e1f26] text-xs font-bold cursor-pointer hover:border-[#44444f] transition-all",
+                    className: "flex items-center gap-1 md:gap-2 px-2 py-1 md:px-3 md:py-1.5 bg-[#14151a] rounded-lg border border-[#1e1f26] text-[10px] md:text-xs font-bold cursor-pointer hover:border-[#44444f] transition-all",
                     children: [
-                      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("img", { src: "https://flagcdn.com/w20/br.png", width: "16", alt: "Brazil", className: "rounded-[1px]" }),
+                      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("img", { src: "https://flagcdn.com/w20/br.png", width: "16", alt: "Brazil", className: "rounded-[1px] w-3 md:w-4" }),
                       /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[#8d8d99] uppercase", children: "PT" }),
-                      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(ChevronRight, { className: `w-3 h-3 text-[#8d8d99] transition-transform ${isLangMenuOpen ? "-rotate-90" : "rotate-90"}` })
+                      /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(ChevronRight, { className: `w-2.5 h-2.5 md:w-3 md:h-3 text-[#8d8d99] transition-transform ${isLangMenuOpen ? "-rotate-90" : "rotate-90"}` })
                     ]
                   }
                 ),
@@ -16094,10 +16094,10 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
                 "div",
                 {
                   onClick: () => setCurrentPage("configuracoes"),
-                  className: "flex items-center gap-2.5 bg-[#14151a] pl-1.5 pr-3 py-1.5 rounded-full border border-[#1e1f26] cursor-pointer hover:border-[#3B82F6]/30 transition-all",
+                  className: "flex items-center gap-1.5 md:gap-2.5 bg-[#14151a] pl-1 pr-2 md:pl-1.5 md:pr-3 py-1 md:py-1.5 rounded-full border border-[#1e1f26] cursor-pointer hover:border-[#3B82F6]/30 transition-all shrink-0",
                   children: [
-                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-7 h-7 bg-[#8B5CF6] rounded-full flex items-center justify-center text-[11px] font-black text-white shadow-lg shadow-[#8B5CF6]/30 overflow-hidden", children: userProfileImage ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("img", { src: userProfileImage, alt: "User", className: "w-full h-full object-cover" }) : "N" }),
-                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-xs font-black text-white uppercase tracking-tight", children: t("usuario") })
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-6 h-6 md:w-7 md:h-7 bg-[#8B5CF6] rounded-full flex items-center justify-center text-[10px] md:text-[11px] font-black text-white shadow-lg shadow-[#8B5CF6]/30 overflow-hidden shrink-0", children: userProfileImage ? /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("img", { src: userProfileImage, alt: "User", className: "w-full h-full object-cover shrink-0" }) : "N" }),
+                    /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[9px] md:text-xs font-black text-white uppercase tracking-tight truncate", children: t("usuario") })
                   ]
                 }
               )

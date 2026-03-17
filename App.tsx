@@ -786,26 +786,26 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
         {currentPage !== 'explorar' && <GlobalBackground />}
 
         {/* PERFECT CLONE HEADER */}
-        <header className="h-[88px] border-b-2 border-white/10 bg-[#0b0c10] flex items-center sticky top-0 z-50 transition-all duration-300">
-          <div className="max-w-[1400px] w-full mx-auto px-6 flex items-center h-full">
+        <header className="h-[72px] bg-[#0B0B0E]/80 backdrop-blur-xl border-b border-white/5 sticky top-0 z-[100]">
+          <div className="max-w-[1400px] w-full mx-auto px-3 sm:px-4 md:px-6 flex items-center h-full">
             {/* Logo Area */}
 
             {/* Mobile Hamburger */}
             <button
-              className="lg:hidden mr-4 p-2 -ml-2 text-white hover:bg-[#1f2026] rounded-lg transition-colors"
+              className="lg:hidden mr-2 md:mr-4 p-1 md:p-2 -ml-2 text-white hover:bg-[#1f2026] rounded-lg transition-colors shrink-0"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              <Menu className="w-6 h-6" />
+              <Menu className="w-5 h-5 md:w-6 md:h-6" />
             </button>
-            <div className="flex items-center gap-2 group cursor-pointer mr-auto" onClick={() => { setIsMobileMenuOpen(false); setCurrentPage('explorar'); }}>
-              <div className="flex items-center justify-center">
+            <div className="flex items-center gap-1.5 md:gap-2 group cursor-pointer mr-auto min-w-0" onClick={() => { setIsMobileMenuOpen(false); setCurrentPage('explorar'); }}>
+              <div className="flex items-center justify-center shrink-0">
                 <img
                   src="/logo.png"
                   alt="Viralpulse Logo"
-                  className="w-6 h-6 object-contain"
+                  className="w-5 h-5 md:w-6 md:h-6 object-contain"
                 />
               </div>
-              <span className="text-[22px] font-black tracking-tighter text-white">Viralpulse</span>
+              <span className="text-[17px] sm:text-[20px] md:text-[22px] font-black tracking-tighter text-white truncate">Viralpulse</span>
             </div>
 
             {/* Navigation Links Grouped closer to Right Actions */}
@@ -873,7 +873,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
               <div className="w-[1.5px] h-6 bg-[#33333a] mx-1"></div>
 
               {/* Right Actions */}
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3 shrink-0">
                 <button 
                   onClick={handleInstallClick}
                   className="hidden sm:flex items-center gap-2 px-4 py-2 border border-[#8B5CF6]/40 text-[#8B5CF6] rounded-lg text-xs font-black hover:bg-[#8B5CF6]/5 transition-all"
@@ -885,11 +885,11 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
                 <div className="relative">
                   <div
                     onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-                    className="flex items-center gap-2 px-3 py-1.5 bg-[#14151a] rounded-lg border border-[#1e1f26] text-xs font-bold cursor-pointer hover:border-[#44444f] transition-all"
+                    className="flex items-center gap-1 md:gap-2 px-2 py-1 md:px-3 md:py-1.5 bg-[#14151a] rounded-lg border border-[#1e1f26] text-[10px] md:text-xs font-bold cursor-pointer hover:border-[#44444f] transition-all"
                   >
-                    <img src="https://flagcdn.com/w20/br.png" width="16" alt="Brazil" className="rounded-[1px]" />
+                    <img src="https://flagcdn.com/w20/br.png" width="16" alt="Brazil" className="rounded-[1px] w-3 md:w-4" />
                     <span className="text-[#8d8d99] uppercase">PT</span>
-                    <ChevronRight className={`w-3 h-3 text-[#8d8d99] transition-transform ${isLangMenuOpen ? '-rotate-90' : 'rotate-90'}`} />
+                    <ChevronRight className={`w-2.5 h-2.5 md:w-3 md:h-3 text-[#8d8d99] transition-transform ${isLangMenuOpen ? '-rotate-90' : 'rotate-90'}`} />
                   </div>
 
                   {isLangMenuOpen && (
@@ -908,16 +908,16 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
 
                 <div
                   onClick={() => setCurrentPage('configuracoes')}
-                  className="flex items-center gap-2.5 bg-[#14151a] pl-1.5 pr-3 py-1.5 rounded-full border border-[#1e1f26] cursor-pointer hover:border-[#3B82F6]/30 transition-all"
+                  className="flex items-center gap-1.5 md:gap-2.5 bg-[#14151a] pl-1 pr-2 md:pl-1.5 md:pr-3 py-1 md:py-1.5 rounded-full border border-[#1e1f26] cursor-pointer hover:border-[#3B82F6]/30 transition-all shrink-0"
                 >
-                  <div className="w-7 h-7 bg-[#8B5CF6] rounded-full flex items-center justify-center text-[11px] font-black text-white shadow-lg shadow-[#8B5CF6]/30 overflow-hidden">
+                  <div className="w-6 h-6 md:w-7 md:h-7 bg-[#8B5CF6] rounded-full flex items-center justify-center text-[10px] md:text-[11px] font-black text-white shadow-lg shadow-[#8B5CF6]/30 overflow-hidden shrink-0">
                     {userProfileImage ? (
-                      <img src={userProfileImage} alt="User" className="w-full h-full object-cover" />
+                      <img src={userProfileImage} alt="User" className="w-full h-full object-cover shrink-0" />
                     ) : (
                       "N"
                     )}
                   </div>
-                  <span className="text-xs font-black text-white uppercase tracking-tight">{t('usuario')}</span>
+                  <span className="text-[9px] md:text-xs font-black text-white uppercase tracking-tight truncate">{t('usuario')}</span>
                 </div>
               </div>
             </div>

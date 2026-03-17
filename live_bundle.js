@@ -19567,19 +19567,19 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
     return /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("main", { className: "max-w-[1500px] mx-auto px-4 md:px-6 py-8 md:py-16 relative", children: [
       /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col lg:flex-row items-center justify-between gap-6 md:gap-8 mb-10 md:mb-20 relative z-10 bg-[#0B0B0E]/30 backdrop-blur-3xl p-5 md:p-10 rounded-[28px] md:rounded-[48px] border border-white/5 shadow-2xl overflow-hidden group", children: [
         /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "absolute inset-0 bg-gradient-to-br from-[#3B82F6]/5 via-transparent to-[#8B5CF6]/5 opacity-50" }),
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col gap-6 flex-1 min-w-[400px] relative z-20", children: [
-          /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "relative", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center justify-center lg:justify-start gap-3 sm:gap-4 mb-4", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col gap-6 flex-1 min-w-0 lg:min-w-[400px] relative z-20 w-full overflow-hidden", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "relative w-full", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center justify-center lg:justify-start gap-3 sm:gap-4 mb-4 flex-wrap", children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "hidden sm:block h-[1px] w-8 bg-gradient-to-r from-[#3B82F6] to-transparent" }),
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[7px] sm:text-[9px] font-black text-[#3B82F6] tracking-[0.2em] sm:tracking-[0.4em] uppercase text-center", children: "Knowledge Matrix Syncing" }),
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex gap-1", children: [1, 2, 3].map((i) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-0.5 h-0.5 sm:w-1 sm:h-1 bg-[#3B82F6]/40 rounded-full animate-pulse", style: { animationDelay: `${i * 200}ms` } }, i)) })
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[7px] sm:text-[9px] font-black text-[#3B82F6] tracking-[0.2em] sm:tracking-[0.4em] uppercase text-center break-words", children: "Knowledge Matrix Syncing" }),
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "flex gap-1 shrink-0", children: [1, 2, 3].map((i) => /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-0.5 h-0.5 sm:w-1 sm:h-1 bg-[#3B82F6]/40 rounded-full animate-pulse", style: { animationDelay: `${i * 200}ms` } }, i)) })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "relative", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("h1", { className: "text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none text-center lg:text-left", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent uppercase text-shadow-sm", children: "Creator" }),
-              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent uppercase", children: "Academy" })
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "relative w-full", children: /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("h1", { className: "text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none text-center lg:text-left break-words w-full", children: [
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent uppercase text-shadow-sm truncate sm:overflow-visible sm:whitespace-normal", children: "Creator" }),
+              /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent uppercase truncate sm:overflow-visible sm:whitespace-normal", children: "Academy" })
             ] }) })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("p", { className: "text-[#8d8d99] text-xs sm:text-sm md:text-base font-medium max-w-sm leading-relaxed border-l-0 lg:border-l border-white/10 pl-0 lg:pl-6 text-center lg:text-left mx-auto lg:mx-0", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("p", { className: "text-[#8d8d99] text-[11px] sm:text-sm md:text-base font-medium max-w-sm leading-relaxed border-l-0 lg:border-l border-white/10 pl-0 lg:pl-6 text-center lg:text-left mx-auto lg:mx-0 px-2 sm:px-0 break-words w-full", children: [
             "O centro de ",
             /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-white", children: "intelig\xEAncia cognitiva" }),
             " para escalar sua opera\xE7\xE3o no TikTok Shop com autoridade."

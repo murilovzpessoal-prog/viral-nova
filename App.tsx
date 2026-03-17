@@ -2839,7 +2839,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0B0B0E] to-transparent opacity-60"></div>
 
         {/* NEURAL CORE VISUALIZATION */}
-        <div className="relative mb-24 scale-125 md:scale-150">
+        <div className="relative mb-12 md:mb-24 scale-90 md:scale-150">
           {/* SYNAPTIC RINGS */}
           <div className="absolute inset-0 w-48 h-48 -left-8 -top-8 border border-[#3B82F6]/20 rounded-full animate-[spin_10s_linear_infinite]"></div>
           <div className="absolute inset-0 w-56 h-56 -left-12 -top-12 border border-[#8B5CF6]/10 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
@@ -2870,13 +2870,13 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
         </div>
 
         {/* PHASIC STATUS INTERFACE */}
-        <div className="relative z-10 flex flex-col items-center gap-8 w-full max-w-md px-8 text-center">
+        <div className="relative z-10 flex flex-col items-center gap-6 md:gap-8 w-full max-w-md px-6 md:px-8 text-center">
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-center gap-3 opacity-0">
               <div className="w-2 h-2 bg-[#3B82F6] rounded-full animate-ping"></div>
               <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.5em]">.</span>
             </div>
-            <h2 className="text-2xl font-black text-white tracking-widest uppercase transition-all duration-1000 animate-in fade-in slide-in-from-bottom-2">
+            <h2 className="text-[1.1rem] md:text-2xl font-black text-white tracking-widest uppercase transition-all duration-1000 animate-in fade-in slide-in-from-bottom-2 leading-snug">
               {loadingMessages[loadingPhase]}
             </h2>
           </div>
@@ -2899,8 +2899,8 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
           </div>
 
           {/* TECHNICAL PROCESSING LOGS (SIMULATED CONSOLE) */}
-          <div className="w-full p-4 bg-black/40 border border-white/5 rounded-2xl font-mono text-left space-y-1.5 backdrop-blur-md">
-            <div className="flex items-center gap-3 text-[8px] text-[#3B82F6] font-black uppercase tracking-widest mb-1">
+          <div className="w-full p-3 md:p-4 bg-black/40 border border-white/5 rounded-2xl md:rounded-3xl font-mono text-left space-y-1.5 backdrop-blur-md">
+            <div className="flex items-center gap-2 md:gap-3 text-[7px] md:text-[8px] text-[#3B82F6] font-black uppercase tracking-widest mb-1">
               <Terminal className="w-3 h-3" /> System Logs // Real-time
             </div>
             <div className="space-y-1 opacity-40">

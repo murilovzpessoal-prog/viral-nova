@@ -17779,7 +17779,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
         /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-[0.03] pointer-events-none" }),
         /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "absolute inset-0 opacity-[0.1] pointer-events-none", style: { backgroundImage: "linear-gradient(#3B82F6 1px, transparent 1px), linear-gradient(90deg, #3B82F6 1px, transparent 1px)", backgroundSize: "60px 60px" } }),
         /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "absolute inset-0 bg-gradient-to-b from-transparent via-[#0B0B0E] to-transparent opacity-60" }),
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "relative mb-24 scale-125 md:scale-150", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "relative mb-12 md:mb-24 scale-90 md:scale-150", children: [
           /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "absolute inset-0 w-48 h-48 -left-8 -top-8 border border-[#3B82F6]/20 rounded-full animate-[spin_10s_linear_infinite]" }),
           /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "absolute inset-0 w-56 h-56 -left-12 -top-12 border border-[#8B5CF6]/10 rounded-full animate-[spin_15s_linear_infinite_reverse]" }),
           /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "absolute inset-0 w-40 h-40 -left-4 -top-4 border-2 border-dashed border-[#3B82F6]/5 rounded-full animate-[spin_20s_linear_infinite]" }),
@@ -17802,13 +17802,13 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
             deg
           ))
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "relative z-10 flex flex-col items-center gap-8 w-full max-w-md px-8 text-center", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "relative z-10 flex flex-col items-center gap-6 md:gap-8 w-full max-w-md px-6 md:px-8 text-center", children: [
           /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex flex-col gap-2", children: [
             /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center justify-center gap-3 opacity-0", children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("div", { className: "w-2 h-2 bg-[#3B82F6] rounded-full animate-ping" }),
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("span", { className: "text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.5em]", children: "." })
             ] }),
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "text-2xl font-black text-white tracking-widest uppercase transition-all duration-1000 animate-in fade-in slide-in-from-bottom-2", children: loadingMessages[loadingPhase] })
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsx)("h2", { className: "text-[1.1rem] md:text-2xl font-black text-white tracking-widest uppercase transition-all duration-1000 animate-in fade-in slide-in-from-bottom-2 leading-snug", children: loadingMessages[loadingPhase] })
           ] }),
           /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "w-full flex flex-col gap-3", children: [
             /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "w-full h-1.5 bg-white/5 rounded-full overflow-hidden relative border border-white/5", children: [
@@ -17834,8 +17834,8 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
               ] })
             ] })
           ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "w-full p-4 bg-black/40 border border-white/5 rounded-2xl font-mono text-left space-y-1.5 backdrop-blur-md", children: [
-            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center gap-3 text-[8px] text-[#3B82F6] font-black uppercase tracking-widest mb-1", children: [
+          /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "w-full p-3 md:p-4 bg-black/40 border border-white/5 rounded-2xl md:rounded-3xl font-mono text-left space-y-1.5 backdrop-blur-md", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime2.jsxs)("div", { className: "flex items-center gap-2 md:gap-3 text-[7px] md:text-[8px] text-[#3B82F6] font-black uppercase tracking-widest mb-1", children: [
               /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Terminal, { className: "w-3 h-3" }),
               " System Logs // Real-time"
             ] }),

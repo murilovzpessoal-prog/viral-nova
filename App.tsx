@@ -3179,12 +3179,12 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
             <button
               onClick={() => setStep(2)}
               disabled={selectedStyle === 'influencer' && !selectedInfluencer}
-              className={`px-16 py-6 rounded-[24px] text-lg font-black flex items-center gap-6 transition-all duration-700 relative overflow-hidden group/next ${(selectedStyle === 'review' || selectedInfluencer)
+              className={`px-8 md:px-16 py-4 md:py-6 rounded-full md:rounded-[24px] text-sm md:text-lg font-black flex items-center gap-4 md:gap-6 transition-all duration-700 relative overflow-hidden group/next ${(selectedStyle === 'review' || selectedInfluencer)
                 ? 'bg-white/10 backdrop-blur-xl border border-white/20 text-white shadow-[0_20px_40px_rgba(0,0,0,0.3)] hover:bg-white/20 hover:scale-[1.05] active:scale-95'
                 : 'bg-white/5 text-[#5b5b7b] border border-white/5 cursor-not-allowed opacity-40'
                 }`}
             >
-              <span className="relative z-10 uppercase tracking-[0.3em]">Prosseguir</span>
+              <span className="relative z-10 uppercase tracking-widest md:tracking-[0.3em]">Prosseguir</span>
               <div className="relative z-10 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover/next:bg-white/20 transition-colors">
                 <ArrowRight className="w-5 h-5 group-hover/next:translate-x-1 transition-transform" />
               </div>
@@ -3325,12 +3325,12 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
             <button
               onClick={() => setStep(3)}
               disabled={!selectedProduct}
-              className={`px-16 py-6 rounded-[24px] text-lg font-black flex items-center gap-6 transition-all duration-700 relative overflow-hidden group/next ${selectedProduct
+              className={`px-8 md:px-16 py-4 md:py-6 rounded-full md:rounded-[24px] text-sm md:text-lg font-black flex items-center gap-4 md:gap-6 transition-all duration-700 relative overflow-hidden group/next ${selectedProduct
                 ? 'bg-white/10 backdrop-blur-xl border border-white/20 text-white shadow-[0_20px_40px_rgba(0,0,0,0.3)] hover:bg-white/20 hover:scale-[1.05] active:scale-95'
                 : 'bg-white/5 text-[#5b5b7b] border border-white/5 cursor-not-allowed opacity-40'
                 }`}
             >
-              <span className="relative z-10 uppercase tracking-[0.3em]">Prosseguir</span>
+              <span className="relative z-10 uppercase tracking-widest md:tracking-[0.3em]">Prosseguir</span>
               <div className="relative z-10 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover/next:bg-white/20 transition-colors">
                 <ArrowRight className="w-5 h-5 group-hover/next:translate-x-1 transition-transform" />
               </div>
@@ -3545,12 +3545,12 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                 setStep(4);
               }}
               disabled={!selectedScenario || !selectedVideoModel || !selectedTone || !selectedDuration}
-              className={`px-16 py-6 rounded-[24px] text-lg font-black flex items-center gap-6 transition-all duration-700 relative overflow-hidden group/next ${selectedScenario && selectedVideoModel && selectedTone && selectedDuration
+              className={`px-8 md:px-16 py-4 md:py-6 rounded-full md:rounded-[24px] text-sm md:text-lg font-black flex items-center gap-6 transition-all duration-700 relative overflow-hidden group/next ${selectedScenario && selectedVideoModel && selectedTone && selectedDuration
                 ? 'bg-white/10 backdrop-blur-xl border border-white/20 text-white shadow-[0_20px_40px_rgba(0,0,0,0.3)] hover:bg-white/20 hover:scale-[1.05] active:scale-95'
                 : 'bg-white/5 text-[#5b5b7b] border border-white/5 cursor-not-allowed opacity-40'
                 }`}
             >
-              <span className="relative z-10 uppercase tracking-[0.3em]">Prosseguir</span>
+              <span className="relative z-10 uppercase tracking-widest md:tracking-[0.3em]">Prosseguir</span>
               <div className="relative z-10 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover/next:bg-white/20 transition-colors">
                 <ArrowRight className="w-5 h-5 group-hover/next:translate-x-1 transition-transform" />
               </div>

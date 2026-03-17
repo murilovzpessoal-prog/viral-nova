@@ -4141,13 +4141,13 @@ const PrevisibilidadeReceitaView: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-[#3B82F6]/5 via-transparent to-[#8B5CF6]/5 opacity-50"></div>
 
         {/* LEFT: TYPOGRAPHY SCULPTURE & PULSE */}
-        <div className="flex flex-col gap-6 flex-1 min-w-[400px] relative z-20">
+        <div className="flex flex-col gap-6 flex-1 min-w-0 lg:min-w-[400px] relative z-20">
           <div className="relative">
             {/* ARCHITECTURAL STATUS LINE */}
-            <div className="flex items-center gap-4 mb-4">
-              <div className="h-[1px] w-8 bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-4 justify-center lg:justify-start">
+              <div className="hidden sm:block h-[1px] w-8 bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
               <span className="text-[9px] font-black text-[#3B82F6] tracking-[0.4em] uppercase">Profit Matrix Alignment</span>
-              <div className="flex gap-1">
+              <div className="flex gap-1 shrink-0">
                 {[1, 2, 3].map((i) => (
                   <div key={i} className="w-1 h-1 bg-[#3B82F6]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
                 ))}
@@ -4155,20 +4155,20 @@ const PrevisibilidadeReceitaView: React.FC = () => {
             </div>
 
             <div className="relative">
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-black tracking-tighter leading-[0.85] select-none">
+              <h1 className="text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter leading-[0.85] select-none text-center lg:text-left pl-1 lg:pl-0">
                 <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent uppercase text-shadow-sm">Previsibilidade de</span>
                 <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent uppercase">Receita</span>
               </h1>
             </div>
           </div>
 
-          <p className="text-[#8d8d99] text-sm md:text-base font-medium max-w-sm leading-relaxed border-l border-white/10 pl-6">
+          <p className="text-[#8d8d99] text-sm md:text-base font-medium max-w-sm leading-relaxed border-l border-white/10 pl-4 lg:pl-6 text-center lg:text-left mx-auto lg:mx-0">
             Projete seus ganhos e descubra o poder de <span className="text-white">escala cognitiva</span> da sua operação no TikTok.
           </p>
         </div>
 
         {/* RIGHT: SYNERGIC MODULE CLUSTER */}
-        <div className="flex items-center justify-center lg:justify-end gap-6 flex-1 relative z-20">
+        <div className="flex flex-wrap items-center justify-center lg:justify-end gap-4 md:gap-6 flex-1 relative z-20">
           <div className="relative group">
             <div className="absolute inset-0 bg-[#3B82F6]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
             <div className="w-30 h-30 md:w-40 md:h-40 backdrop-blur-3xl bg-white/[0.03] border border-white/10 rounded-[28px] md:rounded-[40px] p-4 md:p-6 flex flex-col items-center justify-center shadow-2xl transition-all duration-500 group-hover:scale-105">

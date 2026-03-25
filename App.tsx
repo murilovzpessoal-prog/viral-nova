@@ -8,6 +8,7 @@ import {
   Loader2,
   Flame,
   ChevronRight,
+  ChevronDown,
   Check,
   Monitor,
   LayoutGrid,
@@ -79,7 +80,11 @@ import {
   ArrowLeft,
   BookOpen,
   Award,
-  Star
+  Star,
+  Image as ImageIcon,
+  Clapperboard,
+  Accessibility,
+  CreditCard
 } from 'lucide-react';
 
 // Language Context
@@ -313,7 +318,7 @@ const ConfiguracoesView: React.FC<ConfiguracoesViewProps> = ({ profileImage, onI
         </div>
 
         {/* Logout Button */}
-        <button 
+        <button
           onClick={onLogout}
           className="w-full bg-white/[0.02] border border-white/5 text-[#d946ef]/80 py-5 rounded-2xl font-black text-sm uppercase tracking-widest transition-all hover:bg-[#d946ef]/5 hover:border-[#d946ef]/20 flex items-center justify-center gap-3 group/logout"
         >
@@ -354,7 +359,7 @@ interface CustomAvatar { id: string; name: string; image: string; }
 
 const App: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-  const [currentPage, setCurrentPage] = useState<'explorar' | 'produtos' | 'videos' | 'criadores' | 'ugc-criador' | 'galeria-avatares' | 'galeria-prompts' | 'meus-avatares' | 'criar-avatar' | 'previsibilidade-receita' | 'hacks-virais' | 'hacks-virais-detalhe' | 'creator-academy' | 'passos-iniciais' | 'como-se-afiliar' | 'regras-e-restricoes' | 'como-criar-avatar-ia' | 'como-criar-videos-ugc' | 'configuracoes'>('explorar');
+  const [currentPage, setCurrentPage] = useState<'explorar' | 'produtos' | 'videos' | 'criadores' | 'ugc-criador' | 'galeria-avatares' | 'galeria-prompts' | 'meus-avatares' | 'criar-avatar' | 'previsibilidade-receita' | 'hacks-virais' | 'hacks-virais-detalhe' | 'creator-academy' | 'passos-iniciais' | 'como-se-afiliar' | 'regras-e-restricoes' | 'como-criar-avatar-ia' | 'como-criar-videos-ugc' | 'configuracoes' | 'creator-engine' | 'creator-engine-imagem' | 'creator-engine-video' | 'creator-engine-video-influencer' | 'creator-engine-video-cinematico' | 'creator-engine-video-imitar'>('explorar');
   const [selectedHackId, setSelectedHackId] = useState<string | null>(null);
   const [userProfileImage, setUserProfileImage] = useState<string | null>(null);
   const [language, setLanguage] = useState<Language>('pt');
@@ -377,7 +382,7 @@ const App: React.FC = () => {
 
   const handleInstallClick = async () => {
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as any).MSStream;
-    
+
     if (isIOS) {
       setShowIOSInstallGuide(true);
       return;
@@ -387,10 +392,10 @@ const App: React.FC = () => {
       console.log('PWA installation prompt not available. Maybe already installed or unsupported.');
       return;
     }
-    
+
     deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
-    
+
     if (outcome === 'accepted') {
       console.log('User accepted the install prompt');
     } else {
@@ -412,7 +417,7 @@ const App: React.FC = () => {
     if (!session?.user?.id) return null;
     const publicUrl = await uploadImageToSupabase(file, 'custom-avatars', session.user.id);
     if (!publicUrl) return null;
-    
+
     const newAvatar: CustomAvatar = { id: `custom-${Date.now()}`, name: `Meu Avatar ${customAvatars.length + 1}`, image: publicUrl };
     const newAvatars = [...customAvatars, newAvatar];
     setCustomAvatars(newAvatars);
@@ -504,9 +509,9 @@ const App: React.FC = () => {
         .from('products_viral')
         .select('*')
         .order('rank', { ascending: true });
-      
+
       const { data: hacksData } = await supabase.from('hacks_virais').select('*');
-      
+
       console.log('Supabase Connection Active:', { products: fetchedProducts?.length, hacks: hacksData?.length });
 
     } catch (e) {
@@ -788,6 +793,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
                 { id: 'produtos', label: t('produtos') },
                 { id: 'videos', label: t('videos') },
                 { id: 'criadores', label: t('criadores') },
+                { id: 'creator-engine', label: 'Creator Engine (NOVO)' },
                 { id: 'ugc-criador', label: t('ugcCriador') },
                 { id: 'galeria-avatares', label: t('galeriaAvatares') },
                 { id: 'galeria-prompts', label: t('galeriaPrompts') },
@@ -807,7 +813,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
 
             {/* Mobile App Install Button */}
             <div className="mt-auto pb-6 pt-4 border-t border-[#1e1f26]">
-              <button 
+              <button
                 onClick={() => {
                   setIsMobileMenuOpen(false);
                   handleInstallClick();
@@ -884,15 +890,16 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
                 {/* FERRAMENTAS DROPDOWN (HOVER) */}
                 <div className="relative group h-full flex items-center px-2 cursor-pointer">
                   <div className="flex items-center gap-1">
-                    <span className={`text-sm font-semibold transition-colors relative h-full flex items-center ${['ugc-criador', 'galeria-avatares', 'meus-avatares', 'criar-avatar', 'previsibilidade-receita', 'hacks-virais', 'hacks-virais-detalhe'].includes(currentPage) ? 'text-white' : 'text-[#8d8d99] group-hover:text-white'}`}>
+                    <span className={`text-sm font-semibold transition-colors relative h-full flex items-center ${['creator-engine', 'ugc-criador', 'galeria-avatares', 'meus-avatares', 'criar-avatar', 'previsibilidade-receita', 'hacks-virais', 'hacks-virais-detalhe'].includes(currentPage) ? 'text-white' : 'text-[#8d8d99] group-hover:text-white'}`}>
                       {t('ferramentas')}
-                      {['ugc-criador', 'galeria-avatares', 'meus-avatares', 'criar-avatar', 'previsibilidade-receita', 'hacks-virais', 'hacks-virais-detalhe'].includes(currentPage) && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#8B5CF6] rounded-t-sm"></span>}
+                      {['creator-engine', 'ugc-criador', 'galeria-avatares', 'meus-avatares', 'criar-avatar', 'previsibilidade-receita', 'hacks-virais', 'hacks-virais-detalhe'].includes(currentPage) && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#8B5CF6] rounded-t-sm"></span>}
                     </span>
                     <ChevronRight className="w-3.5 h-3.5 text-[#8d8d99] rotate-90 group-hover:text-white transition-colors" />
                   </div>
 
                   {/* Perfect Clone Tool Dropdown Menu */}
                   <div className="absolute top-[72px] left-1/2 -translate-x-1/2 invisible group-hover:visible opacity-0 group-hover:opacity-100 flex flex-col bg-[#14151a] border border-[#1e1f26] rounded-2xl p-2 min-w-[240px] shadow-[0_20px_40px_rgba(0,0,0,0.8)] z-[100] transition-all duration-200">
+                    <DropdownToolItem label="Creator Engine" badge="NOVO" isActive={currentPage === 'creator-engine'} onClick={() => setCurrentPage('creator-engine')} />
                     <DropdownToolItem label={t('ugcCriador')} badge="IA" isActive={currentPage === 'ugc-criador'} onClick={() => setCurrentPage('ugc-criador')} />
                     <DropdownToolItem label={t('galeriaAvatares')} badge="IA" isActive={currentPage === 'galeria-avatares'} onClick={() => setCurrentPage('galeria-avatares')} />
                     <DropdownToolItem label={t('galeriaPrompts')} isActive={currentPage === 'galeria-prompts'} onClick={() => setCurrentPage('galeria-prompts')} />
@@ -915,7 +922,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
 
               {/* Right Actions */}
               <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3 shrink-0">
-                <button 
+                <button
                   onClick={handleInstallClick}
                   className="hidden sm:flex items-center gap-2 px-4 py-2 border border-[#8B5CF6]/40 text-[#8B5CF6] rounded-lg text-xs font-black hover:bg-[#8B5CF6]/5 transition-all"
                 >
@@ -967,6 +974,14 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
 
         {/* Main Content Area */}
         <div className="flex-1">
+          {currentPage === 'creator-engine' && <CreatorEngineView onGoToImagem={() => setCurrentPage('creator-engine-imagem')} onGoToVideo={() => setCurrentPage('creator-engine-video')} onGoToMinhasCriacoes={() => setCurrentPage('creator-engine-minhas-criacoes')} onGoToCreditos={() => setCurrentPage('creator-engine-creditos')} />}
+          {currentPage === 'creator-engine-minhas-criacoes' && <CreatorEngineMinhasCriacoesView />}
+          {currentPage === 'creator-engine-creditos' && <CreatorEngineCreditosView />}
+          {currentPage === 'creator-engine-imagem' && <CreatorEngineGerarImagemView onBack={() => setCurrentPage('creator-engine')} />}
+          {currentPage === 'creator-engine-video' && <CreatorEngineGerarVideoView onBack={() => setCurrentPage('creator-engine')} onGoToInfluencer={() => setCurrentPage('creator-engine-video-influencer')} onGoToCinematico={() => setCurrentPage('creator-engine-video-cinematico')} onGoToImitar={() => setCurrentPage('creator-engine-video-imitar')} />}
+          {currentPage === 'creator-engine-video-influencer' && <CreatorEngineGerarVideoInfluencerIAView onBack={() => setCurrentPage('creator-engine-video')} />}
+          {currentPage === 'creator-engine-video-cinematico' && <CreatorEngineGerarVideoCinematicoView onBack={() => setCurrentPage('creator-engine-video')} />}
+          {currentPage === 'creator-engine-video-imitar' && <CreatorEngineGerarVideoImitarMovimentosView onBack={() => setCurrentPage('creator-engine-video')} />}
           {currentPage === 'explorar' && <ExploreView products={exploreTopProducts} onGoToAcademy={() => setCurrentPage('creator-academy')} onGoToProducts={() => setCurrentPage('produtos')} />}
           {currentPage === 'produtos' && <ProductsView products={viralProducts} />}
           {currentPage === 'videos' && <VideosView />}
@@ -1009,7 +1024,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
               </div>
               <h2 className="text-xl font-black text-white">Instale o Viralpulse</h2>
               <p className="text-sm text-[#8d8d99] mb-4">Para concluir a instalação no seu iPhone/iPad, siga os passos rápidos abaixo:</p>
-              
+
               <div className="w-full space-y-4 text-left bg-[#0B0B0E]/50 p-4 rounded-xl border border-white/5">
                 <div className="flex items-start gap-4">
                   <div className="w-8 h-8 rounded-full bg-[#1e1f26] flex items-center justify-center shrink-0 border border-white/10 font-black text-xs text-[#8B5CF6]">1</div>
@@ -1020,9 +1035,9 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
                   <p className="text-sm text-white/90 pt-1 leading-relaxed">Role o menu para baixo e toque em <strong>"Adicionar à Tela de Início"</strong>.</p>
                 </div>
               </div>
-              
-              <button 
-                onClick={() => setShowIOSInstallGuide(false)} 
+
+              <button
+                onClick={() => setShowIOSInstallGuide(false)}
                 className="mt-6 w-full py-4 bg-gradient-to-r from-[#8B5CF6] to-[#6D28D9] text-white font-black rounded-xl hover:scale-[1.02] transition-transform shadow-lg shadow-[#8B5CF6]/20 uppercase tracking-widest text-xs"
               >
                 Eu Entendi
@@ -1044,13 +1059,1026 @@ const DropdownToolItem: React.FC<{ label: string; badge?: string; isActive?: boo
   >
     <span className={`font-semibold text-[15px] transition-colors ${isActive ? 'text-[#3B82F6]' : 'text-[#8d8d99] group-hover/item:text-white'}`}>{label}</span>
     {badge && (
-      <span className="px-1.5 py-0.5 bg-[#3B82F6] text-white text-[9px] font-black rounded-sm uppercase tracking-tighter">
+      <span className="px-1.5 py-0.5 bg-[#8B5CF6] text-white text-[9px] font-black rounded-sm uppercase tracking-tighter shadow-sm">
         {badge}
       </span>
     )}
   </button>
 );
 
+
+// --- CREATOR ENGINE: GERAR IMAGEM VIEW ---
+const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
+  const [tipoCriacao, setTipoCriacao] = useState('Influencer Realista');
+  const [isTipoOpen, setIsTipoOpen] = useState(false);
+  const [refOpcional, setRefOpcional] = useState<File | null>(null);
+
+  const tiposDeCriacao = [
+    'Influencer Realista',
+    'Influencer UGC',
+    'Clone (Influencer IA)',
+    'Clone (Celebridades)',
+    'POV (mostrando produto)',
+    'Cenário Cinematográfico'
+  ];
+
+  return (
+    <main className="max-w-[1000px] mx-auto px-4 md:px-8 py-10 md:py-16 flex flex-col items-center">
+      {/* Header */}
+      <div className="w-full max-w-3xl mb-10">
+        <h1 className="text-3xl md:text-[32px] font-bold text-white mb-2 tracking-tight">Gerador de Imagens</h1>
+        <p className="text-[#a8a8b3] text-sm md:text-base">Gere imagens e vídeos com inteligência artificial</p>
+      </div>
+
+      {/* Main Form Container */}
+      <div className="w-full max-w-3xl bg-[#111114] border border-[#27272A] rounded-3xl p-6 md:p-10 relative">
+
+        {/* Back Button */}
+        <button onClick={onBack} className="flex items-center gap-2 text-[#a8a8b3] hover:text-white transition-colors mb-8 font-medium text-sm group focus:outline-none">
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+          Voltar
+        </button>
+
+        <h2 className="text-xl md:text-2xl font-bold text-white mb-8 tracking-tight">Gerar Imagem</h2>
+
+        {/* Form Fields */}
+        <div className="space-y-6">
+
+          {/* Tipo de criação (CUSTOM DROPDOWN) */}
+          <div className="relative">
+            <label className="block text-sm font-semibold text-white mb-2.5">O que você quer gerar?</label>
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setIsTipoOpen(!isTipoOpen)}
+                className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-[#e4e4e7] flex items-center justify-between focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all font-medium"
+              >
+                {tipoCriacao || 'Selecione um tipo de criação'}
+                <ChevronDown className={`w-4 h-4 text-[#a8a8b3] transition-transform ${isTipoOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {isTipoOpen && (
+                <div className="absolute z-50 left-0 right-0 top-[calc(100%+8px)] bg-[#18181B] border border-[#27272A] rounded-xl shadow-2xl py-1.5 overflow-hidden pointer-events-auto">
+                  {tiposDeCriacao.map((tipo) => (
+                    <button
+                      key={tipo}
+                      type="button"
+                      onClick={() => {
+                        setTipoCriacao(tipo);
+                        setIsTipoOpen(false);
+                      }}
+                      className={`w-[calc(100%-12px)] mx-1.5 text-left px-3 py-2.5 text-sm font-medium flex items-center gap-3 transition-colors ${tipoCriacao === tipo
+                          ? 'bg-[#3B82F6] text-white rounded-lg hover:bg-[#2563EB]'
+                          : 'text-[#e4e4e7] hover:text-white hover:bg-[#27272A] rounded-lg'
+                        }`}
+                    >
+                      {tipoCriacao === tipo ? (
+                        <Check className="w-4 h-4 text-white" />
+                      ) : (
+                        <div className="w-4 h-4" /> /* Invisible spacer */
+                      )}
+                      {tipo}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Conditional Estilo da Foto */}
+          {(tipoCriacao === 'Influencer Realista' || tipoCriacao === 'Influencer UGC' || tipoCriacao === 'Clone (Celebridades)') && (
+            <div>
+              <label className="block text-sm font-semibold text-white mb-2.5">Estilo da Foto</label>
+              <div className="relative">
+                <select className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-[#e4e4e7] appearance-none cursor-pointer focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all font-medium">
+                  <option value="frente">De frente</option>
+                  <option value="perfil">De perfil</option>
+                  <option value="corpo-inteiro">Corpo inteiro</option>
+                </select>
+                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#a8a8b3] pointer-events-none" />
+              </div>
+            </div>
+          )}
+
+          {/* Conditional Double Upload Box for Clone IA */}
+          {tipoCriacao === 'Clone (Influencer IA)' && (
+            <div>
+              <label className="block text-sm font-semibold text-white mb-2.5">Referências obrigatórias</label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="flex flex-col">
+                  <span className="text-xs text-[#a8a8b3] mb-2 font-medium">Imagem Base</span>
+                  <div className="h-28 sm:h-32 bg-transparent border-[1.5px] border-dashed border-[#27272A] rounded-[14px] flex flex-col items-center justify-center cursor-pointer hover:border-[#4F46E5] hover:bg-[#18181B] transition-all group">
+                    <ImageIcon className="w-6 h-6 text-[#a8a8b3] group-hover:text-[#4F46E5] mb-2 transition-colors" strokeWidth={1.5} />
+                    <span className="text-sm font-medium text-[#e4e4e7]">Enviar</span>
+                  </div>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xs text-[#a8a8b3] mb-2 font-medium">Imagem de Referência</span>
+                  <div className="h-28 sm:h-32 bg-transparent border-[1.5px] border-dashed border-[#27272A] rounded-[14px] flex flex-col items-center justify-center cursor-pointer hover:border-[#4F46E5] hover:bg-[#18181B] transition-all group">
+                    <ImageIcon className="w-6 h-6 text-[#a8a8b3] group-hover:text-[#4F46E5] mb-2 transition-colors" strokeWidth={1.5} />
+                    <span className="text-sm font-medium text-[#e4e4e7]">Enviar</span>
+                  </div>
+                </div>
+              </div>
+              <p className="text-xs font-medium text-[#a8a8b3] mt-3">
+                A imagem base define o cenário e pose. A imagem de referência define o rosto e aparência.
+              </p>
+            </div>
+          )}
+
+          {/* Descrição */}
+          <div>
+            <label className="block text-sm font-semibold text-white mb-2.5">Descrição</label>
+            <div className="relative">
+              <textarea
+                rows={4}
+                className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-[#e4e4e7] placeholder:text-[#a8a8b3]/50 focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all resize-none font-medium"
+                placeholder={
+                  tipoCriacao === 'Clone (Influencer IA)'
+                    ? "Descreva o que você quer criar. Exemplo: substitua o rosto e a roupa da pessoa da imagem base pelo rosto e roupa da pessoa da imagem de referência, mantendo o mesmo cenário e frame da imagem base."
+                    : tipoCriacao === 'Clone (Celebridades)'
+                      ? "Crie uma imagem do/da (celebridade) Usando o mesmo cenário e substituindo 100% a pessoa da imagem de referência"
+                      : "Descreva o que você quer criar. Exemplo: influencer brasileira de 23 anos com roupa fitness"
+                }
+              ></textarea>
+              <div className="absolute bottom-3 right-4 text-xs text-[#a8a8b3] font-medium">0/2000</div>
+            </div>
+          </div>
+
+          {/* Conditional Alert Box for Clone Celebridades */}
+          {tipoCriacao === 'Clone (Celebridades)' && (
+            <div className="bg-[#EAB308]/[0.05] border border-[#EAB308]/30 rounded-xl p-4 flex gap-3 items-start">
+              <AlertCircle className="w-5 h-5 text-[#EAB308] shrink-0 mt-0.5" />
+              <p className="text-sm font-medium text-[#EAB308] leading-relaxed">
+                Exemplos com celebridades são apenas demonstrativos. Recomendamos utilizar imagens de influencers geradas por IA ou imagens que você tenha permissão para usar.
+              </p>
+            </div>
+          )}
+
+          {/* Proporção */}
+          <div>
+            <label className="block text-sm font-semibold text-white mb-2.5">Proporção</label>
+            <div className="relative">
+              <select className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-[#e4e4e7] appearance-none cursor-pointer focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all font-medium">
+                <option value="1:1">1:1 Quadrado</option>
+                <option value="9:16">9:16 Vertical (Stories)</option>
+                <option value="16:9">16:9 Horizontal (YouTube)</option>
+              </select>
+              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#a8a8b3] pointer-events-none" />
+            </div>
+          </div>
+
+          {/* Referências opcionais (hidden for Clone IA) */}
+          {tipoCriacao !== 'Clone (Influencer IA)' && (
+            <div>
+              <label className="block text-sm font-semibold text-white mb-2.5">Referências opcionais</label>
+              <label className="w-20 h-20 relative bg-transparent border-[1.5px] border-dashed border-[#27272A] rounded-[14px] flex items-center justify-center cursor-pointer hover:border-[#4F46E5] hover:bg-[#18181B] transition-all overflow-hidden group">
+                <input type="file" className="hidden" accept="image/jpeg, image/png, image/webp" onChange={(e) => { if (e.target.files && e.target.files[0]) setRefOpcional(e.target.files[0]); }} />
+                {refOpcional ? (
+                  <div className="absolute inset-0 w-full h-full">
+                    <img src={URL.createObjectURL(refOpcional)} alt="Preview" className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-black/40 hover:bg-black/60 transition-colors flex items-center justify-center">
+                      <button onClick={(e) => { e.preventDefault(); setRefOpcional(null); }} className="p-2">
+                        <X className="w-5 h-5 text-white" strokeWidth={2.5} />
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <Upload className="w-5 h-5 text-[#a8a8b3] group-hover:text-[#4F46E5] transition-colors" strokeWidth={2} />
+                )}
+              </label>
+            </div>
+          )}
+
+          {/* Custo e Saldo */}
+          <div className="flex items-center justify-between bg-[#18181B] border border-[#27272A] rounded-xl px-5 py-4 mt-8">
+            <div className="flex items-center gap-2">
+              <Link className="w-4 h-4 text-[#3B82F6]" />
+              <span className="text-sm font-medium text-white">Custo: 45 créditos</span>
+            </div>
+            <div className="text-sm font-medium text-[#a8a8b3]">
+              Saldo: 500
+            </div>
+          </div>
+
+          {/* Botão Gerar */}
+          <button className="w-full bg-[#3B82F6] hover:bg-[#2563EB] text-white rounded-xl py-4 font-bold text-sm transition-all shadow-md hover:shadow-[#3B82F6]/20 flex items-center justify-center gap-2 group mt-4">
+            <Sparkles className="w-4 h-4" />
+            Gerar Imagem
+          </button>
+        </div>
+      </div>
+
+      {/* Decorative Bottom Sparkle */}
+      <div className="mt-8 opacity-[0.25] flex flex-col items-center">
+        <Sparkles className="w-8 h-8 text-white mb-3" strokeWidth={1.5} />
+        <span className="text-sm font-medium text-white">Descreva o que deseja criar e clique em gerar</span>
+      </div>
+    </main>
+  );
+};
+
+// --- CREATOR ENGINE: GERAR VÍDEO VIEW ---
+const CreatorEngineGerarVideoView: React.FC<{ onBack: () => void; onGoToInfluencer: () => void; onGoToCinematico: () => void; onGoToImitar: () => void }> = ({ onBack, onGoToInfluencer, onGoToCinematico, onGoToImitar }) => {
+  return (
+    <main className="max-w-[1000px] mx-auto px-4 md:px-8 py-10 md:py-16 flex flex-col items-center">
+      {/* Header */}
+      <div className="w-full max-w-4xl mb-10">
+        <h1 className="text-3xl md:text-[32px] font-bold text-white mb-2 tracking-tight">Produção de Vídeos com IA</h1>
+        <p className="text-[#a8a8b3] text-sm md:text-base">Crie, anime e transforme ideias em vídeos profissionais com facilidade.</p>
+      </div>
+
+      {/* Main Form Container */}
+      <div className="w-full max-w-4xl bg-[#111114] border border-[#27272A] rounded-3xl p-6 md:p-10 relative">
+
+        {/* Back Button */}
+        <button onClick={onBack} className="flex items-center gap-2 text-[#a8a8b3] hover:text-white transition-colors mb-8 font-medium text-sm group focus:outline-none">
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+          Voltar
+        </button>
+
+        <h2 className="text-xl md:text-2xl font-bold text-white mb-1 tracking-tight">Gerar Vídeo</h2>
+        <p className="text-[#a8a8b3] text-sm md:text-base mb-8">Escolha o estilo de vídeo</p>
+
+        {/* 3 Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+
+          {/* Card 1 */}
+          <button onClick={onGoToInfluencer} className="flex flex-col text-left bg-[#18181B] border border-[#27272A] hover:border-[#3F3F46] p-6 rounded-2xl transition-all group shadow-sm hover:shadow-lg focus:outline-none">
+            <Wand2 className="w-6 h-6 text-[#a8a8b3] group-hover:text-[#e4e4e7] mb-4 transition-colors" strokeWidth={1.5} />
+            <h3 className="text-white font-bold text-[15px] mb-2 tracking-tight">Influencer IA</h3>
+            <p className="text-[#a8a8b3] text-xs leading-relaxed">Crie vídeos realistas de influencer UGC com IA</p>
+          </button>
+
+          {/* Card 2 */}
+          <button onClick={onGoToCinematico} className="flex flex-col text-left bg-[#18181B] border border-[#27272A] hover:border-[#3F3F46] p-6 rounded-2xl transition-all group shadow-sm hover:shadow-lg focus:outline-none">
+            <Clapperboard className="w-6 h-6 text-[#a8a8b3] group-hover:text-[#e4e4e7] mb-4 transition-colors" strokeWidth={1.5} />
+            <h3 className="text-white font-bold text-[15px] mb-2 tracking-tight leading-tight">Vídeo Cinematográfico</h3>
+            <p className="text-[#a8a8b3] text-xs leading-relaxed">Transforme imagens em vídeos cinematográficos com IA</p>
+          </button>
+
+          {/* Card 3 */}
+          <button onClick={onGoToImitar} className="flex flex-col text-left bg-[#18181B] border border-[#27272A] hover:border-[#3F3F46] p-6 rounded-2xl transition-all group shadow-sm hover:shadow-lg focus:outline-none">
+            <Accessibility className="w-6 h-6 text-[#a8a8b3] group-hover:text-[#e4e4e7] mb-4 transition-colors" strokeWidth={1.5} />
+            <h3 className="text-white font-bold text-[15px] mb-2 tracking-tight">Imitar Movimentos</h3>
+            <p className="text-[#a8a8b3] text-xs leading-relaxed">Replique movimentos de um vídeo</p>
+          </button>
+
+        </div>
+      </div>
+    </main>
+  );
+};
+
+// --- CREATOR ENGINE: GERAR VÍDEO - INFLUENCER IA VIEW ---
+const CreatorEngineGerarVideoInfluencerIAView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
+  const [imagemRef, setImagemRef] = useState<File | null>(null);
+
+  return (
+    <main className="max-w-[1000px] mx-auto px-4 md:px-8 py-10 md:py-16 flex flex-col items-center">
+      {/* Header */}
+      <div className="w-full max-w-3xl mb-10">
+        <h1 className="text-3xl md:text-[32px] font-bold text-white mb-2 tracking-tight">Seu Influencer com IA</h1>
+        <p className="text-[#a8a8b3] text-sm md:text-base max-w-2xl">Crie avatares realistas e profissionais prontos para representar sua marca em qualquer conteúdo.</p>
+      </div>
+
+      {/* Main Form Container */}
+      <div className="w-full max-w-3xl bg-[#111114] border border-[#27272A] rounded-3xl p-6 md:p-10 relative">
+
+        {/* Back Button */}
+        <button onClick={onBack} className="flex items-center gap-2 text-[#a8a8b3] hover:text-white transition-colors mb-8 font-medium text-sm group focus:outline-none">
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+          Voltar
+        </button>
+
+        <h2 className="text-xl md:text-2xl font-bold text-white mb-8 tracking-tight">Criativo</h2>
+
+        {/* Form Fields */}
+        <div className="space-y-6">
+
+          {/* O que você quer gerar? */}
+          <div>
+            <label className="block text-sm font-semibold text-white mb-2.5">O que você quer gerar?</label>
+            <div className="relative">
+              <select className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-[#a8a8b3] appearance-none cursor-pointer focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all font-medium">
+                <option value="">Selecione o tipo de vídeo</option>
+                <option value="avatar">Avatar Falante</option>
+                <option value="ugc">Influencer UGC de Produto</option>
+              </select>
+              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#a8a8b3] pointer-events-none" />
+            </div>
+          </div>
+
+          {/* Descrição */}
+          <div>
+            <label className="block text-sm font-semibold text-white mb-2.5">Descrição</label>
+            <div className="relative">
+              <textarea
+                rows={4}
+                className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-[#e4e4e7] placeholder:text-[#a8a8b3]/50 focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all resize-none font-medium"
+                placeholder="Descreva o que você quer criar..."
+              ></textarea>
+              <div className="absolute bottom-3 right-4 text-xs text-[#a8a8b3] font-medium">0/2000</div>
+            </div>
+          </div>
+
+          {/* Imagem de Referência */}
+          <div>
+            <label className="block text-sm font-semibold text-white mb-2.5">Imagem de Referência</label>
+            <label className="w-full h-36 relative bg-transparent border-[1.5px] border-dashed border-[#27272A] rounded-[14px] flex flex-col items-center justify-center cursor-pointer hover:border-[#4F46E5] hover:bg-[#18181B] transition-all group overflow-hidden">
+              <input type="file" className="hidden" accept="image/jpeg, image/png, image/webp" onChange={(e) => { if (e.target.files && e.target.files[0]) setImagemRef(e.target.files[0]); }} />
+              {imagemRef ? (
+                <div className="absolute inset-0 w-full h-full">
+                  <img src={URL.createObjectURL(imagemRef)} alt="Preview" className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-black/40 hover:bg-black/60 transition-colors flex items-center justify-center">
+                    <button onClick={(e) => { e.preventDefault(); setImagemRef(null); }} className="p-2 rounded-full backdrop-blur-sm bg-black/20 hover:bg-black/40 transition-all">
+                      <X className="w-6 h-6 text-white" strokeWidth={2.5} />
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <ImageIcon className="w-6 h-6 text-[#a8a8b3] group-hover:text-[#4F46E5] mb-2 transition-colors" strokeWidth={1.5} />
+                  <span className="text-sm font-medium text-[#e4e4e7] mb-1">Clique para enviar uma imagem</span>
+                  <span className="text-xs font-medium text-[#a8a8b3]">JPG, PNG ou WEBP</span>
+                </>
+              )}
+            </label>
+          </div>
+
+          {/* Proporção e Duração Row */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* Proporção */}
+            <div>
+              <label className="block text-sm font-semibold text-white mb-2.5">Proporção</label>
+              <div className="relative">
+                <select className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-[#e4e4e7] appearance-none cursor-pointer focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all font-medium">
+                  <option value="9:16">9:16 Retrato</option>
+                  <option value="16:9">16:9 Paisagem</option>
+                  <option value="1:1">1:1 Quadrado</option>
+                </select>
+                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#a8a8b3] pointer-events-none" />
+              </div>
+            </div>
+
+            {/* Duração */}
+            <div>
+              <label className="block text-sm font-semibold text-white mb-2.5">Duração</label>
+              <div className="relative">
+                <select className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-[#e4e4e7] appearance-none cursor-pointer focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all font-medium">
+                  <option value="8">8 segundos</option>
+                  <option value="15">15 segundos</option>
+                  <option value="30">30 segundos</option>
+                </select>
+                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#a8a8b3] pointer-events-none" />
+              </div>
+            </div>
+          </div>
+
+          {/* Custo e Saldo */}
+          <div className="flex items-center justify-between bg-[#18181B] border border-[#27272A] rounded-xl px-5 py-4 mt-8">
+            <div className="flex items-center gap-2">
+              <Link className="w-4 h-4 text-[#3B82F6]" />
+              <span className="text-sm font-medium text-white">Custo: 150 créditos</span>
+            </div>
+            <div className="text-sm font-medium text-[#a8a8b3]">
+              Saldo: 500
+            </div>
+          </div>
+
+          {/* Botão Gerar Vídeo */}
+          <button className="w-full bg-[#3B82F6] hover:bg-[#2563EB] text-white rounded-xl py-4 font-bold text-sm transition-all shadow-md hover:shadow-[#3B82F6]/20 flex items-center justify-center gap-2 group mt-4">
+            <Video className="w-5 h-5" />
+            Gerar Vídeo
+          </button>
+        </div>
+      </div>
+
+      {/* Decorative Bottom */}
+      <div className="mt-8 opacity-[0.25] flex flex-col items-center">
+        <Video className="w-8 h-8 text-white mb-3" strokeWidth={1.5} />
+        <span className="text-sm font-medium text-white">Descreva o vídeo que deseja criar e clique em gerar</span>
+      </div>
+    </main>
+  );
+};
+
+
+// --- CREATOR ENGINE: GERAR VÍDEO - CINEMATOGRÁFICO VIEW ---
+const CreatorEngineGerarVideoCinematicoView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
+  const [imagemBase, setImagemBase] = useState<File | null>(null);
+
+  return (
+    <main className="max-w-[1000px] mx-auto px-4 md:px-8 py-10 md:py-16 flex flex-col items-center">
+      {/* Header */}
+      <div className="w-full max-w-3xl mb-10">
+        <h1 className="text-3xl md:text-[32px] font-bold text-white mb-2 tracking-tight">Vídeos Cinematográficos com IA</h1>
+        <p className="text-[#a8a8b3] text-sm md:text-base max-w-2xl">Use IA para transformar qualquer ideia em cenas cinematográficas que prendem atenção e geram resultado.</p>
+      </div>
+
+      {/* Main Form Container */}
+      <div className="w-full max-w-3xl bg-[#111114] border border-[#27272A] rounded-3xl p-6 md:p-10 relative">
+
+        {/* Back Button */}
+        <button onClick={onBack} className="flex items-center gap-2 text-[#a8a8b3] hover:text-white transition-colors mb-8 font-medium text-sm group focus:outline-none">
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+          Voltar
+        </button>
+
+        <h2 className="text-xl md:text-2xl font-bold text-white mb-8 tracking-tight">Vídeo Cinematográfico</h2>
+
+        {/* Form Fields */}
+        <div className="space-y-6">
+
+          {/* Imagem Base */}
+          <div>
+            <label className="block text-sm font-semibold text-white mb-2.5">Imagem Base</label>
+            <label className="w-full h-36 relative bg-transparent border-[1.5px] border-dashed border-[#27272A] rounded-[14px] flex flex-col items-center justify-center cursor-pointer hover:border-[#4F46E5] hover:bg-[#18181B] transition-all group overflow-hidden">
+              <input type="file" className="hidden" accept="image/jpeg, image/png, image/webp" onChange={(e) => { if (e.target.files && e.target.files[0]) setImagemBase(e.target.files[0]); }} />
+              {imagemBase ? (
+                <div className="absolute inset-0 w-full h-full">
+                  <img src={URL.createObjectURL(imagemBase)} alt="Preview" className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-black/40 hover:bg-black/60 transition-colors flex items-center justify-center">
+                    <button onClick={(e) => { e.preventDefault(); setImagemBase(null); }} className="p-2 rounded-full backdrop-blur-sm bg-black/20 hover:bg-black/40 transition-all">
+                      <X className="w-6 h-6 text-white" strokeWidth={2.5} />
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <ImageIcon className="w-6 h-6 text-[#a8a8b3] group-hover:text-[#4F46E5] mb-2 transition-colors" strokeWidth={1.5} />
+                  <span className="text-sm font-medium text-[#e4e4e7] mb-1">Clique para enviar uma imagem</span>
+                  <span className="text-xs font-medium text-[#a8a8b3]">JPG, PNG ou WEBP</span>
+                </>
+              )}
+            </label>
+          </div>
+
+          {/* Descrição ("O que deve acontecer...") */}
+          <div>
+            <label className="block text-sm font-semibold text-white mb-2.5">O que deve acontecer no vídeo?</label>
+            <div className="relative">
+              <textarea
+                rows={4}
+                className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-[#e4e4e7] placeholder:text-[#a8a8b3]/50 focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all resize-none font-medium"
+                placeholder="Descreva a ação: carro acelerando, vento no cabelo, pessoa andando, câmera cinematográfica..."
+              ></textarea>
+              <div className="absolute bottom-3 right-4 text-xs text-[#a8a8b3] font-medium">0/2000</div>
+            </div>
+            <p className="text-xs font-medium text-[#a8a8b3] mt-3">
+              Envie uma imagem e descreva o que deve acontecer no vídeo. Exemplo: carro acelerando, vento no cabelo, pessoa andando, câmera cinematográfica.
+            </p>
+          </div>
+
+          {/* Custo e Saldo */}
+          <div className="flex items-center justify-between bg-[#18181B] border border-[#27272A] rounded-xl px-5 py-4 mt-8">
+            <div className="flex items-center gap-2">
+              <Link className="w-4 h-4 text-[#3B82F6]" />
+              <span className="text-sm font-medium text-white">Custo: 180 créditos</span>
+            </div>
+            <div className="text-sm font-medium text-[#a8a8b3]">
+              Saldo: 500
+            </div>
+          </div>
+
+          {/* Botão Gerar Vídeo */}
+          <button className="w-full bg-[#3B82F6] hover:bg-[#2563EB] text-white rounded-xl py-4 font-bold text-sm transition-all shadow-md hover:shadow-[#3B82F6]/20 flex items-center justify-center gap-2 group mt-4">
+            <Video className="w-5 h-5" />
+            Gerar Vídeo
+          </button>
+        </div>
+      </div>
+
+      {/* Decorative Bottom */}
+      <div className="mt-8 opacity-[0.25] flex flex-col items-center">
+        <Video className="w-8 h-8 text-white mb-3" strokeWidth={1.5} />
+        <span className="text-sm font-medium text-white">Envie uma imagem e descreva o vídeo que deseja criar</span>
+      </div>
+    </main>
+  );
+};
+
+
+// --- CREATOR ENGINE: GERAR VÍDEO - IMITAR MOVIMENTOS VIEW ---
+const CreatorEngineGerarVideoImitarMovimentosView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
+  const [imagemRef, setImagemRef] = useState<File | null>(null);
+  const [videoRef, setVideoRef] = useState<File | null>(null);
+
+  return (
+    <main className="max-w-[1000px] mx-auto px-4 md:px-8 py-10 md:py-16 flex flex-col items-center">
+      {/* Header */}
+      <div className="w-full max-w-3xl mb-10">
+        <h1 className="text-3xl md:text-[32px] font-bold text-white mb-2 tracking-tight">Imite Movimentos com IA</h1>
+        <p className="text-[#a8a8b3] text-sm md:text-base max-w-2xl">Faça seu avatar copiar qualquer movimento de forma realista.</p>
+      </div>
+
+      {/* Main Form Container */}
+      <div className="w-full max-w-3xl bg-[#111114] border border-[#27272A] rounded-3xl p-6 md:p-10 relative">
+
+        {/* Back Button */}
+        <button onClick={onBack} className="flex items-center gap-2 text-[#a8a8b3] hover:text-white transition-colors mb-8 font-medium text-sm group focus:outline-none">
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+          Voltar
+        </button>
+
+        <h2 className="text-xl md:text-2xl font-bold text-white mb-8 tracking-tight">Imitar Movimentos</h2>
+
+        {/* Form Fields */}
+        <div className="space-y-6">
+
+          {/* Referências obrigatórias */}
+          <div>
+            <label className="block text-sm font-semibold text-white mb-2.5">Referências obrigatórias</label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Imagem */}
+              <div>
+                <label className="block text-xs font-medium text-[#a8a8b3] mb-1.5">Imagem</label>
+                <label className="w-full h-32 relative bg-transparent border-[1.5px] border-dashed border-[#27272A] rounded-[14px] flex flex-col items-center justify-center cursor-pointer hover:border-[#4F46E5] hover:bg-[#18181B] transition-all group overflow-hidden">
+                  <input type="file" className="hidden" accept="image/jpeg, image/png, image/webp" onChange={(e) => { if (e.target.files && e.target.files[0]) setImagemRef(e.target.files[0]); }} />
+                  {imagemRef ? (
+                    <div className="absolute inset-0 w-full h-full">
+                      <img src={URL.createObjectURL(imagemRef)} alt="Preview" className="w-full h-full object-cover" />
+                      <div className="absolute inset-0 bg-black/40 hover:bg-black/60 transition-colors flex items-center justify-center">
+                        <button onClick={(e) => { e.preventDefault(); setImagemRef(null); }} className="p-2 rounded-full backdrop-blur-sm bg-black/20 hover:bg-black/40 transition-all">
+                          <X className="w-6 h-6 text-white" strokeWidth={2.5} />
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <ImageIcon className="w-5 h-5 text-[#a8a8b3] group-hover:text-[#4F46E5] mb-2 transition-colors" strokeWidth={1.5} />
+                      <span className="text-xs font-medium text-[#e4e4e7]">Enviar</span>
+                    </>
+                  )}
+                </label>
+              </div>
+
+              {/* Vídeo de Movimento */}
+              <div>
+                <label className="block text-xs font-medium text-[#a8a8b3] mb-1.5">Vídeo de Movimento</label>
+                <label className="w-full h-32 relative bg-transparent border-[1.5px] border-dashed border-[#27272A] rounded-[14px] flex flex-col items-center justify-center cursor-pointer hover:border-[#4F46E5] hover:bg-[#18181B] transition-all group overflow-hidden">
+                  <input type="file" className="hidden" accept="video/mp4, video/webm, video/quicktime" onChange={(e) => { if (e.target.files && e.target.files[0]) setVideoRef(e.target.files[0]); }} />
+                  {videoRef ? (
+                    <div className="absolute inset-0 w-full h-full">
+                      <video src={URL.createObjectURL(videoRef)} className="w-full h-full object-cover" muted loop autoPlay playsInline />
+                      <div className="absolute inset-0 bg-black/40 hover:bg-black/60 transition-colors flex items-center justify-center">
+                        <button onClick={(e) => { e.preventDefault(); setVideoRef(null); }} className="p-2 rounded-full backdrop-blur-sm bg-black/20 hover:bg-black/40 transition-all">
+                          <X className="w-6 h-6 text-white" strokeWidth={2.5} />
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <Video className="w-5 h-5 text-[#a8a8b3] group-hover:text-[#4F46E5] mb-2 transition-colors" strokeWidth={1.5} />
+                      <span className="text-xs font-medium text-[#e4e4e7]">Enviar</span>
+                    </>
+                  )}
+                </label>
+              </div>
+            </div>
+          </div>
+
+          {/* Descrição (opcional) */}
+          <div>
+            <label className="block text-sm font-semibold text-white mb-2.5">Descrição (opcional)</label>
+            <div className="relative">
+              <textarea
+                rows={3}
+                className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-[#e4e4e7] placeholder:text-[#a8a8b3]/50 focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all resize-none font-medium"
+                placeholder="Descreva detalhes adicionais sobre o movimento..."
+              ></textarea>
+              <div className="absolute bottom-3 right-4 text-xs text-[#a8a8b3] font-medium">0/2000</div>
+            </div>
+          </div>
+
+          {/* Qualidade de saída */}
+          <div>
+            <label className="block text-sm font-semibold text-white mb-2.5">Qualidade de saída</label>
+            <div className="relative">
+              <select className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-[#e4e4e7] appearance-none cursor-pointer focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all font-medium">
+                <option value="720p">720P (HD)</option>
+                <option value="1080p">1080P (Full HD)</option>
+              </select>
+              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#a8a8b3] pointer-events-none" />
+            </div>
+          </div>
+
+          {/* Botão Gerar Vídeo */}
+          <button className="w-full bg-[#3B82F6] hover:bg-[#2563EB] text-white rounded-xl py-4 font-bold text-sm transition-all shadow-md hover:shadow-[#3B82F6]/20 flex items-center justify-center gap-2 group mt-6">
+            <Video className="w-5 h-5" />
+            Gerar Vídeo
+          </button>
+        </div>
+      </div>
+
+      {/* Decorative Bottom */}
+      <div className="mt-8 opacity-[0.25] flex flex-col items-center">
+        <Video className="w-8 h-8 text-white mb-3" strokeWidth={1.5} />
+        <span className="text-sm font-medium text-white">Envie as referências e clique em gerar</span>
+      </div>
+    </main>
+  );
+};
+
+
+// --- CREATOR ENGINE MINHAS CRIAÇÕES VIEW ---
+const CreatorEngineMinhasCriacoesView: React.FC = () => {
+  return (
+    <main className="max-w-[1400px] mx-auto px-6 py-8 md:py-12 min-h-screen">
+      {/* Header */}
+      <div className="mb-8">
+        <h1 className="text-2xl font-bold text-white mb-2 tracking-tight">Minhas Criações</h1>
+        <p className="text-sm text-[#A1A1AA] font-medium">Histórico de imagens e vídeos gerados</p>
+      </div>
+
+      {/* Search and Filters */}
+      <div className="flex flex-col md:flex-row gap-4 mb-20">
+        {/* Search Bar */}
+        <div className="relative flex-1">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#71717A]" strokeWidth={2} />
+          <input 
+            type="text" 
+            placeholder="Buscar por prompt..." 
+            className="w-full bg-[#18181B] hover:bg-[#27272A]/50 border border-[#27272A] rounded-[12px] pl-12 pr-4 py-3.5 text-sm text-white placeholder:text-[#52525B] focus:outline-none focus:bg-[#18181B] focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all font-medium"
+          />
+        </div>
+
+        {/* Filters */}
+        <div className="flex gap-2 shrink-0">
+          <button className="px-5 py-3.5 bg-[#3B82F6] hover:bg-[#2563EB] text-white text-sm font-bold rounded-[12px] transition-colors shadow-sm">
+            Todos
+          </button>
+          <button className="px-5 py-3.5 bg-[#18181B] hover:bg-[#27272A] border border-[#27272A] text-[#A1A1AA] hover:text-white text-sm font-medium rounded-[12px] transition-colors shadow-sm">
+            Imagens
+          </button>
+          <button className="px-5 py-3.5 bg-[#18181B] hover:bg-[#27272A] border border-[#27272A] text-[#A1A1AA] hover:text-white text-sm font-medium rounded-[12px] transition-colors shadow-sm">
+            Vídeos
+          </button>
+        </div>
+      </div>
+
+      {/* Empty State */}
+      <div className="flex flex-col items-center justify-center py-20 opacity-80">
+        <div className="mb-6 relative">
+          <ImageIcon className="w-16 h-16 text-[#3F3F46]" strokeWidth={1.5} />
+          <div className="absolute -bottom-2 -right-2 bg-[#09090b] rounded-full p-1 border border-[#09090b]">
+             <ImageIcon className="w-8 h-8 text-[#52525B]" strokeWidth={1.5} />
+          </div>
+        </div>
+        <p className="text-[#71717A] text-[15px] font-medium">Nenhuma criação encontrada</p>
+      </div>
+    </main>
+  );
+};
+
+// --- CREATOR ENGINE CRÉDITOS VIEW ---
+const CreatorEngineCreditosView: React.FC = () => {
+  return (
+    <main className="max-w-[1400px] mx-auto px-6 py-8 md:py-12 min-h-screen">
+      {/* Header */}
+      <div className="mb-10">
+        <h1 className="text-2xl font-bold text-white mb-2 tracking-tight">Créditos</h1>
+        <p className="text-sm text-[#A1A1AA] font-medium">Gerencie seus créditos e plano</p>
+      </div>
+
+      {/* Saldo Atual */}
+      <div className="w-full bg-[#111114] border border-[#27272A] rounded-2xl p-6 md:p-8 mb-12 relative overflow-hidden">
+        {/* Glow sub-surface */}
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#3B82F6]/5 blur-[100px] rounded-full pointer-events-none"></div>
+        <div className="relative z-10">
+          <div className="flex items-center gap-2 mb-3">
+            <CreditCard className="w-4 h-4 text-[#3B82F6]" />
+            <span className="text-sm text-[#A1A1AA] font-medium">Saldo atual</span>
+          </div>
+          <div className="flex items-baseline gap-2">
+            <span className="text-4xl md:text-5xl font-black text-white tracking-tighter">500</span>
+            <span className="text-[#A1A1AA] text-sm md:text-base font-medium">créditos</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Planos Section */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        
+        {/* Starter Plan */}
+        <div className="bg-[#111114] border border-[#27272A] rounded-2xl p-6 md:p-8 flex flex-col h-full hover:border-[#3B82F6]/30 transition-colors group">
+          <h3 className="text-lg font-bold text-white mb-4 group-hover:text-[#bfdbfe] transition-colors">Starter</h3>
+          <div className="flex items-baseline gap-1 mb-1">
+            <span className="text-[#3B82F6] font-bold text-lg">R$</span>
+            <span className="text-[#3B82F6] text-4xl font-black tracking-tighter">47</span>
+            <span className="text-[#A1A1AA] text-xs">/mês</span>
+          </div>
+          <p className="text-[#3B82F6] text-sm font-medium mb-8">500 créditos</p>
+          
+          <ul className="flex flex-col gap-4 mb-8 flex-1">
+            <li className="flex items-start gap-3">
+              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Até 20 gerações de conteúdo</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Crie influencers hiper-realistas</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Gere imagens, clones e vídeos</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Combinação livre entre recursos</span>
+            </li>
+          </ul>
+          
+          <button className="w-full py-4 bg-[#232328] hover:bg-[#2A2A30] text-[#A1A1AA] hover:text-white rounded-xl text-sm font-bold transition-all shadow-sm">
+            Assinar agora
+          </button>
+        </div>
+
+        {/* Creator Plan (Highlighted) */}
+        <div className="bg-[#18181B] border-2 border-[#3B82F6] rounded-2xl p-6 md:p-8 flex flex-col h-full relative shadow-[0_0_40px_rgba(59,130,246,0.08)]">
+          {/* Badge */}
+          <div className="absolute -top-3 left-8">
+            <span className="bg-[#3B82F6] text-white text-[9px] font-black uppercase tracking-widest py-1.5 px-4 rounded-full shadow-lg">Mais Popular</span>
+          </div>
+
+          <h3 className="text-lg font-bold text-white mb-4 mt-2">Creator</h3>
+          <div className="flex items-baseline gap-1 mb-1">
+            <span className="text-[#3B82F6] font-bold text-lg">R$</span>
+            <span className="text-[#3B82F6] text-4xl font-black tracking-tighter">79</span>
+            <span className="text-[#A1A1AA] text-xs">/mês</span>
+          </div>
+          <p className="text-[#3B82F6] text-sm font-medium mb-8">1.000 créditos</p>
+          
+          <ul className="flex flex-col gap-4 mb-8 flex-1">
+            <li className="flex items-start gap-3">
+              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Até 40 gerações de conteúdo</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Criação rápida de influencers e vídeos</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Ideal para criadores de conteúdo</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Equilíbrio entre imagens e vídeos</span>
+            </li>
+          </ul>
+          
+          <button className="w-full py-4 bg-[#3B82F6] hover:bg-[#2563EB] text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-[#3B82F6]/20">
+            Assinar agora
+          </button>
+        </div>
+
+        {/* Pro Plan */}
+        <div className="bg-[#111114] border border-[#27272A] rounded-2xl p-6 md:p-8 flex flex-col h-full hover:border-[#3B82F6]/30 transition-colors group">
+          <h3 className="text-lg font-bold text-white mb-4 group-hover:text-[#bfdbfe] transition-colors">Pro</h3>
+          <div className="flex items-baseline gap-1 mb-1">
+            <span className="text-[#3B82F6] font-bold text-lg">R$</span>
+            <span className="text-[#3B82F6] text-4xl font-black tracking-tighter">149</span>
+            <span className="text-[#A1A1AA] text-xs">/mês</span>
+          </div>
+          <p className="text-[#3B82F6] text-sm font-medium mb-8">2.000 créditos</p>
+          
+          <ul className="flex flex-col gap-4 mb-8 flex-1">
+            <li className="flex items-start gap-3">
+              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Até 80 gerações de conteúdo</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Produção intensa de criativos</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Ideal para criadores e agências</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Alta escala de geração</span>
+            </li>
+          </ul>
+          
+          <button className="w-full py-4 bg-[#232328] hover:bg-[#2A2A30] text-[#A1A1AA] hover:text-white rounded-xl text-sm font-bold transition-all shadow-sm">
+            Assinar agora
+          </button>
+        </div>
+
+        {/* Business Plan */}
+        <div className="bg-[#111114] border border-[#27272A] rounded-2xl p-6 md:p-8 flex flex-col h-full hover:border-[#3B82F6]/30 transition-colors group">
+          <h3 className="text-lg font-bold text-white mb-4 group-hover:text-[#bfdbfe] transition-colors">Business</h3>
+          <div className="flex items-baseline gap-1 mb-1">
+            <span className="text-[#3B82F6] font-bold text-lg">R$</span>
+            <span className="text-[#3B82F6] text-4xl font-black tracking-tighter">397</span>
+            <span className="text-[#A1A1AA] text-xs">/mês</span>
+          </div>
+          <p className="text-[#3B82F6] text-sm font-medium mb-8">5.000 créditos</p>
+          
+          <ul className="flex flex-col gap-4 mb-8 flex-1">
+            <li className="flex items-start gap-3">
+              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Até 200 gerações de conteúdo</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Criação em escala profissional</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Ideal para produção de alto volume</span>
+            </li>
+            <li className="flex items-start gap-3">
+              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Produção contínua de conteúdo</span>
+            </li>
+          </ul>
+          
+          <button className="w-full py-4 bg-[#232328] hover:bg-[#2A2A30] text-[#A1A1AA] hover:text-white rounded-xl text-sm font-bold transition-all shadow-sm">
+            Assinar agora
+          </button>
+        </div>
+      </div>
+
+      <div className="mb-8 flex items-center gap-2 mt-20">
+        <Zap className="w-5 h-5 text-[#3B82F6] fill-[#3B82F6]" />
+        <h2 className="text-[22px] font-bold text-white tracking-tight">Comprar Créditos Avulsos</h2>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        {/* Avulso 1 */}
+        <div className="bg-[#111114] border border-[#27272A] rounded-2xl p-8 flex flex-col items-center justify-center text-center hover:border-[#3B82F6]/30 transition-colors group">
+          <span className="text-[40px] font-black text-[#3B82F6] tracking-tighter mb-1 group-hover:scale-105 transition-transform">450</span>
+          <span className="text-sm text-[#A1A1AA] mb-8 font-medium">créditos</span>
+          <span className="text-2xl font-bold text-white mb-8 tracking-tight">R$ 39,90</span>
+          <button className="w-full py-4 bg-[#232328] hover:bg-[#2A2A30] text-[#A1A1AA] hover:text-white rounded-xl text-sm font-bold transition-all shadow-sm">
+            Comprar agora
+          </button>
+        </div>
+
+        {/* Avulso 2 (Highlighted) */}
+        <div className="bg-[#18181B] border-2 border-[#3B82F6] rounded-2xl p-8 flex flex-col items-center justify-center text-center relative shadow-[0_0_30px_rgba(59,130,246,0.1)]">
+           {/* Badge */}
+           <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+            <span className="bg-[#3B82F6] text-white text-[9px] font-black uppercase tracking-widest py-1.5 px-4 rounded-full shadow-lg whitespace-nowrap">Mais Vendido</span>
+          </div>
+          <span className="text-[48px] font-black text-[#3B82F6] tracking-tighter mb-1 mt-2">900</span>
+          <span className="text-sm text-[#A1A1AA] mb-8 font-medium">créditos</span>
+          <span className="text-2xl font-bold text-white mb-8 tracking-tight">R$ 69,90</span>
+          <button className="w-full py-4 bg-[#3B82F6] hover:bg-[#2563EB] text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-[#3B82F6]/20">
+            Comprar agora
+          </button>
+        </div>
+
+        {/* Avulso 3 */}
+        <div className="bg-[#111114] border border-[#27272A] rounded-2xl p-8 flex flex-col items-center justify-center text-center hover:border-[#3B82F6]/30 transition-colors group">
+          <span className="text-[40px] font-black text-[#3B82F6] tracking-tighter mb-1 group-hover:scale-105 transition-transform">1.850</span>
+          <span className="text-sm text-[#A1A1AA] mb-8 font-medium">créditos</span>
+          <span className="text-2xl font-bold text-white mb-8 tracking-tight">R$ 119,90</span>
+          <button className="w-full py-4 bg-[#232328] hover:bg-[#2A2A30] text-[#A1A1AA] hover:text-white rounded-xl text-sm font-bold transition-all shadow-sm">
+            Comprar agora
+          </button>
+        </div>
+      </div>
+    </main>
+  );
+};
+
+// --- CREATOR ENGINE VIEW ---
+const CreatorEngineView: React.FC<{ onGoToImagem: () => void; onGoToVideo: () => void; onGoToMinhasCriacoes: () => void; onGoToCreditos: () => void; }> = ({ onGoToImagem, onGoToVideo, onGoToMinhasCriacoes, onGoToCreditos }) => {
+  return (
+    <main className="max-w-[1400px] mx-auto px-4 md:px-8 pt-8 md:pt-12 pb-16 flex flex-col items-center min-h-[85vh] relative overflow-hidden">
+
+      {/* Subtle Background */}
+      <div className="absolute inset-x-0 top-0 pointer-events-none z-0 flex items-start justify-center pt-20">
+        <div className="w-[800px] h-[500px] bg-gradient-to-r from-[#8B5CF6]/10 to-[#d946ef]/10 blur-[150px] rounded-full"></div>
+      </div>
+
+        <div className="relative w-full max-w-5xl flex flex-col items-center z-10 pt-4 pb-12">
+        {/* "VÍDEOS VIRAIS" AESTHETIC BANNER - COMPACT RECTANGULAR */}
+        <div className="flex flex-col items-center justify-center mb-10 md:mb-14 relative z-10 bg-[#0B0B0E]/30 backdrop-blur-md py-10 px-6 md:py-14 md:px-16 rounded-[24px] md:rounded-[36px] border border-white/10 shadow-2xl w-full max-w-[900px]">
+          
+          <div className="flex flex-col items-center text-center w-full">
+            {/* Indicator Badge */}
+            <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4 mb-4">
+              <div className="hidden sm:block h-[1px] w-8 md:w-16 bg-gradient-to-r from-transparent to-[#8B5CF6]"></div>
+              <span className="text-[9px] md:text-[11px] font-black text-[#8B5CF6] tracking-[0.3em] md:tracking-[0.4em] uppercase">Creator Engine Active</span>
+              <div className="flex gap-1 shrink-0">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="w-1 h-1 bg-[#8B5CF6]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
+                ))}
+              </div>
+              <div className="hidden sm:block h-[1px] w-8 md:w-16 bg-gradient-to-l from-transparent to-[#8B5CF6]"></div>
+            </div>
+            
+            {/* Adjusted Typography - Single Line Formatted */}
+            <div className="relative mb-4 flex justify-center w-full py-4">
+              <h1 className="text-[26px] sm:text-4xl md:text-[46px] lg:text-[50px] font-black tracking-tighter leading-loose select-none text-center flex flex-wrap justify-center items-center">
+                <span className="bg-gradient-to-b from-white to-white/20 mr-2 md:mr-3" style={{ WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', paddingBottom: '12px', paddingRight: '6px', marginBottom: '-12px', display: 'inline-block' }}>O que vamos</span>
+                <span className="bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef]" style={{ WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', paddingBottom: '12px', paddingRight: '6px', marginBottom: '-12px', display: 'inline-block' }}>criar hoje?</span>
+              </h1>
+            </div>
+            
+            {/* Content paragraph */}
+            <p className="text-[#8d8d99] text-sm md:text-[15px] font-medium max-w-lg leading-relaxed text-center">
+              Selecione a ferramenta de geração e comece a <span className="text-white">transformar suas ideias</span>.
+            </p>
+          </div>
+        </div>
+
+        {/* Clean Cards Grid Container */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 w-full max-w-[1150px] mx-auto place-items-center">
+          
+          {/* Card Imagem */}
+          <button onClick={onGoToImagem} className="flex flex-col items-center justify-center bg-[#111114] border border-[#1e1e24] p-8 md:p-10 rounded-[20px] transition-all duration-500 hover:bg-[#151518] hover:border-[#8B5CF6]/30 hover:shadow-[0_0_30px_rgba(139,92,246,0.05)] cursor-pointer w-full max-w-[360px] min-h-[260px] group focus:outline-none relative overflow-hidden">
+            
+            {/* Subtle Gradient Glow inside Card on Hover */}
+            <div className="absolute inset-0 bg-gradient-to-b from-[#8B5CF6]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+
+            <div className="relative z-10 flex flex-col items-center">
+              <div className="w-[52px] h-[52px] rounded-[14px] bg-[#18181B] border border-[#27272A] flex items-center justify-center mb-6 group-hover:bg-[#8B5CF6]/10 group-hover:border-[#8B5CF6]/30 transition-all duration-300 shadow-sm">
+                <ImageIcon className="w-5 h-5 text-[#A1A1AA] group-hover:text-[#c4b5fd] transition-colors" strokeWidth={1.5} />
+              </div>
+              
+              <h3 className="text-[17px] font-bold text-white mb-2 tracking-tight group-hover:text-[#e0d6ff] transition-colors">
+                Imagem
+              </h3>
+              
+              <p className="text-[13px] text-[#A1A1AA] text-center leading-relaxed max-w-[260px] group-hover:text-[#A1A1AA]/80 transition-colors">
+                Crie imagens realistas com IA, influencers, produtos, e cenas cinematográficas.
+              </p>
+            </div>
+          </button>
+
+          {/* Card Vídeo */}
+          <button onClick={onGoToVideo} className="flex flex-col items-center justify-center bg-[#111114] border border-[#1e1e24] p-8 md:p-10 rounded-[20px] transition-all duration-500 hover:bg-[#151518] hover:border-[#3B82F6]/30 hover:shadow-[0_0_30px_rgba(59,130,246,0.05)] cursor-pointer w-full max-w-[360px] min-h-[260px] group focus:outline-none relative overflow-hidden">
+            
+            {/* Subtle Gradient Glow inside Card on Hover */}
+            <div className="absolute inset-0 bg-gradient-to-b from-[#3B82F6]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+
+            <div className="relative z-10 flex flex-col items-center">
+              <div className="w-[52px] h-[52px] rounded-[14px] bg-[#18181B] border border-[#27272A] flex items-center justify-center mb-6 group-hover:bg-[#3B82F6]/10 group-hover:border-[#3B82F6]/30 transition-all duration-300 shadow-sm">
+                <Video className="w-5 h-5 text-[#A1A1AA] group-hover:text-[#93c5fd] transition-colors" strokeWidth={1.5} />
+              </div>
+              
+              <h3 className="text-[17px] font-bold text-white mb-2 tracking-tight group-hover:text-[#bfdbfe] transition-colors">
+                Vídeo
+              </h3>
+              
+              <p className="text-[13px] text-[#A1A1AA] text-center leading-relaxed max-w-[260px] group-hover:text-[#A1A1AA]/80 transition-colors">
+                Crie vídeos com IA, influencers em movimento e motion control.
+              </p>
+            </div>
+          </button>
+
+          {/* Card Minhas Criações */}
+          <button onClick={onGoToMinhasCriacoes} className="flex flex-col items-center justify-center bg-[#111114] border border-[#1e1e24] p-8 md:p-10 rounded-[20px] transition-all duration-500 hover:bg-[#151518] hover:border-[#EC4899]/30 hover:shadow-[0_0_30px_rgba(236,72,153,0.05)] cursor-pointer w-full max-w-[360px] min-h-[260px] group focus:outline-none relative overflow-hidden">
+            
+            {/* Subtle Gradient Glow inside Card on Hover */}
+            <div className="absolute inset-0 bg-gradient-to-b from-[#EC4899]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+
+            <div className="relative z-10 flex flex-col items-center">
+              <div className="w-[52px] h-[52px] rounded-[14px] bg-[#18181B] border border-[#27272A] flex items-center justify-center mb-6 group-hover:bg-[#EC4899]/10 group-hover:border-[#EC4899]/30 transition-all duration-300 shadow-sm">
+                <LayoutGrid className="w-5 h-5 text-[#A1A1AA] group-hover:text-[#fbcfe8] transition-colors" strokeWidth={1.5} />
+              </div>
+              
+              <h3 className="text-[17px] font-bold text-white mb-2 tracking-tight group-hover:text-[#fce7f3] transition-colors">
+                Minhas Criações
+              </h3>
+              
+              <p className="text-[13px] text-[#A1A1AA] text-center leading-relaxed max-w-[260px] group-hover:text-[#A1A1AA]/80 transition-colors">
+                Histórico de imagens e vídeos gerados.
+              </p>
+            </div>
+          </button>
+
+          {/* Card Créditos */}
+          <button onClick={onGoToCreditos} className="lg:col-start-2 flex flex-col items-center justify-center bg-[#111114] border border-[#1e1e24] p-8 md:p-10 rounded-[20px] transition-all duration-500 hover:bg-[#151518] hover:border-[#10B981]/30 hover:shadow-[0_0_30px_rgba(16,185,129,0.05)] cursor-pointer w-full max-w-[360px] min-h-[260px] group focus:outline-none relative overflow-hidden">
+            
+            {/* Subtle Gradient Glow inside Card on Hover */}
+            <div className="absolute inset-0 bg-gradient-to-b from-[#10B981]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+
+            <div className="relative z-10 flex flex-col items-center">
+              <div className="w-[52px] h-[52px] rounded-[14px] bg-[#18181B] border border-[#27272A] flex items-center justify-center mb-6 group-hover:bg-[#10B981]/10 group-hover:border-[#10B981]/30 transition-all duration-300 shadow-sm">
+                <Zap className="w-5 h-5 text-[#A1A1AA] group-hover:text-[#a7f3d0] transition-colors" strokeWidth={1.5} />
+              </div>
+              
+              <h3 className="text-[17px] font-bold text-white mb-2 tracking-tight group-hover:text-[#d1fae5] transition-colors">
+                Créditos
+              </h3>
+              
+              <p className="text-[13px] text-[#A1A1AA] text-center leading-relaxed max-w-[260px] group-hover:text-[#A1A1AA]/80 transition-colors">
+                Gerencie seus créditos e plano.
+              </p>
+            </div>
+          </button>
+        </div>
+      </div>
+    </main>
+  );
+};
 
 // --- EXPLORE PAGE VIEW ---
 const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => void, onGoToProducts: () => void }> = ({ products, onGoToAcademy, onGoToProducts }) => (
@@ -1085,7 +2113,7 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
             placeholder="Pesquise por nicho, loja ou criador..."
             className="flex-1 bg-transparent text-white placeholder:text-[#5b5b7b] text-sm md:text-lg px-4 md:px-6 focus:outline-none w-full"
           />
-          <button 
+          <button
             onClick={onGoToProducts}
             className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] text-white h-full px-6 md:px-10 rounded-full font-black text-sm md:text-base tracking-wide shadow-lg hover:scale-[1.02] transition-transform flex items-center gap-2"
           >
@@ -1246,18 +2274,18 @@ const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => {
   const nicheList = (Object.entries(nicheMap) as [string, ProductViral[]][]).sort((a, b) => b[1].length - a[1].length);
 
   const nicheColors: Record<string, { gradient: string; accent: string; glow: string }> = {
-    'Casa & Cozinha':      { gradient: 'from-[#00b37e]/20 to-transparent', accent: '#00b37e', glow: '0_0_30px_rgba(0,179,126,0.15)' },
-    'Beleza':              { gradient: 'from-[#d946ef]/20 to-transparent', accent: '#d946ef', glow: '0_0_30px_rgba(217,70,239,0.15)' },
-    'Moda Fitness':        { gradient: 'from-[#3B82F6]/20 to-transparent', accent: '#3B82F6', glow: '0_0_30px_rgba(59,130,246,0.15)' },
-    'Moda Masculina':      { gradient: 'from-[#8B5CF6]/20 to-transparent', accent: '#8B5CF6', glow: '0_0_30px_rgba(139,92,246,0.15)' },
-    'Acessórios':          { gradient: 'from-[#f59e0b]/20 to-transparent', accent: '#f59e0b', glow: '0_0_30px_rgba(245,158,11,0.15)' },
-    'Perfumaria':          { gradient: 'from-[#ec4899]/20 to-transparent', accent: '#ec4899', glow: '0_0_30px_rgba(236,72,153,0.15)' },
-    'Eletrônicos':         { gradient: 'from-[#06b6d4]/20 to-transparent', accent: '#06b6d4', glow: '0_0_30px_rgba(6,182,212,0.15)' },
-    'Livros':              { gradient: 'from-[#84cc16]/20 to-transparent', accent: '#84cc16', glow: '0_0_30px_rgba(132,204,22,0.15)' },
-    'Calçados':            { gradient: 'from-[#f97316]/20 to-transparent', accent: '#f97316', glow: '0_0_30px_rgba(249,115,22,0.15)' },
-    'Esportes':            { gradient: 'from-[#14b8a6]/20 to-transparent', accent: '#14b8a6', glow: '0_0_30px_rgba(20,184,166,0.15)' },
-    'Ferramentas':         { gradient: 'from-[#ef4444]/20 to-transparent', accent: '#ef4444', glow: '0_0_30px_rgba(239,68,68,0.15)' },
-    'Saúde & Beleza':      { gradient: 'from-[#a855f7]/20 to-transparent', accent: '#a855f7', glow: '0_0_30px_rgba(168,85,247,0.15)' },
+    'Casa & Cozinha': { gradient: 'from-[#00b37e]/20 to-transparent', accent: '#00b37e', glow: '0_0_30px_rgba(0,179,126,0.15)' },
+    'Beleza': { gradient: 'from-[#d946ef]/20 to-transparent', accent: '#d946ef', glow: '0_0_30px_rgba(217,70,239,0.15)' },
+    'Moda Fitness': { gradient: 'from-[#3B82F6]/20 to-transparent', accent: '#3B82F6', glow: '0_0_30px_rgba(59,130,246,0.15)' },
+    'Moda Masculina': { gradient: 'from-[#8B5CF6]/20 to-transparent', accent: '#8B5CF6', glow: '0_0_30px_rgba(139,92,246,0.15)' },
+    'Acessórios': { gradient: 'from-[#f59e0b]/20 to-transparent', accent: '#f59e0b', glow: '0_0_30px_rgba(245,158,11,0.15)' },
+    'Perfumaria': { gradient: 'from-[#ec4899]/20 to-transparent', accent: '#ec4899', glow: '0_0_30px_rgba(236,72,153,0.15)' },
+    'Eletrônicos': { gradient: 'from-[#06b6d4]/20 to-transparent', accent: '#06b6d4', glow: '0_0_30px_rgba(6,182,212,0.15)' },
+    'Livros': { gradient: 'from-[#84cc16]/20 to-transparent', accent: '#84cc16', glow: '0_0_30px_rgba(132,204,22,0.15)' },
+    'Calçados': { gradient: 'from-[#f97316]/20 to-transparent', accent: '#f97316', glow: '0_0_30px_rgba(249,115,22,0.15)' },
+    'Esportes': { gradient: 'from-[#14b8a6]/20 to-transparent', accent: '#14b8a6', glow: '0_0_30px_rgba(20,184,166,0.15)' },
+    'Ferramentas': { gradient: 'from-[#ef4444]/20 to-transparent', accent: '#ef4444', glow: '0_0_30px_rgba(239,68,68,0.15)' },
+    'Saúde & Beleza': { gradient: 'from-[#a855f7]/20 to-transparent', accent: '#a855f7', glow: '0_0_30px_rgba(168,85,247,0.15)' },
     'Beleza & Perfumaria': { gradient: 'from-[#e879f9]/20 to-transparent', accent: '#e879f9', glow: '0_0_30px_rgba(232,121,249,0.15)' },
   };
 
@@ -1280,211 +2308,211 @@ const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => {
   };
 
   return (
-  <main className="max-w-[1500px] mx-auto px-4 md:px-6 py-8 md:py-16 relative">
+    <main className="max-w-[1500px] mx-auto px-4 md:px-6 py-8 md:py-16 relative">
 
-    <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-10 md:mb-16 relative z-10 bg-[#0B0B0E]/20 backdrop-blur-sm p-4 sm:p-6 md:p-8 rounded-[32px] md:rounded-[48px] border border-white/5 shadow-2xl">
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-10 md:mb-16 relative z-10 bg-[#0B0B0E]/20 backdrop-blur-sm p-4 sm:p-6 md:p-8 rounded-[32px] md:rounded-[48px] border border-white/5 shadow-2xl">
 
-      {/* LEFT: TYPOGRAPHY SCULPTURE & PULSE */}
-      <div className="flex flex-col gap-6 flex-1 min-w-0 lg:min-w-[400px]">
-        <div className="relative group">
-          {/* ARCHITECTURAL STATUS LINE */}
-          <div className="flex items-center gap-4 mb-4">
-            <div className="h-[1px] w-8 bg-gradient-to-r from-[#00b37e] to-transparent"></div>
-            <span className="text-[9px] font-black text-[#00b37e] tracking-[0.4em] uppercase">System Pulse Active</span>
-            <div className="flex gap-1">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="w-1 h-1 bg-[#00b37e]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
-              ))}
+        {/* LEFT: TYPOGRAPHY SCULPTURE & PULSE */}
+        <div className="flex flex-col gap-6 flex-1 min-w-0 lg:min-w-[400px]">
+          <div className="relative group">
+            {/* ARCHITECTURAL STATUS LINE */}
+            <div className="flex items-center gap-4 mb-4">
+              <div className="h-[1px] w-8 bg-gradient-to-r from-[#00b37e] to-transparent"></div>
+              <span className="text-[9px] font-black text-[#00b37e] tracking-[0.4em] uppercase">System Pulse Active</span>
+              <div className="flex gap-1">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="w-1 h-1 bg-[#00b37e]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
+                ))}
+              </div>
+            </div>
+
+            <div className="relative">
+              <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none text-left pl-1">
+                <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent">Produtos</span>
+                <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent">Virais</span>
+              </h1>
             </div>
           </div>
 
-          <div className="relative">
-            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none text-left pl-1">
-              <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent">Produtos</span>
-              <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent">Virais</span>
-            </h1>
-          </div>
+          <p className="text-[#8d8d99] text-sm md:text-base font-medium max-w-sm leading-relaxed border-l border-white/10 pl-6">
+            Nossa rede neural minera <span className="text-white">trilhões de signals</span> para materializar oportunidades de escala global.
+          </p>
         </div>
 
-        <p className="text-[#8d8d99] text-sm md:text-base font-medium max-w-sm leading-relaxed border-l border-white/10 pl-6">
-          Nossa rede neural minera <span className="text-white">trilhões de signals</span> para materializar oportunidades de escala global.
-        </p>
-      </div>
-
-      {/* RIGHT: COMPACT METRICS GRID */}
-      <div className="flex flex-wrap items-center justify-center lg:justify-end gap-6 flex-[1.5]">
-        {/* NEW DETECTED (ORGANIC FROSTED) */}
-        <div className="relative group">
-          <div className="absolute inset-0 bg-[#3B82F6]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-          <div className="w-24 h-24 md:w-40 md:h-40 backdrop-blur-3xl bg-white/[0.03] border border-white/10 rounded-[28px] md:rounded-[40px] p-3 md:p-6 flex flex-col items-center justify-center shadow-2xl transition-all duration-500 group-hover:scale-105">
-            <Package className="w-4 h-4 md:w-6 md:h-6 text-[#3B82F6] mb-1.5 md:mb-2 opacity-50" />
-            <span className="text-2xl md:text-4xl font-black text-white tracking-tighter mb-0.5 md:mb-1">18</span>
-            <span className="text-[6px] md:text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">HITS HOJE</span>
-          </div>
-        </div>
-
-        {/* REVENUE ORB (DYNAMIC) */}
-        <div className="relative group">
-          <div className="absolute inset-x-0 -bottom-6 h-12 bg-[#00b37e]/10 blur-3xl rounded-full opacity-40"></div>
-          <div className="w-30 h-30 md:w-48 md:h-48 backdrop-blur-3xl bg-[#0B0B0E]/60 border border-white/10 rounded-full p-4 md:p-8 flex flex-col items-center justify-center shadow-2xl relative overflow-hidden group-hover:border-[#00b37e]/30 transition-all group-hover:scale-105">
-            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#00b37e]/10 to-transparent pointer-events-none"></div>
-            <TrendingUp className="w-3.5 h-3.5 md:w-5 md:h-5 text-[#00b37e] mb-1 animate-bounce" />
-            <div className="flex items-baseline gap-0.5">
-              <span className="text-[9px] md:text-xs font-black text-[#00b37e]/40">R$</span>
-              <span className="text-2xl md:text-4xl font-black text-[#00b37e] tracking-tighter tabular-nums drop-shadow-[0_0_15px_rgba(0,179,126,0.3)]">3.9M</span>
+        {/* RIGHT: COMPACT METRICS GRID */}
+        <div className="flex flex-wrap items-center justify-center lg:justify-end gap-6 flex-[1.5]">
+          {/* NEW DETECTED (ORGANIC FROSTED) */}
+          <div className="relative group">
+            <div className="absolute inset-0 bg-[#3B82F6]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            <div className="w-24 h-24 md:w-40 md:h-40 backdrop-blur-3xl bg-white/[0.03] border border-white/10 rounded-[28px] md:rounded-[40px] p-3 md:p-6 flex flex-col items-center justify-center shadow-2xl transition-all duration-500 group-hover:scale-105">
+              <Package className="w-4 h-4 md:w-6 md:h-6 text-[#3B82F6] mb-1.5 md:mb-2 opacity-50" />
+              <span className="text-2xl md:text-4xl font-black text-white tracking-tighter mb-0.5 md:mb-1">18</span>
+              <span className="text-[6px] md:text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">HITS HOJE</span>
             </div>
-            <span className="text-[6px] md:text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.4em] mt-0.5 md:mt-1 text-center">VOLUME REAL</span>
           </div>
-        </div>
 
-        {/* ACCURACY SPHERE (SCIFI DATA ORB) */}
-        <div className="relative group">
-          <div className="w-24 h-24 md:w-40 md:h-40 flex items-center justify-center p-1 md:p-2 group-hover:scale-105 transition-all">
-            <div className="absolute inset-0 bg-[#8B5CF6]/10 blur-3xl rounded-full animate-pulse"></div>
-            <div className="relative w-full h-full flex items-center justify-center rounded-full border border-white/5 bg-[#0B0B0E]/40 backdrop-blur-md">
-              <svg className="absolute inset-0 w-full h-full transform -rotate-90">
-                <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="0.5" fill="transparent" className="text-white/5" />
-                <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="6" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#8B5CF6] transition-all duration-1000 opacity-20" />
-                <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="1.5" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#8B5CF6] shadow-[0_0_20px_#8B5CF6]" />
-              </svg>
-              <div className="flex flex-col items-center">
-                <span className="text-xl md:text-3xl font-black text-white tracking-tighter">98<span className="text-[8px] md:text-xs text-[#5b5b7b]">%</span></span>
-                <span className="text-[5px] md:text-[7px] font-black text-[#8B5CF6] uppercase tracking-[0.2em]">Accuracy</span>
+          {/* REVENUE ORB (DYNAMIC) */}
+          <div className="relative group">
+            <div className="absolute inset-x-0 -bottom-6 h-12 bg-[#00b37e]/10 blur-3xl rounded-full opacity-40"></div>
+            <div className="w-30 h-30 md:w-48 md:h-48 backdrop-blur-3xl bg-[#0B0B0E]/60 border border-white/10 rounded-full p-4 md:p-8 flex flex-col items-center justify-center shadow-2xl relative overflow-hidden group-hover:border-[#00b37e]/30 transition-all group-hover:scale-105">
+              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#00b37e]/10 to-transparent pointer-events-none"></div>
+              <TrendingUp className="w-3.5 h-3.5 md:w-5 md:h-5 text-[#00b37e] mb-1 animate-bounce" />
+              <div className="flex items-baseline gap-0.5">
+                <span className="text-[9px] md:text-xs font-black text-[#00b37e]/40">R$</span>
+                <span className="text-2xl md:text-4xl font-black text-[#00b37e] tracking-tighter tabular-nums drop-shadow-[0_0_15px_rgba(0,179,126,0.3)]">3.9M</span>
+              </div>
+              <span className="text-[6px] md:text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.4em] mt-0.5 md:mt-1 text-center">VOLUME REAL</span>
+            </div>
+          </div>
+
+          {/* ACCURACY SPHERE (SCIFI DATA ORB) */}
+          <div className="relative group">
+            <div className="w-24 h-24 md:w-40 md:h-40 flex items-center justify-center p-1 md:p-2 group-hover:scale-105 transition-all">
+              <div className="absolute inset-0 bg-[#8B5CF6]/10 blur-3xl rounded-full animate-pulse"></div>
+              <div className="relative w-full h-full flex items-center justify-center rounded-full border border-white/5 bg-[#0B0B0E]/40 backdrop-blur-md">
+                <svg className="absolute inset-0 w-full h-full transform -rotate-90">
+                  <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="0.5" fill="transparent" className="text-white/5" />
+                  <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="6" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#8B5CF6] transition-all duration-1000 opacity-20" />
+                  <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="1.5" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#8B5CF6] shadow-[0_0_20px_#8B5CF6]" />
+                </svg>
+                <div className="flex flex-col items-center">
+                  <span className="text-xl md:text-3xl font-black text-white tracking-tighter">98<span className="text-[8px] md:text-xs text-[#5b5b7b]">%</span></span>
+                  <span className="text-[5px] md:text-[7px] font-black text-[#8B5CF6] uppercase tracking-[0.2em]">Accuracy</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    {/* TOOLBAR - RE-ALIGN TO GRID */}
-    <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-16 relative z-20 px-4">
-      <div className="flex items-center gap-4">
-        <button onClick={() => setViewMode('radar')} className={`relative px-8 py-4 rounded-[20px] font-black uppercase text-[10px] tracking-widest shadow-2xl hover:scale-105 transition-all flex items-center gap-2.5 ${viewMode === 'radar' ? 'bg-white text-black' : 'bg-[#16161A]/60 backdrop-blur-xl border border-white/5 text-[#5b5b7b] hover:text-white'}`}>
-          <LayoutGrid className="w-4 h-4" />
-          RADAR
-        </button>
-        <button onClick={() => setViewMode('mapa')} className={`px-8 py-4 rounded-[20px] font-black uppercase text-[10px] tracking-widest hover:text-white transition-all flex items-center gap-2.5 ${viewMode === 'mapa' ? 'bg-white text-black shadow-2xl' : 'bg-[#16161A]/60 backdrop-blur-xl border border-white/5 text-[#5b5b7b]'}`}>
-          <Sparkles className="w-4 h-4" />
-          MAPA DE NICHOS
-        </button>
+      {/* TOOLBAR - RE-ALIGN TO GRID */}
+      <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-16 relative z-20 px-4">
+        <div className="flex items-center gap-4">
+          <button onClick={() => setViewMode('radar')} className={`relative px-8 py-4 rounded-[20px] font-black uppercase text-[10px] tracking-widest shadow-2xl hover:scale-105 transition-all flex items-center gap-2.5 ${viewMode === 'radar' ? 'bg-white text-black' : 'bg-[#16161A]/60 backdrop-blur-xl border border-white/5 text-[#5b5b7b] hover:text-white'}`}>
+            <LayoutGrid className="w-4 h-4" />
+            RADAR
+          </button>
+          <button onClick={() => setViewMode('mapa')} className={`px-8 py-4 rounded-[20px] font-black uppercase text-[10px] tracking-widest hover:text-white transition-all flex items-center gap-2.5 ${viewMode === 'mapa' ? 'bg-white text-black shadow-2xl' : 'bg-[#16161A]/60 backdrop-blur-xl border border-white/5 text-[#5b5b7b]'}`}>
+            <Sparkles className="w-4 h-4" />
+            MAPA DE NICHOS
+          </button>
+        </div>
+
+        <div className="h-[1px] flex-1 bg-gradient-to-r from-white/5 via-white/10 to-transparent hidden xl:block mx-8"></div>
+
+        <div className="flex items-center gap-10">
+          <div className="flex items-center gap-6">
+            {['00-06', '06-12', '12-18', '18-00'].map((time, idx) => (
+              <div key={time} className="flex flex-col items-center group cursor-pointer">
+                <span className={`text-[9px] font-black tracking-[0.2em] uppercase transition-all ${idx === 3 ? 'text-[#3B82F6]' : 'text-[#5b5b7b] group-hover:text-white/60'}`}>
+                  {time}
+                </span>
+                <div className={`w-1 h-1 rounded-full mt-1.5 transition-all ${idx === 3 ? 'bg-[#3B82F6] shadow-[0_0_10px_#3B82F6]' : 'bg-white/5 group-hover:bg-white/20'}`}></div>
+              </div>
+            ))}
+          </div>
+
+          <div className="px-6 py-3 rounded-[24px] bg-white/[0.02] border border-white/5 backdrop-blur-md flex items-center gap-4">
+            <Clock className="w-4 h-4 text-[#3B82F6] animate-pulse" />
+            <div className="flex flex-col">
+              <span className="text-[7px] font-black text-[#5b5b7b] tracking-wider uppercase">SYNC</span>
+              <span className="text-base font-black text-white tabular-nums tracking-tighter">04:35:11</span>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div className="h-[1px] flex-1 bg-gradient-to-r from-white/5 via-white/10 to-transparent hidden xl:block mx-8"></div>
-
-      <div className="flex items-center gap-10">
-        <div className="flex items-center gap-6">
-          {['00-06', '06-12', '12-18', '18-00'].map((time, idx) => (
-            <div key={time} className="flex flex-col items-center group cursor-pointer">
-              <span className={`text-[9px] font-black tracking-[0.2em] uppercase transition-all ${idx === 3 ? 'text-[#3B82F6]' : 'text-[#5b5b7b] group-hover:text-white/60'}`}>
-                {time}
-              </span>
-              <div className={`w-1 h-1 rounded-full mt-1.5 transition-all ${idx === 3 ? 'bg-[#3B82F6] shadow-[0_0_10px_#3B82F6]' : 'bg-white/5 group-hover:bg-white/20'}`}></div>
-            </div>
+      {viewMode === 'radar' ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-8">
+          {products.map((p) => (
+            <ViralCard key={p.id} product={p} />
           ))}
         </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          {nicheList.map(([category, prods]) => {
+            const color = getColor(category);
+            const rev = totalRevenue(prods);
+            return (
+              <div
+                key={category}
+                className="relative bg-[#0B0B0E]/40 backdrop-blur-2xl border border-white/5 rounded-[40px] overflow-hidden p-8 flex flex-col gap-6 transition-all duration-500 hover:border-white/10 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] group"
+                style={{ boxShadow: `0 0 0 0 transparent` }}
+              >
+                {/* BG GRADIENT */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${color.gradient} opacity-30 pointer-events-none rounded-[40px]`}></div>
 
-        <div className="px-6 py-3 rounded-[24px] bg-white/[0.02] border border-white/5 backdrop-blur-md flex items-center gap-4">
-          <Clock className="w-4 h-4 text-[#3B82F6] animate-pulse" />
-          <div className="flex flex-col">
-            <span className="text-[7px] font-black text-[#5b5b7b] tracking-wider uppercase">SYNC</span>
-            <span className="text-base font-black text-white tabular-nums tracking-tighter">04:35:11</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    {viewMode === 'radar' ? (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-8">
-        {products.map((p) => (
-          <ViralCard key={p.id} product={p} />
-        ))}
-      </div>
-    ) : (
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        {nicheList.map(([category, prods]) => {
-          const color = getColor(category);
-          const rev = totalRevenue(prods);
-          return (
-            <div
-              key={category}
-              className="relative bg-[#0B0B0E]/40 backdrop-blur-2xl border border-white/5 rounded-[40px] overflow-hidden p-8 flex flex-col gap-6 transition-all duration-500 hover:border-white/10 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)] group"
-              style={{ boxShadow: `0 0 0 0 transparent` }}
-            >
-              {/* BG GRADIENT */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${color.gradient} opacity-30 pointer-events-none rounded-[40px]`}></div>
-
-              {/* HEADER */}
-              <div className="relative z-10 flex items-start justify-between">
-                <div>
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: color.accent }}></div>
-                    <span className="text-[9px] font-black uppercase tracking-[0.3em]" style={{ color: color.accent }}>Nicho Ativo</span>
-                  </div>
-                  <h3 className="text-2xl font-black text-white tracking-tighter leading-tight">{category}</h3>
-                </div>
-                <div className="flex flex-col items-end gap-1">
-                  <span className="text-[9px] font-black text-[#5b5b7b] uppercase tracking-widest">Volume</span>
-                  <span className="text-xl font-black tabular-nums" style={{ color: color.accent }}>{formatRevenue(rev)}</span>
-                </div>
-              </div>
-
-              {/* STATS ROW */}
-              <div className="relative z-10 flex items-center gap-4">
-                <div className="flex-1 bg-white/[0.03] border border-white/5 rounded-2xl px-4 py-3 flex flex-col items-center gap-1">
-                  <span className="text-2xl font-black text-white">{prods.length}</span>
-                  <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-widest">Produtos</span>
-                </div>
-                <div className="flex-1 bg-white/[0.03] border border-white/5 rounded-2xl px-4 py-3 flex flex-col items-center gap-1">
-                  <span className="text-2xl font-black text-white">{prods.filter(p => p.highDemand).length > 0 ? prods.filter(p => p.highDemand).length : '—'}</span>
-                  <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-widest">Hot 🔥</span>
-                </div>
-                <div className="flex-1 bg-white/[0.03] border border-white/5 rounded-2xl px-4 py-3 flex flex-col items-center gap-1">
-                  <span className="text-[13px] font-black text-white">#{prods[0]?.rank ?? '—'}</span>
-                  <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-widest">Top Rank</span>
-                </div>
-              </div>
-
-              {/* MINI PRODUCT THUMBNAILS */}
-              <div className="relative z-10 flex items-center gap-3">
-                {prods.slice(0, 4).map((p, i) => (
-                  <div key={p.id} className="relative group/thumb">
-                    <img
-                      src={p.image}
-                      alt={p.title}
-                      className="w-14 h-14 rounded-2xl object-cover border border-white/10 group-hover/thumb:border-white/30 transition-all"
-                    />
-                    <div className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full text-[8px] font-black flex items-center justify-center border border-black" style={{ backgroundColor: color.accent, color: '#000' }}>
-                      #{p.rank}
+                {/* HEADER */}
+                <div className="relative z-10 flex items-start justify-between">
+                  <div>
+                    <div className="flex items-center gap-3 mb-2">
+                      <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: color.accent }}></div>
+                      <span className="text-[9px] font-black uppercase tracking-[0.3em]" style={{ color: color.accent }}>Nicho Ativo</span>
                     </div>
+                    <h3 className="text-2xl font-black text-white tracking-tighter leading-tight">{category}</h3>
                   </div>
-                ))}
-                {prods.length > 4 && (
-                  <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
-                    <span className="text-xs font-black text-[#5b5b7b]">+{prods.length - 4}</span>
+                  <div className="flex flex-col items-end gap-1">
+                    <span className="text-[9px] font-black text-[#5b5b7b] uppercase tracking-widest">Volume</span>
+                    <span className="text-xl font-black tabular-nums" style={{ color: color.accent }}>{formatRevenue(rev)}</span>
                   </div>
-                )}
-              </div>
+                </div>
 
-              {/* HEAT BAR */}
-              <div className="relative z-10">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-widest">Potencial do Nicho</span>
-                  <span className="text-[8px] font-black uppercase tracking-widest" style={{ color: color.accent }}>{Math.min(99, Math.round((prods.length / products.length) * 100 * 5 + 40))}%</span>
+                {/* STATS ROW */}
+                <div className="relative z-10 flex items-center gap-4">
+                  <div className="flex-1 bg-white/[0.03] border border-white/5 rounded-2xl px-4 py-3 flex flex-col items-center gap-1">
+                    <span className="text-2xl font-black text-white">{prods.length}</span>
+                    <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-widest">Produtos</span>
+                  </div>
+                  <div className="flex-1 bg-white/[0.03] border border-white/5 rounded-2xl px-4 py-3 flex flex-col items-center gap-1">
+                    <span className="text-2xl font-black text-white">{prods.filter(p => p.highDemand).length > 0 ? prods.filter(p => p.highDemand).length : '—'}</span>
+                    <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-widest">Hot 🔥</span>
+                  </div>
+                  <div className="flex-1 bg-white/[0.03] border border-white/5 rounded-2xl px-4 py-3 flex flex-col items-center gap-1">
+                    <span className="text-[13px] font-black text-white">#{prods[0]?.rank ?? '—'}</span>
+                    <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-widest">Top Rank</span>
+                  </div>
                 </div>
-                <div className="h-1 bg-white/5 rounded-full overflow-hidden">
-                  <div
-                    className="h-full rounded-full transition-all duration-1000"
-                    style={{ width: `${Math.min(99, Math.round((prods.length / products.length) * 100 * 5 + 40))}%`, backgroundColor: color.accent }}
-                  ></div>
+
+                {/* MINI PRODUCT THUMBNAILS */}
+                <div className="relative z-10 flex items-center gap-3">
+                  {prods.slice(0, 4).map((p, i) => (
+                    <div key={p.id} className="relative group/thumb">
+                      <img
+                        src={p.image}
+                        alt={p.title}
+                        className="w-14 h-14 rounded-2xl object-cover border border-white/10 group-hover/thumb:border-white/30 transition-all"
+                      />
+                      <div className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full text-[8px] font-black flex items-center justify-center border border-black" style={{ backgroundColor: color.accent, color: '#000' }}>
+                        #{p.rank}
+                      </div>
+                    </div>
+                  ))}
+                  {prods.length > 4 && (
+                    <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
+                      <span className="text-xs font-black text-[#5b5b7b]">+{prods.length - 4}</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* HEAT BAR */}
+                <div className="relative z-10">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-widest">Potencial do Nicho</span>
+                    <span className="text-[8px] font-black uppercase tracking-widest" style={{ color: color.accent }}>{Math.min(99, Math.round((prods.length / products.length) * 100 * 5 + 40))}%</span>
+                  </div>
+                  <div className="h-1 bg-white/5 rounded-full overflow-hidden">
+                    <div
+                      className="h-full rounded-full transition-all duration-1000"
+                      style={{ width: `${Math.min(99, Math.round((prods.length / products.length) * 100 * 5 + 40))}%`, backgroundColor: color.accent }}
+                    ></div>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
-    )}
-  </main>
+            );
+          })}
+        </div>
+      )}
+    </main>
   );
 };
 
@@ -2742,7 +3770,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
 
   // Prompt View State
   const [viewedPrompt, setViewedPrompt] = useState<{ title: string; text: string } | null>(null);
-  
+
   // Generation State
   const [isGeneratingScript, setIsGeneratingScript] = useState(false);
 
@@ -3708,16 +4736,16 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                   <div className="w-8 h-[1px] bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
                   <h3 className="text-[11px] font-black text-white uppercase tracking-[0.5em]">Neural Script Engine</h3>
                 </div>
-                <button 
+                <button
                   onClick={() => {
                     setIsGeneratingScript(true);
-                    
+
                     const influencer = allInfluencers.find(i => i.id === selectedInfluencer)?.name || 'Anônimo';
                     const product = viralStepProducts.find(p => p.id === selectedProduct)?.title || 'Produto Neutro';
                     const scenario = scenarios.find(s => s.id === selectedScenario)?.label || 'Cenário Padrão';
                     const videoModel = videoModels.find(m => m.id === selectedVideoModel)?.title || 'Vídeo Padrão';
                     const tone = tones.find(t => t.id === selectedTone)?.label || 'Normal';
-                    
+
                     let numTakes = 1;
                     if (selectedDuration === '2takes') numTakes = 2;
                     if (selectedDuration === '3takes') numTakes = 3;
@@ -3965,13 +4993,13 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                                 <div className="w-1.5 h-1.5 rounded-full bg-[#00b37e] animate-pulse shadow-[0_0_8px_#00b37e]"></div>
                                 <span className="text-[10px] font-black text-white/40 uppercase tracking-widest">Take {idx + 1} / {takes.length}</span>
                               </div>
-                              <button 
+                              <button
                                 onClick={() => {
                                   const productName = viralStepProducts.find(p => p.id === selectedProduct)?.title || 'Product';
                                   const generoVoz = voiceGender === 'fem' ? 'Female' : 'Male';
                                   const tomVoz = selectedStepTone || 'Standard';
                                   const cenarioAcao = scenarios.find(s => s.id === selectedScenario)?.label || 'Clean, well-lit environment';
-                                  
+
                                   const masterPrompt = `[CORE INSTRUCTIONS FOR GOOGLE VEO 3]
 You have been provided with two reference images attached:
 1. Avatar Reference (the digital influencer/model who will guide this video)
@@ -3997,7 +5025,7 @@ Generate a hyper-realistic, photorealistic video where the Avatar (from image 1)
 Make the Avatar speak EXACTLY the following script in Portuguese with perfect, seamless lip-sync matching the syllables flawlessly:
 
 "${text || takes[idx]}"`;
-                                  
+
                                   setViewedPrompt({ title: `TAKE ${idx + 1} — Prompt Completo`, text: masterPrompt });
                                 }}
                                 className="text-[10px] font-black text-[#3B82F6] uppercase tracking-widest hover:underline opacity-60 hover:opacity-100 transition-opacity"
@@ -4012,7 +5040,7 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
                                 const generoVoz = voiceGender === 'fem' ? 'Female' : 'Male';
                                 const tomVoz = selectedStepTone || 'Standard';
                                 const cenarioAcao = scenarios.find(s => s.id === selectedScenario)?.label || 'Clean, well-lit environment';
-                                
+
                                 const masterPrompt = `[CORE INSTRUCTIONS FOR GOOGLE VEO 3]
 You have been provided with two reference images attached:
 1. Avatar Reference (the digital influencer/model who will guide this video)
@@ -4038,7 +5066,7 @@ Generate a hyper-realistic, photorealistic video where the Avatar (from image 1)
 Make the Avatar speak EXACTLY the following script in Portuguese with perfect, seamless lip-sync matching the syllables flawlessly:
 
 "${text || takes[idx]}"`;
-                                
+
                                 navigator.clipboard.writeText(masterPrompt);
                               }}
                               className="w-full flex items-center justify-center gap-3 py-4 bg-[#2a2b33] hover:bg-[#3B82F6] text-white/50 hover:text-white rounded-2xl text-[12px] font-black uppercase tracking-widest transition-all active:scale-95 group/btn"
@@ -4086,13 +5114,13 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
                 <X className="w-5 h-5 text-white/50 hover:text-white" />
               </button>
             </div>
-            
+
             <div className="p-6 overflow-y-auto custom-scrollbar flex-1">
               <div className="bg-black/50 border border-white/5 rounded-2xl p-6 relative group/content">
                 <p className="text-white/80 font-medium leading-relaxed whitespace-pre-wrap select-all selection:bg-[#3B82F6]/30 selection:text-white">
                   {viewedPrompt.text}
                 </p>
-                
+
                 {/* Floating copy button inside content area */}
                 <div className="absolute top-4 right-4 opacity-0 group-hover/content:opacity-100 transition-opacity">
                   <button
@@ -4107,9 +5135,9 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
                 </div>
               </div>
             </div>
-            
+
             <div className="p-6 border-t border-white/10 bg-white/[0.02] flex justify-end">
-              <button 
+              <button
                 onClick={() => {
                   navigator.clipboard.writeText(viewedPrompt.text);
                   setViewedPrompt(null);

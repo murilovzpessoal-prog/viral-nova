@@ -1069,6 +1069,26 @@ const DropdownToolItem: React.FC<{ label: string; badge?: string; isActive?: boo
 
 
 // --- CREATOR ENGINE: GERAR IMAGEM VIEW ---
+const enhancePromptWithGemini = async (userDescription: string) => {
+  const systemPrompt = `Você é um fotógrafo especialista em realismo humano. Sua tarefa é melhorar esta descrição básica e convertê-la num prompt robusto, EXCLUSIVAMENTE em inglês, pronto para ser usado num gerador de imagens IA avançado (como Midjourney ou Flux).
+  A estética deve OBRIGATORIAMENTE ser: Casual real life photo taken with a modern mobile phone camera, natural lighting, realistic facial asymmetry, perfect and natural human skin texture with pores and subtle imperfections. 
+  A imagem NÃO DEVE conter NENHUMA interface gráfica, barra de câmera, play button, blur falso ou aspecto de render 3D plástico.
+  Retorne APENAS o prompt avançado traduzido em inglês, nada além disso. Mantenha os detalhes literais do usuário fielmente (roupas, características físicas, idade, local).`;
+  
+  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{
+        parts: [{ text: `${systemPrompt}\n\nDescrição original do usuário: ${userDescription}` }]
+      }]
+    })
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error?.message || 'Erro ao comunicar com Gemini IA');
+  return data.candidates[0].content.parts[0].text.trim();
+};
+
 const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   const [tipoCriacao, setTipoCriacao] = useState('Influencer Realista');
   const [isTipoOpen, setIsTipoOpen] = useState(false);
@@ -1096,13 +1116,19 @@ const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack
         });
       }
 
+      let enhancedPromptText = promptTexto;
+      // Usar a Gemini para criar o prompt top a não ser que o upload contorne o texto
+      if (promptTexto.trim() && !refOpcional) {
+        enhancedPromptText = await enhancePromptWithGemini(promptTexto);
+      }
+
       const { data, error } = await supabase.functions.invoke('did-api', {
         body: { 
-          action: 'generate', 
+          action: 'stage1', 
           payload: { 
             view: 'imagem', 
             tipo: tipoCriacao, 
-            text: promptTexto,
+            text: enhancedPromptText,
             image_base64: imageBase64
           } 
         }

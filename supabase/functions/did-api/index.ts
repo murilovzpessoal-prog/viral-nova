@@ -8,13 +8,13 @@ const corsHeaders = {
 
 const FAL_API_KEY = "f98afc7c-a671-413a-ab90-abf8a46bd39e:188b2ca4044b9985e1af1544658282f3";
 
-const MASTERPIECE_PROMPT = `Award-winning portrait photography, 8k resolution masterpiece.
-Ultra-realistic, pristine cinematic lighting, soft glowing sunlight.
-Shallow depth of field, 85mm lens, beautiful bokeh background.
-High fashion editorial quality, flawless skin texture, highly detailed face.
-Authentic beauty, highly detailed eyes, natural elegant posture.
-Absolutely zero CGI or plastic AI artifacts. Photorealistic human perfection.
-The person MUST look like a real high-end fashion model influencer.`;
+const ULTRA_REALISTIC_PROMPT = `Casual real life photo taken with a modern mobile phone camera.
+Natural lighting, realistic shadows, balanced exposure and authentic colors.
+Clear background environment fully visible, no artificial blur.
+Natural human skin texture with visible pores, subtle imperfections, realistic facial asymmetry and natural hair strands.
+Authentic everyday photography style, looks like a real person photographed casually in real life.
+4K HDR photo, ultra detailed, natural composition.
+Important: the image must NOT contain any camera interface, phone UI, screenshot frame, recording indicators, shutter buttons or screen overlays.`;
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -60,8 +60,8 @@ serve(async (req) => {
       }
 
       // Caso ele não mandou foto, gera uma com Flux Pro Mestre
-      const rawText = userPayload.text || userPayload.tipo || "Influenciadora brasileira";
-      const enhancedPrompt = `${MASTERPIECE_PROMPT}\n\nSCENE SETTING AND ACTION TO RENDER EXACTLY: ${rawText}`;
+      const subject = userPayload.text || userPayload.tipo || "Influenciadora brasileira";
+      const enhancedPrompt = `Ultra realistic photo of ${subject}. ${ULTRA_REALISTIC_PROMPT}`;
 
       const fluxReq = await fetch("https://fal.run/fal-ai/flux-pro/v1.1", {
          method: "POST",

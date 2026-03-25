@@ -84,7 +84,8 @@ import {
   Image as ImageIcon,
   Clapperboard,
   Accessibility,
-  CreditCard
+  CreditCard,
+  RefreshCw
 } from 'lucide-react';
 
 // Language Context
@@ -975,8 +976,8 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
         {/* Main Content Area */}
         <div className="flex-1">
           {currentPage === 'creator-engine' && <CreatorEngineView onGoToImagem={() => setCurrentPage('creator-engine-imagem')} onGoToVideo={() => setCurrentPage('creator-engine-video')} onGoToMinhasCriacoes={() => setCurrentPage('creator-engine-minhas-criacoes')} onGoToCreditos={() => setCurrentPage('creator-engine-creditos')} />}
-          {currentPage === 'creator-engine-minhas-criacoes' && <CreatorEngineMinhasCriacoesView />}
-          {currentPage === 'creator-engine-creditos' && <CreatorEngineCreditosView />}
+          {currentPage === 'creator-engine-minhas-criacoes' && <CreatorEngineMinhasCriacoesView onBack={() => setCurrentPage('creator-engine')} />}
+          {currentPage === 'creator-engine-creditos' && <CreatorEngineCreditosView onBack={() => setCurrentPage('creator-engine')} />}
           {currentPage === 'creator-engine-imagem' && <CreatorEngineGerarImagemView onBack={() => setCurrentPage('creator-engine')} />}
           {currentPage === 'creator-engine-video' && <CreatorEngineGerarVideoView onBack={() => setCurrentPage('creator-engine')} onGoToInfluencer={() => setCurrentPage('creator-engine-video-influencer')} onGoToCinematico={() => setCurrentPage('creator-engine-video-cinematico')} onGoToImitar={() => setCurrentPage('creator-engine-video-imitar')} />}
           {currentPage === 'creator-engine-video-influencer' && <CreatorEngineGerarVideoInfluencerIAView onBack={() => setCurrentPage('creator-engine-video')} />}
@@ -1072,6 +1073,59 @@ const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack
   const [tipoCriacao, setTipoCriacao] = useState('Influencer Realista');
   const [isTipoOpen, setIsTipoOpen] = useState(false);
   const [refOpcional, setRefOpcional] = useState<File | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [promptTexto, setPromptTexto] = useState('');
+  const [generatedImage, setGeneratedImage] = useState<string | null>(null);
+
+  const handleGenerate = async () => {
+    if (!promptTexto.trim() && tipoCriacao !== 'Clone (Celebridades)') {
+      alert('Por favor, digite uma descrição para a sua imagem.');
+      return;
+    }
+
+    setIsGenerating(true);
+    setGeneratedImage(null);
+    try {
+      let imageBase64 = null;
+      if (refOpcional) {
+        imageBase64 = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(refOpcional);
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = error => reject(error);
+        });
+      }
+
+      const { data, error } = await supabase.functions.invoke('did-api', {
+        body: { 
+          action: 'generate', 
+          payload: { 
+            view: 'imagem', 
+            tipo: tipoCriacao, 
+            text: promptTexto,
+            image_base64: imageBase64
+          } 
+        }
+      });
+      if (error) throw error;
+      
+      if (data?.data?.image_url) {
+         // O Backend do Gemini (Imagen) retornou a Base64 da imagem perfeitamente desenhada!
+         setGeneratedImage(data.data.image_url);
+         if (data?.data?.enhanced_prompt) {
+           console.log("Prompt Mestre Utilizado:", data.data.enhanced_prompt);
+         }
+      } else {
+         throw new Error("A Inteligência Artificial não retornou a imagem.");
+      }
+      setIsGenerating(false);
+
+    } catch (err: any) {
+      console.error('Erro na geração da Imagem:', err);
+      alert('⚠️ Erro ao conectar com a IA: ' + err.message);
+      setIsGenerating(false);
+    } 
+  };
 
   const tiposDeCriacao = [
     'Influencer Realista',
@@ -1192,6 +1246,8 @@ const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack
             <div className="relative">
               <textarea
                 rows={4}
+                value={promptTexto}
+                onChange={(e) => setPromptTexto(e.target.value)}
                 className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-[#e4e4e7] placeholder:text-[#a8a8b3]/50 focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all resize-none font-medium"
                 placeholder={
                   tipoCriacao === 'Clone (Influencer IA)'
@@ -1201,7 +1257,7 @@ const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack
                       : "Descreva o que você quer criar. Exemplo: influencer brasileira de 23 anos com roupa fitness"
                 }
               ></textarea>
-              <div className="absolute bottom-3 right-4 text-xs text-[#a8a8b3] font-medium">0/2000</div>
+              <div className="absolute bottom-3 right-4 text-xs text-[#a8a8b3] font-medium">{promptTexto.length}/2000</div>
             </div>
           </div>
 
@@ -1262,12 +1318,31 @@ const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack
           </div>
 
           {/* Botão Gerar */}
-          <button className="w-full bg-[#3B82F6] hover:bg-[#2563EB] text-white rounded-xl py-4 font-bold text-sm transition-all shadow-md hover:shadow-[#3B82F6]/20 flex items-center justify-center gap-2 group mt-4">
-            <Sparkles className="w-4 h-4" />
-            Gerar Imagem
+          <button 
+            onClick={handleGenerate}
+            disabled={isGenerating}
+            className="w-full bg-[#3B82F6] hover:bg-[#2563EB] disabled:bg-[#3B82F6]/50 disabled:cursor-not-allowed text-white rounded-xl py-4 font-bold text-sm transition-all shadow-md hover:shadow-[#3B82F6]/20 flex items-center justify-center gap-2 group mt-4">
+            {isGenerating ? <Loader2 className="w-5 h-5 animate-spin" /> : <Sparkles className="w-4 h-4" />}
+            {isGenerating ? 'Processando na IA...' : 'Gerar Imagem'}
           </button>
         </div>
       </div>
+
+      {/* Result Section (Exibido quando a imagem finaliza) */}
+      {generatedImage && (
+        <div className="w-full max-w-3xl bg-[#111114] border border-[#3B82F6]/30 rounded-3xl p-6 md:p-10 relative mt-8 flex flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-500 shadow-[0_0_40px_rgba(59,130,246,0.1)]">
+           <div className="w-12 h-12 bg-[#3B82F6]/20 rounded-full flex items-center justify-center mb-4">
+             <Check className="w-6 h-6 text-[#3B82F6]" strokeWidth={3} />
+           </div>
+           <h2 className="text-xl md:text-2xl font-bold text-white mb-6 text-center">Sua Imagem Retornou com Sucesso! 🎉</h2>
+           
+           <img src={generatedImage} alt="Gerada" className="w-full max-w-sm rounded-2xl shadow-2xl mb-8 border border-[#27272A]" />
+           
+           <a href={generatedImage} download target="_blank" rel="noreferrer" className="bg-[#18181B] border border-[#27272A] hover:bg-[#27272A] hover:border-[#3F3F46] text-white px-8 py-3.5 rounded-xl font-bold transition-all flex items-center gap-2">
+             <Upload className="w-4 h-4 rotate-180" /> Baixar Imagem (JPG)
+           </a>
+        </div>
+      )}
 
       {/* Decorative Bottom Sparkle */}
       <div className="mt-8 opacity-[0.25] flex flex-col items-center">
@@ -1333,6 +1408,85 @@ const CreatorEngineGerarVideoView: React.FC<{ onBack: () => void; onGoToInfluenc
 // --- CREATOR ENGINE: GERAR VÍDEO - INFLUENCER IA VIEW ---
 const CreatorEngineGerarVideoInfluencerIAView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   const [imagemRef, setImagemRef] = useState<File | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [promptTexto, setPromptTexto] = useState('');
+  const [pollingText, setPollingText] = useState('');
+  const [generatedVideo, setGeneratedVideo] = useState<string | null>(null);
+
+  const handleGenerate = async () => {
+    if (!promptTexto.trim()) {
+      alert('Por favor, digite uma descrição para o vídeo.');
+      return;
+    }
+
+    setIsGenerating(true);
+    setGeneratedVideo(null);
+
+    try {
+      // FileReader Helper
+      let imageBase64 = null;
+      if (imagemRef) {
+        imageBase64 = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(imagemRef);
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = error => reject(error);
+        });
+      }
+
+      // Função Auxiliar de Polling Reutilizável
+      const pollService = async (serviceName: string, requestId: string, maxRetries = 60) => {
+        for (let i = 0; i < maxRetries; i++) {
+          await new Promise(r => setTimeout(r, 5000));
+          const res = await supabase.functions.invoke(`did-api?action=status&request_id=${requestId}&service=${serviceName}`, { method: 'GET' });
+          const statusData = res.data;
+          
+          if (statusData?.error) throw new Error(statusData.error);
+
+          if (statusData?.data?.status === 'completed' || statusData?.data?.status === 'success') {
+             return statusData.data.result_url;
+          } else if (statusData?.data?.status === 'failed') {
+             throw new Error(`O serviço ${serviceName} falhou.`);
+          }
+        }
+        throw new Error(`Tempo limite atingido para o serviço ${serviceName}.`);
+      };
+
+      // ==========================================
+      // STAGE 1: GERAR CENÁRIO BASE (IMAGEM)
+      // ==========================================
+      setPollingText('Preparando cenário e modelo de visualização...');
+      const s1 = await supabase.functions.invoke('did-api', {
+        body: { action: 'stage1', payload: { view: 'influencer-ia', text: promptTexto, image_base64: imageBase64 } }
+      });
+      if (s1.error || !s1.data?.data?.image_url) throw new Error(s1.error?.message || "Falha na Etapa 1 (Imagem indisponível)");
+      
+      const imageUrl = s1.data.data.image_url;
+
+      // ==========================================
+      // STAGE 2: ANIMAÇÃO DE MOVIMENTO (KLING PRO 1.5)
+      // ==========================================
+      setPollingText('Iniciando Inteligência Kling Pro (Hollywood Padrão Ouro)...\nMovimento e realismo cinematográficos absolutos. Leva cerca de 3 a 4 minutos...');
+      const s2 = await supabase.functions.invoke('did-api', {
+        body: { action: 'stage2', payload: { image_url: imageUrl, text: promptTexto } }
+      });
+      if (s2.error || !s2.data?.data?.kling_request_id) throw new Error(s2.error?.message || "Falha na Etapa 2 (Movimento)");
+      
+      const klingRequestId = s2.data.data.kling_request_id;
+      const klingVideoUrl = await pollService('kling', klingRequestId, 80); // Video leva ~4 min
+      if (!klingVideoUrl) throw new Error("Falha ao gerar o vídeo de Movimento.");
+
+      // Tudo pronto, sem necessidade de LipSync!
+      setGeneratedVideo(klingVideoUrl);
+
+    } catch (err: any) {
+      console.error('Erro na HeyGen API:', err);
+      alert('⚠️ Erro ao processar o vídeo: ' + err.message);
+    } finally {
+      setIsGenerating(false);
+      setPollingText('');
+    }
+  };
 
   return (
     <main className="max-w-[1000px] mx-auto px-4 md:px-8 py-10 md:py-16 flex flex-col items-center">
@@ -1360,10 +1514,10 @@ const CreatorEngineGerarVideoInfluencerIAView: React.FC<{ onBack: () => void }> 
           <div>
             <label className="block text-sm font-semibold text-white mb-2.5">O que você quer gerar?</label>
             <div className="relative">
-              <select className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-[#a8a8b3] appearance-none cursor-pointer focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all font-medium">
-                <option value="">Selecione o tipo de vídeo</option>
-                <option value="avatar">Avatar Falante</option>
-                <option value="ugc">Influencer UGC de Produto</option>
+              <select 
+                defaultValue="ugc"
+                className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-white appearance-none cursor-pointer focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all font-medium">
+                <option value="ugc">Influencer UGC</option>
               </select>
               <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#a8a8b3] pointer-events-none" />
             </div>
@@ -1375,12 +1529,15 @@ const CreatorEngineGerarVideoInfluencerIAView: React.FC<{ onBack: () => void }> 
             <div className="relative">
               <textarea
                 rows={4}
+                value={promptTexto}
+                onChange={(e) => setPromptTexto(e.target.value)}
                 className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-[#e4e4e7] placeholder:text-[#a8a8b3]/50 focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all resize-none font-medium"
                 placeholder="Descreva o que você quer criar..."
               ></textarea>
-              <div className="absolute bottom-3 right-4 text-xs text-[#a8a8b3] font-medium">0/2000</div>
+              <div className="absolute bottom-3 right-4 text-xs text-[#a8a8b3] font-medium">{promptTexto.length}/2000</div>
             </div>
           </div>
+
 
           {/* Imagem de Referência */}
           <div>
@@ -1447,12 +1604,67 @@ const CreatorEngineGerarVideoInfluencerIAView: React.FC<{ onBack: () => void }> 
           </div>
 
           {/* Botão Gerar Vídeo */}
-          <button className="w-full bg-[#3B82F6] hover:bg-[#2563EB] text-white rounded-xl py-4 font-bold text-sm transition-all shadow-md hover:shadow-[#3B82F6]/20 flex items-center justify-center gap-2 group mt-4">
-            <Video className="w-5 h-5" />
-            Gerar Vídeo
+          <button 
+            onClick={handleGenerate}
+            disabled={isGenerating}
+            className="w-full bg-[#3B82F6] hover:bg-[#2563EB] disabled:bg-[#3B82F6]/50 disabled:cursor-not-allowed text-white rounded-xl py-4 font-bold text-sm transition-all shadow-md hover:shadow-[#3B82F6]/20 flex items-center justify-center gap-2 group mt-4 relative overflow-hidden">
+            {isGenerating ? <Loader2 className="w-5 h-5 animate-spin" /> : <Video className="w-5 h-5" />}
+            {isGenerating ? (pollingText || 'Processando...') : 'Gerar Vídeo'}
           </button>
         </div>
       </div>
+
+      {/* Result Section (Exibido quando o vídeo finaliza - TikTok View) */}
+      {/* Result Section (Exibido quando o vídeo finaliza - TikTok View) */}
+      {generatedVideo && (
+        <div className="w-full max-w-[460px] mx-auto mt-12 animate-in fade-in slide-in-from-bottom-8 duration-700 flex flex-col items-center">
+           <div className="w-12 h-12 bg-[#3B82F6]/20 rounded-full flex items-center justify-center mb-4">
+             <Check className="w-6 h-6 text-[#3B82F6]" strokeWidth={3} />
+           </div>
+           <h2 className="text-xl md:text-2xl font-bold text-white mb-6 text-center">Vídeo Pronto! 🎉</h2>
+           
+           {/* Card Central Unificado (Vídeo + Botões) */}
+           <div className="w-full bg-[#111114] border border-[#27272A] rounded-[32px] p-4 shadow-[0_0_50px_rgba(59,130,246,0.15)] flex flex-col gap-4">
+             
+             {/* TikTok Player Container (9:16 Aspect Ratio) */}
+             <div className="w-full aspect-[9/16] bg-black rounded-2xl overflow-hidden relative shadow-inner border border-[#27272A]/50 group">
+               <video 
+                 src={generatedVideo} 
+                 controls 
+                 autoPlay 
+                 loop
+                 playsInline
+                 className="w-full h-full object-cover" 
+               />
+             </div>
+
+             {/* Action Buttons Grid (4 colunas exatas) */}
+             <div className="w-full grid grid-cols-4 gap-2">
+               <a href={generatedVideo} download target="_blank" rel="noreferrer" className="flex flex-col items-center justify-center gap-1.5 bg-[#18181B] hover:bg-[#27272A] border border-[#27272A] py-3 rounded-[16px] transition-all cursor-pointer group">
+                 <Download className="w-4 h-4 md:w-5 md:h-5 text-[#a8a8b3] group-hover:text-white transition-colors" />
+                 <span className="text-[10px] md:text-xs font-semibold text-[#a8a8b3] group-hover:text-white">Baixar</span>
+               </a>
+               <button onClick={() => {
+                   navigator.clipboard.writeText(promptTexto);
+                   alert('Prompt copiado para a área de transferência!');
+                 }} 
+                 className="flex flex-col items-center justify-center gap-1.5 bg-[#18181B] hover:bg-[#27272A] border border-[#27272A] py-3 rounded-[16px] transition-all cursor-pointer group">
+                 <Copy className="w-4 h-4 md:w-5 md:h-5 text-[#a8a8b3] group-hover:text-white transition-colors" />
+                 <span className="text-[10px] md:text-xs font-semibold text-[#a8a8b3] group-hover:text-white">Copiar</span>
+               </button>
+               <button onClick={handleGenerate} className="flex flex-col items-center justify-center gap-1.5 bg-[#18181B] hover:bg-[#27272A] border border-[#27272A] py-3 rounded-[16px] transition-all cursor-pointer group">
+                 <RefreshCw className="w-4 h-4 md:w-5 md:h-5 text-[#a8a8b3] group-hover:text-white transition-colors" />
+                 <span className="text-[10px] md:text-xs font-semibold text-[#a8a8b3] group-hover:text-white">Variação</span>
+               </button>
+               <button className="flex flex-col items-center justify-center gap-1.5 bg-[#18181B] hover:bg-[#27272A] border border-[#27272A] py-3 rounded-[16px] transition-all cursor-pointer group">
+                 <Bookmark className="w-4 h-4 md:w-5 md:h-5 text-[#a8a8b3] group-hover:text-white transition-colors" />
+                 <span className="text-[10px] md:text-xs font-semibold text-[#a8a8b3] group-hover:text-white">Salvar</span>
+               </button>
+             </div>
+             
+           </div>
+        </div>
+      )}
 
       {/* Decorative Bottom */}
       <div className="mt-8 opacity-[0.25] flex flex-col items-center">
@@ -1467,6 +1679,23 @@ const CreatorEngineGerarVideoInfluencerIAView: React.FC<{ onBack: () => void }> 
 // --- CREATOR ENGINE: GERAR VÍDEO - CINEMATOGRÁFICO VIEW ---
 const CreatorEngineGerarVideoCinematicoView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   const [imagemBase, setImagemBase] = useState<File | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  const handleGenerate = async () => {
+    setIsGenerating(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('heygen-api', {
+        body: { action: 'generate', payload: { view: 'cinematico' } }
+      });
+      if (error) throw error;
+      alert('✅ Vídeo Cinemático em produção pela HeyGen! Em breve estará nas Suas Criações.');
+    } catch (err: any) {
+      console.error('Erro na HeyGen API:', err);
+      alert('⚠️ Erro ao conectar com a IA: A chave API pode não estar configurada.');
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
   return (
     <main className="max-w-[1000px] mx-auto px-4 md:px-8 py-10 md:py-16 flex flex-col items-center">
@@ -1542,9 +1771,12 @@ const CreatorEngineGerarVideoCinematicoView: React.FC<{ onBack: () => void }> = 
           </div>
 
           {/* Botão Gerar Vídeo */}
-          <button className="w-full bg-[#3B82F6] hover:bg-[#2563EB] text-white rounded-xl py-4 font-bold text-sm transition-all shadow-md hover:shadow-[#3B82F6]/20 flex items-center justify-center gap-2 group mt-4">
-            <Video className="w-5 h-5" />
-            Gerar Vídeo
+          <button 
+            onClick={handleGenerate}
+            disabled={isGenerating}
+            className="w-full bg-[#3B82F6] hover:bg-[#2563EB] disabled:bg-[#3B82F6]/50 disabled:cursor-not-allowed text-white rounded-xl py-4 font-bold text-sm transition-all shadow-md hover:shadow-[#3B82F6]/20 flex items-center justify-center gap-2 group mt-4">
+            {isGenerating ? <Loader2 className="w-5 h-5 animate-spin" /> : <Video className="w-5 h-5" />}
+            {isGenerating ? 'Processando Vídeo...' : 'Gerar Vídeo'}
           </button>
         </div>
       </div>
@@ -1563,6 +1795,23 @@ const CreatorEngineGerarVideoCinematicoView: React.FC<{ onBack: () => void }> = 
 const CreatorEngineGerarVideoImitarMovimentosView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   const [imagemRef, setImagemRef] = useState<File | null>(null);
   const [videoRef, setVideoRef] = useState<File | null>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  const handleGenerate = async () => {
+    setIsGenerating(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('heygen-api', {
+        body: { action: 'generate', payload: { view: 'imitar-movimentos' } }
+      });
+      if (error) throw error;
+      alert('✅ Vídeo de Movimentos em produção pela HeyGen! Em breve nas Suas Criações.');
+    } catch (err: any) {
+      console.error('Erro na HeyGen API:', err);
+      alert('⚠️ Erro ao conectar com a IA: A chave API pode não estar configurada.');
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
   return (
     <main className="max-w-[1000px] mx-auto px-4 md:px-8 py-10 md:py-16 flex flex-col items-center">
@@ -1664,9 +1913,12 @@ const CreatorEngineGerarVideoImitarMovimentosView: React.FC<{ onBack: () => void
           </div>
 
           {/* Botão Gerar Vídeo */}
-          <button className="w-full bg-[#3B82F6] hover:bg-[#2563EB] text-white rounded-xl py-4 font-bold text-sm transition-all shadow-md hover:shadow-[#3B82F6]/20 flex items-center justify-center gap-2 group mt-6">
-            <Video className="w-5 h-5" />
-            Gerar Vídeo
+          <button 
+            onClick={handleGenerate}
+            disabled={isGenerating}
+            className="w-full bg-[#3B82F6] hover:bg-[#2563EB] disabled:bg-[#3B82F6]/50 disabled:cursor-not-allowed text-white rounded-xl py-4 font-bold text-sm transition-all shadow-md hover:shadow-[#3B82F6]/20 flex items-center justify-center gap-2 group mt-6">
+            {isGenerating ? <Loader2 className="w-5 h-5 animate-spin" /> : <Video className="w-5 h-5" />}
+            {isGenerating ? 'Processando Vídeo...' : 'Gerar Vídeo'}
           </button>
         </div>
       </div>
@@ -1682,11 +1934,17 @@ const CreatorEngineGerarVideoImitarMovimentosView: React.FC<{ onBack: () => void
 
 
 // --- CREATOR ENGINE MINHAS CRIAÇÕES VIEW ---
-const CreatorEngineMinhasCriacoesView: React.FC = () => {
+const CreatorEngineMinhasCriacoesView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   return (
     <main className="max-w-[1400px] mx-auto px-6 py-8 md:py-12 min-h-screen">
       {/* Header */}
-      <div className="mb-8">
+      <div className="mb-8 relative pl-14 md:pl-16">
+        <button 
+          onClick={onBack}
+          className="absolute left-0 top-1 w-10 h-10 md:w-11 md:h-11 bg-[#18181B] border border-[#27272A] rounded-full flex items-center justify-center hover:bg-[#27272A] hover:border-[#3F3F46] transition-all group shadow-sm z-20"
+        >
+          <ArrowLeft className="w-5 h-5 text-[#A1A1AA] group-hover:text-white transition-colors" strokeWidth={2} />
+        </button>
         <h1 className="text-2xl font-bold text-white mb-2 tracking-tight">Minhas Criações</h1>
         <p className="text-sm text-[#A1A1AA] font-medium">Histórico de imagens e vídeos gerados</p>
       </div>
@@ -1732,11 +1990,17 @@ const CreatorEngineMinhasCriacoesView: React.FC = () => {
 };
 
 // --- CREATOR ENGINE CRÉDITOS VIEW ---
-const CreatorEngineCreditosView: React.FC = () => {
+const CreatorEngineCreditosView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   return (
     <main className="max-w-[1400px] mx-auto px-6 py-8 md:py-12 min-h-screen">
       {/* Header */}
-      <div className="mb-10">
+      <div className="mb-10 relative pl-14 md:pl-16">
+        <button 
+          onClick={onBack}
+          className="absolute left-0 top-1 w-10 h-10 md:w-11 md:h-11 bg-[#18181B] border border-[#27272A] rounded-full flex items-center justify-center hover:bg-[#27272A] hover:border-[#3F3F46] transition-all group shadow-sm z-20"
+        >
+          <ArrowLeft className="w-5 h-5 text-[#A1A1AA] group-hover:text-white transition-colors" strokeWidth={2} />
+        </button>
         <h1 className="text-2xl font-bold text-white mb-2 tracking-tight">Créditos</h1>
         <p className="text-sm text-[#A1A1AA] font-medium">Gerencie seus créditos e plano</p>
       </div>

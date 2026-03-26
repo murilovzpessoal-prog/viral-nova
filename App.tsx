@@ -1070,12 +1070,19 @@ const DropdownToolItem: React.FC<{ label: string; badge?: string; isActive?: boo
 
 // --- CREATOR ENGINE: GERAR IMAGEM VIEW ---
 const enhancePromptWithGemini = async (userDescription: string) => {
-  const systemPrompt = `Você é um fotógrafo especialista em realismo humano. Sua tarefa é melhorar esta descrição básica e convertê-la num prompt robusto, EXCLUSIVAMENTE em inglês, pronto para ser usado num gerador de imagens IA avançado (como Midjourney ou Flux).
-  A estética deve OBRIGATORIAMENTE ser: Casual real life photo taken with a modern mobile phone camera, natural lighting, realistic facial asymmetry, perfect and natural human skin texture with pores and subtle imperfections. 
-  A imagem NÃO DEVE conter NENHUMA interface gráfica, barra de câmera, play button, blur falso ou aspecto de render 3D plástico.
-  Retorne APENAS o prompt avançado traduzido em inglês, nada além disso. Mantenha os detalhes literais do usuário fielmente (roupas, características físicas, idade, local).`;
+  const systemPrompt = `Você é um engenheiro de prompt. Sua única função é pegar a descrição básica que o usuário enviou e mesclar perfeitamente dentro DESTE ESQUELETO EXATO, mantendo TODAS as palavras em inglês do esqueleto e apenas substituindo a parte descritiva pela do usuário. 
   
-  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`, {
+  O esqueleto OBRIGATÓRIO que você deve retornar é este:
+  "Ultra realistic candid photo of [INSERIR A DESCRIÇÃO DO USUÁRIO TRADUZIDA PARA INGLÊS AQUI]. Casual real life photo taken with a modern mobile phone camera. Natural raw lighting, realistic shadows, authentic colors. Clear background environment, no artificial blur. Extremely detailed unedited human skin texture with visible micro pores, subtle blemishes, realistic skin reflections, vellus hair, slight facial asymmetry and natural hair strands. Completely unretouched, zero makeup effect, authentic everyday photography style, looks exactly like a real person photographed casually in real life. 4K HDR raw photo, ultra detailed, realistic composition. Important: the image must NOT contain any camera interface, phone UI, screenshot frame, recording indicators, shutter buttons, plastic skin, CGI, or AI smoothing."
+  
+  PRESTE ATENÇÃO AO GÊNERO DO SUJEITO: 
+  Se o usuário pedir uma MULHER (influenciadora, menina, etc), adicione OBRIGATORIAMENTE ao lado da descrição: "Ultra detailed RAW photography of an authentic everyday Brazilian woman, South American Latina. CRITICAL INSTRUCTIONS FOR FEMALE: 0% makeup, ABSOLUTELY NO AIRBRUSHING, extremely raw textured skin, heavily visible micro pores on nose and cheeks, peach fuzz, subtle real-life blemishes, authentic female facial asymmetry, hyper-realistic candid lighting. This must look like a real unfiltered everyday mundane iphone photo."
+  Se o usuário pedir um HOMEM (influenciador, menino, etc), adicione OBRIGATORIAMENTE ao lado da descrição: "authentic brazilian man, typical latin american features, raw unedited skin".
+  E independentemente do gênero, mantenha sempre características marcantes de uma PESSOA BRASILEIRA COMUM e AUTÊNTICA.
+  
+  Retorne APENAS o prompt final em inglês montado com esse esqueleto. Sem aspas iniciais, sem explicações.`;
+  
+  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -1148,7 +1155,6 @@ const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack
 
     } catch (err: any) {
       console.error('Erro na geração da Imagem:', err);
-      alert('⚠️ Erro ao conectar com a IA: ' + err.message);
       setIsGenerating(false);
     } 
   };

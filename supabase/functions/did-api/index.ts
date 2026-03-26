@@ -8,13 +8,7 @@ const corsHeaders = {
 
 const FAL_API_KEY = "f98afc7c-a671-413a-ab90-abf8a46bd39e:188b2ca4044b9985e1af1544658282f3";
 
-const ULTRA_REALISTIC_PROMPT = `Casual real life photo taken with a modern mobile phone camera.
-Natural lighting, realistic shadows, balanced exposure and authentic colors.
-Clear background environment fully visible, no artificial blur.
-Natural human skin texture with visible pores, subtle imperfections, realistic facial asymmetry and natural hair strands.
-Authentic everyday photography style, looks like a real person photographed casually in real life.
-4K HDR photo, ultra detailed, natural composition.
-Important: the image must NOT contain any camera interface, phone UI, screenshot frame, recording indicators, shutter buttons or screen overlays.`;
+// O Prompt de realismo absoluto agora é gerado e injetado pelo Gemini no Frontend.
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -60,10 +54,10 @@ serve(async (req) => {
       }
 
       // Caso ele não mandou foto, gera uma com Flux Pro Mestre
-      const subject = userPayload.text || userPayload.tipo || "Influenciadora brasileira";
-      const enhancedPrompt = `Ultra realistic photo of ${subject}. ${ULTRA_REALISTIC_PROMPT}`;
+      // O frontend (via Gemini) já constrói o prompt final ultra-realista em inglês.
+      const enhancedPrompt = userPayload.text || "Ultra realistic raw photo of a brazilian influencer, casual everyday lighting, highly detailed.";
 
-      const fluxReq = await fetch("https://fal.run/fal-ai/flux-pro/v1.1", {
+      const fluxReq = await fetch("https://fal.run/fal-ai/flux-pro/v1.1-ultra", {
          method: "POST",
          headers: {
             "Authorization": `Key ${FAL_API_KEY}`,
@@ -72,6 +66,7 @@ serve(async (req) => {
          body: JSON.stringify({
            prompt: enhancedPrompt,
            aspect_ratio: "9:16",
+           raw: true,
            safety_tolerance: "5"
          })
       });

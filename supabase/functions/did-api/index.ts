@@ -40,10 +40,12 @@ serve(async (req) => {
       const userPayload = body?.payload || body;
       if (!userPayload) throw new Error("Missing payload in request body");
 
+      const baseImageBase64 = userPayload.base_image_base64;
+      const swapImageBase64 = userPayload.swap_image_base64;
       const uploadedBase64 = userPayload.image_base64; 
 
-      // DECISÃO FINAL: Se enviou foto, ANIMAR EXATAMENTE AQUELA FOTO. Bypass total na inteligência de Texto.
-      if (uploadedBase64 && uploadedBase64.includes("base64,")) {
+      // DECISÃO FINAL: Se enviou foto (apenas em modos casuais, não Clone), ANIMAR EXATAMENTE AQUELA FOTO. Bypass total.
+      if (uploadedBase64 && uploadedBase64.includes("base64,") && !baseImageBase64) {
          return new Response(JSON.stringify({
             data: {
               status: "success",
@@ -53,9 +55,51 @@ serve(async (req) => {
          }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
       }
 
-      // Caso ele não mandou foto, gera uma com Flux Pro Mestre
-      // O frontend (via Gemini) já constrói o prompt final ultra-realista em inglês.
+      // Caso contrário, gera uma com Flux Pro Mestre
+      // O frontend (via Gemini Vison) já constrói o prompt final ultra-realista.
       const enhancedPrompt = userPayload.text || "Ultra realistic raw photo of a brazilian influencer, casual everyday lighting, highly detailed.";
+
+      const fluxPayload: any = {
+           prompt: enhancedPrompt,
+           aspect_ratio: userPayload.aspect_ratio || "9:16",
+           raw: true,
+           safety_tolerance: "5"
+      };
+
+      // MODO CLONE IA: Transplante Direto de Rosto via API Especializada Face-Swap
+      if (baseImageBase64 && swapImageBase64) {
+          const swapReq = await fetch("https://fal.run/fal-ai/face-swap", {
+             method: "POST",
+             headers: {
+                "Authorization": `Key ${FAL_API_KEY}`,
+                "Content-Type": "application/json"
+             },
+             body: JSON.stringify({
+                base_image_url: baseImageBase64,
+                swap_image_url: swapImageBase64
+             })
+          });
+          const swapRes = await swapReq.json();
+          if (!swapRes.image || !swapRes.image.url) {
+              if (swapRes.images && swapRes.images[0] && swapRes.images[0].url) {
+                  return new Response(JSON.stringify({
+                     data: {
+                       status: "success",
+                       image_url: swapRes.images[0].url,
+                       enhanced_prompt: enhancedPrompt
+                     }
+                  }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+              }
+              throw new Error("Falha no Face Swap API: " + JSON.stringify(swapRes));
+          }
+          return new Response(JSON.stringify({
+             data: {
+               status: "success",
+               image_url: swapRes.image.url,
+               enhanced_prompt: enhancedPrompt
+             }
+          }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+      }
 
       const fluxReq = await fetch("https://fal.run/fal-ai/flux-pro/v1.1-ultra", {
          method: "POST",
@@ -63,12 +107,7 @@ serve(async (req) => {
             "Authorization": `Key ${FAL_API_KEY}`,
             "Content-Type": "application/json"
          },
-         body: JSON.stringify({
-           prompt: enhancedPrompt,
-           aspect_ratio: "9:16",
-           raw: true,
-           safety_tolerance: "5"
-         })
+         body: JSON.stringify(fluxPayload)
       });
       
       const fluxRes = await fluxReq.json();

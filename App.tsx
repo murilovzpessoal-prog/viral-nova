@@ -1,6 +1,10 @@
-
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import { translations, Language, TranslationKey } from './src/translations';
+import { fal } from "@fal-ai/client";
+
+fal.config({
+   credentials: import.meta.env.VITE_FAL_API_KEY || "f98afc7c-a671-413a-ab90-abf8a46bd39e:188b2ca4044b9985e1af1544658282f3"
+});
 import { supabase, uploadImageToSupabase } from './src/lib/supabase';
 import { Login } from './src/Login';
 import {
@@ -1068,9 +1072,19 @@ const DropdownToolItem: React.FC<{ label: string; badge?: string; isActive?: boo
 );
 
 
-// --- CREATOR ENGINE: GERAR IMAGEM VIEW ---
-const enhancePromptWithGemini = async (userDescription: string) => {
-  const systemPrompt = `Você é um engenheiro de prompt. Sua única função é pegar a descrição básica que o usuário enviou e mesclar perfeitamente dentro DESTE ESQUELETO EXATO, mantendo TODAS as palavras em inglês do esqueleto e apenas substituindo a parte descritiva pela do usuário. 
+const enhancePromptWithGemini = async (userDescription: string, tipoCriacao?: string, refBase64?: string | null, baseBase64?: string | null) => {
+  let systemPrompt = "";
+
+  if (tipoCriacao === 'Clone (Influencer IA)') {
+    systemPrompt = `Você é o operador mestre de fundição fotorealista da IA AntiGravity.
+Sua função é gerar o "Prompt Estratégico" para substituição de identidade facial (Clone), onde a Imagem Base (âncora contextual) recebe o rosto da Imagem de Referência (DNA facial), integrando-os com perfeição sem aspecto de "recorte" artificial.
+
+Siga EXATAMENTE este bloco estrutural em inglês, injetando sua análise visual incrivelmente detalhada nos colchetes:
+"High-definition professional portrait, merging the identity of the person in the reference image onto the body and context of the person in the base image. The face, eyes, bone structure, skin texture, and core facial identity must be an exact, unmistakable match to the reference image. Prioritize reference geometry over base geometry. Maintain all context from the base image without deviation: [INSERIR DESCRIÇÃO MEGA DETALHADA DA POSE, DA ROUPA ESPECÍFICA (EX: PINK BLAZER), E DO CENÁRIO DA BASE]. The lighting, color grading, and environmental shadows present in the base image must be applied seamlessly to the new face, ensuring perfect integration with no 'cut-out' look. Ensure the skin tones are matched. [INSERIR A DESCRIÇÃO DE COMO O CABELO ESPECÍFICO DA REFERÊNCIA SE INTEGRA NA CENA DA BASE]. Additional actions/instructions: [INSERIR DESCRIÇÃO DO USUÁRIO TRADUZIDA PARA INGLÊS]."
+
+Retorne APENAS o prompt final montado. Sem aspas iniciais, sem introduções.`;
+  } else {
+    systemPrompt = `Você é um engenheiro de prompt. Sua única função é pegar a descrição básica que o usuário enviou e mesclar perfeitamente dentro DESTE ESQUELETO EXATO, mantendo TODAS as palavras em inglês do esqueleto e apenas substituindo a parte descritiva pela do usuário. 
   
   O esqueleto OBRIGATÓRIO que você deve retornar é este:
   "Ultra realistic candid photo of [INSERIR A DESCRIÇÃO DO USUÁRIO TRADUZIDA PARA INGLÊS AQUI]. Casual real life photo taken with a modern mobile phone camera. Natural raw lighting, realistic shadows, authentic colors. Clear background environment, no artificial blur. Extremely detailed unedited human skin texture with visible micro pores, subtle blemishes, realistic skin reflections, vellus hair, slight facial asymmetry and natural hair strands. Completely unretouched, zero makeup effect, authentic everyday photography style, looks exactly like a real person photographed casually in real life. 4K HDR raw photo, ultra detailed, realistic composition. Important: the image must NOT contain any camera interface, phone UI, screenshot frame, recording indicators, shutter buttons, plastic skin, CGI, or AI smoothing."
@@ -1081,14 +1095,35 @@ const enhancePromptWithGemini = async (userDescription: string) => {
   E independentemente do gênero, mantenha sempre características marcantes de uma PESSOA BRASILEIRA COMUM e AUTÊNTICA.
   
   Retorne APENAS o prompt final em inglês montado com esse esqueleto. Sem aspas iniciais, sem explicações.`;
+  }
+
+  const parts: any[] = [{ text: `${systemPrompt}\n\nDescrição original do usuário: ${userDescription}` }];
   
+  if (baseBase64 && tipoCriacao === 'Clone (Influencer IA)') {
+    try {
+       const b64Data = baseBase64.includes(',') ? baseBase64.split(',')[1] : baseBase64;
+       let mime = 'image/jpeg';
+       if (baseBase64.startsWith('data:')) mime = baseBase64.split(';')[0].split(':')[1];
+       parts.push({ inlineData: { data: b64Data, mimeType: mime } });
+       parts[0].text += `\n\nA visual reference of the BASE IMAGE (Scene/Body/Pose) is attached FIRST. Analyze the background, lighting, and body pose structure in detail, and insert that into the [INSERT SCENE/BACKGROUND/POSE DESCRIPTION HERE] block.`;
+    } catch(e) {}
+  }
+
+  if (refBase64) {
+    try {
+       const base64Data = refBase64.includes(',') ? refBase64.split(',')[1] : refBase64;
+       let mimeType = 'image/jpeg';
+       if (refBase64.startsWith('data:')) mimeType = refBase64.split(';')[0].split(':')[1];
+       parts.push({ inlineData: { data: base64Data, mimeType } });
+       parts[0].text += `\n\nA visual reference of the PERSON TO CLONE is attached LAST. Analyze her/his facial features, hair, and clothing in extreme visual detail, and insert that visual description into the [INSERT HIGHLY DETAILED PHYSICAL DESCRIPTION...] block of your response so the image generator can accurately recreate her/him.`;
+    } catch(e) {}
+  }
+
   const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      contents: [{
-        parts: [{ text: `${systemPrompt}\n\nDescrição original do usuário: ${userDescription}` }]
-      }]
+      contents: [{ parts }]
     })
   });
   const data = await res.json();
@@ -1103,9 +1138,12 @@ const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack
   const [isGenerating, setIsGenerating] = useState(false);
   const [promptTexto, setPromptTexto] = useState('');
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
+  const [proporcao, setProporcao] = useState('9:16');
+  const [imageBase, setImageBase] = useState<File | null>(null);
+  const [imageRef, setImageRef] = useState<File | null>(null);
 
   const handleGenerate = async () => {
-    if (!promptTexto.trim() && tipoCriacao !== 'Clone (Celebridades)') {
+    if (!promptTexto.trim() && tipoCriacao !== 'Clone (Celebridades)' && tipoCriacao !== 'Clone (Influencer IA)') {
       alert('Por favor, digite uma descrição para a sua imagem.');
       return;
     }
@@ -1123,10 +1161,39 @@ const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack
         });
       }
 
+      let baseBase64 = null;
+      let refBase64 = null;
+      let falUrlBase = null;
+      let falUrlRef = null;
+      
+      if (tipoCriacao === 'Clone (Influencer IA)') {
+         if (!imageBase || !imageRef) {
+            alert('Você precisa enviar a Imagem Base e a Imagem de Referência para fazer o Clone.');
+            setIsGenerating(false);
+            return;
+         }
+         baseBase64 = imageBase;
+         refBase64 = imageRef;
+         try {
+           setIsGenerating(true);
+           // Fazemos upload direto para a Media Cloud do Fal.ai
+           falUrlBase = await fal.storage.upload(imageBase);
+           falUrlRef = await fal.storage.upload(imageRef);
+         } catch (err) {
+           console.error("Falha a carregar imagens na cloud", err);
+           alert("Erro ao transferir Imagens para Nuvem da IA Fal. Tente novamente.");
+           setIsGenerating(false);
+           return;
+         }
+      }
+
       let enhancedPromptText = promptTexto;
       // Usar a Gemini para criar o prompt top a não ser que o upload contorne o texto
-      if (promptTexto.trim() && !refOpcional) {
-        enhancedPromptText = await enhancePromptWithGemini(promptTexto);
+      if (promptTexto.trim() && !refOpcional && tipoCriacao !== 'Clone (Influencer IA)') {
+        enhancedPromptText = await enhancePromptWithGemini(promptTexto, tipoCriacao);
+      } else if (tipoCriacao === 'Clone (Influencer IA)') {
+        const HARDCODED_PROMPT = "High-definition professional face-swap merging. Transfer the facial identity and features from the identity reference image onto the person in the base image. Preserve the pose, clothing, and background from the base image without modification. Ensure perfect blend.";
+        enhancedPromptText = `${HARDCODED_PROMPT} Context intention: ${promptTexto}`;
       }
 
       const { data, error } = await supabase.functions.invoke('did-api', {
@@ -1136,7 +1203,10 @@ const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack
             view: 'imagem', 
             tipo: tipoCriacao, 
             text: enhancedPromptText,
-            image_base64: imageBase64
+            image_base64: imageBase64,
+            base_image_base64: falUrlBase,
+            swap_image_base64: falUrlRef,
+            aspect_ratio: proporcao
           } 
         }
       });
@@ -1154,7 +1224,8 @@ const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack
       setIsGenerating(false);
 
     } catch (err: any) {
-      console.error('Erro na geração da Imagem:', err);
+      console.error(err);
+      alert('Erro na geração (App): ' + (err.message || err.toString() || 'Erro desconhecido.'));
       setIsGenerating(false);
     } 
   };
@@ -1253,17 +1324,45 @@ const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex flex-col">
                   <span className="text-xs text-[#a8a8b3] mb-2 font-medium">Imagem Base</span>
-                  <div className="h-28 sm:h-32 bg-transparent border-[1.5px] border-dashed border-[#27272A] rounded-[14px] flex flex-col items-center justify-center cursor-pointer hover:border-[#4F46E5] hover:bg-[#18181B] transition-all group">
-                    <ImageIcon className="w-6 h-6 text-[#a8a8b3] group-hover:text-[#4F46E5] mb-2 transition-colors" strokeWidth={1.5} />
-                    <span className="text-sm font-medium text-[#e4e4e7]">Enviar</span>
-                  </div>
+                  <label className="h-28 sm:h-32 relative bg-transparent border-[1.5px] border-dashed border-[#27272A] rounded-[14px] flex flex-col items-center justify-center cursor-pointer hover:border-[#4F46E5] hover:bg-[#18181B] transition-all overflow-hidden group">
+                    <input type="file" className="hidden" accept="image/jpeg, image/png, image/webp" onChange={(e) => { if (e.target.files && e.target.files[0]) setImageBase(e.target.files[0]); }} />
+                    {imageBase ? (
+                      <div className="absolute inset-0 w-full h-full">
+                        <img src={URL.createObjectURL(imageBase)} alt="Base" className="w-full h-full object-cover" />
+                        <div className="absolute inset-0 bg-black/40 xl:opacity-0 xl:group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                          <button onClick={(e) => { e.preventDefault(); setImageBase(null); }} className="p-2">
+                            <X className="w-5 h-5 text-white" strokeWidth={2.5} />
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        <ImageIcon className="w-6 h-6 text-[#a8a8b3] group-hover:text-[#4F46E5] mb-2 transition-colors" strokeWidth={1.5} />
+                        <span className="text-sm font-medium text-[#e4e4e7]">Enviar</span>
+                      </>
+                    )}
+                  </label>
                 </div>
                 <div className="flex flex-col">
                   <span className="text-xs text-[#a8a8b3] mb-2 font-medium">Imagem de Referência</span>
-                  <div className="h-28 sm:h-32 bg-transparent border-[1.5px] border-dashed border-[#27272A] rounded-[14px] flex flex-col items-center justify-center cursor-pointer hover:border-[#4F46E5] hover:bg-[#18181B] transition-all group">
-                    <ImageIcon className="w-6 h-6 text-[#a8a8b3] group-hover:text-[#4F46E5] mb-2 transition-colors" strokeWidth={1.5} />
-                    <span className="text-sm font-medium text-[#e4e4e7]">Enviar</span>
-                  </div>
+                  <label className="h-28 sm:h-32 relative bg-transparent border-[1.5px] border-dashed border-[#27272A] rounded-[14px] flex flex-col items-center justify-center cursor-pointer hover:border-[#4F46E5] hover:bg-[#18181B] transition-all overflow-hidden group">
+                    <input type="file" className="hidden" accept="image/jpeg, image/png, image/webp" onChange={(e) => { if (e.target.files && e.target.files[0]) setImageRef(e.target.files[0]); }} />
+                    {imageRef ? (
+                      <div className="absolute inset-0 w-full h-full">
+                        <img src={URL.createObjectURL(imageRef)} alt="Referencia" className="w-full h-full object-cover" />
+                        <div className="absolute inset-0 bg-black/40 xl:opacity-0 xl:group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                          <button onClick={(e) => { e.preventDefault(); setImageRef(null); }} className="p-2">
+                            <X className="w-5 h-5 text-white" strokeWidth={2.5} />
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        <ImageIcon className="w-6 h-6 text-[#a8a8b3] group-hover:text-[#4F46E5] mb-2 transition-colors" strokeWidth={1.5} />
+                        <span className="text-sm font-medium text-[#e4e4e7]">Enviar</span>
+                      </>
+                    )}
+                  </label>
                 </div>
               </div>
               <p className="text-xs font-medium text-[#a8a8b3] mt-3">
@@ -1273,25 +1372,25 @@ const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack
           )}
 
           {/* Descrição */}
-          <div>
-            <label className="block text-sm font-semibold text-white mb-2.5">Descrição</label>
-            <div className="relative">
-              <textarea
-                rows={4}
-                value={promptTexto}
-                onChange={(e) => setPromptTexto(e.target.value)}
-                className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-[#e4e4e7] placeholder:text-[#a8a8b3]/50 focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all resize-none font-medium"
-                placeholder={
-                  tipoCriacao === 'Clone (Influencer IA)'
-                    ? "Descreva o que você quer criar. Exemplo: substitua o rosto e a roupa da pessoa da imagem base pelo rosto e roupa da pessoa da imagem de referência, mantendo o mesmo cenário e frame da imagem base."
-                    : tipoCriacao === 'Clone (Celebridades)'
+          {tipoCriacao !== 'Clone (Influencer IA)' && (
+            <div>
+              <label className="block text-sm font-semibold text-white mb-2.5">Descrição</label>
+              <div className="relative">
+                <textarea
+                  rows={4}
+                  value={promptTexto}
+                  onChange={(e) => setPromptTexto(e.target.value)}
+                  className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-[#e4e4e7] placeholder:text-[#a8a8b3]/50 focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all resize-none font-medium"
+                  placeholder={
+                    tipoCriacao === 'Clone (Celebridades)'
                       ? "Crie uma imagem do/da (celebridade) Usando o mesmo cenário e substituindo 100% a pessoa da imagem de referência"
                       : "Descreva o que você quer criar. Exemplo: influencer brasileira de 23 anos com roupa fitness"
-                }
-              ></textarea>
-              <div className="absolute bottom-3 right-4 text-xs text-[#a8a8b3] font-medium">{promptTexto.length}/2000</div>
+                  }
+                ></textarea>
+                <div className="absolute bottom-3 right-4 text-xs text-[#a8a8b3] font-medium">{promptTexto.length}/2000</div>
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Conditional Alert Box for Clone Celebridades */}
           {tipoCriacao === 'Clone (Celebridades)' && (
@@ -1307,7 +1406,11 @@ const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack
           <div>
             <label className="block text-sm font-semibold text-white mb-2.5">Proporção</label>
             <div className="relative">
-              <select className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-[#e4e4e7] appearance-none cursor-pointer focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all font-medium">
+              <select 
+                value={proporcao}
+                onChange={(e) => setProporcao(e.target.value)}
+                className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-[#e4e4e7] appearance-none cursor-pointer focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all font-medium"
+              >
                 <option value="1:1">1:1 Quadrado</option>
                 <option value="9:16">9:16 Vertical (Stories)</option>
                 <option value="16:9">16:9 Horizontal (YouTube)</option>

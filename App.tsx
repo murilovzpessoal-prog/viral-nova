@@ -1083,6 +1083,18 @@ Siga EXATAMENTE este bloco estrutural em inglês, injetando sua análise visual 
 "High-definition professional portrait, merging the identity of the person in the reference image onto the body and context of the person in the base image. The face, eyes, bone structure, skin texture, and core facial identity must be an exact, unmistakable match to the reference image. Prioritize reference geometry over base geometry. Maintain all context from the base image without deviation: [INSERIR DESCRIÇÃO MEGA DETALHADA DA POSE, DA ROUPA ESPECÍFICA (EX: PINK BLAZER), E DO CENÁRIO DA BASE]. The lighting, color grading, and environmental shadows present in the base image must be applied seamlessly to the new face, ensuring perfect integration with no 'cut-out' look. Ensure the skin tones are matched. [INSERIR A DESCRIÇÃO DE COMO O CABELO ESPECÍFICO DA REFERÊNCIA SE INTEGRA NA CENA DA BASE]. Additional actions/instructions: [INSERIR DESCRIÇÃO DO USUÁRIO TRADUZIDA PARA INGLÊS]."
 
 Retorne APENAS o prompt final montado. Sem aspas iniciais, sem introduções.`;
+  } else if (tipoCriacao === 'Clone (Celebridades)') {
+    systemPrompt = `Você é o Diretor de Arte (Prompt Engineer) da IA AntiGravity.
+Sua única função é analisar as DUAS imagens enviadas (Base e Referência) e gerar um "Prompt Descritivo" EXTREMAMENTE rico em detalhes visuais, seguindo rigorosamente as instruções a seguir.
+
+INSTRUÇÃO OBRIGATÓRIA SALVA NO SISTEMA:
+"Ultra-photorealistic 8k cinematic masterpiece, extreme high-fidelity identity re-projection. MANDATORY INSTRUCTION: Use the 'Base Image' as a strict spatial and skeletal template. Extract the exact anatomical pose, shoulder orientation, hand gestures (e.g., thumbs up, heart sign, selfie stance), and head tilt from the person in the Base Image. MANDATORY INSTRUCTION: Replace the entire subject with the flawless aesthetic identity, facial bone structure, specific eye shape, and hair texture of the person in the 'Reference Image'. The subject must be perfectly anchored into the 'Base Image' environment, preserving every background detail: wood-paneled ceilings, furniture, computer screens, and reflected subjects without any distortion. LIGHTING INTEGRATION: Apply the exact global illumination, specular highlights, and ambient occlusion from the base scene onto the new identity. SKIN TEXTURE: Render hyper-detailed skin with visible micro-pores, natural imperfections, fine peach fuzz, and realistic subsurface scattering for a 'living skin' effect. CLOTHING: Seamlessly adapt the clothing style from the Reference Image to fit the physical pose and body type of the generated celebrity. Shot on 35mm lens, f/1.8, deep focus, sharp edges, professional color grading, zero blurring, indistinguishable from a real photograph"
+
+Você vai absorver essa instrução mestre e as imagens fornecidas. Depois, você OBRIGATORIAMENTE retornará o seguinte esqueleto, traduzindo o que viu nas imagens para o inglês de forma hiper-realista:
+
+"Ultra-photorealistic 8k cinematic masterpiece, extreme high-fidelity identity re-projection. [DESCREVA EM DETALHES VISUAIS A EXATA POSE, AÇÃO, E O CENÁRIO VISTO NA IMAGEM BASE]. The subject has the exact aesthetic identity: [DESCREVA EM DETALHES O ROSTO, OLHOS E O CABELO DA IMAGEM DE REFERÊNCIA]. The subject is wearing: [DESCREVA A ROUPA EXATA DA IMAGEM DE REFERÊNCIA]. Application of exact global illumination, specular highlights, and ambient occlusion from the base scene. Hyper-detailed skin with visible micro-pores, natural imperfections, fine peach fuzz, and realistic subsurface scattering. Shot on 35mm lens, f/1.8, deep focus, sharp edges, professional color grading, zero blurring, indistinguishable from a real photograph."
+
+Retorne APENAS o bloco de texto final estruturado, totalmente em inglês, preenchendo as descrições solicitadas. Sem aspas iniciais, sem explicações extras.`;
   } else {
     systemPrompt = `Você é um engenheiro de prompt. Sua única função é pegar a descrição básica que o usuário enviou e mesclar perfeitamente dentro DESTE ESQUELETO EXATO, mantendo TODAS as palavras em inglês do esqueleto e apenas substituindo a parte descritiva pela do usuário. 
   
@@ -1099,7 +1111,7 @@ Retorne APENAS o prompt final montado. Sem aspas iniciais, sem introduções.`;
 
   const parts: any[] = [{ text: `${systemPrompt}\n\nDescrição original do usuário: ${userDescription}` }];
   
-  if (baseBase64 && tipoCriacao === 'Clone (Influencer IA)') {
+  if (baseBase64 && (tipoCriacao === 'Clone (Influencer IA)' || tipoCriacao === 'Clone (Celebridades)')) {
     try {
        const b64Data = baseBase64.includes(',') ? baseBase64.split(',')[1] : baseBase64;
        let mime = 'image/jpeg';
@@ -1166,7 +1178,7 @@ const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack
       let falUrlBase = null;
       let falUrlRef = null;
       
-      if (tipoCriacao === 'Clone (Influencer IA)') {
+      if (tipoCriacao === 'Clone (Influencer IA)' || tipoCriacao === 'Clone (Celebridades)') {
          if (!imageBase || !imageRef) {
             alert('Você precisa enviar a Imagem Base e a Imagem de Referência para fazer o Clone.');
             setIsGenerating(false);
@@ -1189,11 +1201,15 @@ const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack
 
       let enhancedPromptText = promptTexto;
       // Usar a Gemini para criar o prompt top a não ser que o upload contorne o texto
-      if (promptTexto.trim() && !refOpcional && tipoCriacao !== 'Clone (Influencer IA)') {
+      if (tipoCriacao === 'Clone (Celebridades)') {
+         let base64B = await new Promise<string>((resolve) => { const r = new FileReader(); r.readAsDataURL(imageBase!); r.onload = () => resolve(r.result as string); });
+         let base64R = await new Promise<string>((resolve) => { const r = new FileReader(); r.readAsDataURL(imageRef!); r.onload = () => resolve(r.result as string); });
+         enhancedPromptText = await enhancePromptWithGemini("Clone Celebridade", tipoCriacao, base64R, base64B);
+      } else if (promptTexto.trim() && !refOpcional && tipoCriacao !== 'Clone (Influencer IA)') {
         enhancedPromptText = await enhancePromptWithGemini(promptTexto, tipoCriacao);
       } else if (tipoCriacao === 'Clone (Influencer IA)') {
         const HARDCODED_PROMPT = "High-definition professional face-swap merging. Transfer the facial identity and features from the identity reference image onto the person in the base image. Preserve the pose, clothing, and background from the base image without modification. Ensure perfect blend.";
-        enhancedPromptText = `${HARDCODED_PROMPT} Context intention: ${promptTexto}`;
+        enhancedPromptText = HARDCODED_PROMPT;
       }
 
       const { data, error } = await supabase.functions.invoke('did-api', {
@@ -1372,7 +1388,7 @@ const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack
           )}
 
           {/* Descrição */}
-          {tipoCriacao !== 'Clone (Influencer IA)' && (
+          {tipoCriacao !== 'Clone (Influencer IA)' && tipoCriacao !== 'Clone (Celebridades)' && (
             <div>
               <label className="block text-sm font-semibold text-white mb-2.5">Descrição</label>
               <div className="relative">
@@ -1419,9 +1435,63 @@ const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack
             </div>
           </div>
 
-          {/* Referências opcionais (hidden for Clone IA) */}
-          {tipoCriacao !== 'Clone (Influencer IA)' && (
-            <div>
+          {/* Conditional Double Upload Box for Clone Celebridades */}
+          {tipoCriacao === 'Clone (Celebridades)' && (
+            <div className="mt-8">
+              <label className="block text-sm font-semibold text-white mb-2.5">Referências obrigatórias</label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="flex flex-col">
+                  <span className="text-xs text-[#a8a8b3] mb-2 font-medium">Imagem Base</span>
+                  <label className="h-28 sm:h-32 relative bg-transparent border-[1.5px] border-dashed border-[#27272A] rounded-[14px] flex flex-col items-center justify-center cursor-pointer hover:border-[#4F46E5] hover:bg-[#18181B] transition-all overflow-hidden group">
+                    <input type="file" className="hidden" accept="image/jpeg, image/png, image/webp" onChange={(e) => { if (e.target.files && e.target.files[0]) setImageBase(e.target.files[0]); }} />
+                    {imageBase ? (
+                      <div className="absolute inset-0 w-full h-full">
+                        <img src={URL.createObjectURL(imageBase)} alt="Base" className="w-full h-full object-cover" />
+                        <div className="absolute inset-0 bg-black/40 xl:opacity-0 xl:group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                          <button onClick={(e) => { e.preventDefault(); setImageBase(null); }} className="p-2">
+                            <X className="w-5 h-5 text-white" strokeWidth={2.5} />
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        <ImageIcon className="w-6 h-6 text-[#a8a8b3] group-hover:text-[#4F46E5] mb-2 transition-colors" strokeWidth={1.5} />
+                        <span className="text-sm font-medium text-[#e4e4e7]">Enviar</span>
+                      </>
+                    )}
+                  </label>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xs text-[#a8a8b3] mb-2 font-medium">Imagem de Referência</span>
+                  <label className="h-28 sm:h-32 relative bg-transparent border-[1.5px] border-dashed border-[#27272A] rounded-[14px] flex flex-col items-center justify-center cursor-pointer hover:border-[#4F46E5] hover:bg-[#18181B] transition-all overflow-hidden group">
+                    <input type="file" className="hidden" accept="image/jpeg, image/png, image/webp" onChange={(e) => { if (e.target.files && e.target.files[0]) setImageRef(e.target.files[0]); }} />
+                    {imageRef ? (
+                      <div className="absolute inset-0 w-full h-full">
+                        <img src={URL.createObjectURL(imageRef)} alt="Referencia" className="w-full h-full object-cover" />
+                        <div className="absolute inset-0 bg-black/40 xl:opacity-0 xl:group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                          <button onClick={(e) => { e.preventDefault(); setImageRef(null); }} className="p-2">
+                            <X className="w-5 h-5 text-white" strokeWidth={2.5} />
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        <ImageIcon className="w-6 h-6 text-[#a8a8b3] group-hover:text-[#4F46E5] mb-2 transition-colors" strokeWidth={1.5} />
+                        <span className="text-sm font-medium text-[#e4e4e7]">Enviar</span>
+                      </>
+                    )}
+                  </label>
+                </div>
+              </div>
+              <p className="text-xs font-medium text-[#a8a8b3] mt-3">
+                A imagem base define o cenário e pose. A imagem de referência define o rosto da celebridade.
+              </p>
+            </div>
+          )}
+
+          {/* Referências opcionais (hidden for Clone IA and Clone Celebridades) */}
+          {tipoCriacao !== 'Clone (Influencer IA)' && tipoCriacao !== 'Clone (Celebridades)' && (
+            <div className="mt-8">
               <label className="block text-sm font-semibold text-white mb-2.5">Referências opcionais</label>
               <label className="w-20 h-20 relative bg-transparent border-[1.5px] border-dashed border-[#27272A] rounded-[14px] flex items-center justify-center cursor-pointer hover:border-[#4F46E5] hover:bg-[#18181B] transition-all overflow-hidden group">
                 <input type="file" className="hidden" accept="image/jpeg, image/png, image/webp" onChange={(e) => { if (e.target.files && e.target.files[0]) setRefOpcional(e.target.files[0]); }} />

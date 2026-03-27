@@ -66,8 +66,47 @@ serve(async (req) => {
            safety_tolerance: "5"
       };
 
-      // MODO CLONE IA: Transplante Direto de Rosto via API Especializada Face-Swap
+      // MODO CLONE IA: Roteamento Bifurcado (Face-Swap Geométrico vs Substituição de Personagem Pulid HD com MASTER PROMPT)
       if (baseImageBase64 && swapImageBase64) {
+          
+          if (userPayload.tipo === 'Clone (Celebridades)') {
+              let mappedSize = "portrait_4_3";
+              if (userPayload.aspect_ratio === "1:1") mappedSize = "square_hd";
+              else if (userPayload.aspect_ratio === "16:9") mappedSize = "landscape_4_3";
+
+              const pulidReq = await fetch("https://fal.run/fal-ai/pulid", {
+                 method: "POST",
+                 headers: {
+                    "Authorization": `Key ${FAL_API_KEY}`,
+                    "Content-Type": "application/json"
+                 },
+                 body: JSON.stringify({
+                    prompt: userPayload.text || "Ultra-photorealistic 8k cinematic masterpiece.",
+                    negative_prompt: "naked, nude, nsfw, doll, mannequin, holding a phone, phone frame, borders, margins, abstract, distorted, deformed body, extra limbs, bad anatomy, bad hands, cartoon, 3d render, low quality, jpeg artifacts, ugly, amateur, missing clothes",
+                    reference_images: [{ image_url: swapImageBase64 }],
+                    image_url: baseImageBase64,
+                    strength: 0.85, 
+                    image_size: mappedSize
+                 })
+              });
+              const pulidRes = await pulidReq.json();
+              
+              let finalUrl = pulidRes.image?.url;
+              if (!finalUrl && pulidRes.images && pulidRes.images[0]?.url) {
+                  finalUrl = pulidRes.images[0].url;
+              }
+              if (!finalUrl) throw new Error("Falha no Modelo PuLID: " + JSON.stringify(pulidRes));
+              
+              return new Response(JSON.stringify({
+                 data: {
+                   status: "success",
+                   image_url: finalUrl,
+                   enhanced_prompt: "Mandated LVM Prompt + Negative Injection Applied"
+                 }
+              }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
+          }
+
+          // Rota: Influencer Clone -> Substituição Facial 1:1 Restrita
           const swapReq = await fetch("https://fal.run/fal-ai/face-swap", {
              method: "POST",
              headers: {

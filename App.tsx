@@ -87,7 +87,7 @@ import {
   Star,
   Image as ImageIcon,
   Clapperboard,
-  Accessibility,
+  Music,
   CreditCard,
   RefreshCw
 } from 'lucide-react';
@@ -360,7 +360,94 @@ const GlobalBackground: React.FC = () => (
   </div>
 );
 
+export const saveCreationToStorageAndDB = async (
+  userId: string,
+  mediaUrl: string,
+  type: 'image' | 'video',
+  prompt: string,
+  category: string
+) => {
+  try {
+    let blob;
+    try {
+        const response = await fetch(mediaUrl);
+        if (!response.ok) throw new Error('Fetch failed');
+        blob = await response.blob();
+    } catch(err) {
+        // Fallback to proxy se o CORS da Luma/Fal bloquear
+        const proxyUrl = 'https://corsproxy.io/?' + encodeURIComponent(mediaUrl);
+        const response = await fetch(proxyUrl);
+        blob = await response.blob();
+    }
+
+    const fileExt = type === 'image' ? 'jpg' : 'mp4';
+    const fileName = `${userId}_${Date.now()}.${fileExt}`;
+    const filePath = `${userId}/${fileName}`;
+
+    const { error: uploadError } = await supabase.storage
+      .from('creations')
+      .upload(filePath, blob, { 
+        contentType: type === 'image' ? 'image/jpeg' : 'video/mp4',
+        upsert: false
+      });
+
+    if (uploadError) throw uploadError;
+
+    const { data: { publicUrl } } = supabase.storage
+      .from('creations')
+      .getPublicUrl(filePath);
+
+    const { error: dbError } = await supabase
+      .from('user_creations')
+      .insert({
+        user_id: userId,
+        type: type,
+        url: publicUrl,
+        prompt: prompt,
+        category: category
+      });
+
+    if (dbError) throw dbError;
+    return publicUrl; // Retorna o link permanente do Supabase
+  } catch (err) {
+    console.error('Failed to save creation permanently to Supabase:', err);
+    return mediaUrl; // Volta a usar original caindo a conexão
+  }
+};
+
 interface CustomAvatar { id: string; name: string; image: string; }
+
+// --- USE USERS CREDITS HOOK ---
+export const useUserCredits = () => {
+  const [credits, setCredits] = useState<number>(0);
+  const [loading, setLoading] = useState(true);
+
+  const fetchCredits = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session?.user) return 0;
+    const { data } = await supabase.from('profiles').select('credits').eq('id', session.user.id).single();
+    const c = data?.credits ?? 0;
+    setCredits(c);
+    return c;
+  };
+
+  const deductCredits = async (amount: number): Promise<boolean> => {
+    // Tenta deduzir pela API segura (RPC do Postgres) para evitar ataques.
+    const { data, error } = await supabase.rpc('deduct_user_credits', { amount });
+    if (error || !data) {
+      alert("⚠️ Saldo de créditos insuficiente! Por favor, recarregue seus créditos para continuar a geração.");
+      return false;
+    }
+    await fetchCredits(); // Atualiza contador na UI
+    return true;
+  };
+
+  useEffect(() => {
+    fetchCredits().finally(() => setLoading(false));
+  }, []);
+
+  return { credits, loading, fetchCredits, deductCredits };
+};
 
 const App: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
@@ -1095,6 +1182,13 @@ Você vai absorver essa instrução mestre e as imagens fornecidas. Depois, voc�
 "Ultra-photorealistic 8k cinematic masterpiece, extreme high-fidelity identity re-projection. [DESCREVA EM DETALHES VISUAIS A EXATA POSE, AÇÃO, E O CENÁRIO VISTO NA IMAGEM BASE]. The subject has the exact aesthetic identity: [DESCREVA EM DETALHES O ROSTO, OLHOS E O CABELO DA IMAGEM DE REFERÊNCIA]. The subject is wearing: [DESCREVA A ROUPA EXATA DA IMAGEM DE REFERÊNCIA]. Application of exact global illumination, specular highlights, and ambient occlusion from the base scene. Hyper-detailed skin with visible micro-pores, natural imperfections, fine peach fuzz, and realistic subsurface scattering. Shot on 35mm lens, f/1.8, deep focus, sharp edges, professional color grading, zero blurring, indistinguishable from a real photograph."
 
 Retorne APENAS o bloco de texto final estruturado, totalmente em inglês, preenchendo as descrições solicitadas. Sem aspas iniciais, sem explicações extras.`;
+  } else if (tipoCriacao === 'POV (mostrando produto)') {
+    systemPrompt = `Você é um Diretor de Fotografia Cinematográfica Especialista em Textura Microscópica.
+Atenção Crítica: O motor de geração da IA se confunde e gera vários itens se você mencionar palavras como "duplicatas" ou "extras" até mesmo para proibir. Use APENAS termos singulares puros. O Ojetivo ÚNICO é EXTREMA QUALIDADE RAW 8K e TEXTURA ORGÂNICA REAL (Zero filtro de embelezamento).
+
+Retorne OBRIGATORIAMENTE APENAS o parágrafo abaixo em inglês, substituindo as chaves (sem adicionar textos extras):
+
+A macroscopic, 8K ultra-realistic RAW unretouched photograph shot on ARRI Alexa 65, 85mm lens, f/1.4. No text, no logos. A beautiful, incredibly authentic everyday woman: [INSERIR A DESCRIÇÃO FÍSICA E DE ROUPA DO USUÁRIO]. Medium shot, waist-up framing. She is making direct eye contact with the camera. Centered in front of her chest, she is gently holding exactly one single [INSERIR QUAL É O PRODUTO DO USUÁRIO] with her hand. Her hand is wrapping naturally and physically around the item. Absolutely zero airbrushing or beauty filters. Deep focus, showcasing hyper-textured human skin, highly visible microscopic pores, skin peach fuzz, tiny imperfections, and raw organic anatomy. Professional crisp studio lighting creates extreme lifelike highlights on her face and extreme physical sharpness on the material depth of the product. The product is the only item she holds. Pure masterpiece cinematic photography.`;
   } else {
     systemPrompt = `Você é um engenheiro de prompt. Sua única função é pegar a descrição básica que o usuário enviou e mesclar perfeitamente dentro DESTE ESQUELETO EXATO, mantendo TODAS as palavras em inglês do esqueleto e apenas substituindo a parte descritiva pela do usuário. 
   
@@ -1120,6 +1214,16 @@ Retorne APENAS o bloco de texto final estruturado, totalmente em inglês, preenc
        parts[0].text += `\n\nA visual reference of the BASE IMAGE (Scene/Body/Pose) is attached FIRST. Analyze the background, lighting, and body pose structure in detail, and insert that into the [INSERT SCENE/BACKGROUND/POSE DESCRIPTION HERE] block.`;
     } catch(e) {}
   }
+  
+  if (baseBase64 && tipoCriacao === 'POV (mostrando produto)') {
+    try {
+       const b64Data = baseBase64.includes(',') ? baseBase64.split(',')[1] : baseBase64;
+       let mime = 'image/jpeg';
+       if (baseBase64.startsWith('data:')) mime = baseBase64.split(';')[0].split(':')[1];
+       parts.push({ inlineData: { data: b64Data, mimeType: mime } });
+       parts[0].text += `\n\n[MANDATORY SENSORY ANALYSIS]: A visual reference of the EXACT PRODUCT is attached. Analyze its specific lighting, sharpness, shadow direction, and color temperature. You MUST command the generated background and influencer lighting to perfectly match the lighting embedded in this product! If it is softly lit, the generated scene must be strictly softly lit. This guarantees it will look indistinguishable from a real photo rather than a collage.`;
+    } catch(e) {}
+  }
 
   if (refBase64) {
     try {
@@ -1131,7 +1235,14 @@ Retorne APENAS o bloco de texto final estruturado, totalmente em inglês, preenc
     } catch(e) {}
   }
 
-  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`, {
+  // @ts-ignore
+  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+  if (!apiKey) {
+    console.error("VITE_GEMINI_API_KEY is not defined.");
+    throw new Error('Chave da API Gemini não configurada (VITE_GEMINI_API_KEY)');
+  }
+
+  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -1144,15 +1255,20 @@ Retorne APENAS o bloco de texto final estruturado, totalmente em inglês, preenc
 };
 
 const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
+  const { credits, deductCredits } = useUserCredits();
   const [tipoCriacao, setTipoCriacao] = useState('Influencer Realista');
   const [isTipoOpen, setIsTipoOpen] = useState(false);
   const [refOpcional, setRefOpcional] = useState<File | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [promptTexto, setPromptTexto] = useState('');
   const [generatedImage, setGeneratedImage] = useState<string | null>(null);
+  const [generatedVideo, setGeneratedVideo] = useState<string | null>(null); // NEW
+  const [pollingText, setPollingText] = useState(''); // NEW
   const [proporcao, setProporcao] = useState('9:16');
   const [imageBase, setImageBase] = useState<File | null>(null);
   const [imageRef, setImageRef] = useState<File | null>(null);
+  const [destinoClone, setDestinoClone] = useState<'ChatGPT' | 'Gemini'>('ChatGPT');
+  const [cloneLoadingText, setCloneLoadingText] = useState('');
 
   const handleGenerate = async () => {
     if (!promptTexto.trim() && tipoCriacao !== 'Clone (Celebridades)' && tipoCriacao !== 'Clone (Influencer IA)') {
@@ -1162,7 +1278,138 @@ const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack
 
     setIsGenerating(true);
     setGeneratedImage(null);
+
+    // BYPASS para Clone Celebridades e POV workflow
+    if (tipoCriacao === 'Clone (Celebridades)' || tipoCriacao === 'POV (mostrando produto)') {
+       if (tipoCriacao === 'Clone (Celebridades)' && (!imageBase || !imageRef)) {
+          alert('Você precisa enviar a Imagem Base e a Imagem de Referência para fazer o Clone.');
+          setIsGenerating(false);
+          return;
+       }
+       if (tipoCriacao === 'POV (mostrando produto)' && !imageBase) {
+          alert('Você precisa anexar a Imagem do Produto para a geração POV.');
+          setIsGenerating(false);
+          return;
+       }
+
+       setIsGenerating(true);
+       setCloneLoadingText('Analisando imagens e estrutura matemática...');
+       const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
+
+       await delay(1200);
+       setCloneLoadingText('Otimizando Prompt Mestre IA...');
+
+       await delay(1500);
+       setCloneLoadingText('Materialização Gerada!');
+
+       let userPromptToCopy = "";
+       if (tipoCriacao === 'Clone (Celebridades)') {
+           userPromptToCopy = "Ultra-photorealistic 8k digital photograph. Full identity projection mission. Use [BASE_IMAGE] as a strict and immutable architectural template for the environment, furniture, and lighting. Preserve 100% of the environmental textures, specific objects, and spatial perspective from the Base Image without deviation. Extract the complete anatomical identity, facial bone structure, specific eye shape, hair texture, and distinct facial DNA from the celebrity in [REFERENCE_IMAGE]. Re-project this entire identity onto the subject in [BASE_IMAGE], adapting the features perfectly to fit the original skull orientation, face shape, and body pose seamslesly. Ensure hyper-detailed skin texture with micro-pores, fine peach fuzz, and precise 'Subsurface Scattering'. Apply the exact global illumination and ambient occlusion from the original Base Image scene to the celebrity's skin, integrating them perfectly into the environment. Zero blurring, zero creative variation for the background or pose. Focus exclusively on identity replacement with seamless, sharp, professional blending. Indistinguishable from reality.";
+       } else {
+           userPromptToCopy = `IMAGE GENERATION COMMAND: Execute high-fidelity photorealistic selfie-style image creation with strict adherence to all constraints below.
+
+Ultra-photorealistic 8K smartphone selfie photograph. Natural handheld camera aesthetics. 
+
+MISSION: High-fidelity identity and environmental projection in a realistic selfie context.
+
+PRODUCT CONSTRAINT (ABSOLUTE RULE):
+Use [PRODUCT_IMAGE] as a STRICT and IMMUTABLE reference. 
+- Preserve 100% of the product’s structure, proportions, textures, label, typography, colors, reflections, and packaging.
+- DO NOT modify, recreate, stylize, or reinterpret the product.
+- The product must remain pixel-accurate and perfectly legible.
+
+SUBJECT GENERATION:
+Create a hyper-realistic human influencer:
+${promptTexto ? promptTexto : "Authentic, beautiful everyday professional model."}
+- Must look like a real social media creator (Instagram/TikTok style)
+- Natural beauty, not overly perfect or artificial
+- Visible micro-details: skin texture, pores, subtle imperfections, baby hairs
+
+POSE & INTERACTION (SELFIE MODE):
+The influencer must be:
+Holding the camera with one hand (selfie perspective) and holding the product with the other hand, clearly visible in frame.
+- Slight natural arm extension (typical selfie angle)
+- Face close to camera, product slightly forward or aligned with face
+- Natural expression (soft smile or candid look)
+- Slight imperfections in angle and framing to simulate real handheld capture
+- Hands must be anatomically correct with realistic grip and pressure
+- Fingers naturally wrapped around the product with correct proportions
+
+ENVIRONMENT:
+Place the subject in:
+A natural everyday environment that makes sense with the product.
+- Must feel like a real-life environment (not studio-perfect)
+- Slight background blur from smartphone depth effect
+- Natural lighting (window light, indoor ambient, or mixed light)
+
+SELFIE REALISM REQUIREMENTS:
+- Slight lens distortion typical of front-facing smartphone cameras
+- Subtle motion micro-blur ONLY if natural (no artificial blur)
+- Realistic noise/grain balance (very subtle)
+- Natural shadows on face and hand from phone angle
+- Imperfect but believable framing (not overly centered or staged)
+
+REALISM REQUIREMENTS:
+- Advanced skin realism (subsurface scattering, pores, peach fuzz)
+- Natural asymmetry and human imperfections
+- Accurate global illumination and ambient occlusion
+- Matching lighting between subject, hand, and product
+- Realistic reflections and highlights on the product
+- Contact shadows between fingers and product
+
+COMPOSITION:
+- Vertical framing (9:16 aspect ratio, social media style)
+- Influencer face + product both clearly visible and in focus
+- Depth of field consistent with smartphone cameras
+- Casual, non-commercial feel but still high quality
+
+RENDER QUALITY:
+- Ultra-sharp focus on face and product
+- No artifacts, no distortions
+- No AI-like plastic skin
+- No text corruption
+- No logo alteration
+
+FINAL GOAL:
+The final image must be indistinguishable from a real selfie taken by a human influencer for social media, with authentic UGC (user-generated content) aesthetics and high commercial believability.
+
+[MANDATORY SENSORY RULE]: I have attached a file as the [PRODUCT_IMAGE]. Analyze its exact lighting setup and match the generated scene explicitly to it.`;
+       }
+       
+       try {
+         await navigator.clipboard.writeText(userPromptToCopy);
+         if (tipoCriacao === 'Clone (Celebridades)') {
+            alert("Prompt Mestre copiado invisivelmente!\n\nVocê será redirecionado agora. No chat, basta apertar Ctrl+V (ou Colar) e não se esqueça de ANEXAR as duas fotos manualmente para gerar a sua mágica.");
+         } else {
+            alert("Prompt Mestre copiado invisivelmente!\n\nVocê será redirecionado agora. No chat, basta apertar Ctrl+V (ou Colar), preencher a descrição física da pessoa e ANEXAR a foto do produto.");
+         }
+       } catch(e) {
+         console.log("Falha area transf", e);
+         alert("Não foi possível copiar automaticamente, por favor copie o prompt: \n\n" + userPromptToCopy);
+       }
+       
+       if (destinoClone === 'ChatGPT') {
+          window.open("https://chatgpt.com/", "_blank");
+       } else {
+          window.open("https://gemini.google.com/", "_blank");
+       }
+       
+       setIsGenerating(false);
+       setCloneLoadingText('');
+       return; // Imagens não vão pro fal.ai
+    }
     try {
+      if (credits < 45) {
+        alert("⚠️ Saldo Insuficiente! Recarregue seus créditos para continuar criando.");
+        setIsGenerating(false);
+        return;
+      }
+      const success = await deductCredits(45);
+      if (!success) {
+        setIsGenerating(false);
+        return;
+      }
+
       let imageBase64 = null;
       if (refOpcional) {
         imageBase64 = await new Promise((resolve, reject) => {
@@ -1177,8 +1424,15 @@ const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack
       let refBase64 = null;
       let falUrlBase = null;
       let falUrlRef = null;
+
+      let productB64ForGemini: string | undefined = undefined;
+      let maskUrlFromCanvas: string | undefined = undefined;
+
+      // A lógica anterior de processamento de Canvas via Fal.ai foi desativada e substituída pelo rediecionamento BYPASS.
+      // ===================================
+
       
-      if (tipoCriacao === 'Clone (Influencer IA)' || tipoCriacao === 'Clone (Celebridades)') {
+      if (tipoCriacao === 'Clone (Influencer IA)') {
          if (!imageBase || !imageRef) {
             alert('Você precisa enviar a Imagem Base e a Imagem de Referência para fazer o Clone.');
             setIsGenerating(false);
@@ -1201,12 +1455,8 @@ const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack
 
       let enhancedPromptText = promptTexto;
       // Usar a Gemini para criar o prompt top a não ser que o upload contorne o texto
-      if (tipoCriacao === 'Clone (Celebridades)') {
-         let base64B = await new Promise<string>((resolve) => { const r = new FileReader(); r.readAsDataURL(imageBase!); r.onload = () => resolve(r.result as string); });
-         let base64R = await new Promise<string>((resolve) => { const r = new FileReader(); r.readAsDataURL(imageRef!); r.onload = () => resolve(r.result as string); });
-         enhancedPromptText = await enhancePromptWithGemini("Clone Celebridade", tipoCriacao, base64R, base64B);
-      } else if (promptTexto.trim() && !refOpcional && tipoCriacao !== 'Clone (Influencer IA)') {
-        enhancedPromptText = await enhancePromptWithGemini(promptTexto, tipoCriacao);
+      if (promptTexto.trim() && !refOpcional && tipoCriacao !== 'Clone (Influencer IA)') {
+        enhancedPromptText = await enhancePromptWithGemini(promptTexto, tipoCriacao, undefined, productB64ForGemini);
       } else if (tipoCriacao === 'Clone (Influencer IA)') {
         const HARDCODED_PROMPT = "High-definition professional face-swap merging. Transfer the facial identity and features from the identity reference image onto the person in the base image. Preserve the pose, clothing, and background from the base image without modification. Ensure perfect blend.";
         enhancedPromptText = HARDCODED_PROMPT;
@@ -1222,15 +1472,17 @@ const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack
             image_base64: imageBase64,
             base_image_base64: falUrlBase,
             swap_image_base64: falUrlRef,
-            aspect_ratio: proporcao
+            aspect_ratio: proporcao,
+            mask_url: maskUrlFromCanvas
           } 
         }
       });
       if (error) throw error;
       
       if (data?.data?.image_url) {
-         // O Backend do Gemini (Imagen) retornou a Base64 da imagem perfeitamente desenhada!
-         setGeneratedImage(data.data.image_url);
+         const { data: { session } } = await supabase.auth.getSession();
+         const finalUrl = await saveCreationToStorageAndDB(session?.user?.id || '', data.data.image_url, 'image', promptTexto, tipoCriacao);
+         setGeneratedImage(finalUrl);
          if (data?.data?.enhanced_prompt) {
            console.log("Prompt Mestre Utilizado:", data.data.enhanced_prompt);
          }
@@ -1251,8 +1503,7 @@ const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack
     'Influencer UGC',
     'Clone (Influencer IA)',
     'Clone (Celebridades)',
-    'POV (mostrando produto)',
-    'Cenário Cinematográfico'
+    'POV (mostrando produto)'
   ];
 
   return (
@@ -1387,6 +1638,36 @@ const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack
             </div>
           )}
 
+          {/* Conditional Upload Box for POV */}
+          {tipoCriacao === 'POV (mostrando produto)' && (
+            <div className="bg-[#4F46E5]/[0.05] border border-[#4F46E5]/20 rounded-xl p-5 mb-6">
+              <label className="block text-sm font-semibold text-white mb-2.5">Imagem do Produto (Obrigatório)</label>
+              <div className="w-full sm:w-1/2">
+                  <label className="h-28 sm:h-32 relative bg-transparent border-[1.5px] border-dashed border-[#27272A] rounded-[14px] flex flex-col items-center justify-center cursor-pointer hover:border-[#4F46E5] hover:bg-[#18181B] transition-all overflow-hidden group">
+                    <input type="file" className="hidden" accept="image/jpeg, image/png, image/webp" onChange={(e) => { if (e.target.files && e.target.files[0]) setImageBase(e.target.files[0]); }} />
+                    {imageBase ? (
+                      <div className="absolute inset-0 w-full h-full">
+                        <img src={URL.createObjectURL(imageBase)} alt="Produto" className="w-full h-full object-cover" />
+                        <div className="absolute inset-0 bg-black/40 xl:opacity-0 xl:group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                          <button onClick={(e) => { e.preventDefault(); setImageBase(null); }} className="p-2">
+                            <X className="w-5 h-5 text-white" strokeWidth={2.5} />
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        <ImageIcon className="w-6 h-6 text-[#a8a8b3] group-hover:text-[#4F46E5] mb-2 transition-colors" strokeWidth={1.5} />
+                        <span className="text-sm font-medium text-[#e4e4e7]">Anexar Produto</span>
+                      </>
+                    )}
+                  </label>
+              </div>
+              <p className="text-xs font-medium text-[#a8a8b3] mt-3">
+                Envie uma foto centralizada do produto. O modelo vai animar a cena partindo do produto até o rosto do(a) influencer.
+              </p>
+            </div>
+          )}
+
           {/* Descrição */}
           {tipoCriacao !== 'Clone (Influencer IA)' && tipoCriacao !== 'Clone (Celebridades)' && (
             <div>
@@ -1397,24 +1678,55 @@ const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack
                   value={promptTexto}
                   onChange={(e) => setPromptTexto(e.target.value)}
                   className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-[#e4e4e7] placeholder:text-[#a8a8b3]/50 focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all resize-none font-medium"
-                  placeholder={
-                    tipoCriacao === 'Clone (Celebridades)'
-                      ? "Crie uma imagem do/da (celebridade) Usando o mesmo cenário e substituindo 100% a pessoa da imagem de referência"
-                      : "Descreva o que você quer criar. Exemplo: influencer brasileira de 23 anos com roupa fitness"
-                  }
+                  placeholder="Descreva o que você quer criar. Exemplo: influencer brasileira de 23 anos com roupa fitness"
                 ></textarea>
                 <div className="absolute bottom-3 right-4 text-xs text-[#a8a8b3] font-medium">{promptTexto.length}/2000</div>
               </div>
             </div>
           )}
 
-          {/* Conditional Alert Box for Clone Celebridades */}
-          {tipoCriacao === 'Clone (Celebridades)' && (
+          {/* Conditional Alert Box for Redirects */}
+          {(tipoCriacao === 'Clone (Celebridades)' || tipoCriacao === 'POV (mostrando produto)') && (
             <div className="bg-[#EAB308]/[0.05] border border-[#EAB308]/30 rounded-xl p-4 flex gap-3 items-start">
               <AlertCircle className="w-5 h-5 text-[#EAB308] shrink-0 mt-0.5" />
-              <p className="text-sm font-medium text-[#EAB308] leading-relaxed">
-                Exemplos com celebridades são apenas demonstrativos. Recomendamos utilizar imagens de influencers geradas por IA ou imagens que você tenha permissão para usar.
-              </p>
+              <div>
+                <p className="text-sm font-medium text-[#e4e4e7] mb-1">Redirecionamento Inteligente</p>
+                <p className="text-[#a8a8b3] text-xs leading-relaxed">
+                  Para máxima fidelidade, nosso sistema copiará um <strong className="text-white font-bold">Prompt Arquitetônico Master</strong> invisível para o seu teclado. Você será redirecionado para a Inteligência Artificial escolhida abaixo. Basta <strong>Colar (Ctrl+V)</strong> o nosso prompt no chat e não esqueça de <strong>anexar suas imagens manualmente</strong> para finalizar a mágica.
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Ocultar Referencias se for Clone ou POV ou UGC */}
+          {tipoCriacao !== 'Clone (Influencer IA)' && tipoCriacao !== 'Clone (Celebridades)' && tipoCriacao !== 'POV (mostrando produto)' && tipoCriacao !== 'UGC (Influencer Realista)' && (
+            <div className="mt-8">
+              <label className="block text-sm font-semibold text-white mb-2.5">Referências opcionais</label>
+              <div className="relative group cursor-pointer" onClick={() => document.getElementById('file-upload')?.click()}>
+                <input
+                  type="file"
+                  id="file-upload"
+                  className="hidden"
+                  accept="image/jpeg, image/png, image/webp"
+                  onChange={(e) => { if (e.target.files && e.target.files[0]) setRefOpcional(e.target.files[0]); }}
+                />
+                <div className={`w-full h-32 rounded-xl flex items-center justify-center transition-all bg-[#18181B] border-2 border-dashed ${refOpcional ? 'border-[#4F46E5]/40 hover:border-[#4F46E5]' : 'border-[#27272A] hover:border-[#4F46E5]/50'}`}>
+                  {refOpcional ? (
+                    <div className="relative w-full h-full flex items-center justify-center">
+                      <img src={URL.createObjectURL(refOpcional)} alt="Reference" className="max-h-full max-w-full rounded-lg object-contain" />
+                      <div className="absolute flex gap-2">
+                          <div className="bg-black/80 text-white text-xs px-3 py-1.5 rounded-lg flex items-center justify-center font-medium shadow-xl backdrop-blur-sm">Imagem recebida</div>
+                          <button onClick={(e) => { e.stopPropagation(); setRefOpcional(null); }} className="p-1 px-2.5 bg-red-600 hover:bg-red-500 rounded-lg text-white font-bold text-xs" >Remover</button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="text-center group-hover:-translate-y-1 transition-transform">
+                      <p className="text-sm font-semibold text-[#e4e4e7]">Enviar imagem ou pose de referência</p>
+                      <p className="text-xs text-[#a8a8b3] mt-2">Formatos permitidos: JPG, PNG, WEBP</p>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           )}
 
@@ -1489,62 +1801,95 @@ const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack
             </div>
           )}
 
-          {/* Referências opcionais (hidden for Clone IA and Clone Celebridades) */}
-          {tipoCriacao !== 'Clone (Influencer IA)' && tipoCriacao !== 'Clone (Celebridades)' && (
-            <div className="mt-8">
-              <label className="block text-sm font-semibold text-white mb-2.5">Referências opcionais</label>
-              <label className="w-20 h-20 relative bg-transparent border-[1.5px] border-dashed border-[#27272A] rounded-[14px] flex items-center justify-center cursor-pointer hover:border-[#4F46E5] hover:bg-[#18181B] transition-all overflow-hidden group">
-                <input type="file" className="hidden" accept="image/jpeg, image/png, image/webp" onChange={(e) => { if (e.target.files && e.target.files[0]) setRefOpcional(e.target.files[0]); }} />
-                {refOpcional ? (
-                  <div className="absolute inset-0 w-full h-full">
-                    <img src={URL.createObjectURL(refOpcional)} alt="Preview" className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-black/40 hover:bg-black/60 transition-colors flex items-center justify-center">
-                      <button onClick={(e) => { e.preventDefault(); setRefOpcional(null); }} className="p-2">
-                        <X className="w-5 h-5 text-white" strokeWidth={2.5} />
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <Upload className="w-5 h-5 text-[#a8a8b3] group-hover:text-[#4F46E5] transition-colors" strokeWidth={2} />
-                )}
-              </label>
+
+          {/* Custo e Saldo (oculto quando é bypass) */}
+          {tipoCriacao !== 'Clone (Celebridades)' && tipoCriacao !== 'POV (mostrando produto)' && (
+            <div className="flex items-center justify-between bg-[#18181B] border border-[#27272A] rounded-xl px-5 py-4 mt-8">
+              <div className="flex items-center gap-2">
+                <Link className="w-4 h-4 text-[#3B82F6]" />
+                <span className="text-sm font-medium text-white">Custo: 45 créditos</span>
+              </div>
+              <div className="text-sm font-bold tracking-tight">
+                Saldo: <span className={credits < 45 ? 'text-red-500' : 'text-[#a8a8b3]'}>{credits}</span>
+              </div>
             </div>
           )}
 
-          {/* Custo e Saldo */}
-          <div className="flex items-center justify-between bg-[#18181B] border border-[#27272A] rounded-xl px-5 py-4 mt-8">
-            <div className="flex items-center gap-2">
-              <Link className="w-4 h-4 text-[#3B82F6]" />
-              <span className="text-sm font-medium text-white">Custo: 45 créditos</span>
+          {/* Destino IA para Redirecionamento */}
+          {(tipoCriacao === 'Clone (Celebridades)' || tipoCriacao === 'POV (mostrando produto)') && (
+            <div className="mt-8">
+              <label className="block text-sm font-semibold text-white mb-2.5">Onde deseja gerar sua imagem?</label>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <button
+                  type="button"
+                  onClick={() => setDestinoClone('ChatGPT')}
+                  className={`flex-1 py-3 px-4 rounded-xl border flex items-center justify-center gap-2 font-medium transition-all ${
+                    destinoClone === 'ChatGPT' 
+                      ? 'bg-[#10A37F]/10 border-[#10A37F] text-[#10A37F]' 
+                      : 'bg-[#18181B] border-[#27272A] text-[#a8a8b3] hover:text-white hover:border-[#3F3F46]'
+                  }`}
+                >
+                  <Brain className="w-4 h-4" /> ChatGPT
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setDestinoClone('Gemini')}
+                  className={`flex-1 py-3 px-4 rounded-xl border flex items-center justify-center gap-2 font-medium transition-all ${
+                    destinoClone === 'Gemini' 
+                      ? 'bg-[#4F46E5]/10 border-[#4F46E5] text-[#4F46E5]' 
+                      : 'bg-[#18181B] border-[#27272A] text-[#a8a8b3] hover:text-white hover:border-[#3F3F46]'
+                  }`}
+                >
+                  <Sparkles className="w-4 h-4" /> Google Gemini
+                </button>
+              </div>
+              <p className="text-xs font-medium text-[#a8a8b3] mt-3">
+                O prompt avançado será copiado automaticamente para uso nessas plataformas.
+              </p>
             </div>
-            <div className="text-sm font-medium text-[#a8a8b3]">
-              Saldo: 500
-            </div>
-          </div>
+          )}
 
           {/* Botão Gerar */}
-          <button 
+          <button
             onClick={handleGenerate}
             disabled={isGenerating}
-            className="w-full bg-[#3B82F6] hover:bg-[#2563EB] disabled:bg-[#3B82F6]/50 disabled:cursor-not-allowed text-white rounded-xl py-4 font-bold text-sm transition-all shadow-md hover:shadow-[#3B82F6]/20 flex items-center justify-center gap-2 group mt-4">
-            {isGenerating ? <Loader2 className="w-5 h-5 animate-spin" /> : <Sparkles className="w-4 h-4" />}
-            {isGenerating ? 'Processando na IA...' : 'Gerar Imagem'}
+            className={`w-full h-14 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-[0_0_20px_rgba(79,70,229,0.3)]
+              ${isGenerating
+                ? 'bg-gradient-to-r from-[#4F46E5] to-[#8B5CF6] opacity-90 cursor-wait pointer-events-none'
+                : 'bg-gradient-to-r from-[#4F46E5] to-[#8B5CF6] hover:opacity-90 hover:-translate-y-0.5'
+              } text-white`}
+          >
+            {isGenerating ? (
+              <>
+                <Loader2 className="w-5 h-5 animate-spin" />
+                <span>{cloneLoadingText || pollingText || 'Gerando...'}</span>
+              </>
+            ) : (
+              <>
+                <Sparkles className="w-5 h-5" />
+                <span>{tipoCriacao === 'Clone (Celebridades)' ? 'Materializar Celebridade' : 'Gerar Imagem'}</span>
+              </>
+            )}
           </button>
         </div>
       </div>
 
-      {/* Result Section (Exibido quando a imagem finaliza) */}
-      {generatedImage && (
+      {/* Result Section (Exibido quando a imagem ou vídeo finaliza) */}
+      {(generatedImage || generatedVideo) && (
         <div className="w-full max-w-3xl bg-[#111114] border border-[#3B82F6]/30 rounded-3xl p-6 md:p-10 relative mt-8 flex flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-500 shadow-[0_0_40px_rgba(59,130,246,0.1)]">
            <div className="w-12 h-12 bg-[#3B82F6]/20 rounded-full flex items-center justify-center mb-4">
              <Check className="w-6 h-6 text-[#3B82F6]" strokeWidth={3} />
            </div>
-           <h2 className="text-xl md:text-2xl font-bold text-white mb-6 text-center">Sua Imagem Retornou com Sucesso! 🎉</h2>
+           <h2 className="text-xl md:text-2xl font-bold text-white mb-6 text-center">Geração Retornou com Sucesso! 🎉</h2>
            
-           <img src={generatedImage} alt="Gerada" className="w-full max-w-sm rounded-2xl shadow-2xl mb-8 border border-[#27272A]" />
+           {generatedVideo ? (
+             <video src={generatedVideo} autoPlay loop muted playsInline controls className="w-full max-w-sm rounded-2xl shadow-2xl mb-8 border border-[#27272A] aspect-[9/16] object-cover bg-black" />
+           ) : (
+             <img src={generatedImage!} alt="Gerada" className="w-full max-w-sm rounded-2xl shadow-2xl mb-8 border border-[#27272A]" />
+           )}
            
-           <a href={generatedImage} download target="_blank" rel="noreferrer" className="bg-[#18181B] border border-[#27272A] hover:bg-[#27272A] hover:border-[#3F3F46] text-white px-8 py-3.5 rounded-xl font-bold transition-all flex items-center gap-2">
-             <Upload className="w-4 h-4 rotate-180" /> Baixar Imagem (JPG)
+           <a href={generatedVideo || generatedImage!} download target="_blank" rel="noreferrer" className="bg-[#18181B] border border-[#27272A] hover:bg-[#27272A] hover:border-[#3F3F46] text-white px-8 py-3.5 rounded-xl font-bold transition-all flex items-center gap-2">
+             <Upload className="w-4 h-4 rotate-180" /> Baixar Aquivo
            </a>
         </div>
       )}
@@ -1599,9 +1944,9 @@ const CreatorEngineGerarVideoView: React.FC<{ onBack: () => void; onGoToInfluenc
 
           {/* Card 3 */}
           <button onClick={onGoToImitar} className="flex flex-col text-left bg-[#18181B] border border-[#27272A] hover:border-[#3F3F46] p-6 rounded-2xl transition-all group shadow-sm hover:shadow-lg focus:outline-none">
-            <Accessibility className="w-6 h-6 text-[#a8a8b3] group-hover:text-[#e4e4e7] mb-4 transition-colors" strokeWidth={1.5} />
-            <h3 className="text-white font-bold text-[15px] mb-2 tracking-tight">Imitar Movimentos</h3>
-            <p className="text-[#a8a8b3] text-xs leading-relaxed">Replique movimentos de um vídeo</p>
+            <Music className="w-6 h-6 text-[#a8a8b3] group-hover:text-[#e4e4e7] mb-4 transition-colors" strokeWidth={1.5} />
+            <h3 className="text-white font-bold text-[15px] mb-2 tracking-tight">Dança em Trend</h3>
+            <p className="text-[#a8a8b3] text-xs leading-relaxed">Faça sua influenciadora dançar alguma música viral</p>
           </button>
 
         </div>
@@ -1612,11 +1957,14 @@ const CreatorEngineGerarVideoView: React.FC<{ onBack: () => void; onGoToInfluenc
 
 // --- CREATOR ENGINE: GERAR VÍDEO - INFLUENCER IA VIEW ---
 const CreatorEngineGerarVideoInfluencerIAView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
+  const { credits, deductCredits } = useUserCredits();
   const [imagemRef, setImagemRef] = useState<File | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [promptTexto, setPromptTexto] = useState('');
   const [pollingText, setPollingText] = useState('');
   const [generatedVideo, setGeneratedVideo] = useState<string | null>(null);
+  const [proporcao, setProporcao] = useState('9:16');
+  const [duracao, setDuracao] = useState('8');
 
   const handleGenerate = async () => {
     if (!promptTexto.trim()) {
@@ -1624,8 +1972,19 @@ const CreatorEngineGerarVideoInfluencerIAView: React.FC<{ onBack: () => void }> 
       return;
     }
 
+    if (credits < 150) {
+      alert("⚠️ Saldo Insuficiente! Recarregue seus créditos para gerar vídeos.");
+      return;
+    }
+    
     setIsGenerating(true);
     setGeneratedVideo(null);
+    
+    const success = await deductCredits(150);
+    if (!success) {
+      setIsGenerating(false);
+      return;
+    }
 
     try {
       // FileReader Helper
@@ -1662,18 +2021,18 @@ const CreatorEngineGerarVideoInfluencerIAView: React.FC<{ onBack: () => void }> 
       // ==========================================
       setPollingText('Preparando cenário e modelo de visualização...');
       const s1 = await supabase.functions.invoke('did-api', {
-        body: { action: 'stage1', payload: { view: 'influencer-ia', text: promptTexto, image_base64: imageBase64 } }
+        body: { action: 'stage1', payload: { view: 'influencer-ia', text: promptTexto, image_base64: imageBase64, aspect_ratio: proporcao, duracao: duracao } }
       });
       if (s1.error || !s1.data?.data?.image_url) throw new Error(s1.error?.message || "Falha na Etapa 1 (Imagem indisponível)");
       
       const imageUrl = s1.data.data.image_url;
 
       // ==========================================
-      // STAGE 2: ANIMAÇÃO DE MOVIMENTO (KLING PRO 1.5)
+      // STAGE 2: ANIMAÇÃO DE MOVIMENTO (KLING PRO 1.5 UGC)
       // ==========================================
-      setPollingText('Iniciando Inteligência Kling Pro (Hollywood Padrão Ouro)...\nMovimento e realismo cinematográficos absolutos. Leva cerca de 3 a 4 minutos...');
+      setPollingText('Iniciando Inteligência Kling UGC Realista...\nAplicando física do mundo real, estabilidade humana e realismo bruto sem filtros artificiais. Leva cerca de 3 a 4 minutos...');
       const s2 = await supabase.functions.invoke('did-api', {
-        body: { action: 'stage2', payload: { image_url: imageUrl, text: promptTexto } }
+        body: { action: 'stage2', payload: { view: 'influencer-ia', image_url: imageUrl, text: promptTexto, aspect_ratio: proporcao, duracao: duracao } }
       });
       if (s2.error || !s2.data?.data?.kling_request_id) throw new Error(s2.error?.message || "Falha na Etapa 2 (Movimento)");
       
@@ -1683,6 +2042,13 @@ const CreatorEngineGerarVideoInfluencerIAView: React.FC<{ onBack: () => void }> 
 
       // Tudo pronto, sem necessidade de LipSync!
       setGeneratedVideo(klingVideoUrl);
+      
+      // Salvar na Galeria
+      supabase.auth.getUser().then(({ data: { user } }) => {
+         if (user) {
+             saveCreationToStorageAndDB(user.id, klingVideoUrl, 'video', promptTexto, 'Vídeo - Influencer UGC');
+         }
+      });
 
     } catch (err: any) {
       console.error('Erro na HeyGen API:', err);
@@ -1774,7 +2140,7 @@ const CreatorEngineGerarVideoInfluencerIAView: React.FC<{ onBack: () => void }> 
             <div>
               <label className="block text-sm font-semibold text-white mb-2.5">Proporção</label>
               <div className="relative">
-                <select className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-[#e4e4e7] appearance-none cursor-pointer focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all font-medium">
+                <select value={proporcao} onChange={(e) => setProporcao(e.target.value)} className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-[#e4e4e7] appearance-none cursor-pointer focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all font-medium">
                   <option value="9:16">9:16 Retrato</option>
                   <option value="16:9">16:9 Paisagem</option>
                   <option value="1:1">1:1 Quadrado</option>
@@ -1787,7 +2153,7 @@ const CreatorEngineGerarVideoInfluencerIAView: React.FC<{ onBack: () => void }> 
             <div>
               <label className="block text-sm font-semibold text-white mb-2.5">Duração</label>
               <div className="relative">
-                <select className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-[#e4e4e7] appearance-none cursor-pointer focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all font-medium">
+                <select value={duracao} onChange={(e) => setDuracao(e.target.value)} className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-[#e4e4e7] appearance-none cursor-pointer focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all font-medium">
                   <option value="8">8 segundos</option>
                   <option value="15">15 segundos</option>
                   <option value="30">30 segundos</option>
@@ -1803,8 +2169,8 @@ const CreatorEngineGerarVideoInfluencerIAView: React.FC<{ onBack: () => void }> 
               <Link className="w-4 h-4 text-[#3B82F6]" />
               <span className="text-sm font-medium text-white">Custo: 150 créditos</span>
             </div>
-            <div className="text-sm font-medium text-[#a8a8b3]">
-              Saldo: 500
+            <div className="text-sm font-bold tracking-tight">
+              Saldo: <span className={credits < 150 ? 'text-red-500' : 'text-[#a8a8b3]'}>{credits}</span>
             </div>
           </div>
 
@@ -1883,22 +2249,93 @@ const CreatorEngineGerarVideoInfluencerIAView: React.FC<{ onBack: () => void }> 
 
 // --- CREATOR ENGINE: GERAR VÍDEO - CINEMATOGRÁFICO VIEW ---
 const CreatorEngineGerarVideoCinematicoView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
+  const { credits, deductCredits } = useUserCredits();
   const [imagemBase, setImagemBase] = useState<File | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [promptTexto, setPromptTexto] = useState('');
+  const [pollingText, setPollingText] = useState('');
+  const [generatedVideo, setGeneratedVideo] = useState<string | null>(null);
 
   const handleGenerate = async () => {
+    if (!promptTexto.trim()) {
+      alert('Por favor, descreva o que deve acontecer no vídeo.');
+      return;
+    }
+
+    if (credits < 180) {
+      alert("⚠️ Saldo Insuficiente! Recarregue seus créditos para gerar vídeos.");
+      return;
+    }
+    
     setIsGenerating(true);
+    setGeneratedVideo(null);
+    
+    const success = await deductCredits(180);
+    if (!success) {
+      setIsGenerating(false);
+      return;
+    }
+
     try {
-      const { data, error } = await supabase.functions.invoke('heygen-api', {
-        body: { action: 'generate', payload: { view: 'cinematico' } }
+      let imageBase64 = null;
+      if (imagemBase) {
+        imageBase64 = await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.readAsDataURL(imagemBase);
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = error => reject(error);
+        });
+      }
+
+      const pollService = async (serviceName: string, requestId: string, maxRetries = 60) => {
+        for (let i = 0; i < maxRetries; i++) {
+          await new Promise(r => setTimeout(r, 5000));
+          const res = await supabase.functions.invoke(`did-api?action=status&request_id=${requestId}&service=${serviceName}`, { method: 'GET' });
+          const statusData = res.data;
+          
+          if (statusData?.error) throw new Error(statusData.error);
+          if (statusData?.data?.status === 'completed' || statusData?.data?.status === 'success') {
+             return statusData.data.result_url;
+          } else if (statusData?.data?.status === 'failed') {
+             throw new Error(`O serviço ${serviceName} falhou.`);
+          }
+        }
+        throw new Error(`Tempo limite atingido para o serviço ${serviceName}.`);
+      };
+
+      // Stage 1: Geral Base
+      setPollingText('Preparando cenário cinematográfico...');
+      const s1 = await supabase.functions.invoke('did-api', {
+        body: { action: 'stage1', payload: { view: 'cinematico', text: promptTexto, image_base64: imageBase64, aspect_ratio: '16:9', duracao: '10' } }
       });
-      if (error) throw error;
-      alert('✅ Vídeo Cinemático em produção pela HeyGen! Em breve estará nas Suas Criações.');
+      if (s1.error || !s1.data?.data?.image_url) throw new Error(s1.error?.message || "Falha na Etapa 1");
+      const imageUrl = s1.data.data.image_url;
+
+      // Stage 2: Movimento
+      setPollingText('Iniciando IA Cinematográfica (Hollywood Padrão)...\nAplicando movimentos de câmera e estabilidade premium. Leva cerca de 3 a 4 minutos...');
+      const s2 = await supabase.functions.invoke('did-api', {
+        body: { action: 'stage2', payload: { view: 'cinematico', image_url: imageUrl, text: promptTexto, aspect_ratio: '16:9', duracao: '10' } }
+      });
+      if (s2.error || !s2.data?.data?.kling_request_id) throw new Error(s2.error?.message || "Falha na Etapa 2");
+      
+      const klingRequestId = s2.data.data.kling_request_id;
+      const klingVideoUrl = await pollService('kling', klingRequestId, 80);
+      if (!klingVideoUrl) throw new Error("Falha ao gerar o vídeo.");
+
+      setGeneratedVideo(klingVideoUrl);
+
+      // Salvar na Galeria
+      supabase.auth.getUser().then(({ data: { user } }) => {
+         if (user) {
+             saveCreationToStorageAndDB(user.id, klingVideoUrl, 'video', promptTexto, 'Vídeo - Cinematográfico');
+         }
+      });
     } catch (err: any) {
-      console.error('Erro na HeyGen API:', err);
-      alert('⚠️ Erro ao conectar com a IA: A chave API pode não estar configurada.');
+      console.error('Erro na API:', err);
+      alert('⚠️ Erro ao processar o vídeo: ' + err.message);
     } finally {
       setIsGenerating(false);
+      setPollingText('');
     }
   };
 
@@ -1954,10 +2391,12 @@ const CreatorEngineGerarVideoCinematicoView: React.FC<{ onBack: () => void }> = 
             <div className="relative">
               <textarea
                 rows={4}
+                value={promptTexto}
+                onChange={(e) => setPromptTexto(e.target.value)}
                 className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-[#e4e4e7] placeholder:text-[#a8a8b3]/50 focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all resize-none font-medium"
                 placeholder="Descreva a ação: carro acelerando, vento no cabelo, pessoa andando, câmera cinematográfica..."
               ></textarea>
-              <div className="absolute bottom-3 right-4 text-xs text-[#a8a8b3] font-medium">0/2000</div>
+              <div className="absolute bottom-3 right-4 text-xs text-[#a8a8b3] font-medium">{promptTexto.length}/2000</div>
             </div>
             <p className="text-xs font-medium text-[#a8a8b3] mt-3">
               Envie uma imagem e descreva o que deve acontecer no vídeo. Exemplo: carro acelerando, vento no cabelo, pessoa andando, câmera cinematográfica.
@@ -1970,8 +2409,8 @@ const CreatorEngineGerarVideoCinematicoView: React.FC<{ onBack: () => void }> = 
               <Link className="w-4 h-4 text-[#3B82F6]" />
               <span className="text-sm font-medium text-white">Custo: 180 créditos</span>
             </div>
-            <div className="text-sm font-medium text-[#a8a8b3]">
-              Saldo: 500
+            <div className="text-sm font-bold tracking-tight">
+              Saldo: <span className={credits < 180 ? 'text-red-500' : 'text-[#a8a8b3]'}>{credits}</span>
             </div>
           </div>
 
@@ -1979,12 +2418,61 @@ const CreatorEngineGerarVideoCinematicoView: React.FC<{ onBack: () => void }> = 
           <button 
             onClick={handleGenerate}
             disabled={isGenerating}
-            className="w-full bg-[#3B82F6] hover:bg-[#2563EB] disabled:bg-[#3B82F6]/50 disabled:cursor-not-allowed text-white rounded-xl py-4 font-bold text-sm transition-all shadow-md hover:shadow-[#3B82F6]/20 flex items-center justify-center gap-2 group mt-4">
+            className="w-full bg-[#3B82F6] hover:bg-[#2563EB] disabled:bg-[#3B82F6]/50 disabled:cursor-not-allowed text-white rounded-xl py-4 font-bold text-sm transition-all shadow-md hover:shadow-[#3B82F6]/20 flex items-center justify-center gap-2 group mt-4 relative overflow-hidden">
             {isGenerating ? <Loader2 className="w-5 h-5 animate-spin" /> : <Video className="w-5 h-5" />}
-            {isGenerating ? 'Processando Vídeo...' : 'Gerar Vídeo'}
+            {isGenerating ? (pollingText || 'Processando...') : 'Gerar Vídeo'}
           </button>
         </div>
       </div>
+
+      {/* Result Section (Exibido quando o vídeo finaliza - Cinematic View 16:9) */}
+      {generatedVideo && (
+        <div className="w-full max-w-[800px] mx-auto mt-12 animate-in fade-in slide-in-from-bottom-8 duration-700 flex flex-col items-center">
+           <div className="w-12 h-12 bg-[#3B82F6]/20 rounded-full flex items-center justify-center mb-4">
+             <Check className="w-6 h-6 text-[#3B82F6]" strokeWidth={3} />
+           </div>
+           <h2 className="text-xl md:text-2xl font-bold text-white mb-6 text-center">Vídeo Pronto! 🎉</h2>
+           
+           <div className="w-full bg-[#111114] border border-[#27272A] rounded-[32px] p-4 shadow-[0_0_50px_rgba(59,130,246,0.15)] flex flex-col gap-4">
+             
+             {/* Player Container (16:9 Aspect Ratio) */}
+             <div className="w-full aspect-video bg-black rounded-2xl overflow-hidden relative shadow-inner border border-[#27272A]/50 group">
+               <video 
+                 src={generatedVideo} 
+                 controls 
+                 autoPlay 
+                 loop
+                 playsInline
+                 className="w-full h-full object-cover" 
+               />
+             </div>
+
+             <div className="w-full grid grid-cols-4 gap-2">
+               <a href={generatedVideo} download target="_blank" rel="noreferrer" className="flex flex-col items-center justify-center gap-1.5 bg-[#18181B] hover:bg-[#27272A] border border-[#27272A] py-3 rounded-[16px] transition-all cursor-pointer group">
+                 <Download className="w-4 h-4 md:w-5 md:h-5 text-[#a8a8b3] group-hover:text-white transition-colors" />
+                 <span className="text-[10px] md:text-xs font-semibold text-[#a8a8b3] group-hover:text-white">Baixar</span>
+               </a>
+               <button onClick={() => {
+                   navigator.clipboard.writeText(promptTexto);
+                   alert('Prompt copiado para a área de transferência!');
+                 }} 
+                 className="flex flex-col items-center justify-center gap-1.5 bg-[#18181B] hover:bg-[#27272A] border border-[#27272A] py-3 rounded-[16px] transition-all cursor-pointer group">
+                 <Copy className="w-4 h-4 md:w-5 md:h-5 text-[#a8a8b3] group-hover:text-white transition-colors" />
+                 <span className="text-[10px] md:text-xs font-semibold text-[#a8a8b3] group-hover:text-white">Copiar</span>
+               </button>
+               <button onClick={handleGenerate} className="flex flex-col items-center justify-center gap-1.5 bg-[#18181B] hover:bg-[#27272A] border border-[#27272A] py-3 rounded-[16px] transition-all cursor-pointer group">
+                 <RefreshCw className="w-4 h-4 md:w-5 md:h-5 text-[#a8a8b3] group-hover:text-white transition-colors" />
+                 <span className="text-[10px] md:text-xs font-semibold text-[#a8a8b3] group-hover:text-white">Variação</span>
+               </button>
+               <button className="flex flex-col items-center justify-center gap-1.5 bg-[#18181B] hover:bg-[#27272A] border border-[#27272A] py-3 rounded-[16px] transition-all cursor-pointer group">
+                 <Bookmark className="w-4 h-4 md:w-5 md:h-5 text-[#a8a8b3] group-hover:text-white transition-colors" />
+                 <span className="text-[10px] md:text-xs font-semibold text-[#a8a8b3] group-hover:text-white">Salvar</span>
+               </button>
+             </div>
+             
+           </div>
+        </div>
+      )}
 
       {/* Decorative Bottom */}
       <div className="mt-8 opacity-[0.25] flex flex-col items-center">
@@ -1999,22 +2487,78 @@ const CreatorEngineGerarVideoCinematicoView: React.FC<{ onBack: () => void }> = 
 // --- CREATOR ENGINE: GERAR VÍDEO - IMITAR MOVIMENTOS VIEW ---
 const CreatorEngineGerarVideoImitarMovimentosView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   const [imagemRef, setImagemRef] = useState<File | null>(null);
-  const [videoRef, setVideoRef] = useState<File | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [promptTexto, setPromptTexto] = useState('');
+  const [pollingText, setPollingText] = useState('');
+  const [generatedPrompt, setGeneratedPrompt] = useState<string | null>(null);
+
+  const fileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = error => reject(error);
+    });
+  };
 
   const handleGenerate = async () => {
+    if (!imagemRef || !promptTexto.trim()) {
+      alert('⚠️ Imagem da Influenciadora e a Descrição da Dança são OBRIGATÓRIAS para gerar as instruções.');
+      return;
+    }
+
     setIsGenerating(true);
+    setGeneratedPrompt(null);
+    setPollingText('Lendo estrutura geométrica e DNA visual da Imagem Base...');
+
     try {
-      const { data, error } = await supabase.functions.invoke('heygen-api', {
-        body: { action: 'generate', payload: { view: 'imitar-movimentos' } }
+      // @ts-ignore
+      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+      if (!apiKey) throw new Error('Chave da API Gemini não configurada no cliente.');
+
+      const baseBase64 = await fileToBase64(imagemRef);
+      
+      await new Promise(r => setTimeout(r, 1000));
+      setPollingText('Compilando Instruções Cinematográficas (Prompt Mestre)...');
+
+      const systemPrompt = `Você é um Gerador Rápido de Prompts.
+O usuário quer animar uma pessoa em uma imagem (usando ferramentas como Flow ou Kling). A imagem JÁ SERÁ fornecida pelo usuário na ferramenta externa.
+Sua FUNÇÃO ÚNICA é formatar a ideia de dança dele dentro deste esqueleto exato, sem adicionar descrições físicas específicas da pessoa, apenas as diretrizes do que o Kling/Flow precisa respeitar:
+
+"Animate the exact person in the attached reference image performing the following EXCLUSIVELY BRAZILIAN DANCE CHOREOGRAPHY: [TRADUZA AQUI A DESCRIÇÃO DE DANÇA DO USUÁRIO PARA INGLÊS, MAS ADICIONE OBRIGATORIAMENTE QUE É UMA 'BRAZILIAN TIKTOK TREND DANCE' OU 'BRAZILIAN FUNK'. DEIXE MUITO CLARO QUE A PERFORMANCE É ANIMADA E NO ESTILO VIRAL BRASILEIRO].
+
+CRITICAL INSTRUCTIONS: 
+1. The AI must generate fluid movements strictly synced to a Brazilian rhythm. DO NOT emulate English/American music styles.
+2. The subject MUST NOT speak or sing. Keep the mouth closed or naturally smiling. 100% focus on the body dance and choreography.
+3. PRESERVE 100% VISUAL FIDELITY. The face, facial features, body proportions, clothing, and the entire background environment/scenario MUST NOT change from the original photo. Lock the background and identity."
+
+Retorne APENAS o bloco em inglês pronto para ser copiado. Sem aspas iniciais, sem introduções.`;
+
+      const parts: any[] = [{ text: `${systemPrompt}\n\nDança solicitada pelo usuário: ${promptTexto}` }];
+
+      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents: [{ parts }] })
       });
-      if (error) throw error;
-      alert('✅ Vídeo de Movimentos em produção pela HeyGen! Em breve nas Suas Criações.');
+      
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error?.message || 'Erro ao comunicar com o motor Visual IA.');
+
+      const returnedPrompt = data.candidates[0].content.parts[0].text.trim();
+      if (!returnedPrompt) throw new Error("A IA retornou um prompt vazio.");
+
+      setPollingText('Tudo Pronto!');
+      await new Promise(r => setTimeout(r, 500));
+      
+      setGeneratedPrompt(returnedPrompt);
+
     } catch (err: any) {
-      console.error('Erro na HeyGen API:', err);
-      alert('⚠️ Erro ao conectar com a IA: A chave API pode não estar configurada.');
+      console.error('Erro na Geração de Prompt de Movimento:', err);
+      alert('⚠️ Erro ao capturar geometria corporal: ' + err.message);
     } finally {
       setIsGenerating(false);
+      setPollingText('');
     }
   };
 
@@ -2022,8 +2566,8 @@ const CreatorEngineGerarVideoImitarMovimentosView: React.FC<{ onBack: () => void
     <main className="max-w-[1000px] mx-auto px-4 md:px-8 py-10 md:py-16 flex flex-col items-center">
       {/* Header */}
       <div className="w-full max-w-3xl mb-10">
-        <h1 className="text-3xl md:text-[32px] font-bold text-white mb-2 tracking-tight">Imite Movimentos com IA</h1>
-        <p className="text-[#a8a8b3] text-sm md:text-base max-w-2xl">Faça seu avatar copiar qualquer movimento de forma realista.</p>
+        <h1 className="text-3xl md:text-[32px] font-bold text-white mb-2 tracking-tight">Dança em Trend (Prompt Master)</h1>
+        <p className="text-[#a8a8b3] text-sm md:text-base max-w-2xl">Coloque sua influencer nas maiores trends do TikTok ou Reels! Geramos o código de roteiro perfeito para você colar no Flow junto com sua Imagem.</p>
       </div>
 
       {/* Main Form Container */}
@@ -2035,18 +2579,18 @@ const CreatorEngineGerarVideoImitarMovimentosView: React.FC<{ onBack: () => void
           Voltar
         </button>
 
-        <h2 className="text-xl md:text-2xl font-bold text-white mb-8 tracking-tight">Imitar Movimentos</h2>
+        <h2 className="text-xl md:text-2xl font-bold text-white mb-8 tracking-tight">Planejamento da Coreografia Fotorrealista</h2>
 
         {/* Form Fields */}
         <div className="space-y-6">
 
           {/* Referências obrigatórias */}
           <div>
-            <label className="block text-sm font-semibold text-white mb-2.5">Referências obrigatórias</label>
+            <label className="block text-sm font-semibold text-white mb-2.5">O que a nossa IA vai analisar?</label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Imagem */}
               <div>
-                <label className="block text-xs font-medium text-[#a8a8b3] mb-1.5">Imagem</label>
+                <label className="block text-xs font-medium text-[#a8a8b3] mb-1.5">Foto do Avatar Base</label>
                 <label className="w-full h-32 relative bg-transparent border-[1.5px] border-dashed border-[#27272A] rounded-[14px] flex flex-col items-center justify-center cursor-pointer hover:border-[#4F46E5] hover:bg-[#18181B] transition-all group overflow-hidden">
                   <input type="file" className="hidden" accept="image/jpeg, image/png, image/webp" onChange={(e) => { if (e.target.files && e.target.files[0]) setImagemRef(e.target.files[0]); }} />
                   {imagemRef ? (
@@ -2061,30 +2605,7 @@ const CreatorEngineGerarVideoImitarMovimentosView: React.FC<{ onBack: () => void
                   ) : (
                     <>
                       <ImageIcon className="w-5 h-5 text-[#a8a8b3] group-hover:text-[#4F46E5] mb-2 transition-colors" strokeWidth={1.5} />
-                      <span className="text-xs font-medium text-[#e4e4e7]">Enviar</span>
-                    </>
-                  )}
-                </label>
-              </div>
-
-              {/* Vídeo de Movimento */}
-              <div>
-                <label className="block text-xs font-medium text-[#a8a8b3] mb-1.5">Vídeo de Movimento</label>
-                <label className="w-full h-32 relative bg-transparent border-[1.5px] border-dashed border-[#27272A] rounded-[14px] flex flex-col items-center justify-center cursor-pointer hover:border-[#4F46E5] hover:bg-[#18181B] transition-all group overflow-hidden">
-                  <input type="file" className="hidden" accept="video/mp4, video/webm, video/quicktime" onChange={(e) => { if (e.target.files && e.target.files[0]) setVideoRef(e.target.files[0]); }} />
-                  {videoRef ? (
-                    <div className="absolute inset-0 w-full h-full">
-                      <video src={URL.createObjectURL(videoRef)} className="w-full h-full object-cover" muted loop autoPlay playsInline />
-                      <div className="absolute inset-0 bg-black/40 hover:bg-black/60 transition-colors flex items-center justify-center">
-                        <button onClick={(e) => { e.preventDefault(); setVideoRef(null); }} className="p-2 rounded-full backdrop-blur-sm bg-black/20 hover:bg-black/40 transition-all">
-                          <X className="w-6 h-6 text-white" strokeWidth={2.5} />
-                        </button>
-                      </div>
-                    </div>
-                  ) : (
-                    <>
-                      <Video className="w-5 h-5 text-[#a8a8b3] group-hover:text-[#4F46E5] mb-2 transition-colors" strokeWidth={1.5} />
-                      <span className="text-xs font-medium text-[#e4e4e7]">Enviar</span>
+                      <span className="text-xs font-medium text-[#e4e4e7]">Enviar Imagem</span>
                     </>
                   )}
                 </label>
@@ -2092,46 +2613,89 @@ const CreatorEngineGerarVideoImitarMovimentosView: React.FC<{ onBack: () => void
             </div>
           </div>
 
-          {/* Descrição (opcional) */}
+          {/* Descrição Obrigatória */}
           <div>
-            <label className="block text-sm font-semibold text-white mb-2.5">Descrição (opcional)</label>
+            <label className="block text-sm font-semibold text-white mb-2.5">Descreva a dança da Trend</label>
             <div className="relative">
               <textarea
                 rows={3}
-                className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-[#e4e4e7] placeholder:text-[#a8a8b3]/50 focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all resize-none font-medium"
-                placeholder="Descreva detalhes adicionais sobre o movimento..."
+                value={promptTexto}
+                onChange={(e) => setPromptTexto(e.target.value)}
+                className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-[#e4e4e7] placeholder:text-[#a8a8b3]/50 focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all resize-none font-medium text-base"
+                placeholder="Exemplo: Dançando a trend de hip hop do TikTok com reboladas velozes e expressividade alegre no rosto..."
               ></textarea>
-              <div className="absolute bottom-3 right-4 text-xs text-[#a8a8b3] font-medium">0/2000</div>
+              <div className="absolute bottom-3 right-4 text-xs text-[#a8a8b3] font-medium">{promptTexto.length}/2000</div>
             </div>
           </div>
 
-          {/* Qualidade de saída */}
-          <div>
-            <label className="block text-sm font-semibold text-white mb-2.5">Qualidade de saída</label>
-            <div className="relative">
-              <select className="w-full bg-[#18181B] border border-[#27272A] rounded-xl px-4 py-3.5 text-sm text-[#e4e4e7] appearance-none cursor-pointer focus:outline-none focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all font-medium">
-                <option value="720p">720P (HD)</option>
-                <option value="1080p">1080P (Full HD)</option>
-              </select>
-              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#a8a8b3] pointer-events-none" />
+          <div className="mt-4 p-4 rounded-xl bg-[#3B82F6]/10 border border-[#3B82F6]/20">
+            <div className="flex gap-3">
+              <Sparkles className="w-5 h-5 text-[#3B82F6] shrink-0" />
+              <p className="text-xs font-medium text-[#e4e4e7] leading-relaxed">
+                Esqueça o upload de vídeos base complicados. Nossa IA usa sua descrição para bolar a coreografia e analisar a identidade na sua foto, te gerando INSTANTANEAMENTE o prompt master 100% otimizado para colar no Flow/Kling.
+              </p>
             </div>
           </div>
 
-          {/* Botão Gerar Vídeo */}
+          {/* Botão Gerar Prompt */}
           <button 
             onClick={handleGenerate}
             disabled={isGenerating}
-            className="w-full bg-[#3B82F6] hover:bg-[#2563EB] disabled:bg-[#3B82F6]/50 disabled:cursor-not-allowed text-white rounded-xl py-4 font-bold text-sm transition-all shadow-md hover:shadow-[#3B82F6]/20 flex items-center justify-center gap-2 group mt-6">
-            {isGenerating ? <Loader2 className="w-5 h-5 animate-spin" /> : <Video className="w-5 h-5" />}
-            {isGenerating ? 'Processando Vídeo...' : 'Gerar Vídeo'}
+            className="w-full bg-[#3B82F6] hover:bg-[#2563EB] disabled:bg-[#3B82F6]/50 disabled:cursor-not-allowed text-white rounded-xl py-4 font-bold text-sm transition-all shadow-md hover:shadow-[#3B82F6]/20 flex items-center justify-center gap-2 group mt-6 relative overflow-hidden">
+            {isGenerating ? <Loader2 className="w-5 h-5 animate-spin" /> : <Brain className="w-5 h-5" />}
+            {isGenerating ? (pollingText || 'Gerando Instruções...') : 'Extrair Inteligência e Gerar Instruções'}
           </button>
         </div>
       </div>
 
+      {/* Result Section (Exibido quando o Prompt Mestre finaliza) */}
+      {generatedPrompt && (
+        <div className="w-full max-w-3xl mx-auto mt-12 animate-in fade-in slide-in-from-bottom-8 duration-700 flex flex-col items-center">
+           <div className="w-12 h-12 bg-[#10B981]/20 rounded-full flex items-center justify-center mb-4 border border-[#10B981]/30">
+             <Check className="w-6 h-6 text-[#10B981]" strokeWidth={3} />
+           </div>
+           <h2 className="text-xl md:text-2xl font-bold text-white mb-2 text-center">Instruções Prontas! 🎉</h2>
+           <p className="text-[#a8a8b3] text-sm md:text-base text-center mb-8 max-w-[500px]">Copie a matriz de comandos abaixo e cole em sua Ferramenta de Flow favorita juntamente com sua Imagem de Avatar e seu Vídeo Base.</p>
+           
+           <div className="w-full bg-[#111114] border border-[#27272A] rounded-3xl p-6 shadow-[0_0_50px_rgba(59,130,246,0.15)] flex flex-col">
+             
+              <div className="flex items-center mb-4">
+                  <h3 className="text-sm font-bold text-white flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-[#4F46E5]" /> Código de Inteligência
+                  </h3>
+              </div>
+
+              {/* Editable/Selectable Prompt Box */}
+              <div className="bg-[#18181B] border border-[#27272A] rounded-xl p-5 cursor-text mb-6">
+                 <p className="text-[13px] md:text-sm font-medium text-[#e4e4e7] leading-relaxed font-mono whitespace-pre-wrap select-all focus:outline-none">
+                    {generatedPrompt}
+                 </p>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3 w-full">
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(generatedPrompt);
+                    }}
+                    className="flex-1 flex items-center justify-center gap-2 bg-[#27272A] hover:bg-[#3F3F46] border border-[#4F46E5]/50 hover:border-[#4F46E5] text-white py-4 rounded-xl font-bold text-sm transition-all shadow-[0_0_15px_rgba(79,70,229,0.1)] hover:shadow-[0_0_20px_rgba(79,70,229,0.3)]"
+                  >
+                    <Copy className="w-5 h-5 text-[#4F46E5]" />
+                    Copiar Prompt Profissional
+                  </button>
+                  <a href="#" className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-[#4F46E5] to-[#8B5CF6] hover:opacity-90 text-white py-4 rounded-xl font-bold text-sm transition-all shadow-md shadow-[#4F46E5]/20 hover:-translate-y-0.5">
+                    <Video className="w-5 h-5 text-white" />
+                    Abrir Flow para Gerar Vídeo
+                  </a>
+              </div>
+           </div>
+        </div>
+      )}
+
       {/* Decorative Bottom */}
       <div className="mt-8 opacity-[0.25] flex flex-col items-center">
-        <Video className="w-8 h-8 text-white mb-3" strokeWidth={1.5} />
-        <span className="text-sm font-medium text-white">Envie as referências e clique em gerar</span>
+        <Brain className="w-8 h-8 text-white mb-3" strokeWidth={1.5} />
+        <span className="text-sm font-medium text-white">Criador de Ações Matrix - IA Nativa</span>
       </div>
     </main>
   );
@@ -2140,6 +2704,79 @@ const CreatorEngineGerarVideoImitarMovimentosView: React.FC<{ onBack: () => void
 
 // --- CREATOR ENGINE MINHAS CRIAÇÕES VIEW ---
 const CreatorEngineMinhasCriacoesView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
+  const [creations, setCreations] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState<'Todos'|'image'|'video'>('Todos');
+  const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    fetchCreations();
+  }, []);
+
+  const fetchCreations = async () => {
+    try {
+      setLoading(true);
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      
+      const { data, error } = await supabase
+        .from('user_creations')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setCreations(data || []);
+    } catch (err) {
+      console.error("Erro ao buscar criações:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (id: string, url: string) => {
+    if (!window.confirm("Tem certeza que deseja deletar esta criação?")) return;
+    try {
+      // Deletar do banco de dados
+      await supabase.from('user_creations').delete().eq('id', id);
+      
+      // Deletar do Storage (Opcional, mas recomendado para limpar espaço)
+      const fileName = url.split('/').pop();
+      if (fileName) {
+         await supabase.storage.from('creations').remove([`${(await supabase.auth.getUser()).data.user?.id}/${fileName}`]);
+      }
+      
+      setCreations(creeps => creeps.filter(c => c.id !== id));
+    } catch (err) {
+      console.error("Erro ao deletar:", err);
+    }
+  };
+
+  const handleDownload = async (url: string, type: 'image'|'video', e: React.MouseEvent) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = `criacao_viralpulse_${Date.now()}.${type === 'image' ? 'jpg' : 'mp4'}`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(blobUrl);
+    } catch (err) {
+      console.error("Erro no download, abrindo noutra aba:", err);
+      window.open(url, '_blank');
+    }
+  };
+
+  const filteredCreations = creations.filter(c => {
+    if (filter !== 'Todos' && c.type !== filter) return false;
+    if (search && !c.prompt?.toLowerCase().includes(search.toLowerCase())) return false;
+    return true;
+  });
+
   return (
     <main className="max-w-[1400px] mx-auto px-6 py-8 md:py-12 min-h-screen">
       {/* Header */}
@@ -2155,12 +2792,14 @@ const CreatorEngineMinhasCriacoesView: React.FC<{ onBack: () => void }> = ({ onB
       </div>
 
       {/* Search and Filters */}
-      <div className="flex flex-col md:flex-row gap-4 mb-20">
+      <div className="flex flex-col md:flex-row gap-4 mb-10">
         {/* Search Bar */}
         <div className="relative flex-1">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#71717A]" strokeWidth={2} />
           <input 
             type="text" 
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             placeholder="Buscar por prompt..." 
             className="w-full bg-[#18181B] hover:bg-[#27272A]/50 border border-[#27272A] rounded-[12px] pl-12 pr-4 py-3.5 text-sm text-white placeholder:text-[#52525B] focus:outline-none focus:bg-[#18181B] focus:border-[#4F46E5] focus:ring-1 focus:ring-[#4F46E5]/50 transition-all font-medium"
           />
@@ -2168,28 +2807,95 @@ const CreatorEngineMinhasCriacoesView: React.FC<{ onBack: () => void }> = ({ onB
 
         {/* Filters */}
         <div className="flex gap-2 shrink-0">
-          <button className="px-5 py-3.5 bg-[#3B82F6] hover:bg-[#2563EB] text-white text-sm font-bold rounded-[12px] transition-colors shadow-sm">
+          <button 
+            onClick={() => setFilter('Todos')}
+            className={`px-5 py-3.5 text-sm font-bold rounded-[12px] transition-colors shadow-sm ${filter === 'Todos' ? 'bg-[#3B82F6] text-white hover:bg-[#2563EB]' : 'bg-[#18181B] border border-[#27272A] text-[#A1A1AA] hover:bg-[#27272A] hover:text-white'}`}>
             Todos
           </button>
-          <button className="px-5 py-3.5 bg-[#18181B] hover:bg-[#27272A] border border-[#27272A] text-[#A1A1AA] hover:text-white text-sm font-medium rounded-[12px] transition-colors shadow-sm">
+          <button 
+             onClick={() => setFilter('image')}
+             className={`px-5 py-3.5 text-sm font-bold rounded-[12px] transition-colors shadow-sm ${filter === 'image' ? 'bg-[#3B82F6] text-white hover:bg-[#2563EB]' : 'bg-[#18181B] border border-[#27272A] text-[#A1A1AA] hover:bg-[#27272A] hover:text-white'}`}>
             Imagens
           </button>
-          <button className="px-5 py-3.5 bg-[#18181B] hover:bg-[#27272A] border border-[#27272A] text-[#A1A1AA] hover:text-white text-sm font-medium rounded-[12px] transition-colors shadow-sm">
+          <button 
+             onClick={() => setFilter('video')}
+             className={`px-5 py-3.5 text-sm font-bold rounded-[12px] transition-colors shadow-sm ${filter === 'video' ? 'bg-[#3B82F6] text-white hover:bg-[#2563EB]' : 'bg-[#18181B] border border-[#27272A] text-[#A1A1AA] hover:bg-[#27272A] hover:text-white'}`}>
             Vídeos
           </button>
         </div>
       </div>
 
-      {/* Empty State */}
-      <div className="flex flex-col items-center justify-center py-20 opacity-80">
-        <div className="mb-6 relative">
-          <ImageIcon className="w-16 h-16 text-[#3F3F46]" strokeWidth={1.5} />
-          <div className="absolute -bottom-2 -right-2 bg-[#09090b] rounded-full p-1 border border-[#09090b]">
-             <ImageIcon className="w-8 h-8 text-[#52525B]" strokeWidth={1.5} />
-          </div>
+      {/* Grid Layout (Masonry CSS) */}
+      {loading ? (
+        <div className="flex flex-col items-center justify-center py-20">
+          <Loader2 className="w-8 h-8 text-[#4F46E5] animate-spin mb-4" />
+          <p className="text-[#a8a8b3] font-medium">Buscando suas criações...</p>
         </div>
-        <p className="text-[#71717A] text-[15px] font-medium">Nenhuma criação encontrada</p>
-      </div>
+      ) : filteredCreations.length > 0 ? (
+        <div className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-6 space-y-6">
+          {filteredCreations.map((item) => (
+            <div key={item.id} className="break-inside-avoid bg-[#18181B] border border-[#27272A] rounded-[20px] overflow-hidden flex flex-col group shadow-lg hover:shadow-xl hover:border-[#3F3F46] transition-all duration-300">
+              
+              {/* Media Preview */}
+              <div className="relative w-full overflow-hidden bg-black flex flex-col justify-center items-center min-h-[200px]">
+                {/* Badge top-right */}
+                <div className="absolute top-3 right-3 z-10 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 flex items-center gap-1.5">
+                  {item.type === 'video' ? <Video className="w-3.5 h-3.5 text-white" /> : <ImageIcon className="w-3.5 h-3.5 text-white" />}
+                  <span className="text-[10px] uppercase font-bold text-white tracking-widest">{item.type === 'video' ? 'Vídeo' : 'Imagem'}</span>
+                </div>
+                
+                {item.type === 'video' ? (
+                  <video src={item.url} autoPlay loop muted playsInline className="w-full h-auto max-h-[500px] object-cover" />
+                ) : (
+                  <img src={item.url} alt="Criação" className="w-full h-auto max-h-[500px] object-cover group-hover:scale-105 transition-transform duration-500" />
+                )}
+              </div>
+
+              {/* Data & Actions */}
+              <div className="p-5 flex flex-col flex-1">
+                {/* Category & Date */}
+                <div className="flex items-center justify-between mb-2">
+                   <h3 className="text-xs font-black text-[#8d8d99] uppercase tracking-widest">{item.category || 'Geração'}</h3>
+                   <span className="text-[11px] font-medium text-[#52525B]">{new Date(item.created_at).toLocaleDateString('pt-BR')}</span>
+                </div>
+                
+                {/* Prompt */}
+                <p className="text-sm font-medium text-white mb-6 line-clamp-3 leading-relaxed">
+                  {item.prompt || 'Sem descrição'}
+                </p>
+
+                <div className="mt-auto h-[1px] w-full bg-[#27272A] mb-4"></div>
+
+                {/* Botões */}
+                <div className="flex items-center justify-between gap-2">
+                   <div className="flex gap-4">
+                     <button onClick={() => window.open(item.url, '_blank')} className="flex items-center gap-1.5 text-sm font-bold text-[#A1A1AA] hover:text-white transition-colors group/btn">
+                        <Eye className="w-4 h-4 group-hover/btn:text-[#4F46E5] transition-colors" /> Ver
+                     </button>
+                     <button onClick={(e) => handleDownload(item.url, item.type, e)} className="flex items-center gap-1.5 text-sm font-bold text-[#A1A1AA] hover:text-white transition-colors group/btn">
+                        <Download className="w-4 h-4 group-hover/btn:text-[#10B981] transition-colors" /> Baixar
+                     </button>
+                   </div>
+                   <button onClick={() => handleDelete(item.id, item.url)} className="flex items-center gap-1.5 text-sm font-bold text-[#EF4444] hover:text-[#DC2626] transition-colors">
+                      <Trash2 className="w-4 h-4" /> Deletar
+                   </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        /* Empty State */
+        <div className="flex flex-col items-center justify-center py-20 opacity-80">
+          <div className="mb-6 relative">
+            <ImageIcon className="w-16 h-16 text-[#3F3F46]" strokeWidth={1.5} />
+            <div className="absolute -bottom-2 -right-2 bg-[#09090b] rounded-full p-1 border border-[#09090b]">
+               <Video className="w-8 h-8 text-[#52525B]" strokeWidth={1.5} />
+            </div>
+          </div>
+          <p className="text-[#71717A] text-[15px] font-medium">Bateu um vento frio! Nenhuma criação encontrada por aqui.</p>
+        </div>
+      )}
     </main>
   );
 };
@@ -2258,9 +2964,9 @@ const CreatorEngineCreditosView: React.FC<{ onBack: () => void }> = ({ onBack })
             </li>
           </ul>
           
-          <button className="w-full py-4 bg-[#232328] hover:bg-[#2A2A30] text-[#A1A1AA] hover:text-white rounded-xl text-sm font-bold transition-all shadow-sm">
+          <a href="https://pay.cakto.com.br/fykwfrh" target="_blank" rel="noopener noreferrer" className="w-full py-4 bg-[#232328] hover:bg-[#2A2A30] text-[#A1A1AA] hover:text-white rounded-xl text-sm font-bold transition-all shadow-sm text-center block">
             Assinar agora
-          </button>
+          </a>
         </div>
 
         {/* Creator Plan (Highlighted) */}
@@ -2297,9 +3003,9 @@ const CreatorEngineCreditosView: React.FC<{ onBack: () => void }> = ({ onBack })
             </li>
           </ul>
           
-          <button className="w-full py-4 bg-[#3B82F6] hover:bg-[#2563EB] text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-[#3B82F6]/20">
+          <a href="https://pay.cakto.com.br/sgvh5nc" target="_blank" rel="noopener noreferrer" className="w-full py-4 bg-[#3B82F6] hover:bg-[#2563EB] text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-[#3B82F6]/20 text-center block">
             Assinar agora
-          </button>
+          </a>
         </div>
 
         {/* Pro Plan */}
@@ -2331,9 +3037,9 @@ const CreatorEngineCreditosView: React.FC<{ onBack: () => void }> = ({ onBack })
             </li>
           </ul>
           
-          <button className="w-full py-4 bg-[#232328] hover:bg-[#2A2A30] text-[#A1A1AA] hover:text-white rounded-xl text-sm font-bold transition-all shadow-sm">
+          <a href="https://pay.cakto.com.br/h6zxvfe" target="_blank" rel="noopener noreferrer" className="w-full py-4 bg-[#232328] hover:bg-[#2A2A30] text-[#A1A1AA] hover:text-white rounded-xl text-sm font-bold transition-all shadow-sm text-center block">
             Assinar agora
-          </button>
+          </a>
         </div>
 
         {/* Business Plan */}
@@ -2365,9 +3071,9 @@ const CreatorEngineCreditosView: React.FC<{ onBack: () => void }> = ({ onBack })
             </li>
           </ul>
           
-          <button className="w-full py-4 bg-[#232328] hover:bg-[#2A2A30] text-[#A1A1AA] hover:text-white rounded-xl text-sm font-bold transition-all shadow-sm">
+          <a href="https://pay.cakto.com.br/363mbpm" target="_blank" rel="noopener noreferrer" className="w-full py-4 bg-[#232328] hover:bg-[#2A2A30] text-[#A1A1AA] hover:text-white rounded-xl text-sm font-bold transition-all shadow-sm text-center block">
             Assinar agora
-          </button>
+          </a>
         </div>
       </div>
 
@@ -2382,9 +3088,9 @@ const CreatorEngineCreditosView: React.FC<{ onBack: () => void }> = ({ onBack })
           <span className="text-[40px] font-black text-[#3B82F6] tracking-tighter mb-1 group-hover:scale-105 transition-transform">450</span>
           <span className="text-sm text-[#A1A1AA] mb-8 font-medium">créditos</span>
           <span className="text-2xl font-bold text-white mb-8 tracking-tight">R$ 39,90</span>
-          <button className="w-full py-4 bg-[#232328] hover:bg-[#2A2A30] text-[#A1A1AA] hover:text-white rounded-xl text-sm font-bold transition-all shadow-sm">
+          <a href="https://pay.cakto.com.br/35reqrs" target="_blank" rel="noopener noreferrer" className="w-full py-4 bg-[#232328] hover:bg-[#2A2A30] text-[#A1A1AA] hover:text-white rounded-xl text-sm font-bold transition-all shadow-sm text-center block">
             Comprar agora
-          </button>
+          </a>
         </div>
 
         {/* Avulso 2 (Highlighted) */}
@@ -2396,9 +3102,9 @@ const CreatorEngineCreditosView: React.FC<{ onBack: () => void }> = ({ onBack })
           <span className="text-[48px] font-black text-[#3B82F6] tracking-tighter mb-1 mt-2">900</span>
           <span className="text-sm text-[#A1A1AA] mb-8 font-medium">créditos</span>
           <span className="text-2xl font-bold text-white mb-8 tracking-tight">R$ 69,90</span>
-          <button className="w-full py-4 bg-[#3B82F6] hover:bg-[#2563EB] text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-[#3B82F6]/20">
+          <a href="https://pay.cakto.com.br/itnrkpn" target="_blank" rel="noopener noreferrer" className="w-full py-4 bg-[#3B82F6] hover:bg-[#2563EB] text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-[#3B82F6]/20 text-center block">
             Comprar agora
-          </button>
+          </a>
         </div>
 
         {/* Avulso 3 */}
@@ -2406,9 +3112,9 @@ const CreatorEngineCreditosView: React.FC<{ onBack: () => void }> = ({ onBack })
           <span className="text-[40px] font-black text-[#3B82F6] tracking-tighter mb-1 group-hover:scale-105 transition-transform">1.850</span>
           <span className="text-sm text-[#A1A1AA] mb-8 font-medium">créditos</span>
           <span className="text-2xl font-bold text-white mb-8 tracking-tight">R$ 119,90</span>
-          <button className="w-full py-4 bg-[#232328] hover:bg-[#2A2A30] text-[#A1A1AA] hover:text-white rounded-xl text-sm font-bold transition-all shadow-sm">
+          <a href="https://pay.cakto.com.br/mkxq6qj" target="_blank" rel="noopener noreferrer" className="w-full py-4 bg-[#232328] hover:bg-[#2A2A30] text-[#A1A1AA] hover:text-white rounded-xl text-sm font-bold transition-all shadow-sm text-center block">
             Comprar agora
-          </button>
+          </a>
         </div>
       </div>
     </main>
@@ -7069,7 +7775,66 @@ const GaleriaAvataresView: React.FC<{ onGoToMyAvatars: () => void; onCreateNew: 
               </div>
 
               <div className="mt-12">
-                <button className="w-full py-5 bg-[#3B82F6] hover:bg-[#4338ca] text-white rounded-3xl font-black text-base flex items-center justify-center gap-3 shadow-[0_15px_40px_rgba(81,66,245,0.3)] transition-all hover:scale-[1.02] active:scale-[0.98]">
+                <button 
+                  onClick={async () => {
+                    const originalUrl = selectedAvatar.image;
+                    const fileName = `${selectedAvatar.name.replace(/\\s+/g, '_')}_avatar.jpg`;
+                    
+                    try {
+                      // Tentativa 1: Fetch Direto (Mais puro, sem proxies engasgando)
+                      const response = await fetch(originalUrl);
+                      if (!response.ok) throw new Error('Fetch Origin Bloqueado');
+                      
+                      const blob = await response.blob();
+                      const blobUrl = window.URL.createObjectURL(blob);
+                      
+                      const link = document.createElement('a');
+                      link.style.display = 'none';
+                      link.href = blobUrl;
+                      link.download = fileName;
+                      document.body.appendChild(link);
+                      link.click();
+                      
+                      setTimeout(() => {
+                        document.body.removeChild(link);
+                        window.URL.revokeObjectURL(blobUrl);
+                      }, 100);
+                    } catch(err) {
+                      console.warn('Fetch native falhou. Armando bypass por Canvas Engine...');
+                      // Tentativa 2: Canvas Rendering Bypass (Mais violento, engole a imagem e cospe em memória)
+                      const img = new Image();
+                      img.crossOrigin = 'Anonymous'; // Força autorização
+                      
+                      img.onload = () => {
+                        try {
+                          const canvas = document.createElement('canvas');
+                          canvas.width = img.width;
+                          canvas.height = img.height;
+                          const ctx = canvas.getContext('2d');
+                          if (ctx) {
+                             ctx.drawImage(img, 0, 0);
+                             // Extrai o Base64 Data URL nativo da imagem pintada
+                             const dataURL = canvas.toDataURL('image/jpeg', 1.0);
+                             const link = document.createElement('a');
+                             link.download = fileName;
+                             link.href = dataURL;
+                             document.body.appendChild(link);
+                             link.click();
+                             document.body.removeChild(link);
+                          }
+                        } catch(canvasErr) {
+                          // Como último recurso ABSOLUTO, evitamos deixar o botão morto.
+                          window.open(originalUrl, '_blank');
+                        }
+                      };
+                      img.onerror = () => {
+                         window.open(originalUrl, '_blank');
+                      };
+                      // Adiciona um timestamp para quebrar cache local de uma imagem não-cors pregressa
+                      img.src = originalUrl + (originalUrl.includes('?') ? '&' : '?') + 'cb=' + new Date().getTime();
+                    }
+                  }}
+                  className="w-full py-5 bg-[#3B82F6] hover:bg-[#4338ca] text-white rounded-3xl font-black text-base flex items-center justify-center gap-3 shadow-[0_15px_40px_rgba(81,66,245,0.3)] transition-all hover:scale-[1.02] active:scale-[0.98]">
                   <Download className="w-6 h-6" />
                   Baixar Imagem do Avatar
                 </button>

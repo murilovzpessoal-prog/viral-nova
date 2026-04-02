@@ -1810,7 +1810,7 @@ The final image must be indistinguishable from a real selfie taken by a human in
                 <span className="text-sm font-medium text-white">Custo: 45 créditos</span>
               </div>
               <div className="text-sm font-bold tracking-tight">
-                Saldo: <span className={credits < 45 ? 'text-red-500' : 'text-[#a8a8b3]'}>{credits}</span>
+                Saldo: <span className={credits < 45 ? 'text-red-500' : 'text-[#a8a8b3]'}>{credits.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
               </div>
             </div>
           )}
@@ -2170,7 +2170,7 @@ const CreatorEngineGerarVideoInfluencerIAView: React.FC<{ onBack: () => void }> 
               <span className="text-sm font-medium text-white">Custo: 150 créditos</span>
             </div>
             <div className="text-sm font-bold tracking-tight">
-              Saldo: <span className={credits < 150 ? 'text-red-500' : 'text-[#a8a8b3]'}>{credits}</span>
+              Saldo: <span className={credits < 150 ? 'text-red-500' : 'text-[#a8a8b3]'}>{credits.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
             </div>
           </div>
 
@@ -2410,7 +2410,7 @@ const CreatorEngineGerarVideoCinematicoView: React.FC<{ onBack: () => void }> = 
               <span className="text-sm font-medium text-white">Custo: 180 créditos</span>
             </div>
             <div className="text-sm font-bold tracking-tight">
-              Saldo: <span className={credits < 180 ? 'text-red-500' : 'text-[#a8a8b3]'}>{credits}</span>
+              Saldo: <span className={credits < 180 ? 'text-red-500' : 'text-[#a8a8b3]'}>{credits.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
             </div>
           </div>
 
@@ -2902,6 +2902,8 @@ const CreatorEngineMinhasCriacoesView: React.FC<{ onBack: () => void }> = ({ onB
 
 // --- CREATOR ENGINE CRÉDITOS VIEW ---
 const CreatorEngineCreditosView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
+  const { credits } = useUserCredits();
+
   return (
     <main className="max-w-[1400px] mx-auto px-6 py-8 md:py-12 min-h-screen">
       {/* Header */}
@@ -2926,7 +2928,7 @@ const CreatorEngineCreditosView: React.FC<{ onBack: () => void }> = ({ onBack })
             <span className="text-sm text-[#A1A1AA] font-medium">Saldo atual</span>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-4xl md:text-5xl font-black text-white tracking-tighter">500</span>
+            <span className="text-4xl md:text-5xl font-black text-white tracking-tighter">{credits.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
             <span className="text-[#A1A1AA] text-sm md:text-base font-medium">créditos</span>
           </div>
         </div>
@@ -7526,12 +7528,12 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
         </div>
 
         <div className="flex flex-col items-center md:items-end gap-10 z-10 w-full md:w-auto">
-          <button className="relative group/mail h-20 w-full md:w-[320px] rounded-2xl overflow-hidden transition-all hover:scale-[1.03] active:scale-95 shadow-3xl">
+          <button onClick={() => window.open('https://www.contate.me/viralpulsesuporte', '_blank')} className="relative group/mail h-20 w-full md:w-[320px] rounded-2xl overflow-hidden transition-all hover:scale-[1.03] active:scale-95 shadow-3xl">
             <div className="absolute inset-0 bg-[#3B82F6] shadow-[0_20px_50px_rgba(59,130,246,0.4)]"></div>
             <div className="absolute inset-0 bg-black translate-y-full group-hover/mail:translate-y-0 transition-transform duration-500"></div>
             <div className="relative h-full flex items-center justify-center gap-4 px-10">
               <Mail className="w-6 h-6 text-white" />
-              <span className="text-sm font-black text-white uppercase tracking-[0.2em]">Contatar Suporte</span>
+              <span className="text-sm font-black text-white uppercase tracking-[0.2em]">Suporte via WhatsApp</span>
             </div>
           </button>
 

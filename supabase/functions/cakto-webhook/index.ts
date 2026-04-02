@@ -29,7 +29,7 @@ serve(async (req) => {
     const event = payload?.event || payload?.type;
     const status = payload?.data?.status || payload?.status;
     
-    // Aceita variações de status de "aprovado" dependendo do Gateway Cakto
+    // Aceita variações de status dependendo do Gateway Cakto
     const isApproved = 
       event === 'charge.succeeded' || 
       event === 'payment.approved' || 
@@ -38,9 +38,18 @@ serve(async (req) => {
       status === 'paid' || 
       status === 'authorized';
 
-    if (!isApproved) {
+    const isRefunded = 
+      event === 'charge.refunded' ||
+      event === 'payment.refunded' ||
+      event === 'purchase_refunded' ||
+      status === 'refunded' || 
+      status === 'chargeback' || 
+      status === 'canceled' ||
+      status === 'disputed';
+
+    if (!isApproved && !isRefunded) {
        console.log(`Evento ignorado. Event: ${event}, Status: ${status}`);
-       return new Response("Ignorado, não é um evento de aprovação de pagamento", { status: 200 });
+       return new Response("Ignorado, não é um evento de aprovação de pagamento nem reembolso", { status: 200 });
     }
 
     const email = payload?.data?.customer?.email || payload?.customer?.email || payload?.data?.email;
@@ -56,7 +65,11 @@ serve(async (req) => {
     // Mapeamento baseado nos links Cakto enviados pelo usuário
     if (productName.includes('450')) creditsToAdd = 450;
     else if (productName.includes('900')) creditsToAdd = 900;
+    else if (productName.includes('1000')) creditsToAdd = 1000;
     else if (productName.includes('1850')) creditsToAdd = 1850;
+    else if (productName.includes('2000')) creditsToAdd = 2000;
+    else if (productName.includes('5000')) creditsToAdd = 5000;
+    else if (productName.includes('10000')) creditsToAdd = 10000;
     else if (productName.includes('starter')) creditsToAdd = 500;
     else if (productName.includes('creator')) creditsToAdd = 1000;
     else if (productName.includes('pro')) creditsToAdd = 2500;
@@ -77,6 +90,24 @@ serve(async (req) => {
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     );
+
+    // ==========================================
+    // FLUXO DE REEMBOLSO (DELEÇÃO DE USUÁRIO)
+    // ==========================================
+    if (isRefunded) {
+      console.log(`💳 REEMBOLSO DETECTADO para: ${email}. O apagador de contas foi ativado.`);
+      const { data, error } = await supabaseClient.rpc('delete_user_by_email', { target_email: email });
+      if (error) {
+         console.error("Erro Fatal no Delete User RPC:", error);
+         throw error;
+      }
+      console.log(`✅ Conta banida! O usuário ${email} foi DELETADO com sucesso da tabela Authentication e Profiles.`);
+      return new Response(JSON.stringify({ success: true, email, action: 'deleted_due_to_refund' }), {
+        headers: { 'Content-Type': 'application/json' },
+        status: 200,
+      });
+    }
+    // ==========================================
 
     console.log(`Iniciando RPC increment_credits_by_email para: ${email} (+${creditsToAdd})`);
 

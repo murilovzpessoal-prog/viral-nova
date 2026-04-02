@@ -1160,98 +1160,24 @@ const DropdownToolItem: React.FC<{ label: string; badge?: string; isActive?: boo
 
 
 const enhancePromptWithGemini = async (userDescription: string, tipoCriacao?: string, refBase64?: string | null, baseBase64?: string | null) => {
-  let systemPrompt = "";
-
-  if (tipoCriacao === 'Clone (Influencer IA)') {
-    systemPrompt = `Você é o operador mestre de fundição fotorealista da IA AntiGravity.
-Sua função é gerar o "Prompt Estratégico" para substituição de identidade facial (Clone), onde a Imagem Base (âncora contextual) recebe o rosto da Imagem de Referência (DNA facial), integrando-os com perfeição sem aspecto de "recorte" artificial.
-
-Siga EXATAMENTE este bloco estrutural em inglês, injetando sua análise visual incrivelmente detalhada nos colchetes:
-"High-definition professional portrait, merging the identity of the person in the reference image onto the body and context of the person in the base image. The face, eyes, bone structure, skin texture, and core facial identity must be an exact, unmistakable match to the reference image. Prioritize reference geometry over base geometry. Maintain all context from the base image without deviation: [INSERIR DESCRIÇÃO MEGA DETALHADA DA POSE, DA ROUPA ESPECÍFICA (EX: PINK BLAZER), E DO CENÁRIO DA BASE]. The lighting, color grading, and environmental shadows present in the base image must be applied seamlessly to the new face, ensuring perfect integration with no 'cut-out' look. Ensure the skin tones are matched. [INSERIR A DESCRIÇÃO DE COMO O CABELO ESPECÍFICO DA REFERÊNCIA SE INTEGRA NA CENA DA BASE]. Additional actions/instructions: [INSERIR DESCRIÇÃO DO USUÁRIO TRADUZIDA PARA INGLÊS]."
-
-Retorne APENAS o prompt final montado. Sem aspas iniciais, sem introduções.`;
-  } else if (tipoCriacao === 'Clone (Celebridades)') {
-    systemPrompt = `Você é o Diretor de Arte (Prompt Engineer) da IA AntiGravity.
-Sua única função é analisar as DUAS imagens enviadas (Base e Referência) e gerar um "Prompt Descritivo" EXTREMAMENTE rico em detalhes visuais, seguindo rigorosamente as instruções a seguir.
-
-INSTRUÇÃO OBRIGATÓRIA SALVA NO SISTEMA:
-"Ultra-photorealistic 8k cinematic masterpiece, extreme high-fidelity identity re-projection. MANDATORY INSTRUCTION: Use the 'Base Image' as a strict spatial and skeletal template. Extract the exact anatomical pose, shoulder orientation, hand gestures (e.g., thumbs up, heart sign, selfie stance), and head tilt from the person in the Base Image. MANDATORY INSTRUCTION: Replace the entire subject with the flawless aesthetic identity, facial bone structure, specific eye shape, and hair texture of the person in the 'Reference Image'. The subject must be perfectly anchored into the 'Base Image' environment, preserving every background detail: wood-paneled ceilings, furniture, computer screens, and reflected subjects without any distortion. LIGHTING INTEGRATION: Apply the exact global illumination, specular highlights, and ambient occlusion from the base scene onto the new identity. SKIN TEXTURE: Render hyper-detailed skin with visible micro-pores, natural imperfections, fine peach fuzz, and realistic subsurface scattering for a 'living skin' effect. CLOTHING: Seamlessly adapt the clothing style from the Reference Image to fit the physical pose and body type of the generated celebrity. Shot on 35mm lens, f/1.8, deep focus, sharp edges, professional color grading, zero blurring, indistinguishable from a real photograph"
-
-Você vai absorver essa instrução mestre e as imagens fornecidas. Depois, você OBRIGATORIAMENTE retornará o seguinte esqueleto, traduzindo o que viu nas imagens para o inglês de forma hiper-realista:
-
-"Ultra-photorealistic 8k cinematic masterpiece, extreme high-fidelity identity re-projection. [DESCREVA EM DETALHES VISUAIS A EXATA POSE, AÇÃO, E O CENÁRIO VISTO NA IMAGEM BASE]. The subject has the exact aesthetic identity: [DESCREVA EM DETALHES O ROSTO, OLHOS E O CABELO DA IMAGEM DE REFERÊNCIA]. The subject is wearing: [DESCREVA A ROUPA EXATA DA IMAGEM DE REFERÊNCIA]. Application of exact global illumination, specular highlights, and ambient occlusion from the base scene. Hyper-detailed skin with visible micro-pores, natural imperfections, fine peach fuzz, and realistic subsurface scattering. Shot on 35mm lens, f/1.8, deep focus, sharp edges, professional color grading, zero blurring, indistinguishable from a real photograph."
-
-Retorne APENAS o bloco de texto final estruturado, totalmente em inglês, preenchendo as descrições solicitadas. Sem aspas iniciais, sem explicações extras.`;
-  } else if (tipoCriacao === 'POV (mostrando produto)') {
-    systemPrompt = `Você é um Diretor de Fotografia Cinematográfica Especialista em Textura Microscópica.
-Atenção Crítica: O motor de geração da IA se confunde e gera vários itens se você mencionar palavras como "duplicatas" ou "extras" até mesmo para proibir. Use APENAS termos singulares puros. O Ojetivo ÚNICO é EXTREMA QUALIDADE RAW 8K e TEXTURA ORGÂNICA REAL (Zero filtro de embelezamento).
-
-Retorne OBRIGATORIAMENTE APENAS o parágrafo abaixo em inglês, substituindo as chaves (sem adicionar textos extras):
-
-A macroscopic, 8K ultra-realistic RAW unretouched photograph shot on ARRI Alexa 65, 85mm lens, f/1.4. No text, no logos. A beautiful, incredibly authentic everyday woman: [INSERIR A DESCRIÇÃO FÍSICA E DE ROUPA DO USUÁRIO]. Medium shot, waist-up framing. She is making direct eye contact with the camera. Centered in front of her chest, she is gently holding exactly one single [INSERIR QUAL É O PRODUTO DO USUÁRIO] with her hand. Her hand is wrapping naturally and physically around the item. Absolutely zero airbrushing or beauty filters. Deep focus, showcasing hyper-textured human skin, highly visible microscopic pores, skin peach fuzz, tiny imperfections, and raw organic anatomy. Professional crisp studio lighting creates extreme lifelike highlights on her face and extreme physical sharpness on the material depth of the product. The product is the only item she holds. Pure masterpiece cinematic photography.`;
-  } else {
-    systemPrompt = `Você é um engenheiro de prompt. Sua única função é pegar a descrição básica que o usuário enviou e mesclar perfeitamente dentro DESTE ESQUELETO EXATO, mantendo TODAS as palavras em inglês do esqueleto e apenas substituindo a parte descritiva pela do usuário. 
-  
-  O esqueleto OBRIGATÓRIO que você deve retornar é este:
-  "Ultra realistic candid photo of [INSERIR A DESCRIÇÃO DO USUÁRIO TRADUZIDA PARA INGLÊS AQUI]. Casual real life photo taken with a modern mobile phone camera. Natural raw lighting, realistic shadows, authentic colors. Clear background environment, no artificial blur. Extremely detailed unedited human skin texture with visible micro pores, subtle blemishes, realistic skin reflections, vellus hair, slight facial asymmetry and natural hair strands. Completely unretouched, zero makeup effect, authentic everyday photography style, looks exactly like a real person photographed casually in real life. 4K HDR raw photo, ultra detailed, realistic composition. Important: the image must NOT contain any camera interface, phone UI, screenshot frame, recording indicators, shutter buttons, plastic skin, CGI, or AI smoothing."
-  
-  PRESTE ATENÇÃO AO GÊNERO DO SUJEITO: 
-  Se o usuário pedir uma MULHER (influenciadora, menina, etc), adicione OBRIGATORIAMENTE ao lado da descrição: "Ultra detailed RAW photography of an authentic everyday Brazilian woman, South American Latina. CRITICAL INSTRUCTIONS FOR FEMALE: 0% makeup, ABSOLUTELY NO AIRBRUSHING, extremely raw textured skin, heavily visible micro pores on nose and cheeks, peach fuzz, subtle real-life blemishes, authentic female facial asymmetry, hyper-realistic candid lighting. This must look like a real unfiltered everyday mundane iphone photo."
-  Se o usuário pedir um HOMEM (influenciador, menino, etc), adicione OBRIGATORIAMENTE ao lado da descrição: "authentic brazilian man, typical latin american features, raw unedited skin".
-  E independentemente do gênero, mantenha sempre características marcantes de uma PESSOA BRASILEIRA COMUM e AUTÊNTICA.
-  
-  Retorne APENAS o prompt final em inglês montado com esse esqueleto. Sem aspas iniciais, sem explicações.`;
-  }
-
-  const parts: any[] = [{ text: `${systemPrompt}\n\nDescrição original do usuário: ${userDescription}` }];
-  
-  if (baseBase64 && (tipoCriacao === 'Clone (Influencer IA)' || tipoCriacao === 'Clone (Celebridades)')) {
-    try {
-       const b64Data = baseBase64.includes(',') ? baseBase64.split(',')[1] : baseBase64;
-       let mime = 'image/jpeg';
-       if (baseBase64.startsWith('data:')) mime = baseBase64.split(';')[0].split(':')[1];
-       parts.push({ inlineData: { data: b64Data, mimeType: mime } });
-       parts[0].text += `\n\nA visual reference of the BASE IMAGE (Scene/Body/Pose) is attached FIRST. Analyze the background, lighting, and body pose structure in detail, and insert that into the [INSERT SCENE/BACKGROUND/POSE DESCRIPTION HERE] block.`;
-    } catch(e) {}
-  }
-  
-  if (baseBase64 && tipoCriacao === 'POV (mostrando produto)') {
-    try {
-       const b64Data = baseBase64.includes(',') ? baseBase64.split(',')[1] : baseBase64;
-       let mime = 'image/jpeg';
-       if (baseBase64.startsWith('data:')) mime = baseBase64.split(';')[0].split(':')[1];
-       parts.push({ inlineData: { data: b64Data, mimeType: mime } });
-       parts[0].text += `\n\n[MANDATORY SENSORY ANALYSIS]: A visual reference of the EXACT PRODUCT is attached. Analyze its specific lighting, sharpness, shadow direction, and color temperature. You MUST command the generated background and influencer lighting to perfectly match the lighting embedded in this product! If it is softly lit, the generated scene must be strictly softly lit. This guarantees it will look indistinguishable from a real photo rather than a collage.`;
-    } catch(e) {}
-  }
-
-  if (refBase64) {
-    try {
-       const base64Data = refBase64.includes(',') ? refBase64.split(',')[1] : refBase64;
-       let mimeType = 'image/jpeg';
-       if (refBase64.startsWith('data:')) mimeType = refBase64.split(';')[0].split(':')[1];
-       parts.push({ inlineData: { data: base64Data, mimeType } });
-       parts[0].text += `\n\nA visual reference of the PERSON TO CLONE is attached LAST. Analyze her/his facial features, hair, and clothing in extreme visual detail, and insert that visual description into the [INSERT HIGHLY DETAILED PHYSICAL DESCRIPTION...] block of your response so the image generator can accurately recreate her/him.`;
-    } catch(e) {}
-  }
-
-  // @ts-ignore
-  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-  if (!apiKey) {
-    console.error("VITE_GEMINI_API_KEY is not defined.");
-    throw new Error('Chave da API Gemini não configurada (VITE_GEMINI_API_KEY)');
-  }
-
-  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      contents: [{ parts }]
-    })
+  const { data, error } = await supabase.functions.invoke('gemini-api', {
+    body: {
+      userDescription,
+      tipoCriacao,
+      refBase64,
+      baseBase64
+    }
   });
-  const data = await res.json();
-  if (!res.ok) throw new Error(data.error?.message || 'Erro ao comunicar com Gemini IA');
-  return data.candidates[0].content.parts[0].text.trim();
+
+  if (error) {
+    throw new Error(error.message || 'Erro ao comunicar com a IA');
+  }
+
+  if (data?.error) {
+    throw new Error(data.error);
+  }
+
+  return data.enhancedPrompt;
 };
 
 const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
@@ -2512,40 +2438,23 @@ const CreatorEngineGerarVideoImitarMovimentosView: React.FC<{ onBack: () => void
     setPollingText('Lendo estrutura geométrica e DNA visual da Imagem Base...');
 
     try {
-      // @ts-ignore
-      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-      if (!apiKey) throw new Error('Chave da API Gemini não configurada no cliente.');
-
       const baseBase64 = await fileToBase64(imagemRef);
       
       await new Promise(r => setTimeout(r, 1000));
       setPollingText('Compilando Instruções Cinematográficas (Prompt Mestre)...');
 
-      const systemPrompt = `Você é um Gerador Rápido de Prompts.
-O usuário quer animar uma pessoa em uma imagem (usando ferramentas como Flow ou Kling). A imagem JÁ SERÁ fornecida pelo usuário na ferramenta externa.
-Sua FUNÇÃO ÚNICA é formatar a ideia de dança dele dentro deste esqueleto exato, sem adicionar descrições físicas específicas da pessoa, apenas as diretrizes do que o Kling/Flow precisa respeitar:
-
-"Animate the exact person in the attached reference image performing the following EXCLUSIVELY BRAZILIAN DANCE CHOREOGRAPHY: [TRADUZA AQUI A DESCRIÇÃO DE DANÇA DO USUÁRIO PARA INGLÊS, MAS ADICIONE OBRIGATORIAMENTE QUE É UMA 'BRAZILIAN TIKTOK TREND DANCE' OU 'BRAZILIAN FUNK'. DEIXE MUITO CLARO QUE A PERFORMANCE É ANIMADA E NO ESTILO VIRAL BRASILEIRO].
-
-CRITICAL INSTRUCTIONS: 
-1. The AI must generate fluid movements strictly synced to a Brazilian rhythm. DO NOT emulate English/American music styles.
-2. The subject MUST NOT speak or sing. Keep the mouth closed or naturally smiling. 100% focus on the body dance and choreography.
-3. PRESERVE 100% VISUAL FIDELITY. The face, facial features, body proportions, clothing, and the entire background environment/scenario MUST NOT change from the original photo. Lock the background and identity."
-
-Retorne APENAS o bloco em inglês pronto para ser copiado. Sem aspas iniciais, sem introduções.`;
-
-      const parts: any[] = [{ text: `${systemPrompt}\n\nDança solicitada pelo usuário: ${promptTexto}` }];
-
-      const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contents: [{ parts }] })
+      const { data, error } = await supabase.functions.invoke('gemini-api', {
+        body: {
+          userDescription: promptTexto,
+          tipoCriacao: 'Dança em Trend',
+          baseBase64: baseBase64
+        }
       });
-      
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error?.message || 'Erro ao comunicar com o motor Visual IA.');
 
-      const returnedPrompt = data.candidates[0].content.parts[0].text.trim();
+      if (error) throw new Error(error.message || 'Erro ao comunicar com o motor Visual IA.');
+      if (data?.error) throw new Error(data.error);
+
+      const returnedPrompt = data.enhancedPrompt;
       if (!returnedPrompt) throw new Error("A IA retornou um prompt vazio.");
 
       setPollingText('Tudo Pronto!');

@@ -83,6 +83,19 @@ Siga EXATAMENTE este bloco estrutural em inglês, injetando a análise visual da
 "Ultra-realistic high-definition 4k video. Maintain absolute structural and visual consistency with the reference image: [INSERIR AQUI A DESCRIÇÃO MEGA DETALHADA E CIRÚRGICA DA ROUPA, ROSTO, CABELO, TOM DE PELE E CENÁRIO DA PESSOA DA IMAGEM ENVIADA]. The character is performing a smooth, fluid, and precise motion sequence, exactly matching the choreography, dance steps, and physical actions from the provided reference motion video. Ensure the physics of the clothing and hair react naturally to the complex movements. Cinematic lighting, raw unedited film style, 60fps smooth rendering. Additional details: [INSERIR A DESCRIÇÃO DO USUÁRIO TRADUZIDA PARA INGLÊS AQUI, SE HOUVER, SENÃO DEIXE EM BRANCO]."
 
 Retorne APENAS o prompt final em inglês. Sem aspas iniciais, sem introduções.`;
+      } else if (tipoCriacao === 'Dança em Trend') {
+        systemPrompt = `Você é um Gerador Rápido de Prompts.
+O usuário quer animar uma pessoa em uma imagem (usando ferramentas como Flow ou Kling). A imagem JÁ SERÁ fornecida pelo usuário na ferramenta externa.
+Sua FUNÇÃO ÚNICA é formatar a ideia de dança dele dentro deste esqueleto exato, sem adicionar descrições físicas específicas da pessoa, apenas as diretrizes do que o Kling/Flow precisa respeitar:
+
+"Animate the exact person in the attached reference image performing the following EXCLUSIVELY BRAZILIAN DANCE CHOREOGRAPHY: [TRADUZA AQUI A DESCRIÇÃO DE DANÇA DO USUÁRIO PARA INGLÊS, MAS ADICIONE OBRIGATORIAMENTE QUE É UMA 'BRAZILIAN TIKTOK TREND DANCE' OU 'BRAZILIAN FUNK'. DEIXE MUITO CLARO QUE A PERFORMANCE É ANIMADA E NO ESTILO VIRAL BRASILEIRO].
+
+CRITICAL INSTRUCTIONS: 
+1. The AI must generate fluid movements strictly synced to a Brazilian rhythm. DO NOT emulate English/American music styles.
+2. The subject MUST NOT speak or sing. Keep the mouth closed or naturally smiling. 100% focus on the body dance and choreography.
+3. PRESERVE 100% VISUAL FIDELITY. The face, facial features, body proportions, clothing, and the entire background environment/scenario MUST NOT change from the original photo. Lock the background and identity."
+
+Retorne APENAS o bloco em inglês pronto para ser copiado. Sem aspas iniciais, sem introduções.`;
       } else {
         systemPrompt = `Você é um engenheiro de prompt. Sua única função é pegar a descrição básica que o usuário enviou e mesclar perfeitamente dentro DESTE ESQUELETO EXATO, mantendo TODAS as palavras em inglês do esqueleto e apenas substituindo a parte descritiva pela do usuário. 
     

@@ -193,7 +193,7 @@ Retorne APENAS o bloco em inglês pronto para ser copiado. Sem aspas iniciais, s
   } catch (error) {
     return new Response(JSON.stringify({ error: error.message }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      status: 400,
+      status: 200,
     });
   }
 });

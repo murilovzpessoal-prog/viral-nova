@@ -190,11 +190,13 @@ interface PromptItem {
 // --- CONFIGURAÇÕES VIEW ---
 interface ConfiguracoesViewProps {
   profileImage: string | null;
+  userEmail?: string;
+  userName?: string;
   onImageUpload: (file: File) => Promise<void>;
   onLogout: () => void;
 }
 
-const ConfiguracoesView: React.FC<ConfiguracoesViewProps> = ({ profileImage, onImageUpload, onLogout }) => {
+const ConfiguracoesView: React.FC<ConfiguracoesViewProps> = ({ profileImage, userEmail, userName, onImageUpload, onLogout }) => {
   const { t } = useTranslation();
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -259,7 +261,7 @@ const ConfiguracoesView: React.FC<ConfiguracoesViewProps> = ({ profileImage, onI
                 <div className="relative flex-1 group">
                   <input
                     type="text"
-                    defaultValue="nicklousstefanianrj6"
+                    defaultValue={userName || ""}
                     className="w-full bg-white/[0.03] border border-white/5 rounded-2xl py-5 px-6 text-[15px] text-white focus:outline-none focus:border-[#8B5CF6]/40 focus:ring-4 focus:ring-[#8B5CF6]/10 transition-all font-medium"
                   />
                 </div>
@@ -274,7 +276,7 @@ const ConfiguracoesView: React.FC<ConfiguracoesViewProps> = ({ profileImage, onI
               <div className="relative">
                 <input
                   type="email"
-                  defaultValue="nicklousstefanianrj6@gmail.com"
+                  defaultValue={userEmail || ""}
                   readOnly
                   className="w-full bg-white/[0.01] border border-white/5 rounded-2xl py-5 px-6 text-[15px] text-[#5b5b7b] cursor-not-allowed font-medium"
                 />
@@ -1095,6 +1097,8 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
           {currentPage === 'configuracoes' && (
             <ConfiguracoesView
               profileImage={userProfileImage}
+              userEmail={session?.user?.email || ""}
+              userName={session?.user?.user_metadata?.full_name || session?.user?.user_metadata?.name || session?.user?.email?.split('@')[0] || ""}
               onImageUpload={handleProfileImageUpload}
               onLogout={handleLogout}
             />

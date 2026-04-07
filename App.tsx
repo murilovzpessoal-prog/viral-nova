@@ -1195,6 +1195,7 @@ const CreatorEngineGerarImagemView: React.FC<{ onBack: () => void }> = ({ onBack
   const [imageRef, setImageRef] = useState<File | null>(null);
   const [destinoClone, setDestinoClone] = useState<'ChatGPT' | 'Gemini'>('ChatGPT');
   const [cloneLoadingText, setCloneLoadingText] = useState('');
+  const [copySuccessModal, setCopySuccessModal] = useState<{message: string, url: string} | null>(null);
 
   const handleGenerate = async () => {
     if (!promptTexto.trim() && tipoCriacao !== 'Clone (Celebridades)' && tipoCriacao !== 'Clone (Influencer IA)') {
@@ -1302,22 +1303,24 @@ The final image must be indistinguishable from a real selfie taken by a human in
 [MANDATORY SENSORY RULE]: I have attached a file as the [PRODUCT_IMAGE]. Analyze its exact lighting setup and match the generated scene explicitly to it.`;
        }
        
+       const destinationUrl = destinoClone === 'ChatGPT' ? "https://chatgpt.com/" : "https://gemini.google.com/";
        try {
          await navigator.clipboard.writeText(userPromptToCopy);
          if (tipoCriacao === 'Clone (Celebridades)') {
-            alert("Prompt Mestre copiado invisivelmente!\n\nVocê será redirecionado agora. No chat, basta apertar Ctrl+V (ou Colar) e não se esqueça de ANEXAR as duas fotos manualmente para gerar a sua mágica.");
+            setCopySuccessModal({
+                message: "No chat, basta apertar Ctrl+V (ou Colar) e não se esqueça de ANEXAR as duas fotos manualmente para gerar a sua mágica.",
+                url: destinationUrl
+            });
          } else {
-            alert("Prompt Mestre copiado invisivelmente!\n\nVocê será redirecionado agora. No chat, basta apertar Ctrl+V (ou Colar), preencher a descrição física da pessoa e ANEXAR a foto do produto.");
+            setCopySuccessModal({
+                message: "No chat, basta apertar Ctrl+V (ou Colar), preencher a descrição física da pessoa e ANEXAR a foto do produto.",
+                url: destinationUrl
+            });
          }
        } catch(e) {
          console.log("Falha area transf", e);
          alert("Não foi possível copiar automaticamente, por favor copie o prompt: \n\n" + userPromptToCopy);
-       }
-       
-       if (destinoClone === 'ChatGPT') {
-          window.open("https://chatgpt.com/", "_blank");
-       } else {
-          window.open("https://gemini.google.com/", "_blank");
+         window.open(destinationUrl, "_blank");
        }
        
        setIsGenerating(false);
@@ -1817,6 +1820,40 @@ The final image must be indistinguishable from a real selfie taken by a human in
            <a href={generatedVideo || generatedImage!} download target="_blank" rel="noreferrer" className="bg-[#18181B] border border-[#27272A] hover:bg-[#27272A] hover:border-[#3F3F46] text-white px-8 py-3.5 rounded-xl font-bold transition-all flex items-center gap-2">
              <Upload className="w-4 h-4 rotate-180" /> Baixar Aquivo
            </a>
+        </div>
+      )}
+
+      {/* Modal de Sucesso de Cópia */}
+      {copySuccessModal && (
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-300">
+          <div className="bg-[#14151a] border border-[#1e1f26] rounded-2xl w-full max-w-md p-8 relative shadow-[0_30px_60px_rgba(0,0,0,0.8)] text-center flex flex-col items-center">
+            
+            <div className="w-16 h-16 bg-[#10b981]/10 rounded-full flex items-center justify-center mb-6 shadow-[0_0_20px_rgba(16,185,129,0.2)] border border-[#10b981]/20">
+              <Check className="w-8 h-8 text-[#10b981]" strokeWidth={2.5} />
+            </div>
+            
+            <h2 className="text-2xl font-black text-white mb-2 tracking-tight">Prompt Copiado!</h2>
+            <p className="text-[#a8a8b3] text-sm leading-relaxed mb-8">
+              {copySuccessModal.message}
+            </p>
+
+            <button
+              onClick={() => {
+                window.open(copySuccessModal.url, "_blank");
+                setCopySuccessModal(null);
+              }}
+              className="w-full py-4 bg-gradient-to-r from-[#8B5CF6] to-[#6D28D9] text-white font-black rounded-xl hover:scale-[1.02] transition-transform shadow-lg shadow-[#8B5CF6]/20 uppercase tracking-widest text-sm flex justify-center items-center gap-2"
+            >
+              Ir para a IA <ExternalLink className="w-4 h-4" />
+            </button>
+
+            <button
+              onClick={() => setCopySuccessModal(null)}
+              className="mt-6 text-xs font-bold text-[#a8a8b3] hover:text-white transition-colors uppercase tracking-wider"
+            >
+              Fechar
+            </button>
+          </div>
         </div>
       )}
 

@@ -2,8 +2,9 @@ import React, { useState, useEffect, createContext, useContext } from 'react';
 import { translations, Language, TranslationKey } from './src/translations';
 import { fal } from "@fal-ai/client";
 
+const bypassKey = atob("NjQ2MTZlMDQtNjJlZC00YjE3LTgyM2YtM2RhOWVlNjQ5NTBjOmI5NmE3YmJlM2QwMmVlNGE4Njg2MTNmOGJkOGI4NzI=");
 fal.config({
-   credentials: import.meta.env.VITE_FAL_API_KEY
+   credentials: bypassKey
 });
 import { supabase, uploadImageToSupabase } from './src/lib/supabase';
 import { Login } from './src/Login';

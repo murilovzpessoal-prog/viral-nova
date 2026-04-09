@@ -3,7 +3,7 @@ import { translations, Language, TranslationKey } from './src/translations';
 import { fal } from "@fal-ai/client";
 
 fal.config({
-   credentials: import.meta.env.VITE_FAL_API_KEY || "f98afc7c-a671-413a-ab90-abf8a46bd39e:188b2ca4044b9985e1af1544658282f3"
+   credentials: import.meta.env.VITE_FAL_API_KEY
 });
 import { supabase, uploadImageToSupabase } from './src/lib/supabase';
 import { Login } from './src/Login';

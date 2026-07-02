@@ -217,7 +217,7 @@ const ConfiguracoesView: React.FC<ConfiguracoesViewProps> = ({ profileImage, use
       <div className="flex flex-col items-center mb-12">
         <div
           onClick={() => !isUploading && fileInputRef.current?.click()}
-          className="w-28 h-28 bg-gradient-to-br from-[#8B5CF6] to-[#d946ef] rounded-full flex items-center justify-center text-4xl font-black text-white shadow-[0_0_40px_rgba(139,92,246,0.3)] mb-8 relative group cursor-pointer overflow-hidden border-4 border-white/10 backdrop-blur-xl transition-all hover:scale-105 active:scale-95"
+          className="w-28 h-28 bg-gradient-to-br from-[#D946EF] to-[#d946ef] rounded-full flex items-center justify-center text-4xl font-black text-white shadow-[0_0_40px_rgba(139,92,246,0.3)] mb-8 relative group cursor-pointer overflow-hidden border-4 border-white/10 backdrop-blur-xl transition-all hover:scale-105 active:scale-95"
         >
           {isUploading ? (
             <div className="animate-spin w-8 h-8 border-4 border-white/20 border-t-white rounded-full"></div>
@@ -247,10 +247,10 @@ const ConfiguracoesView: React.FC<ConfiguracoesViewProps> = ({ profileImage, use
       <div className="w-full flex flex-col gap-6">
         {/* Personal Info Card */}
         <div className="bg-white/[0.02] border border-white/5 backdrop-blur-[20px] rounded-[40px] p-6 md:p-10 shadow-2xl relative overflow-hidden group/card hover:border-white/10 transition-all">
-          <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#8B5CF6]/50 to-transparent"></div>
+          <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#D946EF]/50 to-transparent"></div>
           <div className="flex items-center gap-4 mb-10">
-            <div className="w-10 h-10 rounded-2xl bg-[#8B5CF6]/10 flex items-center justify-center">
-              <User className="w-5 h-5 text-[#8B5CF6]" />
+            <div className="w-10 h-10 rounded-2xl bg-[#D946EF]/10 flex items-center justify-center">
+              <User className="w-5 h-5 text-[#D946EF]" />
             </div>
             <h2 className="text-xl font-black text-white tracking-tight">{t('informacoesPessoais')}</h2>
           </div>
@@ -263,10 +263,10 @@ const ConfiguracoesView: React.FC<ConfiguracoesViewProps> = ({ profileImage, use
                   <input
                     type="text"
                     defaultValue={userName || ""}
-                    className="w-full bg-white/[0.03] border border-white/5 rounded-2xl py-5 px-6 text-[15px] text-white focus:outline-none focus:border-[#8B5CF6]/40 focus:ring-4 focus:ring-[#8B5CF6]/10 transition-all font-medium"
+                    className="w-full bg-white/[0.03] border border-white/5 rounded-2xl py-5 px-6 text-[15px] text-white focus:outline-none focus:border-[#D946EF]/40 focus:ring-4 focus:ring-[#8B5CF6]/10 transition-all font-medium"
                   />
                 </div>
-                <button className="px-8 py-5 bg-white/[0.03] border border-white/10 text-white rounded-2xl text-[13px] font-black uppercase tracking-widest hover:bg-[#8B5CF6] hover:border-[#8B5CF6] transition-all hover:shadow-[0_0_20px_rgba(139,92,246,0.2)] w-full sm:w-auto">
+                <button className="px-8 py-5 bg-white/[0.03] border border-white/10 text-white rounded-2xl text-[13px] font-black uppercase tracking-widest hover:bg-[#D946EF] hover:border-[#D946EF] transition-all hover:shadow-[0_0_20px_rgba(139,92,246,0.2)] w-full sm:w-auto">
                   {t('editar')}
                 </button>
               </div>
@@ -319,7 +319,7 @@ const ConfiguracoesView: React.FC<ConfiguracoesViewProps> = ({ profileImage, use
               />
             </div>
 
-            <button className="w-full bg-gradient-to-r from-[#8B5CF6] to-[#d946ef] hover:scale-[1.02] text-white py-5 rounded-2xl font-black text-[15px] uppercase tracking-widest transition-all shadow-[0_10px_30px_rgba(139,92,246,0.3)] active:scale-[0.98]">
+            <button className="w-full bg-gradient-to-r from-[#D946EF] to-[#d946ef] hover:scale-[1.02] text-white py-5 rounded-2xl font-black text-[15px] uppercase tracking-widest transition-all shadow-[0_10px_30px_rgba(139,92,246,0.3)] active:scale-[0.98]">
               {t('atualizarSenha')}
             </button>
           </div>
@@ -342,24 +342,27 @@ const ConfiguracoesView: React.FC<ConfiguracoesViewProps> = ({ profileImage, use
 
 // --- GLOBAL BACKGROUND COMPONENT ---
 const GlobalBackground: React.FC = () => (
-  <div className="fixed inset-0 pointer-events-none overflow-hidden z-[0]">
-    {/* Mesh Gradients */}
-    <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-[#8B5CF6]/10 blur-[120px] rounded-full animate-[pulse-soft_8s_infinite] mix-blend-screen"></div>
-    <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-[#d946ef]/10 blur-[120px] rounded-full animate-[pulse-soft_12s_infinite_reverse] mix-blend-screen"></div>
+  <div className="fixed inset-0 pointer-events-none overflow-hidden z-[0] bg-[#0b0b0e]">
+    {/* Deep center radial glow for focus */}
+    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(45,212,191,0.03)_0%,transparent_70%)]"></div>
 
-    {/* Digital Grid with Perspective */}
-    <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30 transform perspective-[1000px] rotateX-[20deg] origin-top scale-110"></div>
+    {/* Premium Mesh Gradients */}
+    <div className="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] bg-[#2DD4BF]/10 blur-[130px] rounded-full animate-[pulse-soft_8s_infinite] mix-blend-screen"></div>
+    <div className="absolute bottom-[-20%] right-[-10%] w-[70%] h-[70%] bg-[#D946EF]/10 blur-[130px] rounded-full animate-[pulse-soft_12s_infinite_reverse] mix-blend-screen"></div>
 
-    {/* Neural Particles (Digital Dust) */}
-    <div className="absolute inset-0 opacity-20">
-      <div className="absolute top-[20%] left-[15%] w-1 h-1 bg-white rounded-full animate-pulse shadow-[0_0_8px_white]"></div>
-      <div className="absolute top-[45%] left-[85%] w-1 h-1 bg-[#8B5CF6] rounded-full animate-pulse shadow-[0_0_8px_#8B5CF6] delay-700"></div>
-      <div className="absolute top-[75%] left-[25%] w-1 h-1 bg-[#d946ef] rounded-full animate-pulse shadow-[0_0_8px_#d946ef] delay-1000"></div>
-      <div className="absolute top-[15%] left-[65%] w-1 h-1 bg-white rounded-full animate-pulse shadow-[0_0_8px_white] delay-300"></div>
+    {/* Sleek Minimal Digital Grid */}
+    <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.015)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_80%_60%_at_50%_50%,#000_70%,transparent_100%)] opacity-40 transform perspective-[1000px] rotateX-[15deg] origin-top scale-110"></div>
+
+    {/* Neural Particles */}
+    <div className="absolute inset-0 opacity-30">
+      <div className="absolute top-[20%] left-[15%] w-1 h-1 bg-[#2DD4BF] rounded-full animate-pulse shadow-[0_0_12px_#2DD4BF]"></div>
+      <div className="absolute top-[45%] left-[85%] w-[3px] h-[3px] bg-[#D946EF] rounded-full animate-pulse shadow-[0_0_10px_#D946EF] delay-700"></div>
+      <div className="absolute top-[75%] left-[25%] w-1 h-1 bg-[#2DD4BF] rounded-full animate-pulse shadow-[0_0_12px_#2DD4BF] delay-1000"></div>
+      <div className="absolute top-[15%] left-[65%] w-[2px] h-[2px] bg-white rounded-full animate-pulse shadow-[0_0_8px_white] delay-300"></div>
     </div>
 
-    {/* Scanning Line Effect */}
-    <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#8B5CF6]/20 to-transparent animate-[scanline_10s_linear_infinite]"></div>
+    {/* Premium Scanning Line Effect */}
+    <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#2DD4BF]/20 to-transparent animate-[scanline_12s_linear_infinite]"></div>
   </div>
 );
 
@@ -856,7 +859,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
   if (isAuthChecking) {
     return (
       <div className="min-h-screen bg-[#0B0B0E] flex flex-col gap-4 items-center justify-center">
-        <Loader2 className="w-8 h-8 text-[#8B5CF6] animate-spin" />
+        <Loader2 className="w-8 h-8 text-[#D946EF] animate-spin" />
         <span className="text-[#8d8d99] text-sm font-medium tracking-widest uppercase">Autenticando...</span>
       </div>
     );
@@ -888,7 +891,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
                 { id: 'produtos', label: t('produtos') },
                 { id: 'videos', label: t('videos') },
                 { id: 'criadores', label: t('criadores') },
-                { id: 'creator-engine', label: 'Creator Engine (NOVO)' },
+
                 { id: 'ugc-criador', label: t('ugcCriador') },
                 { id: 'galeria-avatares', label: t('galeriaAvatares') },
                 { id: 'galeria-prompts', label: t('galeriaPrompts') },
@@ -899,7 +902,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
                 <button
                   key={item.id}
                   onClick={() => { setCurrentPage(item.id as any); setIsMobileMenuOpen(false); }}
-                  className={`text-left text-sm font-semibold py-3 px-4 rounded-xl transition-all ${currentPage === item.id ? 'text-white bg-[#8B5CF6]' : 'text-[#8d8d99] hover:text-white hover:bg-[#1f2026]'}`}
+                  className={`text-left text-sm font-semibold py-3 px-4 rounded-xl transition-all ${currentPage === item.id ? 'text-white bg-[#D946EF]' : 'text-[#8d8d99] hover:text-white hover:bg-[#1f2026]'}`}
                 >
                   {item.label}
                 </button>
@@ -913,7 +916,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
                   setIsMobileMenuOpen(false);
                   handleInstallClick();
                 }}
-                className="w-full flex items-center justify-center gap-2 px-4 py-3 border border-[#8B5CF6]/40 bg-[#8B5CF6]/5 text-[#8B5CF6] rounded-xl text-sm font-black hover:bg-[#8B5CF6]/10 transition-all"
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 border border-[#D946EF]/40 bg-[#D946EF]/5 text-[#D946EF] rounded-xl text-sm font-black hover:bg-[#D946EF]/10 transition-all"
               >
                 <Download className="w-5 h-5" />
                 {t('baixarApp')}
@@ -923,7 +926,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
         </div>
       )}
 
-      <div className="min-h-screen bg-[#0b0c10] text-[#e1e1e6] selection:bg-[#3B82F6]/30 flex flex-col relative">
+      <div className="min-h-screen bg-transparent text-[#e1e1e6] selection:bg-[#2DD4BF]/30 flex flex-col relative">
         {/* GLOBAL PREMIUM BACKGROUND (EXCLUINDO EXPLORAR) */}
         {currentPage !== 'explorar' && <GlobalBackground />}
 
@@ -958,28 +961,28 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
                   className={`text-sm font-semibold transition-colors relative h-full flex items-center px-2 ${currentPage === 'explorar' ? 'text-white' : 'text-[#8d8d99] hover:text-white'}`}
                 >
                   {t('explorar')}
-                  {currentPage === 'explorar' && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#8B5CF6] rounded-t-sm"></span>}
+                  {currentPage === 'explorar' && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#D946EF] rounded-t-sm"></span>}
                 </button>
                 <button
                   onClick={() => setCurrentPage('produtos')}
                   className={`text-sm font-semibold transition-colors relative h-full flex items-center px-2 ${currentPage === 'produtos' ? 'text-white' : 'text-[#8d8d99] hover:text-white'}`}
                 >
                   {t('produtos')}
-                  {currentPage === 'produtos' && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#8B5CF6] rounded-t-sm"></span>}
+                  {currentPage === 'produtos' && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#D946EF] rounded-t-sm"></span>}
                 </button>
                 <button
                   onClick={() => setCurrentPage('videos')}
                   className={`text-sm font-semibold transition-colors relative h-full flex items-center px-2 ${currentPage === 'videos' ? 'text-white' : 'text-[#8d8d99] hover:text-white'}`}
                 >
                   {t('videos')}
-                  {currentPage === 'videos' && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#8B5CF6] rounded-t-sm"></span>}
+                  {currentPage === 'videos' && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#D946EF] rounded-t-sm"></span>}
                 </button>
                 <button
                   onClick={() => setCurrentPage('criadores')}
                   className={`text-sm font-semibold transition-colors relative h-full flex items-center px-2 ${currentPage === 'criadores' ? 'text-white' : 'text-[#8d8d99] hover:text-white'}`}
                 >
                   {t('criadores')}
-                  {currentPage === 'criadores' && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#8B5CF6] rounded-t-sm"></span>}
+                  {currentPage === 'criadores' && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#D946EF] rounded-t-sm"></span>}
                 </button>
 
                 {/* FERRAMENTAS DROPDOWN (HOVER) */}
@@ -987,14 +990,14 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
                   <div className="flex items-center gap-1">
                     <span className={`text-sm font-semibold transition-colors relative h-full flex items-center ${['creator-engine', 'ugc-criador', 'galeria-avatares', 'meus-avatares', 'criar-avatar', 'previsibilidade-receita', 'hacks-virais', 'hacks-virais-detalhe'].includes(currentPage) ? 'text-white' : 'text-[#8d8d99] group-hover:text-white'}`}>
                       {t('ferramentas')}
-                      {['creator-engine', 'ugc-criador', 'galeria-avatares', 'meus-avatares', 'criar-avatar', 'previsibilidade-receita', 'hacks-virais', 'hacks-virais-detalhe'].includes(currentPage) && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#8B5CF6] rounded-t-sm"></span>}
+                      {['creator-engine', 'ugc-criador', 'galeria-avatares', 'meus-avatares', 'criar-avatar', 'previsibilidade-receita', 'hacks-virais', 'hacks-virais-detalhe'].includes(currentPage) && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#D946EF] rounded-t-sm"></span>}
                     </span>
                     <ChevronRight className="w-3.5 h-3.5 text-[#8d8d99] rotate-90 group-hover:text-white transition-colors" />
                   </div>
 
                   {/* Perfect Clone Tool Dropdown Menu */}
                   <div className="absolute top-[72px] left-1/2 -translate-x-1/2 invisible group-hover:visible opacity-0 group-hover:opacity-100 flex flex-col bg-[#14151a] border border-[#1e1f26] rounded-2xl p-2 min-w-[240px] shadow-[0_20px_40px_rgba(0,0,0,0.8)] z-[100] transition-all duration-200">
-                    <DropdownToolItem label="Creator Engine" badge="NOVO" isActive={currentPage === 'creator-engine'} onClick={() => setCurrentPage('creator-engine')} />
+
                     <DropdownToolItem label={t('ugcCriador')} badge="IA" isActive={currentPage === 'ugc-criador'} onClick={() => setCurrentPage('ugc-criador')} />
                     <DropdownToolItem label={t('galeriaAvatares')} badge="IA" isActive={currentPage === 'galeria-avatares'} onClick={() => setCurrentPage('galeria-avatares')} />
                     <DropdownToolItem label={t('galeriaPrompts')} isActive={currentPage === 'galeria-prompts'} onClick={() => setCurrentPage('galeria-prompts')} />
@@ -1008,7 +1011,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
                   className={`text-sm font-semibold transition-colors relative h-full flex items-center px-2 ${currentPage === 'creator-academy' ? 'text-white' : 'text-[#8d8d99] hover:text-white'}`}
                 >
                   {t('creatorAcademy')}
-                  {currentPage === 'creator-academy' && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#8B5CF6] rounded-t-sm"></span>}
+                  {currentPage === 'creator-academy' && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#D946EF] rounded-t-sm"></span>}
                 </button>
               </nav>
 
@@ -1019,7 +1022,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
               <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3 shrink-0">
                 <button
                   onClick={handleInstallClick}
-                  className="hidden sm:flex items-center gap-2 px-4 py-2 border border-[#8B5CF6]/40 text-[#8B5CF6] rounded-lg text-xs font-black hover:bg-[#8B5CF6]/5 transition-all"
+                  className="hidden sm:flex items-center gap-2 px-4 py-2 border border-[#D946EF]/40 text-[#D946EF] rounded-lg text-xs font-black hover:bg-[#D946EF]/5 transition-all"
                 >
                   <Download className="w-4 h-4" />
                   {t('baixarApp')}
@@ -1039,7 +1042,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
                     <div className="absolute top-full mt-2 right-0 bg-[#14151a] border border-[#1e1f26] rounded-xl p-1.5 min-w-[160px] shadow-2xl z-[100] animate-in fade-in zoom-in-95 duration-200">
                       <button
                         onClick={() => { setLanguage('pt'); setIsLangMenuOpen(false); }}
-                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-black transition-all ${language === 'pt' ? 'bg-[#3B82F6]/10 text-[#3B82F6]' : 'text-[#8d8d99] hover:bg-[#2d2d33] hover:text-white'}`}
+                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-black transition-all ${language === 'pt' ? 'bg-[#2DD4BF]/10 text-[#2DD4BF]' : 'text-[#8d8d99] hover:bg-[#2d2d33] hover:text-white'}`}
                       >
                         <img src="https://flagcdn.com/w20/br.png" width="16" alt="Brazil" className="rounded-[1px]" />
                         {t('portugues')}
@@ -1051,9 +1054,9 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
 
                 <div
                   onClick={() => setCurrentPage('configuracoes')}
-                  className="flex items-center gap-1.5 md:gap-2.5 bg-[#14151a] pl-1 pr-2 md:pl-1.5 md:pr-3 py-1 md:py-1.5 rounded-full border border-[#1e1f26] cursor-pointer hover:border-[#3B82F6]/30 transition-all shrink-0"
+                  className="flex items-center gap-1.5 md:gap-2.5 bg-[#14151a] pl-1 pr-2 md:pl-1.5 md:pr-3 py-1 md:py-1.5 rounded-full border border-[#1e1f26] cursor-pointer hover:border-[#2DD4BF]/30 transition-all shrink-0"
                 >
-                  <div className="w-6 h-6 md:w-7 md:h-7 bg-[#8B5CF6] rounded-full flex items-center justify-center text-[10px] md:text-[11px] font-black text-white shadow-lg shadow-[#8B5CF6]/30 overflow-hidden shrink-0">
+                  <div className="w-6 h-6 md:w-7 md:h-7 bg-[#D946EF] rounded-full flex items-center justify-center text-[10px] md:text-[11px] font-black text-white shadow-lg shadow-[#D946EF]/30 overflow-hidden shrink-0">
                     {userProfileImage ? (
                       <img src={userProfileImage} alt="User" className="w-full h-full object-cover shrink-0" />
                     ) : (
@@ -1116,26 +1119,26 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
             <div className="flex flex-col items-center text-center gap-4 mt-2">
-              <div className="w-16 h-16 bg-[#8B5CF6]/10 rounded-full flex items-center justify-center mb-2 shadow-[0_0_20px_rgba(139,92,246,0.2)] border border-[#8B5CF6]/20">
-                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#8B5CF6]"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              <div className="w-16 h-16 bg-[#D946EF]/10 rounded-full flex items-center justify-center mb-2 shadow-[0_0_20px_rgba(139,92,246,0.2)] border border-[#D946EF]/20">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#D946EF]"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
               </div>
               <h2 className="text-xl font-black text-white">Instale o Viralpulse</h2>
               <p className="text-sm text-[#8d8d99] mb-4">Para concluir a instalação no seu iPhone/iPad, siga os passos rápidos abaixo:</p>
 
               <div className="w-full space-y-4 text-left bg-[#0B0B0E]/50 p-4 rounded-xl border border-white/5">
                 <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-[#1e1f26] flex items-center justify-center shrink-0 border border-white/10 font-black text-xs text-[#8B5CF6]">1</div>
+                  <div className="w-8 h-8 rounded-full bg-[#1e1f26] flex items-center justify-center shrink-0 border border-white/10 font-black text-xs text-[#D946EF]">1</div>
                   <p className="text-sm text-white/90 pt-1 leading-relaxed">Toque no ícone de <strong>Compartilhar</strong> (quadradinho com seta para cima) na barra inferior do Safari.</p>
                 </div>
                 <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-[#1e1f26] flex items-center justify-center shrink-0 border border-white/10 font-black text-xs text-[#8B5CF6]">2</div>
+                  <div className="w-8 h-8 rounded-full bg-[#1e1f26] flex items-center justify-center shrink-0 border border-white/10 font-black text-xs text-[#D946EF]">2</div>
                   <p className="text-sm text-white/90 pt-1 leading-relaxed">Role o menu para baixo e toque em <strong>"Adicionar à Tela de Início"</strong>.</p>
                 </div>
               </div>
 
               <button
                 onClick={() => setShowIOSInstallGuide(false)}
-                className="mt-6 w-full py-4 bg-gradient-to-r from-[#8B5CF6] to-[#6D28D9] text-white font-black rounded-xl hover:scale-[1.02] transition-transform shadow-lg shadow-[#8B5CF6]/20 uppercase tracking-widest text-xs"
+                className="mt-6 w-full py-4 bg-gradient-to-r from-[#D946EF] to-[#6D28D9] text-white font-black rounded-xl hover:scale-[1.02] transition-transform shadow-lg shadow-[#D946EF]/20 uppercase tracking-widest text-xs"
               >
                 Eu Entendi
               </button>
@@ -1152,11 +1155,11 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
 const DropdownToolItem: React.FC<{ label: string; badge?: string; isActive?: boolean; onClick?: () => void }> = ({ label, badge, isActive, onClick }) => (
   <button
     onClick={onClick}
-    className={`flex items-center justify-between px-4 py-3.5 rounded-xl transition-all group/item text-left w-full ${isActive ? 'bg-[#3B82F6]/10 border border-[#3B82F6]/20' : 'hover:bg-[#2d2d33]'}`}
+    className={`flex items-center justify-between px-4 py-3.5 rounded-xl transition-all group/item text-left w-full ${isActive ? 'bg-[#2DD4BF]/10 border border-[#2DD4BF]/20' : 'hover:bg-[#2d2d33]'}`}
   >
-    <span className={`font-semibold text-[15px] transition-colors ${isActive ? 'text-[#3B82F6]' : 'text-[#8d8d99] group-hover/item:text-white'}`}>{label}</span>
+    <span className={`font-semibold text-[15px] transition-colors ${isActive ? 'text-[#2DD4BF]' : 'text-[#8d8d99] group-hover/item:text-white'}`}>{label}</span>
     {badge && (
-      <span className="px-1.5 py-0.5 bg-[#8B5CF6] text-white text-[9px] font-black rounded-sm uppercase tracking-tighter shadow-sm">
+      <span className="px-1.5 py-0.5 bg-[#D946EF] text-white text-[9px] font-black rounded-sm uppercase tracking-tighter shadow-sm">
         {badge}
       </span>
     )}
@@ -1486,7 +1489,7 @@ The final image must be indistinguishable from a real selfie taken by a human in
                         setIsTipoOpen(false);
                       }}
                       className={`w-[calc(100%-12px)] mx-1.5 text-left px-3 py-2.5 text-sm font-medium flex items-center gap-3 transition-colors ${tipoCriacao === tipo
-                          ? 'bg-[#3B82F6] text-white rounded-lg hover:bg-[#2563EB]'
+                          ? 'bg-[#2DD4BF] text-white rounded-lg hover:bg-[#2563EB]'
                           : 'text-[#e4e4e7] hover:text-white hover:bg-[#27272A] rounded-lg'
                         }`}
                     >
@@ -1740,7 +1743,7 @@ The final image must be indistinguishable from a real selfie taken by a human in
           {tipoCriacao !== 'Clone (Celebridades)' && tipoCriacao !== 'POV (mostrando produto)' && (
             <div className="flex items-center justify-between bg-[#18181B] border border-[#27272A] rounded-xl px-5 py-4 mt-8">
               <div className="flex items-center gap-2">
-                <Link className="w-4 h-4 text-[#3B82F6]" />
+                <Link className="w-4 h-4 text-[#2DD4BF]" />
                 <span className="text-sm font-medium text-white">Custo: 45 créditos</span>
               </div>
               <div className="text-sm font-bold tracking-tight">
@@ -1789,8 +1792,8 @@ The final image must be indistinguishable from a real selfie taken by a human in
             disabled={isGenerating}
             className={`w-full h-14 rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-[0_0_20px_rgba(79,70,229,0.3)]
               ${isGenerating
-                ? 'bg-gradient-to-r from-[#4F46E5] to-[#8B5CF6] opacity-90 cursor-wait pointer-events-none'
-                : 'bg-gradient-to-r from-[#4F46E5] to-[#8B5CF6] hover:opacity-90 hover:-translate-y-0.5'
+                ? 'bg-gradient-to-r from-[#4F46E5] to-[#D946EF] opacity-90 cursor-wait pointer-events-none'
+                : 'bg-gradient-to-r from-[#4F46E5] to-[#D946EF] hover:opacity-90 hover:-translate-y-0.5'
               } text-white`}
           >
             {isGenerating ? (
@@ -1810,9 +1813,9 @@ The final image must be indistinguishable from a real selfie taken by a human in
 
       {/* Result Section (Exibido quando a imagem ou vídeo finaliza) */}
       {(generatedImage || generatedVideo) && (
-        <div className="w-full max-w-3xl bg-[#111114] border border-[#3B82F6]/30 rounded-3xl p-6 md:p-10 relative mt-8 flex flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-500 shadow-[0_0_40px_rgba(59,130,246,0.1)]">
-           <div className="w-12 h-12 bg-[#3B82F6]/20 rounded-full flex items-center justify-center mb-4">
-             <Check className="w-6 h-6 text-[#3B82F6]" strokeWidth={3} />
+        <div className="w-full max-w-3xl bg-[#111114] border border-[#2DD4BF]/30 rounded-3xl p-6 md:p-10 relative mt-8 flex flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-500 shadow-[0_0_40px_rgba(59,130,246,0.1)]">
+           <div className="w-12 h-12 bg-[#2DD4BF]/20 rounded-full flex items-center justify-center mb-4">
+             <Check className="w-6 h-6 text-[#2DD4BF]" strokeWidth={3} />
            </div>
            <h2 className="text-xl md:text-2xl font-bold text-white mb-6 text-center">Geração Retornou com Sucesso! 🎉</h2>
            
@@ -1847,7 +1850,7 @@ The final image must be indistinguishable from a real selfie taken by a human in
                 window.open(copySuccessModal.url, "_blank");
                 setCopySuccessModal(null);
               }}
-              className="w-full py-4 bg-gradient-to-r from-[#8B5CF6] to-[#6D28D9] text-white font-black rounded-xl hover:scale-[1.02] transition-transform shadow-lg shadow-[#8B5CF6]/20 uppercase tracking-widest text-sm flex justify-center items-center gap-2"
+              className="w-full py-4 bg-gradient-to-r from-[#D946EF] to-[#6D28D9] text-white font-black rounded-xl hover:scale-[1.02] transition-transform shadow-lg shadow-[#D946EF]/20 uppercase tracking-widest text-sm flex justify-center items-center gap-2"
             >
               Ir para a IA <ExternalLink className="w-4 h-4" />
             </button>
@@ -2134,7 +2137,7 @@ const CreatorEngineGerarVideoInfluencerIAView: React.FC<{ onBack: () => void }> 
           {/* Custo e Saldo */}
           <div className="flex items-center justify-between bg-[#18181B] border border-[#27272A] rounded-xl px-5 py-4 mt-8">
             <div className="flex items-center gap-2">
-              <Link className="w-4 h-4 text-[#3B82F6]" />
+              <Link className="w-4 h-4 text-[#2DD4BF]" />
               <span className="text-sm font-medium text-white">Custo: 150 créditos</span>
             </div>
             <div className="text-sm font-bold tracking-tight">
@@ -2146,7 +2149,7 @@ const CreatorEngineGerarVideoInfluencerIAView: React.FC<{ onBack: () => void }> 
           <button 
             onClick={handleGenerate}
             disabled={isGenerating}
-            className="w-full bg-[#3B82F6] hover:bg-[#2563EB] disabled:bg-[#3B82F6]/50 disabled:cursor-not-allowed text-white rounded-xl py-4 font-bold text-sm transition-all shadow-md hover:shadow-[#3B82F6]/20 flex items-center justify-center gap-2 group mt-4 relative overflow-hidden">
+            className="w-full bg-[#2DD4BF] hover:bg-[#2563EB] disabled:bg-[#2DD4BF]/50 disabled:cursor-not-allowed text-white rounded-xl py-4 font-bold text-sm transition-all shadow-md hover:shadow-[#2DD4BF]/20 flex items-center justify-center gap-2 group mt-4 relative overflow-hidden">
             {isGenerating ? <Loader2 className="w-5 h-5 animate-spin" /> : <Video className="w-5 h-5" />}
             {isGenerating ? (pollingText || 'Processando...') : 'Gerar Vídeo'}
           </button>
@@ -2157,8 +2160,8 @@ const CreatorEngineGerarVideoInfluencerIAView: React.FC<{ onBack: () => void }> 
       {/* Result Section (Exibido quando o vídeo finaliza - TikTok View) */}
       {generatedVideo && (
         <div className="w-full max-w-[460px] mx-auto mt-12 animate-in fade-in slide-in-from-bottom-8 duration-700 flex flex-col items-center">
-           <div className="w-12 h-12 bg-[#3B82F6]/20 rounded-full flex items-center justify-center mb-4">
-             <Check className="w-6 h-6 text-[#3B82F6]" strokeWidth={3} />
+           <div className="w-12 h-12 bg-[#2DD4BF]/20 rounded-full flex items-center justify-center mb-4">
+             <Check className="w-6 h-6 text-[#2DD4BF]" strokeWidth={3} />
            </div>
            <h2 className="text-xl md:text-2xl font-bold text-white mb-6 text-center">Vídeo Pronto! 🎉</h2>
            
@@ -2374,7 +2377,7 @@ const CreatorEngineGerarVideoCinematicoView: React.FC<{ onBack: () => void }> = 
           {/* Custo e Saldo */}
           <div className="flex items-center justify-between bg-[#18181B] border border-[#27272A] rounded-xl px-5 py-4 mt-8">
             <div className="flex items-center gap-2">
-              <Link className="w-4 h-4 text-[#3B82F6]" />
+              <Link className="w-4 h-4 text-[#2DD4BF]" />
               <span className="text-sm font-medium text-white">Custo: 180 créditos</span>
             </div>
             <div className="text-sm font-bold tracking-tight">
@@ -2386,7 +2389,7 @@ const CreatorEngineGerarVideoCinematicoView: React.FC<{ onBack: () => void }> = 
           <button 
             onClick={handleGenerate}
             disabled={isGenerating}
-            className="w-full bg-[#3B82F6] hover:bg-[#2563EB] disabled:bg-[#3B82F6]/50 disabled:cursor-not-allowed text-white rounded-xl py-4 font-bold text-sm transition-all shadow-md hover:shadow-[#3B82F6]/20 flex items-center justify-center gap-2 group mt-4 relative overflow-hidden">
+            className="w-full bg-[#2DD4BF] hover:bg-[#2563EB] disabled:bg-[#2DD4BF]/50 disabled:cursor-not-allowed text-white rounded-xl py-4 font-bold text-sm transition-all shadow-md hover:shadow-[#2DD4BF]/20 flex items-center justify-center gap-2 group mt-4 relative overflow-hidden">
             {isGenerating ? <Loader2 className="w-5 h-5 animate-spin" /> : <Video className="w-5 h-5" />}
             {isGenerating ? (pollingText || 'Processando...') : 'Gerar Vídeo'}
           </button>
@@ -2396,8 +2399,8 @@ const CreatorEngineGerarVideoCinematicoView: React.FC<{ onBack: () => void }> = 
       {/* Result Section (Exibido quando o vídeo finaliza - Cinematic View 16:9) */}
       {generatedVideo && (
         <div className="w-full max-w-[800px] mx-auto mt-12 animate-in fade-in slide-in-from-bottom-8 duration-700 flex flex-col items-center">
-           <div className="w-12 h-12 bg-[#3B82F6]/20 rounded-full flex items-center justify-center mb-4">
-             <Check className="w-6 h-6 text-[#3B82F6]" strokeWidth={3} />
+           <div className="w-12 h-12 bg-[#2DD4BF]/20 rounded-full flex items-center justify-center mb-4">
+             <Check className="w-6 h-6 text-[#2DD4BF]" strokeWidth={3} />
            </div>
            <h2 className="text-xl md:text-2xl font-bold text-white mb-6 text-center">Vídeo Pronto! 🎉</h2>
            
@@ -2579,9 +2582,9 @@ const CreatorEngineGerarVideoImitarMovimentosView: React.FC<{ onBack: () => void
             </div>
           </div>
 
-          <div className="mt-4 p-4 rounded-xl bg-[#3B82F6]/10 border border-[#3B82F6]/20">
+          <div className="mt-4 p-4 rounded-xl bg-[#2DD4BF]/10 border border-[#2DD4BF]/20">
             <div className="flex gap-3">
-              <Sparkles className="w-5 h-5 text-[#3B82F6] shrink-0" />
+              <Sparkles className="w-5 h-5 text-[#2DD4BF] shrink-0" />
               <p className="text-xs font-medium text-[#e4e4e7] leading-relaxed">
                 Esqueça o upload de vídeos base complicados. Nossa IA usa sua descrição para bolar a coreografia e analisar a identidade na sua foto, te gerando INSTANTANEAMENTE o prompt master 100% otimizado para colar no Flow/Kling.
               </p>
@@ -2592,7 +2595,7 @@ const CreatorEngineGerarVideoImitarMovimentosView: React.FC<{ onBack: () => void
           <button 
             onClick={handleGenerate}
             disabled={isGenerating}
-            className="w-full bg-[#3B82F6] hover:bg-[#2563EB] disabled:bg-[#3B82F6]/50 disabled:cursor-not-allowed text-white rounded-xl py-4 font-bold text-sm transition-all shadow-md hover:shadow-[#3B82F6]/20 flex items-center justify-center gap-2 group mt-6 relative overflow-hidden">
+            className="w-full bg-[#2DD4BF] hover:bg-[#2563EB] disabled:bg-[#2DD4BF]/50 disabled:cursor-not-allowed text-white rounded-xl py-4 font-bold text-sm transition-all shadow-md hover:shadow-[#2DD4BF]/20 flex items-center justify-center gap-2 group mt-6 relative overflow-hidden">
             {isGenerating ? <Loader2 className="w-5 h-5 animate-spin" /> : <Brain className="w-5 h-5" />}
             {isGenerating ? (pollingText || 'Gerando Instruções...') : 'Extrair Inteligência e Gerar Instruções'}
           </button>
@@ -2634,7 +2637,7 @@ const CreatorEngineGerarVideoImitarMovimentosView: React.FC<{ onBack: () => void
                     <Copy className="w-5 h-5 text-[#4F46E5]" />
                     Copiar Prompt Profissional
                   </button>
-                  <a href="#" className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-[#4F46E5] to-[#8B5CF6] hover:opacity-90 text-white py-4 rounded-xl font-bold text-sm transition-all shadow-md shadow-[#4F46E5]/20 hover:-translate-y-0.5">
+                  <a href="#" className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-[#4F46E5] to-[#D946EF] hover:opacity-90 text-white py-4 rounded-xl font-bold text-sm transition-all shadow-md shadow-[#4F46E5]/20 hover:-translate-y-0.5">
                     <Video className="w-5 h-5 text-white" />
                     Abrir Flow para Gerar Vídeo
                   </a>
@@ -2760,17 +2763,17 @@ const CreatorEngineMinhasCriacoesView: React.FC<{ onBack: () => void }> = ({ onB
         <div className="flex gap-2 shrink-0">
           <button 
             onClick={() => setFilter('Todos')}
-            className={`px-5 py-3.5 text-sm font-bold rounded-[12px] transition-colors shadow-sm ${filter === 'Todos' ? 'bg-[#3B82F6] text-white hover:bg-[#2563EB]' : 'bg-[#18181B] border border-[#27272A] text-[#A1A1AA] hover:bg-[#27272A] hover:text-white'}`}>
+            className={`px-5 py-3.5 text-sm font-bold rounded-[12px] transition-colors shadow-sm ${filter === 'Todos' ? 'bg-[#2DD4BF] text-white hover:bg-[#2563EB]' : 'bg-[#18181B] border border-[#27272A] text-[#A1A1AA] hover:bg-[#27272A] hover:text-white'}`}>
             Todos
           </button>
           <button 
              onClick={() => setFilter('image')}
-             className={`px-5 py-3.5 text-sm font-bold rounded-[12px] transition-colors shadow-sm ${filter === 'image' ? 'bg-[#3B82F6] text-white hover:bg-[#2563EB]' : 'bg-[#18181B] border border-[#27272A] text-[#A1A1AA] hover:bg-[#27272A] hover:text-white'}`}>
+             className={`px-5 py-3.5 text-sm font-bold rounded-[12px] transition-colors shadow-sm ${filter === 'image' ? 'bg-[#2DD4BF] text-white hover:bg-[#2563EB]' : 'bg-[#18181B] border border-[#27272A] text-[#A1A1AA] hover:bg-[#27272A] hover:text-white'}`}>
             Imagens
           </button>
           <button 
              onClick={() => setFilter('video')}
-             className={`px-5 py-3.5 text-sm font-bold rounded-[12px] transition-colors shadow-sm ${filter === 'video' ? 'bg-[#3B82F6] text-white hover:bg-[#2563EB]' : 'bg-[#18181B] border border-[#27272A] text-[#A1A1AA] hover:bg-[#27272A] hover:text-white'}`}>
+             className={`px-5 py-3.5 text-sm font-bold rounded-[12px] transition-colors shadow-sm ${filter === 'video' ? 'bg-[#2DD4BF] text-white hover:bg-[#2563EB]' : 'bg-[#18181B] border border-[#27272A] text-[#A1A1AA] hover:bg-[#27272A] hover:text-white'}`}>
             Vídeos
           </button>
         </div>
@@ -2872,10 +2875,10 @@ const CreatorEngineCreditosView: React.FC<{ onBack: () => void }> = ({ onBack })
       {/* Saldo Atual */}
       <div className="w-full bg-[#111114] border border-[#27272A] rounded-2xl p-6 md:p-8 mb-12 relative overflow-hidden">
         {/* Glow sub-surface */}
-        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#3B82F6]/5 blur-[100px] rounded-full pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-[#2DD4BF]/5 blur-[100px] rounded-full pointer-events-none"></div>
         <div className="relative z-10">
           <div className="flex items-center gap-2 mb-3">
-            <CreditCard className="w-4 h-4 text-[#3B82F6]" />
+            <CreditCard className="w-4 h-4 text-[#2DD4BF]" />
             <span className="text-sm text-[#A1A1AA] font-medium">Saldo atual</span>
           </div>
           <div className="flex items-baseline gap-2">
@@ -2889,30 +2892,30 @@ const CreatorEngineCreditosView: React.FC<{ onBack: () => void }> = ({ onBack })
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
         
         {/* Starter Plan */}
-        <div className="bg-[#111114] border border-[#27272A] rounded-2xl p-6 md:p-8 flex flex-col h-full hover:border-[#3B82F6]/30 transition-colors group">
+        <div className="bg-[#111114] border border-[#27272A] rounded-2xl p-6 md:p-8 flex flex-col h-full hover:border-[#2DD4BF]/30 transition-colors group">
           <h3 className="text-lg font-bold text-white mb-4 group-hover:text-[#bfdbfe] transition-colors">Starter</h3>
           <div className="flex items-baseline gap-1 mb-1">
-            <span className="text-[#3B82F6] font-bold text-lg">R$</span>
-            <span className="text-[#3B82F6] text-4xl font-black tracking-tighter">47</span>
+            <span className="text-[#2DD4BF] font-bold text-lg">R$</span>
+            <span className="text-[#2DD4BF] text-4xl font-black tracking-tighter">47</span>
             <span className="text-[#A1A1AA] text-xs">/mês</span>
           </div>
-          <p className="text-[#3B82F6] text-sm font-medium mb-8">500 créditos</p>
+          <p className="text-[#2DD4BF] text-sm font-medium mb-8">500 créditos</p>
           
           <ul className="flex flex-col gap-4 mb-8 flex-1">
             <li className="flex items-start gap-3">
-              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <Check className="w-4 h-4 text-[#2DD4BF] shrink-0 mt-0.5" strokeWidth={3} />
               <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Até 20 gerações de conteúdo</span>
             </li>
             <li className="flex items-start gap-3">
-              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <Check className="w-4 h-4 text-[#2DD4BF] shrink-0 mt-0.5" strokeWidth={3} />
               <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Crie influencers hiper-realistas</span>
             </li>
             <li className="flex items-start gap-3">
-              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <Check className="w-4 h-4 text-[#2DD4BF] shrink-0 mt-0.5" strokeWidth={3} />
               <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Gere imagens, clones e vídeos</span>
             </li>
             <li className="flex items-start gap-3">
-              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <Check className="w-4 h-4 text-[#2DD4BF] shrink-0 mt-0.5" strokeWidth={3} />
               <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Combinação livre entre recursos</span>
             </li>
           </ul>
@@ -2923,69 +2926,69 @@ const CreatorEngineCreditosView: React.FC<{ onBack: () => void }> = ({ onBack })
         </div>
 
         {/* Creator Plan (Highlighted) */}
-        <div className="bg-[#18181B] border-2 border-[#3B82F6] rounded-2xl p-6 md:p-8 flex flex-col h-full relative shadow-[0_0_40px_rgba(59,130,246,0.08)]">
+        <div className="bg-[#18181B] border-2 border-[#2DD4BF] rounded-2xl p-6 md:p-8 flex flex-col h-full relative shadow-[0_0_40px_rgba(59,130,246,0.08)]">
           {/* Badge */}
           <div className="absolute -top-3 left-8">
-            <span className="bg-[#3B82F6] text-white text-[9px] font-black uppercase tracking-widest py-1.5 px-4 rounded-full shadow-lg">Mais Popular</span>
+            <span className="bg-[#2DD4BF] text-white text-[9px] font-black uppercase tracking-widest py-1.5 px-4 rounded-full shadow-lg">Mais Popular</span>
           </div>
 
           <h3 className="text-lg font-bold text-white mb-4 mt-2">Creator</h3>
           <div className="flex items-baseline gap-1 mb-1">
-            <span className="text-[#3B82F6] font-bold text-lg">R$</span>
-            <span className="text-[#3B82F6] text-4xl font-black tracking-tighter">79</span>
+            <span className="text-[#2DD4BF] font-bold text-lg">R$</span>
+            <span className="text-[#2DD4BF] text-4xl font-black tracking-tighter">79</span>
             <span className="text-[#A1A1AA] text-xs">/mês</span>
           </div>
-          <p className="text-[#3B82F6] text-sm font-medium mb-8">1.000 créditos</p>
+          <p className="text-[#2DD4BF] text-sm font-medium mb-8">1.000 créditos</p>
           
           <ul className="flex flex-col gap-4 mb-8 flex-1">
             <li className="flex items-start gap-3">
-              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <Check className="w-4 h-4 text-[#2DD4BF] shrink-0 mt-0.5" strokeWidth={3} />
               <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Até 40 gerações de conteúdo</span>
             </li>
             <li className="flex items-start gap-3">
-              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <Check className="w-4 h-4 text-[#2DD4BF] shrink-0 mt-0.5" strokeWidth={3} />
               <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Criação rápida de influencers e vídeos</span>
             </li>
             <li className="flex items-start gap-3">
-              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <Check className="w-4 h-4 text-[#2DD4BF] shrink-0 mt-0.5" strokeWidth={3} />
               <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Ideal para criadores de conteúdo</span>
             </li>
             <li className="flex items-start gap-3">
-              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <Check className="w-4 h-4 text-[#2DD4BF] shrink-0 mt-0.5" strokeWidth={3} />
               <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Equilíbrio entre imagens e vídeos</span>
             </li>
           </ul>
           
-          <a href="https://pay.cakto.com.br/sgvh5nc" target="_blank" rel="noopener noreferrer" className="w-full py-4 bg-[#3B82F6] hover:bg-[#2563EB] text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-[#3B82F6]/20 text-center block">
+          <a href="https://pay.cakto.com.br/sgvh5nc" target="_blank" rel="noopener noreferrer" className="w-full py-4 bg-[#2DD4BF] hover:bg-[#2563EB] text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-[#2DD4BF]/20 text-center block">
             Assinar agora
           </a>
         </div>
 
         {/* Pro Plan */}
-        <div className="bg-[#111114] border border-[#27272A] rounded-2xl p-6 md:p-8 flex flex-col h-full hover:border-[#3B82F6]/30 transition-colors group">
+        <div className="bg-[#111114] border border-[#27272A] rounded-2xl p-6 md:p-8 flex flex-col h-full hover:border-[#2DD4BF]/30 transition-colors group">
           <h3 className="text-lg font-bold text-white mb-4 group-hover:text-[#bfdbfe] transition-colors">Pro</h3>
           <div className="flex items-baseline gap-1 mb-1">
-            <span className="text-[#3B82F6] font-bold text-lg">R$</span>
-            <span className="text-[#3B82F6] text-4xl font-black tracking-tighter">149</span>
+            <span className="text-[#2DD4BF] font-bold text-lg">R$</span>
+            <span className="text-[#2DD4BF] text-4xl font-black tracking-tighter">149</span>
             <span className="text-[#A1A1AA] text-xs">/mês</span>
           </div>
-          <p className="text-[#3B82F6] text-sm font-medium mb-8">2.000 créditos</p>
+          <p className="text-[#2DD4BF] text-sm font-medium mb-8">2.000 créditos</p>
           
           <ul className="flex flex-col gap-4 mb-8 flex-1">
             <li className="flex items-start gap-3">
-              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <Check className="w-4 h-4 text-[#2DD4BF] shrink-0 mt-0.5" strokeWidth={3} />
               <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Até 80 gerações de conteúdo</span>
             </li>
             <li className="flex items-start gap-3">
-              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <Check className="w-4 h-4 text-[#2DD4BF] shrink-0 mt-0.5" strokeWidth={3} />
               <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Produção intensa de criativos</span>
             </li>
             <li className="flex items-start gap-3">
-              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <Check className="w-4 h-4 text-[#2DD4BF] shrink-0 mt-0.5" strokeWidth={3} />
               <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Ideal para criadores e agências</span>
             </li>
             <li className="flex items-start gap-3">
-              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <Check className="w-4 h-4 text-[#2DD4BF] shrink-0 mt-0.5" strokeWidth={3} />
               <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Alta escala de geração</span>
             </li>
           </ul>
@@ -2996,30 +2999,30 @@ const CreatorEngineCreditosView: React.FC<{ onBack: () => void }> = ({ onBack })
         </div>
 
         {/* Business Plan */}
-        <div className="bg-[#111114] border border-[#27272A] rounded-2xl p-6 md:p-8 flex flex-col h-full hover:border-[#3B82F6]/30 transition-colors group">
+        <div className="bg-[#111114] border border-[#27272A] rounded-2xl p-6 md:p-8 flex flex-col h-full hover:border-[#2DD4BF]/30 transition-colors group">
           <h3 className="text-lg font-bold text-white mb-4 group-hover:text-[#bfdbfe] transition-colors">Business</h3>
           <div className="flex items-baseline gap-1 mb-1">
-            <span className="text-[#3B82F6] font-bold text-lg">R$</span>
-            <span className="text-[#3B82F6] text-4xl font-black tracking-tighter">397</span>
+            <span className="text-[#2DD4BF] font-bold text-lg">R$</span>
+            <span className="text-[#2DD4BF] text-4xl font-black tracking-tighter">397</span>
             <span className="text-[#A1A1AA] text-xs">/mês</span>
           </div>
-          <p className="text-[#3B82F6] text-sm font-medium mb-8">5.000 créditos</p>
+          <p className="text-[#2DD4BF] text-sm font-medium mb-8">5.000 créditos</p>
           
           <ul className="flex flex-col gap-4 mb-8 flex-1">
             <li className="flex items-start gap-3">
-              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <Check className="w-4 h-4 text-[#2DD4BF] shrink-0 mt-0.5" strokeWidth={3} />
               <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Até 200 gerações de conteúdo</span>
             </li>
             <li className="flex items-start gap-3">
-              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <Check className="w-4 h-4 text-[#2DD4BF] shrink-0 mt-0.5" strokeWidth={3} />
               <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Criação em escala profissional</span>
             </li>
             <li className="flex items-start gap-3">
-              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <Check className="w-4 h-4 text-[#2DD4BF] shrink-0 mt-0.5" strokeWidth={3} />
               <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Ideal para produção de alto volume</span>
             </li>
             <li className="flex items-start gap-3">
-              <Check className="w-4 h-4 text-[#3B82F6] shrink-0 mt-0.5" strokeWidth={3} />
+              <Check className="w-4 h-4 text-[#2DD4BF] shrink-0 mt-0.5" strokeWidth={3} />
               <span className="text-sm text-[#A1A1AA] font-medium leading-relaxed">Produção contínua de conteúdo</span>
             </li>
           </ul>
@@ -3031,14 +3034,14 @@ const CreatorEngineCreditosView: React.FC<{ onBack: () => void }> = ({ onBack })
       </div>
 
       <div className="mb-8 flex items-center gap-2 mt-20">
-        <Zap className="w-5 h-5 text-[#3B82F6] fill-[#3B82F6]" />
+        <Zap className="w-5 h-5 text-[#2DD4BF] fill-[#2DD4BF]" />
         <h2 className="text-[22px] font-bold text-white tracking-tight">Comprar Créditos Avulsos</h2>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
         {/* Avulso 1 */}
-        <div className="bg-[#111114] border border-[#27272A] rounded-2xl p-8 flex flex-col items-center justify-center text-center hover:border-[#3B82F6]/30 transition-colors group">
-          <span className="text-[40px] font-black text-[#3B82F6] tracking-tighter mb-1 group-hover:scale-105 transition-transform">450</span>
+        <div className="bg-[#111114] border border-[#27272A] rounded-2xl p-8 flex flex-col items-center justify-center text-center hover:border-[#2DD4BF]/30 transition-colors group">
+          <span className="text-[40px] font-black text-[#2DD4BF] tracking-tighter mb-1 group-hover:scale-105 transition-transform">450</span>
           <span className="text-sm text-[#A1A1AA] mb-8 font-medium">créditos</span>
           <span className="text-2xl font-bold text-white mb-8 tracking-tight">R$ 39,90</span>
           <a href="https://pay.cakto.com.br/35reqrs" target="_blank" rel="noopener noreferrer" className="w-full py-4 bg-[#232328] hover:bg-[#2A2A30] text-[#A1A1AA] hover:text-white rounded-xl text-sm font-bold transition-all shadow-sm text-center block">
@@ -3047,22 +3050,22 @@ const CreatorEngineCreditosView: React.FC<{ onBack: () => void }> = ({ onBack })
         </div>
 
         {/* Avulso 2 (Highlighted) */}
-        <div className="bg-[#18181B] border-2 border-[#3B82F6] rounded-2xl p-8 flex flex-col items-center justify-center text-center relative shadow-[0_0_30px_rgba(59,130,246,0.1)]">
+        <div className="bg-[#18181B] border-2 border-[#2DD4BF] rounded-2xl p-8 flex flex-col items-center justify-center text-center relative shadow-[0_0_30px_rgba(59,130,246,0.1)]">
            {/* Badge */}
            <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-            <span className="bg-[#3B82F6] text-white text-[9px] font-black uppercase tracking-widest py-1.5 px-4 rounded-full shadow-lg whitespace-nowrap">Mais Vendido</span>
+            <span className="bg-[#2DD4BF] text-white text-[9px] font-black uppercase tracking-widest py-1.5 px-4 rounded-full shadow-lg whitespace-nowrap">Mais Vendido</span>
           </div>
-          <span className="text-[48px] font-black text-[#3B82F6] tracking-tighter mb-1 mt-2">900</span>
+          <span className="text-[48px] font-black text-[#2DD4BF] tracking-tighter mb-1 mt-2">900</span>
           <span className="text-sm text-[#A1A1AA] mb-8 font-medium">créditos</span>
           <span className="text-2xl font-bold text-white mb-8 tracking-tight">R$ 69,90</span>
-          <a href="https://pay.cakto.com.br/itnrkpn" target="_blank" rel="noopener noreferrer" className="w-full py-4 bg-[#3B82F6] hover:bg-[#2563EB] text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-[#3B82F6]/20 text-center block">
+          <a href="https://pay.cakto.com.br/itnrkpn" target="_blank" rel="noopener noreferrer" className="w-full py-4 bg-[#2DD4BF] hover:bg-[#2563EB] text-white rounded-xl text-sm font-bold transition-all shadow-lg shadow-[#2DD4BF]/20 text-center block">
             Comprar agora
           </a>
         </div>
 
         {/* Avulso 3 */}
-        <div className="bg-[#111114] border border-[#27272A] rounded-2xl p-8 flex flex-col items-center justify-center text-center hover:border-[#3B82F6]/30 transition-colors group">
-          <span className="text-[40px] font-black text-[#3B82F6] tracking-tighter mb-1 group-hover:scale-105 transition-transform">1.850</span>
+        <div className="bg-[#111114] border border-[#27272A] rounded-2xl p-8 flex flex-col items-center justify-center text-center hover:border-[#2DD4BF]/30 transition-colors group">
+          <span className="text-[40px] font-black text-[#2DD4BF] tracking-tighter mb-1 group-hover:scale-105 transition-transform">1.850</span>
           <span className="text-sm text-[#A1A1AA] mb-8 font-medium">créditos</span>
           <span className="text-2xl font-bold text-white mb-8 tracking-tight">R$ 119,90</span>
           <a href="https://pay.cakto.com.br/mkxq6qj" target="_blank" rel="noopener noreferrer" className="w-full py-4 bg-[#232328] hover:bg-[#2A2A30] text-[#A1A1AA] hover:text-white rounded-xl text-sm font-bold transition-all shadow-sm text-center block">
@@ -3081,7 +3084,7 @@ const CreatorEngineView: React.FC<{ onGoToImagem: () => void; onGoToVideo: () =>
 
       {/* Subtle Background */}
       <div className="absolute inset-x-0 top-0 pointer-events-none z-0 flex items-start justify-center pt-20">
-        <div className="w-[800px] h-[500px] bg-gradient-to-r from-[#8B5CF6]/10 to-[#d946ef]/10 blur-[150px] rounded-full"></div>
+        <div className="w-[800px] h-[500px] bg-gradient-to-r from-[#D946EF]/10 to-[#d946ef]/10 blur-[150px] rounded-full"></div>
       </div>
 
         <div className="relative w-full max-w-5xl flex flex-col items-center z-10 pt-4 pb-12">
@@ -3091,21 +3094,21 @@ const CreatorEngineView: React.FC<{ onGoToImagem: () => void; onGoToVideo: () =>
           <div className="flex flex-col items-center text-center w-full">
             {/* Indicator Badge */}
             <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4 mb-4">
-              <div className="hidden sm:block h-[1px] w-8 md:w-16 bg-gradient-to-r from-transparent to-[#8B5CF6]"></div>
-              <span className="text-[9px] md:text-[11px] font-black text-[#8B5CF6] tracking-[0.3em] md:tracking-[0.4em] uppercase">Creator Engine Active</span>
+              <div className="hidden sm:block h-[1px] w-8 md:w-16 bg-gradient-to-r from-transparent to-[#D946EF]"></div>
+              <span className="text-[9px] md:text-[11px] font-black text-[#D946EF] tracking-[0.3em] md:tracking-[0.4em] uppercase">Creator Engine Active</span>
               <div className="flex gap-1 shrink-0">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="w-1 h-1 bg-[#8B5CF6]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
+                  <div key={i} className="w-1 h-1 bg-[#D946EF]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
                 ))}
               </div>
-              <div className="hidden sm:block h-[1px] w-8 md:w-16 bg-gradient-to-l from-transparent to-[#8B5CF6]"></div>
+              <div className="hidden sm:block h-[1px] w-8 md:w-16 bg-gradient-to-l from-transparent to-[#D946EF]"></div>
             </div>
             
             {/* Adjusted Typography - Single Line Formatted */}
             <div className="relative mb-4 flex justify-center w-full py-4">
               <h1 className="text-[26px] sm:text-4xl md:text-[46px] lg:text-[50px] font-black tracking-tighter leading-loose select-none text-center flex flex-wrap justify-center items-center">
                 <span className="bg-gradient-to-b from-white to-white/20 mr-2 md:mr-3" style={{ WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', paddingBottom: '12px', paddingRight: '6px', marginBottom: '-12px', display: 'inline-block' }}>O que vamos</span>
-                <span className="bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef]" style={{ WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', paddingBottom: '12px', paddingRight: '6px', marginBottom: '-12px', display: 'inline-block' }}>criar hoje?</span>
+                <span className="bg-gradient-to-r from-[#2DD4BF] via-[#D946EF] to-[#d946ef]" style={{ WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', paddingBottom: '12px', paddingRight: '6px', marginBottom: '-12px', display: 'inline-block' }}>criar hoje?</span>
               </h1>
             </div>
             
@@ -3120,13 +3123,13 @@ const CreatorEngineView: React.FC<{ onGoToImagem: () => void; onGoToVideo: () =>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 w-full max-w-[1150px] mx-auto place-items-center">
           
           {/* Card Imagem */}
-          <button onClick={onGoToImagem} className="flex flex-col items-center justify-center bg-[#111114] border border-[#1e1e24] p-8 md:p-10 rounded-[20px] transition-all duration-500 hover:bg-[#151518] hover:border-[#8B5CF6]/30 hover:shadow-[0_0_30px_rgba(139,92,246,0.05)] cursor-pointer w-full max-w-[360px] min-h-[260px] group focus:outline-none relative overflow-hidden">
+          <button onClick={onGoToImagem} className="flex flex-col items-center justify-center bg-[#111114] border border-[#1e1e24] p-8 md:p-10 rounded-[20px] transition-all duration-500 hover:bg-[#151518] hover:border-[#D946EF]/30 hover:shadow-[0_0_30px_rgba(139,92,246,0.05)] cursor-pointer w-full max-w-[360px] min-h-[260px] group focus:outline-none relative overflow-hidden">
             
             {/* Subtle Gradient Glow inside Card on Hover */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#8B5CF6]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-[#D946EF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
 
             <div className="relative z-10 flex flex-col items-center">
-              <div className="w-[52px] h-[52px] rounded-[14px] bg-[#18181B] border border-[#27272A] flex items-center justify-center mb-6 group-hover:bg-[#8B5CF6]/10 group-hover:border-[#8B5CF6]/30 transition-all duration-300 shadow-sm">
+              <div className="w-[52px] h-[52px] rounded-[14px] bg-[#18181B] border border-[#27272A] flex items-center justify-center mb-6 group-hover:bg-[#D946EF]/10 group-hover:border-[#D946EF]/30 transition-all duration-300 shadow-sm">
                 <ImageIcon className="w-5 h-5 text-[#A1A1AA] group-hover:text-[#c4b5fd] transition-colors" strokeWidth={1.5} />
               </div>
               
@@ -3141,13 +3144,13 @@ const CreatorEngineView: React.FC<{ onGoToImagem: () => void; onGoToVideo: () =>
           </button>
 
           {/* Card Vídeo */}
-          <button onClick={onGoToVideo} className="flex flex-col items-center justify-center bg-[#111114] border border-[#1e1e24] p-8 md:p-10 rounded-[20px] transition-all duration-500 hover:bg-[#151518] hover:border-[#3B82F6]/30 hover:shadow-[0_0_30px_rgba(59,130,246,0.05)] cursor-pointer w-full max-w-[360px] min-h-[260px] group focus:outline-none relative overflow-hidden">
+          <button onClick={onGoToVideo} className="flex flex-col items-center justify-center bg-[#111114] border border-[#1e1e24] p-8 md:p-10 rounded-[20px] transition-all duration-500 hover:bg-[#151518] hover:border-[#2DD4BF]/30 hover:shadow-[0_0_30px_rgba(59,130,246,0.05)] cursor-pointer w-full max-w-[360px] min-h-[260px] group focus:outline-none relative overflow-hidden">
             
             {/* Subtle Gradient Glow inside Card on Hover */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#3B82F6]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-[#2DD4BF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
 
             <div className="relative z-10 flex flex-col items-center">
-              <div className="w-[52px] h-[52px] rounded-[14px] bg-[#18181B] border border-[#27272A] flex items-center justify-center mb-6 group-hover:bg-[#3B82F6]/10 group-hover:border-[#3B82F6]/30 transition-all duration-300 shadow-sm">
+              <div className="w-[52px] h-[52px] rounded-[14px] bg-[#18181B] border border-[#27272A] flex items-center justify-center mb-6 group-hover:bg-[#2DD4BF]/10 group-hover:border-[#2DD4BF]/30 transition-all duration-300 shadow-sm">
                 <Video className="w-5 h-5 text-[#A1A1AA] group-hover:text-[#93c5fd] transition-colors" strokeWidth={1.5} />
               </div>
               
@@ -3213,16 +3216,16 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
   <main className="max-w-[1400px] mx-auto px-6 py-8 md:py-12">
     {/* PREMIUM HERO SECTION */}
     <div className="relative mb-16 md:mb-20 flex flex-col items-center justify-center text-center">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] bg-gradient-to-r from-[#3B82F6]/20 to-[#8B5CF6]/20 blur-[100px] md:blur-[120px] rounded-full pointer-events-none"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[600px] h-[300px] bg-gradient-to-r from-[#2DD4BF]/20 to-[#D946EF]/20 blur-[100px] md:blur-[120px] rounded-full pointer-events-none"></div>
 
       <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#16161A] border border-white/5 mb-6 shadow-xl relative z-10">
-        <Sparkles className="w-4 h-4 text-[#3B82F6]" />
+        <Sparkles className="w-4 h-4 text-[#2DD4BF]" />
         <span className="text-[10px] md:text-xs font-black text-[#8d8d99] tracking-[0.2em] md:tracking-[0.25em] uppercase">Inteligência Estratégica</span>
       </div>
 
       <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-[72px] font-black text-white tracking-tighter mb-6 max-w-4xl leading-[1.1] relative z-10">
         Descubra os próximos <br className="hidden md:block" />
-        <span className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] bg-clip-text text-transparent">Produtos Vencedores</span>
+        <span className="bg-gradient-to-r from-[#2DD4BF] to-[#D946EF] bg-clip-text text-transparent">Produtos Vencedores</span>
       </h1>
 
       <p className="text-[#a8a8b3] text-base md:text-xl font-medium max-w-2xl mb-10 md:mb-12 relative z-10">
@@ -3231,7 +3234,7 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
 
       {/* SUPER SEARCH BAR */}
       <div className="relative w-full max-w-3xl group z-20">
-        <div className="absolute inset-x-0 -inset-y-2 md:inset-0 bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] rounded-full blur-[20px] md:blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
+        <div className="absolute inset-x-0 -inset-y-2 md:inset-0 bg-gradient-to-r from-[#2DD4BF] to-[#D946EF] rounded-full blur-[20px] md:blur-2xl opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
         <div className="relative flex items-center bg-[#0B0B0E]/80 backdrop-blur-2xl border border-white/10 rounded-full p-2 md:p-2.5 h-16 md:h-20 shadow-[0_8px_32px_rgba(0,0,0,0.5)] transition-all hover:border-white/20">
           <div className="pl-6 md:pl-8 text-[#5b5b7b]">
             <Search className="w-5 h-5 md:w-6 md:h-6" />
@@ -3243,7 +3246,7 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
           />
           <button
             onClick={onGoToProducts}
-            className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] text-white h-full px-6 md:px-10 rounded-full font-black text-sm md:text-base tracking-wide shadow-lg hover:scale-[1.02] transition-transform flex items-center gap-2"
+            className="bg-gradient-to-r from-[#2DD4BF] to-[#D946EF] text-white h-full px-6 md:px-10 rounded-full font-black text-sm md:text-base tracking-wide shadow-lg hover:scale-[1.02] transition-transform flex items-center gap-2"
           >
             Explorar
             <ArrowRight className="w-4 h-4 md:w-5 md:h-5 hidden sm:block" />
@@ -3254,13 +3257,13 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
 
     {/* QUICK METRICS / DASHBOARD WIDGETS */}
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-12 md:mb-20">
-      <div className="bg-[#0B0B0E] border border-[#1e1f26] rounded-[32px] p-6 md:p-8 relative overflow-hidden group hover:border-[#3B82F6]/30 transition-all shadow-2xl">
+      <div className="bg-[#0B0B0E] border border-[#1e1f26] rounded-[32px] p-6 md:p-8 relative overflow-hidden group hover:border-[#2DD4BF]/30 transition-all shadow-2xl">
         <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity transform group-hover:scale-110 duration-500">
-          <TrendingUp className="w-32 h-32 text-[#3B82F6]" />
+          <TrendingUp className="w-32 h-32 text-[#2DD4BF]" />
         </div>
         <div className="relative z-10 flex flex-col gap-5">
-          <div className="w-14 h-14 rounded-2xl bg-[#16161a] flex items-center justify-center border border-white/5 group-hover:border-[#3B82F6]/30 transition-colors shadow-inner">
-            <Activity className="w-6 h-6 text-[#3B82F6]" />
+          <div className="w-14 h-14 rounded-2xl bg-[#16161a] flex items-center justify-center border border-white/5 group-hover:border-[#2DD4BF]/30 transition-colors shadow-inner">
+            <Activity className="w-6 h-6 text-[#2DD4BF]" />
           </div>
           <div>
             <span className="text-[#5b5b7b] text-[10px] md:text-xs font-black uppercase tracking-[0.2em] block mb-2">MERCADO AQUECIDO</span>
@@ -3273,19 +3276,19 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
         </div>
       </div>
 
-      <div className="bg-[#0B0B0E] border border-[#1e1f26] rounded-[32px] p-6 md:p-8 relative overflow-hidden group hover:border-[#8B5CF6]/30 transition-all shadow-2xl">
+      <div className="bg-[#0B0B0E] border border-[#1e1f26] rounded-[32px] p-6 md:p-8 relative overflow-hidden group hover:border-[#D946EF]/30 transition-all shadow-2xl">
         <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity transform group-hover:scale-110 duration-500">
-          <Eye className="w-32 h-32 text-[#8B5CF6]" />
+          <Eye className="w-32 h-32 text-[#D946EF]" />
         </div>
         <div className="relative z-10 flex flex-col gap-5">
-          <div className="w-14 h-14 rounded-2xl bg-[#16161a] flex items-center justify-center border border-white/5 group-hover:border-[#8B5CF6]/30 transition-colors shadow-inner">
-            <Globe className="w-6 h-6 text-[#8B5CF6]" />
+          <div className="w-14 h-14 rounded-2xl bg-[#16161a] flex items-center justify-center border border-white/5 group-hover:border-[#D946EF]/30 transition-colors shadow-inner">
+            <Globe className="w-6 h-6 text-[#D946EF]" />
           </div>
           <div>
             <span className="text-[#5b5b7b] text-[10px] md:text-xs font-black uppercase tracking-[0.2em] block mb-2">LOJAS RASTREADAS</span>
             <div className="flex items-baseline gap-3">
               <span className="text-4xl md:text-5xl font-black text-white tracking-tighter">128</span>
-              <span className="text-[#8B5CF6] text-xs font-black flex items-center bg-[#8B5CF6]/10 px-2 py-1 rounded-lg border border-[#8B5CF6]/20">Ativas</span>
+              <span className="text-[#D946EF] text-xs font-black flex items-center bg-[#D946EF]/10 px-2 py-1 rounded-lg border border-[#D946EF]/20">Ativas</span>
             </div>
             <p className="text-[#8d8d99] text-sm font-medium mt-3">Monitoramento estrutural 24h por dia das top lojas</p>
           </div>
@@ -3314,26 +3317,26 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
 
     {/* FEATURES GRID */}
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6 mb-20 md:mb-24">
-      <FeatureExploreCard icon={<Package className="w-6 h-6 md:w-7 md:h-7 text-[#3B82F6]" />} title="Produtos em Tendência" description="Identifique agora quais produtos estão escalando e gerando lucro real." onClick={onGoToProducts} />
-      <FeatureExploreCard icon={<Wand2 className="w-6 h-6 md:w-7 md:h-7 text-[#3B82F6]" />} title="Influencer IA" description="Crie roteiros e vídeos UGC altamente persuasivos com inteligência artificial." onClick={() => { }} />
-      <FeatureExploreCard icon={<Eye className="w-6 h-6 md:w-7 md:h-7 text-[#3B82F6]" />} title="Análise de Concorrentes" description="Espione estratégias, faturamento e criativos das maiores lojas do mercado." onClick={() => { }} />
-      <FeatureExploreCard icon={<Video className="w-6 h-6 md:w-7 md:h-7 text-[#3B82F6]" />} title="Vídeos Virais" description="Base de dados completa com os criativos que mais converteram nas últimas 24h." onClick={() => { }} />
+      <FeatureExploreCard icon={<Package className="w-6 h-6 md:w-7 md:h-7 text-[#2DD4BF]" />} title="Produtos em Tendência" description="Identifique agora quais produtos estão escalando e gerando lucro real." onClick={onGoToProducts} />
+      <FeatureExploreCard icon={<Wand2 className="w-6 h-6 md:w-7 md:h-7 text-[#2DD4BF]" />} title="Influencer IA" description="Crie roteiros e vídeos UGC altamente persuasivos com inteligência artificial." onClick={() => { }} />
+      <FeatureExploreCard icon={<Eye className="w-6 h-6 md:w-7 md:h-7 text-[#2DD4BF]" />} title="Análise de Concorrentes" description="Espione estratégias, faturamento e criativos das maiores lojas do mercado." onClick={() => { }} />
+      <FeatureExploreCard icon={<Video className="w-6 h-6 md:w-7 md:h-7 text-[#2DD4BF]" />} title="Vídeos Virais" description="Base de dados completa com os criativos que mais converteram nas últimas 24h." onClick={() => { }} />
     </div>
 
     <div>
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 md:gap-0 mb-8 md:mb-12">
         <div className="flex items-center gap-4">
-          <Flame className="w-7 h-7 text-[#3B82F6]" />
+          <Flame className="w-7 h-7 text-[#2DD4BF]" />
           <h2 className="text-[#7f5af0]xl font-black text-white tracking-tighter">Top Produtos (24h)</h2>
         </div>
-        <button onClick={onGoToProducts} className="text-[13px] font-black text-[#3B82F6] flex items-center gap-2 hover:underline underline-offset-[12px] transition-all uppercase tracking-[0.2em]">
+        <button onClick={onGoToProducts} className="text-[13px] font-black text-[#2DD4BF] flex items-center gap-2 hover:underline underline-offset-[12px] transition-all uppercase tracking-[0.2em]">
           Expandir Ranking <ChevronRight className="w-5 h-5" />
         </button>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-8">
         {products.map((product) => (
-          <div key={product.id} className="bg-[#14151a] border border-[#1e1f26] rounded-[32px] overflow-hidden group cursor-pointer hover:border-[#3B82F6]/40 transition-all shadow-2xl">
+          <div key={product.id} className="bg-[#14151a] border border-[#1e1f26] rounded-[32px] overflow-hidden group cursor-pointer hover:border-[#2DD4BF]/40 transition-all shadow-2xl">
             <div className="relative aspect-[4/3] overflow-hidden bg-[#24242a]">
               <img src={product.image} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" alt="" />
               <div className="absolute top-5 left-5 px-4 py-1.5 bg-[#f59e0b] text-white rounded-xl text-xs font-black shadow-2xl border border-white/10">#{product.rank}</div>
@@ -3344,8 +3347,8 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
                 <span className="text-[9px] text-[#8d8d99] font-medium uppercase tracking-wider">RECEITA ESTIMADA</span>
                 <div className="flex items-end justify-between">
                   <div className="flex items-baseline gap-0.5">
-                    <span className="text-xs font-medium text-[#3B82F6]/70">R$</span>
-                    <span className="text-lg font-semibold text-[#3B82F6] leading-none tracking-tight">{product.revenue.replace('R$ ', '')}</span>
+                    <span className="text-xs font-medium text-[#2DD4BF]/70">R$</span>
+                    <span className="text-lg font-semibold text-[#2DD4BF] leading-none tracking-tight">{product.revenue.replace('R$ ', '')}</span>
                   </div>
                   <span className="text-[10px] font-medium text-[#8d8d99] leading-none">{product.priceRange}</span>
                 </div>
@@ -3357,9 +3360,9 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
                     e.stopPropagation();
                     window.open(product.productUrl, '_blank');
                   }}
-                  className="mt-6 w-full bg-[#1c1c21] hover:bg-[#2a2a32] border border-[#1e1f26] hover:border-[#3B82F6]/30 text-white py-3 rounded-2xl font-black text-[11px] uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-lg"
+                  className="mt-6 w-full bg-[#1c1c21] hover:bg-[#2a2a32] border border-[#1e1f26] hover:border-[#2DD4BF]/30 text-white py-3 rounded-2xl font-black text-[11px] uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-lg"
                 >
-                  <ExternalLink className="w-3.5 h-3.5 text-[#3B82F6]" /> Ver Produto
+                  <ExternalLink className="w-3.5 h-3.5 text-[#2DD4BF]" /> Ver Produto
                 </button>
               )}
             </div>
@@ -3371,17 +3374,17 @@ const ExploreView: React.FC<{ products: ProductExplore[], onGoToAcademy: () => v
 );
 
 const FeatureExploreCard: React.FC<{ icon: React.ReactNode, title: string, description: string, onClick: () => void }> = ({ icon, title, description, onClick }) => (
-  <div onClick={onClick} className={`relative bg-[#0B0B0E] p-5 md:p-10 flex flex-col gap-4 md:gap-6 rounded-[32px] border border-[#1e1f26] overflow-hidden group cursor-pointer transition-all duration-300 ${onClick ? 'hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(59,130,246,0.1)] hover:border-[#3B82F6]/30' : ''}`}>
-    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#3B82F6]/0 to-[#3B82F6]/0 group-hover:from-[#3B82F6]/[0.03] group-hover:to-transparent transition-all duration-500 pointer-events-none"></div>
+  <div onClick={onClick} className={`relative bg-[#0B0B0E] p-5 md:p-10 flex flex-col gap-4 md:gap-6 rounded-[32px] border border-[#1e1f26] overflow-hidden group cursor-pointer transition-all duration-300 ${onClick ? 'hover:-translate-y-2 hover:shadow-[0_20px_40px_rgba(59,130,246,0.1)] hover:border-[#2DD4BF]/30' : ''}`}>
+    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#2DD4BF]/0 to-[#2DD4BF]/0 group-hover:from-[#2DD4BF]/[0.03] group-hover:to-transparent transition-all duration-500 pointer-events-none"></div>
 
-    <div className="w-12 h-12 md:w-16 md:h-16 bg-[#16161a] rounded-2xl flex items-center justify-center border border-white/5 group-hover:border-[#3B82F6]/30 transition-all duration-300 shadow-inner z-10 shrink-0">
+    <div className="w-12 h-12 md:w-16 md:h-16 bg-[#16161a] rounded-2xl flex items-center justify-center border border-white/5 group-hover:border-[#2DD4BF]/30 transition-all duration-300 shadow-inner z-10 shrink-0">
       <div className="transform group-hover:scale-110 transition-transform duration-500">
         {React.cloneElement(icon as React.ReactElement, { className: 'w-5 h-5 md:w-7 md:h-7' })}
       </div>
     </div>
 
     <div className="z-10 flex-1 flex flex-col justify-end">
-      <h3 className="text-lg md:text-2xl font-black text-white mb-2 md:mb-3 group-hover:text-[#3B82F6] transition-colors">{title}</h3>
+      <h3 className="text-lg md:text-2xl font-black text-white mb-2 md:mb-3 group-hover:text-[#2DD4BF] transition-colors">{title}</h3>
       <p className="text-[#8d8d99] leading-relaxed text-[13px] md:text-base font-medium">{description}</p>
     </div>
   </div>
@@ -3404,8 +3407,8 @@ const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => {
   const nicheColors: Record<string, { gradient: string; accent: string; glow: string }> = {
     'Casa & Cozinha': { gradient: 'from-[#00b37e]/20 to-transparent', accent: '#00b37e', glow: '0_0_30px_rgba(0,179,126,0.15)' },
     'Beleza': { gradient: 'from-[#d946ef]/20 to-transparent', accent: '#d946ef', glow: '0_0_30px_rgba(217,70,239,0.15)' },
-    'Moda Fitness': { gradient: 'from-[#3B82F6]/20 to-transparent', accent: '#3B82F6', glow: '0_0_30px_rgba(59,130,246,0.15)' },
-    'Moda Masculina': { gradient: 'from-[#8B5CF6]/20 to-transparent', accent: '#8B5CF6', glow: '0_0_30px_rgba(139,92,246,0.15)' },
+    'Moda Fitness': { gradient: 'from-[#2DD4BF]/20 to-transparent', accent: '#3B82F6', glow: '0_0_30px_rgba(59,130,246,0.15)' },
+    'Moda Masculina': { gradient: 'from-[#D946EF]/20 to-transparent', accent: '#8B5CF6', glow: '0_0_30px_rgba(139,92,246,0.15)' },
     'Acessórios': { gradient: 'from-[#f59e0b]/20 to-transparent', accent: '#f59e0b', glow: '0_0_30px_rgba(245,158,11,0.15)' },
     'Perfumaria': { gradient: 'from-[#ec4899]/20 to-transparent', accent: '#ec4899', glow: '0_0_30px_rgba(236,72,153,0.15)' },
     'Eletrônicos': { gradient: 'from-[#06b6d4]/20 to-transparent', accent: '#06b6d4', glow: '0_0_30px_rgba(6,182,212,0.15)' },
@@ -3417,7 +3420,7 @@ const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => {
     'Beleza & Perfumaria': { gradient: 'from-[#e879f9]/20 to-transparent', accent: '#e879f9', glow: '0_0_30px_rgba(232,121,249,0.15)' },
   };
 
-  const getColor = (cat: string) => nicheColors[cat] || { gradient: 'from-[#8B5CF6]/20 to-transparent', accent: '#8B5CF6', glow: '0_0_30px_rgba(139,92,246,0.15)' };
+  const getColor = (cat: string) => nicheColors[cat] || { gradient: 'from-[#D946EF]/20 to-transparent', accent: '#8B5CF6', glow: '0_0_30px_rgba(139,92,246,0.15)' };
 
   const totalRevenue = (prods: ProductViral[]) => {
     return prods.reduce((sum, p) => {
@@ -3457,7 +3460,7 @@ const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => {
             <div className="relative">
               <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none text-left pl-1">
                 <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent">Produtos</span>
-                <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent">Virais</span>
+                <span className="block bg-gradient-to-r from-[#2DD4BF] via-[#D946EF] to-[#d946ef] bg-clip-text text-transparent">Virais</span>
               </h1>
             </div>
           </div>
@@ -3471,9 +3474,9 @@ const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => {
         <div className="flex flex-wrap items-center justify-center lg:justify-end gap-6 flex-[1.5]">
           {/* NEW DETECTED (ORGANIC FROSTED) */}
           <div className="relative group">
-            <div className="absolute inset-0 bg-[#3B82F6]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            <div className="absolute inset-0 bg-[#2DD4BF]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
             <div className="w-24 h-24 md:w-40 md:h-40 backdrop-blur-3xl bg-white/[0.03] border border-white/10 rounded-[28px] md:rounded-[40px] p-3 md:p-6 flex flex-col items-center justify-center shadow-2xl transition-all duration-500 group-hover:scale-105">
-              <Package className="w-4 h-4 md:w-6 md:h-6 text-[#3B82F6] mb-1.5 md:mb-2 opacity-50" />
+              <Package className="w-4 h-4 md:w-6 md:h-6 text-[#2DD4BF] mb-1.5 md:mb-2 opacity-50" />
               <span className="text-2xl md:text-4xl font-black text-white tracking-tighter mb-0.5 md:mb-1">18</span>
               <span className="text-[6px] md:text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">HITS HOJE</span>
             </div>
@@ -3496,16 +3499,16 @@ const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => {
           {/* ACCURACY SPHERE (SCIFI DATA ORB) */}
           <div className="relative group">
             <div className="w-24 h-24 md:w-40 md:h-40 flex items-center justify-center p-1 md:p-2 group-hover:scale-105 transition-all">
-              <div className="absolute inset-0 bg-[#8B5CF6]/10 blur-3xl rounded-full animate-pulse"></div>
+              <div className="absolute inset-0 bg-[#D946EF]/10 blur-3xl rounded-full animate-pulse"></div>
               <div className="relative w-full h-full flex items-center justify-center rounded-full border border-white/5 bg-[#0B0B0E]/40 backdrop-blur-md">
                 <svg className="absolute inset-0 w-full h-full transform -rotate-90">
                   <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="0.5" fill="transparent" className="text-white/5" />
-                  <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="6" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#8B5CF6] transition-all duration-1000 opacity-20" />
-                  <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="1.5" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#8B5CF6] shadow-[0_0_20px_#8B5CF6]" />
+                  <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="6" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#D946EF] transition-all duration-1000 opacity-20" />
+                  <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="1.5" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#D946EF] shadow-[0_0_20px_#8B5CF6]" />
                 </svg>
                 <div className="flex flex-col items-center">
                   <span className="text-xl md:text-3xl font-black text-white tracking-tighter">98<span className="text-[8px] md:text-xs text-[#5b5b7b]">%</span></span>
-                  <span className="text-[5px] md:text-[7px] font-black text-[#8B5CF6] uppercase tracking-[0.2em]">Accuracy</span>
+                  <span className="text-[5px] md:text-[7px] font-black text-[#D946EF] uppercase tracking-[0.2em]">Accuracy</span>
                 </div>
               </div>
             </div>
@@ -3532,16 +3535,16 @@ const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => {
           <div className="flex items-center gap-6">
             {['00-06', '06-12', '12-18', '18-00'].map((time, idx) => (
               <div key={time} className="flex flex-col items-center group cursor-pointer">
-                <span className={`text-[9px] font-black tracking-[0.2em] uppercase transition-all ${idx === 3 ? 'text-[#3B82F6]' : 'text-[#5b5b7b] group-hover:text-white/60'}`}>
+                <span className={`text-[9px] font-black tracking-[0.2em] uppercase transition-all ${idx === 3 ? 'text-[#2DD4BF]' : 'text-[#5b5b7b] group-hover:text-white/60'}`}>
                   {time}
                 </span>
-                <div className={`w-1 h-1 rounded-full mt-1.5 transition-all ${idx === 3 ? 'bg-[#3B82F6] shadow-[0_0_10px_#3B82F6]' : 'bg-white/5 group-hover:bg-white/20'}`}></div>
+                <div className={`w-1 h-1 rounded-full mt-1.5 transition-all ${idx === 3 ? 'bg-[#2DD4BF] shadow-[0_0_10px_#3B82F6]' : 'bg-white/5 group-hover:bg-white/20'}`}></div>
               </div>
             ))}
           </div>
 
           <div className="px-6 py-3 rounded-[24px] bg-white/[0.02] border border-white/5 backdrop-blur-md flex items-center gap-4">
-            <Clock className="w-4 h-4 text-[#3B82F6] animate-pulse" />
+            <Clock className="w-4 h-4 text-[#2DD4BF] animate-pulse" />
             <div className="flex flex-col">
               <span className="text-[7px] font-black text-[#5b5b7b] tracking-wider uppercase">SYNC</span>
               <span className="text-base font-black text-white tabular-nums tracking-tighter">04:35:11</span>
@@ -3648,7 +3651,7 @@ const ViralCard: React.FC<{ product: ProductViral }> = ({ product }) => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <div className="bg-[#14151a] border border-[#1e1f26] rounded-[32px] md:rounded-[48px] overflow-hidden group hover:border-[#3B82F6]/40 transition-all flex flex-col h-full shadow-2xl relative">
+    <div className="bg-[#14151a] border border-[#1e1f26] rounded-[32px] md:rounded-[48px] overflow-hidden group hover:border-[#2DD4BF]/40 transition-all flex flex-col h-full shadow-2xl relative">
       {/* PRODUCT IMAGE SECTION */}
       <div className="p-2 md:p-5 pb-2">
         <div
@@ -3667,7 +3670,7 @@ const ViralCard: React.FC<{ product: ProductViral }> = ({ product }) => {
               <img src={product.image} alt={product.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
 
               {/* SMALL RANK BADGE - PILL SHAPED */}
-              <div className="absolute top-2.5 left-2.5 md:top-4 md:left-4 flex items-center gap-1.5 px-2.5 py-0.5 md:px-4 md:py-1.5 bg-[#3B82F6] rounded-full text-[8px] md:text-[10px] font-black text-white shadow-xl theme-glow-blue">
+              <div className="absolute top-2.5 left-2.5 md:top-4 md:left-4 flex items-center gap-1.5 px-2.5 py-0.5 md:px-4 md:py-1.5 bg-[#2DD4BF] rounded-full text-[8px] md:text-[10px] font-black text-white shadow-xl theme-glow-blue">
                 <Flame className="w-2.5 h-2.5 md:w-3.5 md:h-3.5 fill-white" /> Top #{product.rank}
               </div>
 
@@ -3676,20 +3679,14 @@ const ViralCard: React.FC<{ product: ProductViral }> = ({ product }) => {
                 <span className="text-[#00b37e] font-black">$</span> {product.priceRange}
               </div>
 
-              {product.videoUrl && (
-                <div className="absolute inset-0 flex items-center justify-center bg-[#0b0c10]/20 group-hover:bg-[#0b0c10]/40 transition-colors">
-                  <div className="w-12 h-12 md:w-16 md:h-16 bg-[#3B82F6] rounded-full flex items-center justify-center shadow-2xl shadow-[#3B82F6]/50 transform group-hover:scale-110 transition-transform">
-                    <Play className="w-6 h-6 md:w-8 md:h-8 text-white fill-current translate-x-1" />
-                  </div>
-                </div>
-              )}
+
             </>
           )}
         </div>
       </div>
 
       <div className="px-4 md:px-10 pb-6 md:pb-10 flex-1 flex flex-col">
-        <h3 className="text-lg md:text-xl font-bold text-white mb-2 md:mb-3 leading-tight tracking-tight group-hover:text-[#3B82F6] transition-colors">{product.title}</h3>
+        <h3 className="text-lg md:text-xl font-bold text-white mb-2 md:mb-3 leading-tight tracking-tight group-hover:text-[#2DD4BF] transition-colors">{product.title}</h3>
 
         <div className="mb-4 md:mb-6 flex items-center gap-2">
           <span className="inline-block bg-[#14151a] text-[#8d8d99] px-2.5 py-1 md:px-3 md:py-1.5 rounded-lg text-[8px] md:text-[9px] font-medium uppercase tracking-wider border border-[#1e1f26]">
@@ -3706,8 +3703,8 @@ const ViralCard: React.FC<{ product: ProductViral }> = ({ product }) => {
           <div className="flex flex-col">
             <span className="text-[8px] md:text-[9px] font-medium text-[#8d8d99] uppercase tracking-wider block mb-1 md:mb-2">RECEITA EST.</span>
             <div className="flex items-baseline gap-0.5">
-              <span className="text-[#3B82F6]/70 font-medium text-[11px] md:text-sm leading-none">R$</span>
-              <span className="text-lg md:text-xl font-semibold text-[#3B82F6] tracking-tight leading-none">{product.revenue.replace('R$ ', '')}</span>
+              <span className="text-[#2DD4BF]/70 font-medium text-[11px] md:text-sm leading-none">R$</span>
+              <span className="text-lg md:text-xl font-semibold text-[#2DD4BF] tracking-tight leading-none">{product.revenue.replace('R$ ', '')}</span>
             </div>
           </div>
           <div className="flex flex-col items-end">
@@ -3718,7 +3715,7 @@ const ViralCard: React.FC<{ product: ProductViral }> = ({ product }) => {
 
         <button
           onClick={() => product.productUrl && window.open(product.productUrl, '_blank')}
-          className="w-full bg-[#3B82F6] hover:bg-[#4338ca] text-white py-3 md:py-5 rounded-[20px] md:rounded-[28px] font-black text-sm md:text-[17px] uppercase tracking-[0.02em] flex items-center justify-center gap-2.5 transition-all shadow-[0_15px_40px_rgba(81,66,245,0.3)] hover:scale-[1.02] active:scale-[0.98]"
+          className="w-full bg-[#2DD4BF] hover:bg-[#4338ca] text-white py-3 md:py-5 rounded-[20px] md:rounded-[28px] font-black text-sm md:text-[17px] uppercase tracking-[0.02em] flex items-center justify-center gap-2.5 transition-all shadow-[0_15px_40px_rgba(81,66,245,0.3)] hover:scale-[1.02] active:scale-[0.98]"
         >
           <ExternalLink className="w-4 h-4 md:w-5.5 md:h-5.5 stroke-[3px]" /> Ver Produto
         </button>
@@ -4273,7 +4270,7 @@ const VideosView: React.FC = () => {
             <div className="relative">
               <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none text-left pl-1">
                 <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent">Vídeos</span>
-                <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent">Virais</span>
+                <span className="block bg-gradient-to-r from-[#2DD4BF] via-[#D946EF] to-[#d946ef] bg-clip-text text-transparent">Virais</span>
               </h1>
             </div>
           </div>
@@ -4285,9 +4282,9 @@ const VideosView: React.FC = () => {
         <div className="flex flex-wrap items-center justify-center lg:justify-end gap-6 flex-[1.5]">
           {/* HIT COUNT (ORGANIC FROSTED) */}
           <div className="relative group">
-            <div className="absolute inset-0 bg-[#3B82F6]/10 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            <div className="absolute inset-0 bg-[#2DD4BF]/10 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
             <div className="w-24 h-24 md:w-40 md:h-40 backdrop-blur-3xl bg-white/[0.03] border border-white/10 rounded-[28px] md:rounded-[40px] p-3 md:p-6 flex flex-col items-center justify-center shadow-2xl transition-all duration-500 group-hover:scale-105">
-              <Zap className="w-4 h-4 md:w-6 md:h-6 text-[#3B82F6] mb-1.5 md:mb-2 opacity-50 animate-bounce" />
+              <Zap className="w-4 h-4 md:w-6 md:h-6 text-[#2DD4BF] mb-1.5 md:mb-2 opacity-50 animate-bounce" />
               <span className="text-2xl md:text-4xl font-black text-white tracking-tighter mb-0.5 md:mb-1">40</span>
               <span className="text-[6px] md:text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">HITS HOJE</span>
             </div>
@@ -4310,16 +4307,16 @@ const VideosView: React.FC = () => {
           {/* ENGAGEMENT SPHERE (SCIFI DATA ORB) */}
           <div className="relative group">
             <div className="w-24 h-24 md:w-40 md:h-40 flex items-center justify-center p-1 md:p-2 group-hover:scale-105 transition-all">
-              <div className="absolute inset-0 bg-[#8B5CF6]/10 blur-3xl rounded-full animate-pulse"></div>
+              <div className="absolute inset-0 bg-[#D946EF]/10 blur-3xl rounded-full animate-pulse"></div>
               <div className="relative w-full h-full flex items-center justify-center rounded-full border border-white/5 bg-[#0B0B0E]/40 backdrop-blur-md">
                 <svg className="absolute inset-0 w-full h-full transform -rotate-90">
                   <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="0.5" fill="transparent" className="text-white/5" />
-                  <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="6" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#8B5CF6] transition-all duration-1000 opacity-20" />
-                  <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="1.5" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#8B5CF6] shadow-[0_0_20px_#8B5CF6]" />
+                  <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="6" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#D946EF] transition-all duration-1000 opacity-20" />
+                  <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="1.5" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#D946EF] shadow-[0_0_20px_#8B5CF6]" />
                 </svg>
                 <div className="flex flex-col items-center">
                   <span className="text-xl md:text-3xl font-black text-white tracking-tighter">99<span className="text-[8px] md:text-xs text-[#5b5b7b]">%</span></span>
-                  <span className="text-[5px] md:text-[7px] font-black text-[#8B5CF6] uppercase tracking-[0.2em]">Engagement</span>
+                  <span className="text-[5px] md:text-[7px] font-black text-[#D946EF] uppercase tracking-[0.2em]">Engagement</span>
                 </div>
               </div>
             </div>
@@ -4357,13 +4354,13 @@ const VideosView: React.FC = () => {
       </div>
 
       <div className="flex items-center gap-3 mb-12 px-2 flex-wrap">
-        <button onClick={() => setVideoFilter('all')} className={`px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-[0.15em] flex items-center gap-2 hover:scale-[1.03] transition-all ${videoFilter === 'all' ? 'bg-[#8B5CF6] text-white shadow-lg shadow-[#8B5CF6]/20' : 'bg-[#14151a] border border-[#1e1f26] text-[#8d8d99] hover:border-[#44444f] hover:text-white'}`}>
+        <button onClick={() => setVideoFilter('all')} className={`px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-[0.15em] flex items-center gap-2 hover:scale-[1.03] transition-all ${videoFilter === 'all' ? 'bg-[#D946EF] text-white shadow-lg shadow-[#D946EF]/20' : 'bg-[#14151a] border border-[#1e1f26] text-[#8d8d99] hover:border-[#44444f] hover:text-white'}`}>
           <LayoutGrid className="w-4 h-4" /> Todos os Vídeos
         </button>
         <button onClick={() => setVideoFilter('revenue')} className={`px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-[0.15em] flex items-center gap-2 hover:scale-[1.03] transition-all ${videoFilter === 'revenue' ? 'bg-[#00b37e] text-white shadow-lg shadow-[#00b37e]/20' : 'bg-[#14151a] border border-[#1e1f26] text-[#8d8d99] hover:border-[#44444f] hover:text-white'}`}>
           <DollarSign className="w-4 h-4" /> Mais Faturados
         </button>
-        <button onClick={() => setVideoFilter('sales')} className={`px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-[0.15em] flex items-center gap-2 hover:scale-[1.03] transition-all ${videoFilter === 'sales' ? 'bg-[#8B5CF6] text-white shadow-lg shadow-[#8B5CF6]/20' : 'bg-[#14151a] border border-[#1e1f26] text-[#8d8d99] hover:border-[#44444f] hover:text-white'}`}>
+        <button onClick={() => setVideoFilter('sales')} className={`px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-[0.15em] flex items-center gap-2 hover:scale-[1.03] transition-all ${videoFilter === 'sales' ? 'bg-[#D946EF] text-white shadow-lg shadow-[#D946EF]/20' : 'bg-[#14151a] border border-[#1e1f26] text-[#8d8d99] hover:border-[#44444f] hover:text-white'}`}>
           <ShoppingBag className="w-4 h-4" /> Mais Vendidos
         </button>
         <button onClick={() => setVideoFilter('favorites')} className={`px-6 py-2.5 rounded-xl text-[11px] font-black uppercase tracking-[0.15em] flex items-center gap-2 hover:scale-[1.03] transition-all ${videoFilter === 'favorites' ? 'bg-[#f59e0b] text-white shadow-lg shadow-[#f59e0b]/20' : 'bg-[#14151a] border border-[#1e1f26] text-[#8d8d99] hover:border-[#44444f] hover:text-white'}`}>
@@ -4375,7 +4372,7 @@ const VideosView: React.FC = () => {
         <div className="flex flex-col items-center justify-center py-24 gap-4">
           <Bookmark className="w-12 h-12 text-[#5b5b7b]" />
           <p className="text-[#5b5b7b] font-black uppercase tracking-widest text-sm">Nenhum vídeo favoritado ainda</p>
-          <button onClick={() => setVideoFilter('all')} className="text-[#8B5CF6] text-sm font-black hover:underline">Ver todos os vídeos</button>
+          <button onClick={() => setVideoFilter('all')} className="text-[#D946EF] text-sm font-black hover:underline">Ver todos os vídeos</button>
         </div>
       )}
 
@@ -4418,15 +4415,15 @@ const ScriptModal: React.FC<{ isOpen: boolean; onClose: () => void; video: Video
         <div className="p-5 md:p-8 flex flex-col gap-5 md:gap-8">
           <div className="flex flex-col gap-6">
             <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-[#1F2028] flex items-center justify-center text-[#8B5CF6] font-black text-sm shrink-0 mt-0.5">1</div>
+              <div className="w-8 h-8 rounded-full bg-[#1F2028] flex items-center justify-center text-[#D946EF] font-black text-sm shrink-0 mt-0.5">1</div>
               <p className="text-[#8d8d99] text-[15px] font-medium leading-relaxed">Clique no botão abaixo para copiar o link do vídeo.</p>
             </div>
             <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-[#1F2028] flex items-center justify-center text-[#8B5CF6] font-black text-sm shrink-0 mt-0.5">2</div>
+              <div className="w-8 h-8 rounded-full bg-[#1F2028] flex items-center justify-center text-[#D946EF] font-black text-sm shrink-0 mt-0.5">2</div>
               <p className="text-[#8d8d99] text-[15px] font-medium leading-relaxed">O site Transcript24 abrirá em uma nova aba.</p>
             </div>
             <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-[#1F2028] flex items-center justify-center text-[#8B5CF6] font-black text-sm shrink-0 mt-0.5">3</div>
+              <div className="w-8 h-8 rounded-full bg-[#1F2028] flex items-center justify-center text-[#D946EF] font-black text-sm shrink-0 mt-0.5">3</div>
               <p className="text-[#8d8d99] text-[15px] font-medium leading-relaxed">Cole o link no site para gerar o script completo.</p>
             </div>
           </div>
@@ -4434,7 +4431,7 @@ const ScriptModal: React.FC<{ isOpen: boolean; onClose: () => void; video: Video
           <div className="flex flex-col gap-4">
             <button
               onClick={handleCopyAndOpen}
-              className="w-full bg-[#8B5CF6] hover:bg-[#7c3aed] text-white py-5 rounded-2xl flex items-center justify-center gap-3 transition-all font-black text-[15px] shadow-lg shadow-[#8B5CF6]/20"
+              className="w-full bg-[#D946EF] hover:bg-[#7c3aed] text-white py-5 rounded-2xl flex items-center justify-center gap-3 transition-all font-black text-[15px] shadow-lg shadow-[#D946EF]/20"
             >
               <Copy className="w-5 h-5" /> Copiar Link e Abrir Site
             </button>
@@ -4493,7 +4490,7 @@ const VideoCard: React.FC<{ video: VideoViral; isFavorite?: boolean; onToggleFav
   return (
     <div className="flex flex-col group h-full">
       <div
-        className="relative aspect-[9/12] md:aspect-[9/16] bg-[#14151a] border border-[#1e1f26] rounded-2xl md:rounded-[48px] overflow-hidden cursor-pointer shadow-2xl hover:border-[#8B5CF6]/30 transition-all"
+        className="relative aspect-[9/12] md:aspect-[9/16] bg-[#14151a] border border-[#1e1f26] rounded-2xl md:rounded-[48px] overflow-hidden cursor-pointer shadow-2xl hover:border-[#D946EF]/30 transition-all"
         onClick={togglePlay}
       >
         {isPlaying ? (
@@ -4507,7 +4504,7 @@ const VideoCard: React.FC<{ video: VideoViral; isFavorite?: boolean; onToggleFav
 
             <div className="absolute inset-0 flex items-center justify-center z-10">
               <div className="w-12 h-12 md:w-24 md:h-24 bg-[#0b0c10]/20 backdrop-blur-md rounded-full flex items-center justify-center border border-white/20 group-hover:scale-110 transition-transform shadow-2xl">
-                <div className="w-10 h-10 md:w-16 md:h-16 bg-[#8B5CF6] rounded-full flex items-center justify-center shadow-2xl shadow-[#8B5CF6]/50">
+                <div className="w-10 h-10 md:w-16 md:h-16 bg-[#D946EF] rounded-full flex items-center justify-center shadow-2xl shadow-[#D946EF]/50">
                   <Play className="w-4 h-4 md:w-8 md:h-8 text-white fill-current translate-x-1" />
                 </div>
               </div>
@@ -4561,7 +4558,7 @@ const VideoCard: React.FC<{ video: VideoViral; isFavorite?: boolean; onToggleFav
             }}
             className="bg-[#1c1c1f] hover:bg-[#24242a] text-white py-2.5 md:py-4 rounded-xl md:rounded-2xl flex items-center justify-center gap-2 transition-all group/btn"
           >
-            <Link className={`w-4 h-4 md:w-5 h-5 ${copied ? 'text-green-500' : 'text-[#3b82f6]'} group-hover/btn:text-white transition-colors`} />
+            <Link className={`w-4 h-4 md:w-5 h-5 ${copied ? 'text-green-500' : 'text-[#2DD4BF]'} group-hover/btn:text-white transition-colors`} />
             <span className="text-xs md:text-[13px] font-black">{copied ? 'Copiado!' : 'Link'}</span>
           </button>
           <button
@@ -4572,7 +4569,7 @@ const VideoCard: React.FC<{ video: VideoViral; isFavorite?: boolean; onToggleFav
             }}
             className="bg-[#1c1c1f] hover:bg-[#24242a] text-white py-2.5 md:py-4 rounded-xl md:rounded-2xl flex items-center justify-center gap-2 transition-all group/btn"
           >
-            <User className="w-4 h-4 md:w-5 h-5 text-[#3B82F6] group-hover/btn:text-white transition-colors" />
+            <User className="w-4 h-4 md:w-5 h-5 text-[#2DD4BF] group-hover/btn:text-white transition-colors" />
             <span className="text-xs md:text-[13px] font-black">Perfil</span>
           </button>
         </div>
@@ -4631,7 +4628,7 @@ const CreatorsView: React.FC = () => {
             <div className="relative">
               <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none text-left pl-1">
                 <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent">Criadores</span>
-                <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent">Virais</span>
+                <span className="block bg-gradient-to-r from-[#2DD4BF] via-[#D946EF] to-[#d946ef] bg-clip-text text-transparent">Virais</span>
               </h1>
             </div>
           </div>
@@ -4645,9 +4642,9 @@ const CreatorsView: React.FC = () => {
         <div className="flex flex-wrap items-center justify-center lg:justify-end gap-6 flex-[1.5]">
           {/* MONITORADOS (ORGANIC FROSTED) */}
           <div className="relative group">
-            <div className="absolute inset-0 bg-[#3B82F6]/10 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            <div className="absolute inset-0 bg-[#2DD4BF]/10 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
             <div className="w-24 h-24 md:w-40 md:h-40 backdrop-blur-3xl bg-white/[0.03] border border-white/10 rounded-[28px] md:rounded-[40px] p-3 md:p-6 flex flex-col items-center justify-center shadow-2xl transition-all duration-500 group-hover:scale-105">
-              <Users className="w-4 h-4 md:w-6 md:h-6 text-[#3B82F6] mb-1.5 md:mb-2 opacity-50 animate-bounce" />
+              <Users className="w-4 h-4 md:w-6 md:h-6 text-[#2DD4BF] mb-1.5 md:mb-2 opacity-50 animate-bounce" />
               <span className="text-2xl md:text-4xl font-black text-white tracking-tighter mb-0.5 md:mb-1">8</span>
               <span className="text-[6px] md:text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">INSIGHTS HOJE</span>
             </div>
@@ -4670,15 +4667,15 @@ const CreatorsView: React.FC = () => {
           {/* DOMINANCE SPHERE (SCIFI DATA ORB) */}
           <div className="relative group">
             <div className="w-24 h-24 md:w-40 md:h-40 flex items-center justify-center p-1 md:p-2 group-hover:scale-105 transition-all">
-              <div className="absolute inset-0 bg-[#8B5CF6]/10 blur-3xl rounded-full animate-pulse"></div>
+              <div className="absolute inset-0 bg-[#D946EF]/10 blur-3xl rounded-full animate-pulse"></div>
               <div className="relative w-full h-full flex items-center justify-center rounded-full border border-white/5 bg-[#0B0B0E]/40 backdrop-blur-md">
                 <svg className="absolute inset-0 w-full h-full transform -rotate-90">
                   <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="0.5" fill="transparent" className="text-white/5" />
-                  <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="6" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#8B5CF6] transition-all duration-1000 opacity-20" />
-                  <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="1.5" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#8B5CF6] shadow-[0_0_20px_#8B5CF6]" />
+                  <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="6" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#D946EF] transition-all duration-1000 opacity-20" />
+                  <circle cx="50%" cy="50%" r="42%" stroke="currentColor" strokeWidth="1.5" fill="transparent" strokeDasharray="280" strokeDashoffset="10" strokeLinecap="round" className="text-[#D946EF] shadow-[0_0_20px_#8B5CF6]" />
                 </svg>
                 <div className="flex flex-col items-center">
-                  <Crown className="w-4 h-4 md:w-5 md:h-5 text-[#8B5CF6] mb-1 opacity-50 animate-pulse" />
+                  <Crown className="w-4 h-4 md:w-5 md:h-5 text-[#D946EF] mb-1 opacity-50 animate-pulse" />
                   <span className="text-xl md:text-3xl font-black text-white tracking-tighter">98<span className="text-[8px] md:text-xs text-[#5b5b7b]">%</span></span>
                 </div>
               </div>
@@ -4694,20 +4691,20 @@ const CreatorsView: React.FC = () => {
           <div className="flex items-center gap-10 h-8 border-b border-white/5 pb-2">
             {['00-06', '06-12', '12-18', '18-00'].map((time, idx) => (
               <div key={time} className="flex flex-col items-center group cursor-pointer relative h-full justify-end">
-                <span className={`text-[10px] font-black tracking-widest uppercase transition-all mb-2 ${idx === 2 ? 'text-[#3B82F6]' : 'text-[#5b5b7b] group-hover:text-white/60'}`}>
+                <span className={`text-[10px] font-black tracking-widest uppercase transition-all mb-2 ${idx === 2 ? 'text-[#2DD4BF]' : 'text-[#5b5b7b] group-hover:text-white/60'}`}>
                   {time}
                 </span>
-                <div className={`w-[2px] h-2 transition-all ${idx === 2 ? 'bg-[#3B82F6] shadow-[0_0_10px_#3B82F6]' : 'bg-white/10 group-hover:bg-white/30'}`}></div>
-                {idx === 2 && <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-8 h-px bg-[#3B82F6] blur-[2px]"></div>}
+                <div className={`w-[2px] h-2 transition-all ${idx === 2 ? 'bg-[#2DD4BF] shadow-[0_0_10px_#3B82F6]' : 'bg-white/10 group-hover:bg-white/30'}`}></div>
+                {idx === 2 && <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-8 h-px bg-[#2DD4BF] blur-[2px]"></div>}
               </div>
             ))}
           </div>
         </div>
         <div className="flex items-center gap-6">
-          <div className="px-10 py-4 rounded-[28px] bg-white/[0.02] border border-white/5 backdrop-blur-md flex items-center gap-5 group hover:border-[#3B82F6]/20 transition-all shadow-2xl">
+          <div className="px-10 py-4 rounded-[28px] bg-white/[0.02] border border-white/5 backdrop-blur-md flex items-center gap-5 group hover:border-[#2DD4BF]/20 transition-all shadow-2xl">
             <div className="relative">
-              <div className="absolute inset-0 bg-[#3B82F6]/20 blur-lg rounded-full animate-ping"></div>
-              <Clock className="w-5 h-5 text-[#3B82F6] relative z-10" />
+              <div className="absolute inset-0 bg-[#2DD4BF]/20 blur-lg rounded-full animate-ping"></div>
+              <Clock className="w-5 h-5 text-[#2DD4BF] relative z-10" />
             </div>
             <div className="flex flex-col">
               <span className="text-[7px] font-black text-[#5b5b7b] tracking-[0.3em] uppercase">Status de Sync</span>
@@ -4732,7 +4729,7 @@ const CreatorRow: React.FC<{ creator: CreatorViral }> = ({ creator }) => (
     className="relative group cursor-pointer mb-2"
   >
     {/* ARCHITECTURAL SELECTION CLIPS (HOVER ONLY) - ULTRA-COMPACT */}
-    <div className="absolute -inset-0.25 bg-gradient-to-r from-[#3B82F6]/20 via-transparent to-[#8B5CF6]/20 rounded-xl opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-500"></div>
+    <div className="absolute -inset-0.25 bg-gradient-to-r from-[#2DD4BF]/20 via-transparent to-[#D946EF]/20 rounded-xl opacity-0 group-hover:opacity-100 blur-sm transition-opacity duration-500"></div>
 
     {/* MAIN ARCHITECTURAL CONTAINER - ENHANCED SCALE & PROFESSIONAL */}
     <div className="relative bg-[#0B0B0E]/80 backdrop-blur-3xl border border-white/5 rounded-xl px-4 py-4 md:px-6 md:py-5 flex items-center justify-between overflow-hidden shadow-2xl transition-all duration-500 group-hover:translate-x-1 group-hover:border-white/10 group-hover:bg-[#0B0B0E]/90">
@@ -4774,7 +4771,7 @@ const CreatorRow: React.FC<{ creator: CreatorViral }> = ({ creator }) => (
 
           {/* AVATAR POD (FLOATING IDENTITY) - ULTRA SCALE */}
           <div className="relative">
-            <div className="absolute -inset-1 bg-gradient-to-br from-[#3B82F6]/20 to-transparent rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            <div className="absolute -inset-1 bg-gradient-to-br from-[#2DD4BF]/20 to-transparent rounded-full blur-md opacity-0 group-hover:opacity-100 transition-opacity"></div>
             <div className="relative w-12 h-12 md:w-16 md:h-16 p-0.5 rounded-full bg-gradient-to-br from-white/10 to-transparent border border-white/5 group-hover:border-white/20 transition-all duration-500">
               <div className="w-full h-full rounded-full overflow-hidden border border-[#1c1c1f] shadow-2xl relative">
                 <img src={creator.avatar} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="" />
@@ -4790,11 +4787,11 @@ const CreatorRow: React.FC<{ creator: CreatorViral }> = ({ creator }) => (
         {/* CREATOR INTEL (TYPOGRAPHY) - ULTRA DENSE PROFILE */}
         <div className="flex flex-col gap-0.5 min-w-0 flex-1">
           <div className="flex items-center gap-1.5 md:gap-2">
-            <h3 className="text-lg md:text-xl font-black text-white group-hover:text-[#3B82F6] transition-colors leading-none tracking-tighter truncate">
+            <h3 className="text-lg md:text-xl font-black text-white group-hover:text-[#2DD4BF] transition-colors leading-none tracking-tighter truncate">
               {creator.username}
             </h3>
             <div className="px-1 md:px-1.5 py-0 bg-white/[0.03] border border-white/10 rounded flex items-center gap-1 shrink-0">
-              <div className="w-1 h-1 bg-[#3B82F6] rounded-full animate-pulse"></div>
+              <div className="w-1 h-1 bg-[#2DD4BF] rounded-full animate-pulse"></div>
               <span className="text-[6px] md:text-[6.5px] font-black text-[#8d8d99] uppercase tracking-[0.2em]">{creator.category}</span>
             </div>
           </div>
@@ -4831,8 +4828,8 @@ const CreatorRow: React.FC<{ creator: CreatorViral }> = ({ creator }) => (
 
       {/* EXTERNAL LINK POD - ULTRA SCALE */}
       <div className="relative group/link">
-        <div className="absolute inset-0 bg-[#3B82F6]/20 blur-xl rounded-full opacity-0 group-hover/link:opacity-100 transition-opacity"></div>
-        <div className="w-12 h-12 bg-white/[0.03] border border-white/10 rounded-lg flex items-center justify-center transition-all duration-500 group-hover:bg-[#3B82F6] group-hover:border-[#3B82F6] group-hover:shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+        <div className="absolute inset-0 bg-[#2DD4BF]/20 blur-xl rounded-full opacity-0 group-hover/link:opacity-100 transition-opacity"></div>
+        <div className="w-12 h-12 bg-white/[0.03] border border-white/10 rounded-lg flex items-center justify-center transition-all duration-500 group-hover:bg-[#2DD4BF] group-hover:border-[#2DD4BF] group-hover:shadow-[0_0_15px_rgba(59,130,246,0.3)]">
           <ExternalLink className="w-6 h-6 text-[#5b5b7b] group-hover:text-white transition-colors" />
         </div>
       </div>
@@ -5038,24 +5035,24 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
         {/* NEURAL CORE VISUALIZATION */}
         <div className="relative mb-12 md:mb-24 scale-90 md:scale-150">
           {/* SYNAPTIC RINGS */}
-          <div className="absolute inset-0 w-48 h-48 -left-8 -top-8 border border-[#3B82F6]/20 rounded-full animate-[spin_10s_linear_infinite]"></div>
-          <div className="absolute inset-0 w-56 h-56 -left-12 -top-12 border border-[#8B5CF6]/10 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
-          <div className="absolute inset-0 w-40 h-40 -left-4 -top-4 border-2 border-dashed border-[#3B82F6]/5 rounded-full animate-[spin_20s_linear_infinite]"></div>
+          <div className="absolute inset-0 w-48 h-48 -left-8 -top-8 border border-[#2DD4BF]/20 rounded-full animate-[spin_10s_linear_infinite]"></div>
+          <div className="absolute inset-0 w-56 h-56 -left-12 -top-12 border border-[#D946EF]/10 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
+          <div className="absolute inset-0 w-40 h-40 -left-4 -top-4 border-2 border-dashed border-[#2DD4BF]/5 rounded-full animate-[spin_20s_linear_infinite]"></div>
 
           {/* INNER HUB */}
           <div className="relative w-32 h-32 bg-[#14151a] border border-white/10 rounded-full flex items-center justify-center shadow-[0_0_80px_rgba(59,130,246,0.2)]">
-            <div className="absolute inset-0 bg-[#3B82F6]/5 rounded-full blur-xl animate-pulse"></div>
+            <div className="absolute inset-0 bg-[#2DD4BF]/5 rounded-full blur-xl animate-pulse"></div>
             <Brain className="w-16 h-16 text-white animate-[pulse_2s_ease-in-out_infinite]" strokeWidth={1.5} />
 
             {/* SCANNING RADAR */}
-            <div className="absolute inset-0 border-t-2 border-[#3B82F6] rounded-full animate-[spin_3s_linear_infinite]"></div>
+            <div className="absolute inset-0 border-t-2 border-[#2DD4BF] rounded-full animate-[spin_3s_linear_infinite]"></div>
           </div>
 
           {/* ORBITAL DATA NODES */}
           {[0, 120, 240].map((deg) => (
             <div
               key={deg}
-              className="absolute w-2 h-2 bg-[#3B82F6] rounded-full shadow-[0_0_10px_#3B82F6] animate-pulse"
+              className="absolute w-2 h-2 bg-[#2DD4BF] rounded-full shadow-[0_0_10px_#3B82F6] animate-pulse"
               style={{
                 left: 'calc(50% - 4px)',
                 top: '-20px',
@@ -5070,7 +5067,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
         <div className="relative z-10 flex flex-col items-center gap-6 md:gap-8 w-full max-w-md px-6 md:px-8 text-center">
           <div className="flex flex-col gap-2">
             <div className="flex items-center justify-center gap-3 opacity-0">
-              <div className="w-2 h-2 bg-[#3B82F6] rounded-full animate-ping"></div>
+              <div className="w-2 h-2 bg-[#2DD4BF] rounded-full animate-ping"></div>
               <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.5em]">.</span>
             </div>
             <h2 className="text-[1.1rem] md:text-2xl font-black text-white tracking-widest uppercase transition-all duration-1000 animate-in fade-in slide-in-from-bottom-2 leading-snug">
@@ -5083,7 +5080,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
             <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden relative border border-white/5">
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent animate-[tech-shimmer_3s_infinite]"></div>
               <div
-                className="h-full bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#3B82F6] relative transition-all duration-1000 ease-out"
+                className="h-full bg-gradient-to-r from-[#2DD4BF] via-[#D946EF] to-[#2DD4BF] relative transition-all duration-1000 ease-out"
                 style={{ width: `${(loadingPhase + 1) * 25}%` }}
               >
                 <div className="absolute right-0 top-0 bottom-0 w-8 bg-white/40 blur-sm"></div>
@@ -5097,15 +5094,15 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
 
           {/* TECHNICAL PROCESSING LOGS (SIMULATED CONSOLE) */}
           <div className="w-full p-3 md:p-4 bg-black/40 border border-white/5 rounded-2xl md:rounded-3xl font-mono text-left space-y-1.5 backdrop-blur-md">
-            <div className="flex items-center gap-2 md:gap-3 text-[7px] md:text-[8px] text-[#3B82F6] font-black uppercase tracking-widest mb-1">
+            <div className="flex items-center gap-2 md:gap-3 text-[7px] md:text-[8px] text-[#2DD4BF] font-black uppercase tracking-widest mb-1">
               <Terminal className="w-3 h-3" /> System Logs // Real-time
             </div>
             <div className="space-y-1 opacity-40">
-              <p className="text-[8px] text-[#3B82F6] animate-in slide-in-from-left duration-300">{'>>'} INITIALIZING_NEURAL_SYNAPSE_LINK...</p>
+              <p className="text-[8px] text-[#2DD4BF] animate-in slide-in-from-left duration-300">{'>>'} INITIALIZING_NEURAL_SYNAPSE_LINK...</p>
               {loadingPhase >= 1 && <p className="text-[8px] text-white animate-in slide-in-from-left duration-300">{'>>'} PARSING_AVATAR_FACIAL_MATRICS... [OK]</p>}
               {loadingPhase >= 2 && <p className="text-[8px] text-white animate-in slide-in-from-left duration-300">{'>>'} MODULATING_ACOUSTIC_SYNTHESIS... [READY]</p>}
               {loadingPhase >= 3 && <p className="text-[8px] text-[#00b37e] animate-in slide-in-from-left duration-300">{'>>'} EXPORTING_FINAL_RENDER_FRAME... [100%]</p>}
-              <p className="text-[8px] text-[#3B82F6] flex gap-1 items-center">{'>>'} EXEC_STATE: <span className="w-1 h-3 bg-[#3B82F6] animate-pulse"></span></p>
+              <p className="text-[8px] text-[#2DD4BF] flex gap-1 items-center">{'>>'} EXEC_STATE: <span className="w-1 h-3 bg-[#2DD4BF] animate-pulse"></span></p>
             </div>
           </div>
         </div>
@@ -5124,8 +5121,8 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
         <div className="flex flex-col md:flex-row items-center md:items-end justify-center md:justify-between gap-6 mb-8">
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
             <div className="flex items-center gap-3 mb-2 opacity-0">
-              <div className="w-2 h-2 bg-[#3B82F6] rounded-full"></div>
-              <span className="text-[10px] font-black text-[#3B82F6] uppercase tracking-[0.4em]">.</span>
+              <div className="w-2 h-2 bg-[#2DD4BF] rounded-full"></div>
+              <span className="text-[10px] font-black text-[#2DD4BF] uppercase tracking-[0.4em]">.</span>
             </div>
             <h1 className="text-3xl md:text-5xl font-black text-white tracking-tighter leading-none">
               {getStepTitle()}
@@ -5147,7 +5144,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
         {/* DATA-VIZ PROGRESS TIMELINE */}
         <div className="relative h-[2px] w-full bg-white/5 rounded-full overflow-hidden">
           <div
-            className="absolute inset-y-0 left-0 bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] shadow-[0_0_15px_rgba(59,130,246,0.5)] transition-all duration-1000 ease-out"
+            className="absolute inset-y-0 left-0 bg-gradient-to-r from-[#2DD4BF] via-[#D946EF] to-[#d946ef] shadow-[0_0_15px_rgba(59,130,246,0.5)] transition-all duration-1000 ease-out"
             style={{ width: `${(step / 4) * 100}%` }}
           >
             <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent_0%,rgba(255,255,255,0.4)_50%,transparent_100%)] animate-[shimmer_2s_infinite]"></div>
@@ -5174,8 +5171,8 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
             <>
               <div className="flex items-center justify-between mb-12 relative z-10">
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-[#3B82F6]/10 rounded-xl flex items-center justify-center border border-[#3B82F6]/20">
-                    <Eye className="w-5 h-5 text-[#3B82F6]" />
+                  <div className="w-10 h-10 bg-[#2DD4BF]/10 rounded-xl flex items-center justify-center border border-[#2DD4BF]/20">
+                    <Eye className="w-5 h-5 text-[#2DD4BF]" />
                   </div>
                   <h2 className="text-2xl font-black text-white tracking-tight uppercase">POV Configuration</h2>
                 </div>
@@ -5186,9 +5183,9 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
               </div>
 
               <div className="flex-1 flex flex-col items-center justify-center py-16 px-10 border border-white/5 rounded-[40px] bg-[#0B0B0E]/40 mb-12 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#3B82F6]/5 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#2DD4BF]/5 to-transparent"></div>
                 <div className="w-24 h-24 bg-[#14151a] rounded-full flex items-center justify-center mb-8 shadow-2xl border border-white/10 relative z-10">
-                  <Eye className="w-12 h-12 text-[#3B82F6] opacity-50" />
+                  <Eye className="w-12 h-12 text-[#2DD4BF] opacity-50" />
                 </div>
                 <p className="text-[#8d8d99] text-xl font-medium text-center max-w-[500px] leading-relaxed relative z-10 tracking-tight">
                   <span className="text-white">Modo POV detectado.</span> O sistema irá renderizar a perspectiva em primeira pessoa, focando na interação tátil com o produto.
@@ -5201,14 +5198,14 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                 <div className="flex flex-col">
                   <h2 className="text-2xl md:text-3xl font-black text-white tracking-tighter uppercase mb-1">Selecionar Identidade</h2>
                   <div className="flex items-center gap-2">
-                    <div className="w-1 h-3 bg-[#3B82F6] rounded-full"></div>
+                    <div className="w-1 h-3 bg-[#2DD4BF] rounded-full"></div>
                     <span className="text-[10px] font-black text-[#8d8d99] tracking-[0.4em] uppercase opacity-70">Autenticação de Avatar</span>
                   </div>
                 </div>
 
                 {/* MECHANICAL HARDWARE TABS */}
                 <div className="bg-[#0B0B0E]/90 backdrop-blur-3xl p-1 rounded-2xl flex items-center border border-white/10 shadow-[inner_0_2px_4px_rgba(255,255,255,0.05)] relative overflow-hidden group/tabs">
-                  <div className="absolute inset-x-0 h-[1px] top-0 bg-gradient-to-r from-transparent via-[#3B82F6]/40 to-transparent"></div>
+                  <div className="absolute inset-x-0 h-[1px] top-0 bg-gradient-to-r from-transparent via-[#2DD4BF]/40 to-transparent"></div>
                   {[
                     { id: 'mulheres', label: 'Mulheres', icon: <User size={14} /> },
                     { id: 'homens', label: 'Homens', icon: <User size={14} /> },
@@ -5217,15 +5214,15 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                     <button
                       key={tab.id}
                       onClick={() => setActiveTab(tab.id as any)}
-                      className={`flex items-center gap-3 px-4 md:px-8 py-2 md:py-3 rounded-lg md:rounded-xl text-[10px] md:text-[11px] font-black transition-all duration-700 relative group/tab ${activeTab === tab.id ? 'text-[#3B82F6] bg-[#3B82F6]/5' : 'text-[#5b5b7b] hover:text-white hover:bg-white/5'}`}
+                      className={`flex items-center gap-3 px-4 md:px-8 py-2 md:py-3 rounded-lg md:rounded-xl text-[10px] md:text-[11px] font-black transition-all duration-700 relative group/tab ${activeTab === tab.id ? 'text-[#2DD4BF] bg-[#2DD4BF]/5' : 'text-[#5b5b7b] hover:text-white hover:bg-white/5'}`}
                     >
                       <span className={`${activeTab === tab.id ? 'opacity-100 scale-110' : 'opacity-40'} transition-all duration-500`}>{tab.icon}</span>
                       <span className="relative z-10 uppercase tracking-[0.2em]">{tab.label}</span>
                       {activeTab === tab.id && (
                         <>
-                          <div className="absolute left-0 top-1/4 bottom-1/4 w-[2px] bg-[#3B82F6] rounded-full shadow-[0_0_10px_#3B82F6]"></div>
-                          <div className="absolute right-0 top-1/4 bottom-1/4 w-[2px] bg-[#3B82F6] rounded-full shadow-[0_0_10px_#3B82F6]"></div>
-                          <div className="absolute inset-0 bg-gradient-to-t from-[#3B82F6]/10 to-transparent animate-pulse"></div>
+                          <div className="absolute left-0 top-1/4 bottom-1/4 w-[2px] bg-[#2DD4BF] rounded-full shadow-[0_0_10px_#3B82F6]"></div>
+                          <div className="absolute right-0 top-1/4 bottom-1/4 w-[2px] bg-[#2DD4BF] rounded-full shadow-[0_0_10px_#3B82F6]"></div>
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#2DD4BF]/10 to-transparent animate-pulse"></div>
                         </>
                       )}
                     </button>
@@ -5243,18 +5240,18 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                     {/* ULTRA-PREMIUM ROTATING ORBITAL RING */}
                     {selectedInfluencer === inf.id && (
                       <div className="absolute -inset-6 animate-in fade-in duration-1000">
-                        <div className="absolute inset-0 border-[1.5px] border-dashed border-[#3B82F6]/40 rounded-[48px] animate-[rotate-orbital_20s_linear_infinite]"></div>
+                        <div className="absolute inset-0 border-[1.5px] border-dashed border-[#2DD4BF]/40 rounded-[48px] animate-[rotate-orbital_20s_linear_infinite]"></div>
                         <div className="absolute inset-4 border-[1px] border-white/10 rounded-[40px] animate-[rotate-orbital_15s_linear_infinite_reverse]"></div>
-                        <div className="absolute -inset-10 bg-[#3B82F6]/10 blur-[60px] rounded-full animate-pulse"></div>
+                        <div className="absolute -inset-10 bg-[#2DD4BF]/10 blur-[60px] rounded-full animate-pulse"></div>
                       </div>
                     )}
 
-                    <div className={`relative aspect-[3/4] md:aspect-[3.5/4.5] rounded-[32px] md:rounded-[40px] overflow-hidden border-2 transition-all duration-700 ${selectedInfluencer === inf.id ? 'border-[#3B82F6] shadow-[0_0_50px_rgba(59,130,246,0.3)] scale-[1.02]' : 'border-white/5 hover:border-white/20 hover:scale-[1.01]'}`}>
+                    <div className={`relative aspect-[3/4] md:aspect-[3.5/4.5] rounded-[32px] md:rounded-[40px] overflow-hidden border-2 transition-all duration-700 ${selectedInfluencer === inf.id ? 'border-[#2DD4BF] shadow-[0_0_50px_rgba(59,130,246,0.3)] scale-[1.02]' : 'border-white/5 hover:border-white/20 hover:scale-[1.01]'}`}>
 
                       {/* HARDWARE DECALS & ID OVERLAYS */}
                       <div className="absolute top-8 left-8 z-20 flex flex-col gap-1 opacity-40">
-                        <span className="text-[7px] font-mono text-[#3B82F6] tracking-[2px]">SYS_ID_{inf.id.toUpperCase()}</span>
-                        <div className="w-12 h-[1px] bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
+                        <span className="text-[7px] font-mono text-[#2DD4BF] tracking-[2px]">SYS_ID_{inf.id.toUpperCase()}</span>
+                        <div className="w-12 h-[1px] bg-gradient-to-r from-[#2DD4BF] to-transparent"></div>
                       </div>
 
                       {/* IMAGE LAYER */}
@@ -5263,16 +5260,16 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                       {/* BIO-SCAN RADIUS OVERLAY (HOVER ONLY) */}
                       <div className="absolute inset-0 opacity-0 group-hover/card:opacity-100 transition-opacity duration-700 overflow-hidden">
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,rgba(59,130,246,0.1)_100%)]"></div>
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[180%] aspect-square border border-[#3B82F6]/10 rounded-full animate-[rotate-orbital_10s_linear_infinite]"></div>
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[180%] aspect-square border border-[#2DD4BF]/10 rounded-full animate-[rotate-orbital_10s_linear_infinite]"></div>
 
                         {/* TARGETING BRACKETS */}
-                        <div className="absolute top-1/4 left-1/4 w-8 h-8 border-t border-l border-[#3B82F6] animate-pulse"></div>
-                        <div className="absolute top-1/4 right-1/4 w-8 h-8 border-t border-r border-[#3B82F6] animate-pulse"></div>
-                        <div className="absolute bottom-1/4 left-1/4 w-8 h-8 border-b border-l border-[#3B82F6] animate-pulse"></div>
-                        <div className="absolute bottom-1/4 right-1/4 w-8 h-8 border-b border-r border-[#3B82F6] animate-pulse"></div>
+                        <div className="absolute top-1/4 left-1/4 w-8 h-8 border-t border-l border-[#2DD4BF] animate-pulse"></div>
+                        <div className="absolute top-1/4 right-1/4 w-8 h-8 border-t border-r border-[#2DD4BF] animate-pulse"></div>
+                        <div className="absolute bottom-1/4 left-1/4 w-8 h-8 border-b border-l border-[#2DD4BF] animate-pulse"></div>
+                        <div className="absolute bottom-1/4 right-1/4 w-8 h-8 border-b border-r border-[#2DD4BF] animate-pulse"></div>
 
                         {/* SCANNER LINE */}
-                        <div className="absolute inset-x-0 h-[30%] bg-gradient-to-b from-[#3B82F6]/20 to-transparent -top-1/4 group-hover/card:animate-[scanline_3s_ease-in-out_infinite]"></div>
+                        <div className="absolute inset-x-0 h-[30%] bg-gradient-to-b from-[#2DD4BF]/20 to-transparent -top-1/4 group-hover/card:animate-[scanline_3s_ease-in-out_infinite]"></div>
                       </div>
 
                       {/* GLASS EFFECT SYSTEM */}
@@ -5282,10 +5279,10 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                       <div className="absolute bottom-10 left-10 right-10">
                         <div className="flex flex-col gap-1.5 translate-y-2 group-hover/card:translate-y-0 transition-transform duration-500">
                           <div className="flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 bg-[#3B82F6] rounded-full animate-pulse"></div>
+                            <div className="w-1.5 h-1.5 bg-[#2DD4BF] rounded-full animate-pulse"></div>
                             <span className="text-[9px] font-black text-[#8d8d99] uppercase tracking-[0.3em] font-mono">{inf.id.startsWith('w') ? 'NEURAL_UNIT_W' : 'NEURAL_UNIT_M'}</span>
                           </div>
-                          <h3 className="text-3xl font-black text-white tracking-tighter leading-none uppercase group-hover/card:text-[#3B82F6] transition-colors">{inf.name}</h3>
+                          <h3 className="text-3xl font-black text-white tracking-tighter leading-none uppercase group-hover/card:text-[#2DD4BF] transition-colors">{inf.name}</h3>
                         </div>
                       </div>
 
@@ -5293,18 +5290,18 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                       {selectedInfluencer === inf.id && (
                         <div className="absolute top-10 right-10 flex flex-col items-end gap-2">
                           <div className="relative w-12 h-12 flex items-center justify-center">
-                            <div className="absolute inset-0 bg-[#3B82F6] blur-xl rounded-full animate-ping"></div>
-                            <div className="relative w-full h-full bg-[#3B82F6] rounded-full flex items-center justify-center border-2 border-white/40 shadow-[0_0_20px_#3B82F6]">
+                            <div className="absolute inset-0 bg-[#2DD4BF] blur-xl rounded-full animate-ping"></div>
+                            <div className="relative w-full h-full bg-[#2DD4BF] rounded-full flex items-center justify-center border-2 border-white/40 shadow-[0_0_20px_#3B82F6]">
                               <Check className="w-7 h-7 text-white" strokeWidth={4} />
                             </div>
                           </div>
-                          <span className="text-[7px] font-bold text-[#3B82F6] uppercase tracking-[0.2em] animate-pulse">Linked</span>
+                          <span className="text-[7px] font-bold text-[#2DD4BF] uppercase tracking-[0.2em] animate-pulse">Linked</span>
                         </div>
                       )}
 
                       {/* CORNER CLIPS (CINEMATIC) */}
-                      <div className="absolute top-0 left-0 w-12 h-12 border-t-[3px] border-l-[3px] border-[#3B82F6]/20 rounded-tl-[40px] opacity-0 group-hover/card:opacity-100 transition-all duration-700 group-hover/card:top-2 group-hover/card:left-2"></div>
-                      <div className="absolute bottom-0 right-0 w-12 h-12 border-b-[3px] border-r-[3px] border-[#3B82F6]/20 rounded-br-[40px] opacity-0 group-hover/card:opacity-100 transition-all duration-700 group-hover/card:bottom-2 group-hover/card:right-2"></div>
+                      <div className="absolute top-0 left-0 w-12 h-12 border-t-[3px] border-l-[3px] border-[#2DD4BF]/20 rounded-tl-[40px] opacity-0 group-hover/card:opacity-100 transition-all duration-700 group-hover/card:top-2 group-hover/card:left-2"></div>
+                      <div className="absolute bottom-0 right-0 w-12 h-12 border-b-[3px] border-r-[3px] border-[#2DD4BF]/20 rounded-br-[40px] opacity-0 group-hover/card:opacity-100 transition-all duration-700 group-hover/card:bottom-2 group-hover/card:right-2"></div>
                     </div>
                   </div>
                 ))}
@@ -5312,13 +5309,13 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                 {activeTab === 'meus-avatares' && (
                   <div className={`col-span-full border-[2px] border-dashed border-white/5 rounded-[56px] bg-white/[0.01] relative overflow-hidden group/new ${customAvatars.length > 0 ? 'p-8' : 'py-12 flex flex-col items-center justify-center'}`}>
                     <input type="file" ref={fileInputRef} className="hidden" accept="image/*" onChange={handleImageUpload} />
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#3B82F6]/10 via-transparent to-transparent opacity-0 group-hover/new:opacity-100 transition-opacity duration-1000"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#2DD4BF]/10 via-transparent to-transparent opacity-0 group-hover/new:opacity-100 transition-opacity duration-1000"></div>
 
                     {customAvatars.length > 0 ? (
                       <div className="flex flex-col gap-6 z-10 relative">
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                           {customAvatars.map((av) => (
-                            <div key={av.id} className={`relative aspect-[3.5/4.5] rounded-[32px] overflow-hidden border-2 cursor-pointer transition-all duration-700 ${selectedInfluencer === av.id ? 'border-[#3B82F6] shadow-[0_0_40px_rgba(59,130,246,0.3)] scale-[1.02]' : 'border-white/10 hover:border-white/30'}`} onClick={() => setSelectedInfluencer(av.id)}>
+                            <div key={av.id} className={`relative aspect-[3.5/4.5] rounded-[32px] overflow-hidden border-2 cursor-pointer transition-all duration-700 ${selectedInfluencer === av.id ? 'border-[#2DD4BF] shadow-[0_0_40px_rgba(59,130,246,0.3)] scale-[1.02]' : 'border-white/10 hover:border-white/30'}`} onClick={() => setSelectedInfluencer(av.id)}>
                               <img src={av.image} className="w-full h-full object-cover" alt={av.name} />
                               <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0E] via-[#0B0B0E]/20 to-transparent opacity-70"></div>
                               <div className="absolute bottom-4 left-4 right-4">
@@ -5328,7 +5325,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                                 <Trash2 className="w-3.5 h-3.5 text-white" />
                               </button>
                               {selectedInfluencer === av.id && (
-                                <div className="absolute top-3 left-3 w-7 h-7 bg-[#3B82F6] rounded-full flex items-center justify-center border border-white/40 shadow-[0_0_15px_#3B82F6]">
+                                <div className="absolute top-3 left-3 w-7 h-7 bg-[#2DD4BF] rounded-full flex items-center justify-center border border-white/40 shadow-[0_0_15px_#3B82F6]">
                                   <Check className="w-4 h-4 text-white" strokeWidth={3} />
                                 </div>
                               )}
@@ -5342,21 +5339,21 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                       </div>
                     ) : (
                       <>
-                        <button onClick={() => !isUploading && fileInputRef.current?.click()} className="group relative w-full aspect-[3.5/4.5] rounded-[32px] border-2 border-dashed border-white/20 bg-white/[0.02] hover:bg-white/[0.05] hover:border-[#3B82F6]/50 transition-all cursor-pointer flex flex-col items-center justify-center gap-4 overflow-hidden disabled:opacity-50">
-                          <div className="absolute inset-0 bg-gradient-to-t from-[#3B82F6]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <button onClick={() => !isUploading && fileInputRef.current?.click()} className="group relative w-full aspect-[3.5/4.5] rounded-[32px] border-2 border-dashed border-white/20 bg-white/[0.02] hover:bg-white/[0.05] hover:border-[#2DD4BF]/50 transition-all cursor-pointer flex flex-col items-center justify-center gap-4 overflow-hidden disabled:opacity-50">
+                          <div className="absolute inset-0 bg-gradient-to-t from-[#2DD4BF]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                           {isUploading ? (
                             <div className="w-14 h-14 rounded-full flex items-center justify-center animate-spin">
-                              <div className="w-8 h-8 border-4 border-t-white border-[#3B82F6]/30 rounded-full"></div>
+                              <div className="w-8 h-8 border-4 border-t-white border-[#2DD4BF]/30 rounded-full"></div>
                             </div>
                           ) : (
-                            <div className="w-14 h-14 rounded-full bg-[#3B82F6]/20 border border-[#3B82F6]/40 flex items-center justify-center group-hover:scale-110 group-hover:bg-[#3B82F6] transition-all relative z-10">
+                            <div className="w-14 h-14 rounded-full bg-[#2DD4BF]/20 border border-[#2DD4BF]/40 flex items-center justify-center group-hover:scale-110 group-hover:bg-[#2DD4BF] transition-all relative z-10">
                               <Plus className="w-6 h-6 text-white" />
                             </div>
                           )}
-                          <span className="text-xs font-black text-white uppercase tracking-widest group-hover:text-[#3B82F6] transition-colors relative z-10">{isUploading ? 'Carregando...' : 'Adicionar Avatar'}</span>
+                          <span className="text-xs font-black text-white uppercase tracking-widest group-hover:text-[#2DD4BF] transition-colors relative z-10">{isUploading ? 'Carregando...' : 'Adicionar Avatar'}</span>
                         </button>
                         <p className="text-[#8d8d99] text-xl font-medium tracking-tight mb-10 relative z-10 max-w-[400px] text-center leading-relaxed">Nenhum <span className="text-white">avatar personalizado</span> detectado nesta conta.</p>
-                        <button onClick={() => !isUploading && fileInputRef.current?.click()} className="px-12 py-5 bg-[#3B82F6] text-white rounded-[24px] text-base font-black hover:bg-[#2563EB] transition-all relative z-10 shadow-[0_15px_30px_rgba(59,130,246,0.3)] hover:scale-105 active:scale-95 group/btn disabled:opacity-50">
+                        <button onClick={() => !isUploading && fileInputRef.current?.click()} className="px-12 py-5 bg-[#2DD4BF] text-white rounded-[24px] text-base font-black hover:bg-[#2563EB] transition-all relative z-10 shadow-[0_15px_30px_rgba(59,130,246,0.3)] hover:scale-105 active:scale-95 group/btn disabled:opacity-50">
                           <span className="relative z-10 uppercase tracking-[0.2em] flex items-center gap-3">
                             {isUploading ? <div className="animate-spin w-5 h-5 border-2 border-t-white border-white/30 rounded-full"></div> : <Upload className="w-5 h-5" />}
                             {isUploading ? 'Processando...' : 'Fazer Upload'}
@@ -5410,12 +5407,12 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 relative z-10">
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-3 opacity-0">
-                <div className="px-3 py-1 bg-[#3B82F6]/10 border border-[#3B82F6]/30 rounded-full">
-                  <span className="text-[10px] font-black text-[#3B82F6] uppercase tracking-widest">.</span>
+                <div className="px-3 py-1 bg-[#2DD4BF]/10 border border-[#2DD4BF]/30 rounded-full">
+                  <span className="text-[10px] font-black text-[#2DD4BF] uppercase tracking-widest">.</span>
                 </div>
               </div>
               <h1 className="text-3xl md:text-5xl font-black text-white tracking-tighter uppercase leading-none">
-                Selecione o <span className="text-[#3B82F6]">Produto Viral</span>
+                Selecione o <span className="text-[#2DD4BF]">Produto Viral</span>
               </h1>
             </div>
 
@@ -5441,7 +5438,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
               <div className="w-64 h-1.5 bg-white/5 rounded-full overflow-hidden relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[tech-shimmer_3s_infinite]"></div>
                 <div
-                  className="h-full bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] relative"
+                  className="h-full bg-gradient-to-r from-[#2DD4BF] to-[#D946EF] relative"
                   style={{ width: '50%' }}
                 >
                   <div className="absolute right-0 top-0 bottom-0 w-4 bg-white/40 blur-sm"></div>
@@ -5456,27 +5453,27 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                 <div
                   key={p.id}
                   onClick={() => handleProductSelect(p.id)}
-                  className={`group relative bg-[#0B0B0E]/40 backdrop-blur-xl border-2 rounded-[40px] overflow-hidden cursor-pointer transition-all duration-700 transform-gpu hover:scale-[1.03] ${selectedProduct === p.id ? 'border-[#3B82F6] shadow-[0_0_50px_rgba(59,130,246,0.2)]' : 'border-white/5 hover:border-white/20'}`}
+                  className={`group relative bg-[#0B0B0E]/40 backdrop-blur-xl border-2 rounded-[40px] overflow-hidden cursor-pointer transition-all duration-700 transform-gpu hover:scale-[1.03] ${selectedProduct === p.id ? 'border-[#2DD4BF] shadow-[0_0_50px_rgba(59,130,246,0.2)]' : 'border-white/5 hover:border-white/20'}`}
                 >
                   <div className="aspect-square relative overflow-hidden bg-black/40">
                     <img src={p.image} className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 group-hover:rotate-1" alt={p.title} />
 
                     {/* BIO-SCAN HOVER EFFECT */}
                     <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                      <div className="absolute inset-x-0 h-[1px] bg-[#3B82F6]/50 top-0 animate-[scanline_2s_infinite]"></div>
-                      <div className="absolute top-4 right-4 w-12 h-12 border-t-2 border-r-2 border-[#3B82F6] opacity-40"></div>
-                      <div className="absolute bottom-4 left-4 w-12 h-12 border-b-2 border-l-2 border-[#3B82F6] opacity-40"></div>
+                      <div className="absolute inset-x-0 h-[1px] bg-[#2DD4BF]/50 top-0 animate-[scanline_2s_infinite]"></div>
+                      <div className="absolute top-4 right-4 w-12 h-12 border-t-2 border-r-2 border-[#2DD4BF] opacity-40"></div>
+                      <div className="absolute bottom-4 left-4 w-12 h-12 border-b-2 border-l-2 border-[#2DD4BF] opacity-40"></div>
                     </div>
 
                     {/* HARDWARE DECALS */}
                     <div className="absolute top-4 left-4 flex flex-col gap-1 translate-x-[-10px] group-hover:translate-x-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
-                      <span className="text-[8px] font-mono text-[#3B82F6] bg-black/60 px-2 py-0.5 rounded border border-[#3B82F6]/30 uppercase tracking-tighter">SYS_ID_1048_X</span>
+                      <span className="text-[8px] font-mono text-[#2DD4BF] bg-black/60 px-2 py-0.5 rounded border border-[#2DD4BF]/30 uppercase tracking-tighter">SYS_ID_1048_X</span>
                       <span className="text-[8px] font-mono text-white/40 bg-black/40 px-2 py-0.5 rounded border border-white/10 uppercase tracking-tighter">REF_PROD_V{p.id.slice(0, 4)}</span>
                     </div>
 
                     <div className="absolute bottom-4 right-4 translate-y-[10px] group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500">
                       {p.viral ? (
-                        <div className="bg-[#3B82F6] px-3 py-1 rounded-full shadow-lg flex items-center gap-2">
+                        <div className="bg-[#2DD4BF] px-3 py-1 rounded-full shadow-lg flex items-center gap-2">
                           <div className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
                           <span className="text-[9px] font-black text-white uppercase tracking-widest">{p.badge}</span>
                         </div>
@@ -5490,24 +5487,24 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
 
                     {/* ACTIVE SYNC OVERLAY */}
                     {selectedProduct === p.id && (
-                      <div className="absolute inset-0 bg-[#3B82F6]/10 flex items-center justify-center animate-in fade-in duration-500">
-                        <div className="w-20 h-20 rounded-full border-2 border-[#3B82F6] border-t-transparent animate-spin"></div>
+                      <div className="absolute inset-0 bg-[#2DD4BF]/10 flex items-center justify-center animate-in fade-in duration-500">
+                        <div className="w-20 h-20 rounded-full border-2 border-[#2DD4BF] border-t-transparent animate-spin"></div>
                         <div className="absolute inset-0 flex items-center justify-center">
-                          <Check className="text-[#3B82F6] w-10 h-10" strokeWidth={3} />
+                          <Check className="text-[#2DD4BF] w-10 h-10" strokeWidth={3} />
                         </div>
                       </div>
                     )}
                   </div>
 
                   <div className="p-4 md:p-8 relative bg-black/20">
-                    <h4 className="text-white text-sm md:text-[15px] font-black mb-3 md:mb-4 line-clamp-2 leading-tight tracking-tight min-h-[36px] md:min-h-[40px] group-hover:text-[#3B82F6] transition-colors">{p.title}</h4>
+                    <h4 className="text-white text-sm md:text-[15px] font-black mb-3 md:mb-4 line-clamp-2 leading-tight tracking-tight min-h-[36px] md:min-h-[40px] group-hover:text-[#2DD4BF] transition-colors">{p.title}</h4>
 
                     <div className="flex items-center justify-between">
                       <div className="px-3 py-1 bg-[#00b37e]/10 border border-[#00b37e]/20 rounded-md">
                         <span className="text-[9px] font-black text-[#00b37e] uppercase tracking-widest leading-none">Alta Demanda</span>
                       </div>
                       {selectedProduct === p.id && (
-                        <span className="text-[9px] font-black text-[#3B82F6] uppercase tracking-[0.2em] animate-pulse">Synchronized</span>
+                        <span className="text-[9px] font-black text-[#2DD4BF] uppercase tracking-[0.2em] animate-pulse">Synchronized</span>
                       )}
                     </div>
                   </div>
@@ -5556,7 +5553,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 relative z-10">
             <div className="flex flex-col gap-2">
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-none">
-                Configuração <span className="text-[#3B82F6]">do Vídeo</span>
+                Configuração <span className="text-[#2DD4BF]">do Vídeo</span>
               </h1>
             </div>
 
@@ -5582,7 +5579,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
               <div className="w-64 h-1.5 bg-white/5 rounded-full overflow-hidden relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[tech-shimmer_3s_infinite]"></div>
                 <div
-                  className="h-full bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] relative"
+                  className="h-full bg-gradient-to-r from-[#2DD4BF] to-[#D946EF] relative"
                   style={{ width: '75%' }}
                 >
                   <div className="absolute right-0 top-0 bottom-0 w-4 bg-white/40 blur-sm"></div>
@@ -5594,7 +5591,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
           {/* ENVIRONMENT PODS (CENÁRIO) */}
           <div className="mb-10 md:mb-16 relative z-10">
             <div className="flex items-center gap-4 mb-6 md:mb-8">
-              <div className="w-12 h-[1px] bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
+              <div className="w-12 h-[1px] bg-gradient-to-r from-[#2DD4BF] to-transparent"></div>
               <h3 className="text-[10px] md:text-[12px] font-black text-white uppercase tracking-[0.3em] md:tracking-[0.5em]">Ambiente // Cenário</h3>
             </div>
 
@@ -5605,22 +5602,22 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                   onClick={() => setSelectedScenario(scen.id)}
                   className="flex flex-col items-center gap-3 md:gap-4 group/pod perspective-1000"
                 >
-                  <div className={`relative w-full aspect-square rounded-[24px] md:rounded-[32px] flex items-center justify-center transition-all duration-700 transform-gpu group-hover/pod:scale-105 group-active/pod:scale-95 ${selectedScenario === scen.id ? 'bg-[#3B82F6]/10 border-2 border-[#3B82F6] shadow-[0_0_30px_rgba(59,130,246,0.2)]' : 'bg-[#0B0B0E] border border-white/5 hover:border-white/20'}`}>
+                  <div className={`relative w-full aspect-square rounded-[24px] md:rounded-[32px] flex items-center justify-center transition-all duration-700 transform-gpu group-hover/pod:scale-105 group-active/pod:scale-95 ${selectedScenario === scen.id ? 'bg-[#2DD4BF]/10 border-2 border-[#2DD4BF] shadow-[0_0_30px_rgba(59,130,246,0.2)]' : 'bg-[#0B0B0E] border border-white/5 hover:border-white/20'}`}>
 
                     {/* POD SCANNER EFFECT */}
                     {selectedScenario === scen.id && (
                       <div className="absolute inset-0 overflow-hidden rounded-[30px]">
-                        <div className="absolute inset-x-0 h-[2px] bg-[#3B82F6]/40 top-0 animate-[scanline_2s_infinite]"></div>
+                        <div className="absolute inset-x-0 h-[2px] bg-[#2DD4BF]/40 top-0 animate-[scanline_2s_infinite]"></div>
                       </div>
                     )}
 
-                    <div className={`relative z-10 transition-all duration-500 ${selectedScenario === scen.id ? 'text-[#3B82F6] scale-125' : 'text-[#5b5b7b] group-hover/pod:text-white'}`}>
+                    <div className={`relative z-10 transition-all duration-500 ${selectedScenario === scen.id ? 'text-[#2DD4BF] scale-125' : 'text-[#5b5b7b] group-hover/pod:text-white'}`}>
                       {React.cloneElement(scen.icon as React.ReactElement, { size: 32, strokeWidth: 1.5 })}
                     </div>
 
                     {/* SELECTION INDICATOR */}
                     {selectedScenario === scen.id && (
-                      <div className="absolute -top-2 -right-2 w-6 h-6 bg-[#3B82F6] rounded-full flex items-center justify-center border-2 border-[#0B0B0E] shadow-lg">
+                      <div className="absolute -top-2 -right-2 w-6 h-6 bg-[#2DD4BF] rounded-full flex items-center justify-center border-2 border-[#0B0B0E] shadow-lg">
                         <Check size={12} className="text-white" strokeWidth={4} />
                       </div>
                     )}
@@ -5636,7 +5633,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
           {/* NEURAL PROCESSING MODULES (MODELO DO VÍDEO) */}
           <div className="mb-16 relative z-10">
             <div className="flex items-center gap-4 mb-8">
-              <div className="w-12 h-[1px] bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
+              <div className="w-12 h-[1px] bg-gradient-to-r from-[#2DD4BF] to-transparent"></div>
               <h3 className="text-[12px] font-black text-white uppercase tracking-[0.5em]">Processamento // Template</h3>
             </div>
 
@@ -5645,16 +5642,16 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                 <button
                   key={model.id}
                   onClick={() => setSelectedVideoModel(model.id)}
-                  className={`group/model relative flex flex-col items-start p-8 rounded-[32px] border-2 transition-all duration-700 text-left overflow-hidden ${selectedVideoModel === model.id ? 'bg-[#3B82F6]/5 border-[#3B82F6] shadow-[0_0_40px_rgba(59,130,246,0.15)] scale-[1.02]' : 'bg-[#0B0B0E] border-white/5 hover:border-white/10'}`}
+                  className={`group/model relative flex flex-col items-start p-8 rounded-[32px] border-2 transition-all duration-700 text-left overflow-hidden ${selectedVideoModel === model.id ? 'bg-[#2DD4BF]/5 border-[#2DD4BF] shadow-[0_0_40px_rgba(59,130,246,0.15)] scale-[1.02]' : 'bg-[#0B0B0E] border-white/5 hover:border-white/10'}`}
                 >
                   {/* ACTIVE MODULE GLOW */}
                   {selectedVideoModel === model.id && (
-                    <div className="absolute inset-x-0 bottom-0 h-1 bg-[#3B82F6] shadow-[0_0_20px_#3B82F6] animate-pulse"></div>
+                    <div className="absolute inset-x-0 bottom-0 h-1 bg-[#2DD4BF] shadow-[0_0_20px_#3B82F6] animate-pulse"></div>
                   )}
 
                   <div className="flex items-center gap-3 mb-3">
-                    <div className={`w-2 h-2 rounded-full transition-colors ${selectedVideoModel === model.id ? 'bg-[#3B82F6] animate-pulse' : 'bg-[#1e1f26]'}`}></div>
-                    <span className={`text-sm font-black tracking-tight uppercase transition-colors ${selectedVideoModel === model.id ? 'text-[#3B82F6]' : 'text-white/80 group-hover/model:text-white'}`}>
+                    <div className={`w-2 h-2 rounded-full transition-colors ${selectedVideoModel === model.id ? 'bg-[#2DD4BF] animate-pulse' : 'bg-[#1e1f26]'}`}></div>
+                    <span className={`text-sm font-black tracking-tight uppercase transition-colors ${selectedVideoModel === model.id ? 'text-[#2DD4BF]' : 'text-white/80 group-hover/model:text-white'}`}>
                       {model.title}
                     </span>
                   </div>
@@ -5664,10 +5661,10 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                   </p>
 
                   <div className={`mt-auto flex items-center gap-2 opacity-0 group-hover/model:opacity-100 transition-opacity duration-500 ${selectedVideoModel === model.id ? 'opacity-100' : ''}`}>
-                    <span className="text-[8px] font-black text-[#3B82F6] uppercase tracking-[0.2em]">Neural Match</span>
+                    <span className="text-[8px] font-black text-[#2DD4BF] uppercase tracking-[0.2em]">Neural Match</span>
                     <div className="flex gap-0.5">
                       {[1, 2, 3, 4].map(i => (
-                        <div key={i} className={`w-1 h-3 rounded-full ${i <= 3 ? 'bg-[#3B82F6]' : 'bg-[#1e1f26]'}`}></div>
+                        <div key={i} className={`w-1 h-3 rounded-full ${i <= 3 ? 'bg-[#2DD4BF]' : 'bg-[#1e1f26]'}`}></div>
                       ))}
                     </div>
                   </div>
@@ -5680,7 +5677,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16 relative z-10">
             <div>
               <div className="flex items-center gap-4 mb-8">
-                <div className="w-8 h-[1px] bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
+                <div className="w-8 h-[1px] bg-gradient-to-r from-[#2DD4BF] to-transparent"></div>
                 <h3 className="text-[12px] font-black text-white uppercase tracking-[0.5em]">Tonalidade // Sync</h3>
               </div>
               <div className="flex flex-wrap gap-4">
@@ -5688,14 +5685,14 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                   <button
                     key={tone.id}
                     onClick={() => setSelectedTone(tone.id)}
-                    className={`flex items-center gap-3 px-8 py-4 rounded-2xl border-2 transition-all duration-500 relative overflow-hidden group/tone ${selectedTone === tone.id ? 'bg-[#3B82F6]/10 border-[#3B82F6] text-white shadow-lg' : 'bg-[#0B0B0E] border-white/5 text-[#8d8d99] hover:text-white hover:border-white/10'}`}
+                    className={`flex items-center gap-3 px-8 py-4 rounded-2xl border-2 transition-all duration-500 relative overflow-hidden group/tone ${selectedTone === tone.id ? 'bg-[#2DD4BF]/10 border-[#2DD4BF] text-white shadow-lg' : 'bg-[#0B0B0E] border-white/5 text-[#8d8d99] hover:text-white hover:border-white/10'}`}
                   >
-                    <div className={`transition-all duration-500 ${selectedTone === tone.id ? 'text-[#3B82F6] scale-125' : 'text-current opacity-40 group-hover/tone:opacity-100'}`}>
+                    <div className={`transition-all duration-500 ${selectedTone === tone.id ? 'text-[#2DD4BF] scale-125' : 'text-current opacity-40 group-hover/tone:opacity-100'}`}>
                       {tone.icon}
                     </div>
                     <span className="text-xs font-black uppercase tracking-widest">{tone.label}</span>
                     {selectedTone === tone.id && (
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#3B82F6]/10 to-transparent"></div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#2DD4BF]/10 to-transparent"></div>
                     )}
                   </button>
                 ))}
@@ -5704,7 +5701,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
 
             <div>
               <div className="flex items-center gap-4 mb-8">
-                <div className="w-8 h-[1px] bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
+                <div className="w-8 h-[1px] bg-gradient-to-r from-[#2DD4BF] to-transparent"></div>
                 <h3 className="text-[12px] font-black text-white uppercase tracking-[0.5em]">Temporal // Ciclo</h3>
               </div>
               <div className="flex flex-wrap gap-4">
@@ -5712,12 +5709,12 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                   <button
                     key={dur.id}
                     onClick={() => setSelectedDuration(dur.id)}
-                    className={`flex items-center gap-3 px-8 py-4 rounded-2xl border-2 transition-all duration-500 relative overflow-hidden group/dur ${selectedDuration === dur.id ? 'bg-[#3B82F6]/10 border-[#3B82F6] text-white shadow-lg' : 'bg-[#0B0B0E] border-white/5 text-[#8d8d99] hover:text-white hover:border-white/10'}`}
+                    className={`flex items-center gap-3 px-8 py-4 rounded-2xl border-2 transition-all duration-500 relative overflow-hidden group/dur ${selectedDuration === dur.id ? 'bg-[#2DD4BF]/10 border-[#2DD4BF] text-white shadow-lg' : 'bg-[#0B0B0E] border-white/5 text-[#8d8d99] hover:text-white hover:border-white/10'}`}
                   >
-                    <Clock className={`w-4 h-4 transition-all duration-500 ${selectedDuration === dur.id ? 'text-[#3B82F6] scale-125' : 'text-current opacity-40 group-hover/dur:opacity-100'}`} />
+                    <Clock className={`w-4 h-4 transition-all duration-500 ${selectedDuration === dur.id ? 'text-[#2DD4BF] scale-125' : 'text-current opacity-40 group-hover/dur:opacity-100'}`} />
                     <span className="text-xs font-black uppercase tracking-widest">{dur.label}</span>
                     {selectedDuration === dur.id && (
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#3B82F6]/10 to-transparent"></div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#2DD4BF]/10 to-transparent"></div>
                     )}
                   </button>
                 ))}
@@ -5776,12 +5773,12 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 relative z-10">
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-3 opacity-0">
-                <div className="px-3 py-1 bg-[#3B82F6]/10 border border-[#3B82F6]/30 rounded-full">
-                  <span className="text-[10px] font-black text-[#3B82F6] uppercase tracking-widest">.</span>
+                <div className="px-3 py-1 bg-[#2DD4BF]/10 border border-[#2DD4BF]/30 rounded-full">
+                  <span className="text-[10px] font-black text-[#2DD4BF] uppercase tracking-widest">.</span>
                 </div>
               </div>
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tighter uppercase leading-none">
-                Roteiro <span className="text-[#3B82F6]">& Voz</span>
+                Roteiro <span className="text-[#2DD4BF]">& Voz</span>
               </h1>
             </div>
 
@@ -5807,7 +5804,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
               <div className="w-64 h-1.5 bg-white/5 rounded-full overflow-hidden relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[tech-shimmer_3s_infinite]"></div>
                 <div
-                  className="h-full bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] relative"
+                  className="h-full bg-gradient-to-r from-[#2DD4BF] to-[#D946EF] relative"
                   style={{ width: '100%' }}
                 >
                   <div className="absolute right-0 top-0 bottom-0 w-4 bg-white/40 blur-sm"></div>
@@ -5821,7 +5818,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
             <div className="space-y-12">
               <div>
                 <div className="flex items-center gap-4 mb-4 md:mb-8">
-                  <div className="w-8 h-[1px] bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
+                  <div className="w-8 h-[1px] bg-gradient-to-r from-[#2DD4BF] to-transparent"></div>
                   <h3 className="text-[10px] md:text-[11px] font-black text-white uppercase tracking-[0.3em] md:tracking-[0.5em]">Gênero // Matriz</h3>
                 </div>
                 <div className="flex gap-3 p-1.5 md:p-2 bg-black/40 border border-white/5 rounded-2xl md:rounded-3xl backdrop-blur-xl">
@@ -5829,10 +5826,10 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                     <button
                       key={gender}
                       onClick={() => setVoiceGender(gender as 'fem' | 'masc')}
-                      className={`flex-1 py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-500 relative overflow-hidden group/gen ${voiceGender === gender ? 'text-white border border-[#3B82F6]/50 bg-[#3B82F6]/10' : 'text-[#5b5b7b] hover:text-white hover:bg-white/5'}`}
+                      className={`flex-1 py-5 rounded-2xl text-[10px] font-black uppercase tracking-[0.3em] transition-all duration-500 relative overflow-hidden group/gen ${voiceGender === gender ? 'text-white border border-[#2DD4BF]/50 bg-[#2DD4BF]/10' : 'text-[#5b5b7b] hover:text-white hover:bg-white/5'}`}
                     >
                       {gender === 'fem' ? 'Feminino' : 'Masculino'}
-                      {voiceGender === gender && <div className="absolute inset-0 bg-[#3B82F6]/5 shadow-[inset_0_0_20px_rgba(59,130,246,0.1)]"></div>}
+                      {voiceGender === gender && <div className="absolute inset-0 bg-[#2DD4BF]/5 shadow-[inset_0_0_20px_rgba(59,130,246,0.1)]"></div>}
                     </button>
                   ))}
                 </div>
@@ -5840,7 +5837,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
 
               <div>
                 <div className="flex items-center gap-4 mb-4 md:mb-8">
-                  <div className="w-8 h-[1px] bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
+                  <div className="w-8 h-[1px] bg-gradient-to-r from-[#2DD4BF] to-transparent"></div>
                   <h3 className="text-[10px] md:text-[11px] font-black text-white uppercase tracking-[0.3em] md:tracking-[0.5em]">Tonalidade // Modulação</h3>
                 </div>
                 <div className="flex flex-wrap gap-2 md:gap-3">
@@ -5848,7 +5845,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                     <button
                       key={tone}
                       onClick={() => setSelectedStepTone(tone)}
-                      className={`px-4 md:px-8 py-2 md:py-3.5 rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black border-2 transition-all duration-500 uppercase tracking-widest ${selectedStepTone === tone ? 'border-[#3B82F6] bg-[#3B82F6]/10 text-white shadow-lg shadow-[#3B82F6]/10' : 'border-white/5 bg-black/40 text-[#5b5b7b] hover:border-white/20 hover:text-white'}`}
+                      className={`px-4 md:px-8 py-2 md:py-3.5 rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black border-2 transition-all duration-500 uppercase tracking-widest ${selectedStepTone === tone ? 'border-[#2DD4BF] bg-[#2DD4BF]/10 text-white shadow-lg shadow-[#2DD4BF]/10' : 'border-white/5 bg-black/40 text-[#5b5b7b] hover:border-white/20 hover:text-white'}`}
                     >
                       {tone}
                     </button>
@@ -5861,7 +5858,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
             <div className="space-y-8">
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-4">
-                  <div className="w-8 h-[1px] bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
+                  <div className="w-8 h-[1px] bg-gradient-to-r from-[#2DD4BF] to-transparent"></div>
                   <h3 className="text-[11px] font-black text-white uppercase tracking-[0.5em]">Neural Script Engine</h3>
                 </div>
                 <button
@@ -5910,7 +5907,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                     }, 1500); // 1.5s delay for effect
                   }}
                   disabled={isGeneratingScript}
-                  className="px-4 py-2 bg-[#3B82F6]/10 border border-[#3B82F6]/20 text-[#3B82F6] rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-[#3B82F6]/20 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                  className="px-4 py-2 bg-[#2DD4BF]/10 border border-[#2DD4BF]/20 text-[#2DD4BF] rounded-xl text-[9px] font-black uppercase tracking-widest hover:bg-[#2DD4BF]/20 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
                   {isGeneratingScript ? (
                     <><Loader2 className="w-3 h-3 animate-spin" /> Processando...</>
                   ) : (
@@ -5923,7 +5920,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                 {takes.map((take, index) => (
                   <div key={index} className="relative group/take animate-in fade-in slide-in-from-bottom-4 duration-500">
                     <div className="absolute -top-3 left-6 px-4 py-1 bg-[#0B0B0E] border border-white/10 rounded-full z-10 flex items-center gap-3 shadow-2xl">
-                      <span className="text-[9px] font-black text-[#3B82F6] uppercase tracking-widest leading-none">Module {index + 1}</span>
+                      <span className="text-[9px] font-black text-[#2DD4BF] uppercase tracking-widest leading-none">Module {index + 1}</span>
                       {index > 0 && (
                         <button
                           onClick={() => setTakes(takes.filter((_, i) => i !== index))}
@@ -5941,7 +5938,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                         setTakes(newTakes);
                       }}
                       placeholder={`Initialize transcription for module ${index + 1}...`}
-                      className="w-full h-32 bg-black/40 backdrop-blur-xl border-2 border-white/5 rounded-[32px] p-8 text-sm text-white placeholder:text-[#5b5b7b]/30 focus:outline-none focus:border-[#3B82F6]/30 transition-all duration-500 resize-none font-medium leading-relaxed"
+                      className="w-full h-32 bg-black/40 backdrop-blur-xl border-2 border-white/5 rounded-[32px] p-8 text-sm text-white placeholder:text-[#5b5b7b]/30 focus:outline-none focus:border-[#2DD4BF]/30 transition-all duration-500 resize-none font-medium leading-relaxed"
                     />
                     <div className="absolute bottom-6 right-8 flex items-center gap-4 opacity-40 group-hover/take:opacity-100 transition-opacity">
                       <div className="w-[1px] h-3 bg-white/10"></div>
@@ -5954,7 +5951,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
 
                 <button
                   onClick={() => setTakes([...takes, ''])}
-                  className="w-full py-6 rounded-[32px] border-2 border-dashed border-white/5 hover:border-[#3B82F6]/30 hover:bg-[#3B82F6]/5 text-[#5b5b7b] hover:text-[#3B82F6] flex items-center justify-center gap-4 transition-all duration-500 group/add"
+                  className="w-full py-6 rounded-[32px] border-2 border-dashed border-white/5 hover:border-[#2DD4BF]/30 hover:bg-[#2DD4BF]/5 text-[#5b5b7b] hover:text-[#2DD4BF] flex items-center justify-center gap-4 transition-all duration-500 group/add"
                 >
                   <Plus className="w-6 h-6 group-hover/add:rotate-90 transition-transform duration-500" />
                   <span className="text-xs font-black uppercase tracking-[0.2em]">Initialize Additional Module</span>
@@ -5962,7 +5959,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
               </div>
 
               <div className="flex items-center gap-3 p-4 bg-white/5 rounded-2xl border border-white/5">
-                <Info className="w-4 h-4 text-[#3B82F6]" />
+                <Info className="w-4 h-4 text-[#2DD4BF]" />
                 <p className="text-[10px] font-bold text-[#5b5b7b] uppercase tracking-wider leading-relaxed">
                   Neural link established. Avatar will synthesize text with 99.8% synaptic accuracy.
                 </p>
@@ -6007,7 +6004,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
               <CheckCircle2 className="w-8 h-8 text-[#00b37e]" />
             </div>
             <h1 className="text-4xl md:text-5xl font-black text-white tracking-tighter mb-4 uppercase">
-              Sua Direção de IA está <span className="text-[#3B82F6]">Pronta!</span>
+              Sua Direção de IA está <span className="text-[#2DD4BF]">Pronta!</span>
             </h1>
             <p className="text-[#8d8d99] text-lg font-medium max-w-2xl">
               Tudo pronto! Siga os passos abaixo para baixar seus arquivos e gerar seu vídeo no estúdio.
@@ -6018,10 +6015,10 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
             {/* Coluna da Esquerda: Arquivos para Baixar (4 cols) */}
             <div className="lg:col-span-4 flex flex-col gap-6">
               {/* AVATAR REPOSITORY CARD */}
-              <div className="relative group/asset rounded-[40px] overflow-hidden border border-white/5 bg-[#14151a] shadow-2xl transition-all duration-700 hover:border-[#3B82F6]/30">
+              <div className="relative group/asset rounded-[40px] overflow-hidden border border-white/5 bg-[#14151a] shadow-2xl transition-all duration-700 hover:border-[#2DD4BF]/30">
                 <div className="absolute top-6 left-6 z-20 flex items-center gap-3">
                   <div className="px-3 py-1 bg-black/60 backdrop-blur-md border border-white/10 rounded-full">
-                    <span className="text-[9px] font-mono text-[#3B82F6] uppercase tracking-[0.2em]">ID_AVATAR_{selectedInfluencer?.toUpperCase() || 'NULL'}</span>
+                    <span className="text-[9px] font-mono text-[#2DD4BF] uppercase tracking-[0.2em]">ID_AVATAR_{selectedInfluencer?.toUpperCase() || 'NULL'}</span>
                   </div>
                 </div>
 
@@ -6043,7 +6040,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                       const url = allInfluencers.find(i => i.id === selectedInfluencer)?.image || allInfluencers[0].image;
                       downloadImage(url, `avatar_${selectedInfluencer || 'modelo'}.png`);
                     }}
-                    className="w-full py-4 bg-white hover:bg-[#3B82F6] text-black hover:text-white rounded-2xl text-xs font-black uppercase tracking-widest transition-all flex items-center justify-center gap-3 shadow-lg active:scale-95"
+                    className="w-full py-4 bg-white hover:bg-[#2DD4BF] text-black hover:text-white rounded-2xl text-xs font-black uppercase tracking-widest transition-all flex items-center justify-center gap-3 shadow-lg active:scale-95"
                   >
                     <Download className="w-4 h-4" strokeWidth={3} />
                     Baixar Imagem PNG
@@ -6085,19 +6082,19 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
               <div className="bg-[#14151a]/60 backdrop-blur-3xl border border-white/5 rounded-[32px] md:rounded-[48px] p-5 md:p-14 shadow-2xl relative overflow-hidden group/station h-full">
                 {/* Cabeçalho Tech */}
                 <div className="flex items-center gap-4 mb-8 md:mb-16 relative z-10">
-                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-[14px] md:rounded-2xl bg-[#3B82F6]/10 border border-[#3B82F6]/30 flex items-center justify-center shadow-[0_0_20px_rgba(59,130,246,0.2)] shrink-0">
-                    <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-[#3B82F6]" />
+                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-[14px] md:rounded-2xl bg-[#2DD4BF]/10 border border-[#2DD4BF]/30 flex items-center justify-center shadow-[0_0_20px_rgba(59,130,246,0.2)] shrink-0">
+                    <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-[#2DD4BF]" />
                   </div>
                   <h3 className="text-2xl md:text-3xl font-black text-white uppercase tracking-tight leading-tight">Estação de Trabalho</h3>
                 </div>
 
                 <div className="flex flex-col gap-10 md:gap-16 relative">
                   {/* Linha Vertical de Conexão */}
-                  <div className="absolute left-[13px] top-6 bottom-6 w-[1.5px] bg-gradient-to-b from-[#3B82F6]/50 via-white/5 to-white/5"></div>
+                  <div className="absolute left-[13px] top-6 bottom-6 w-[1.5px] bg-gradient-to-b from-[#2DD4BF]/50 via-white/5 to-white/5"></div>
 
                   {/* PASSO 01: SALVAR REFERÊNCIAS */}
                   <div className="flex items-start gap-4 md:gap-8 relative z-10 group/step">
-                    <div className="w-[26px] h-[26px] bg-black border-2 border-[#3B82F6] rounded-full flex items-center justify-center text-[10px] font-black text-[#3B82F6] shadow-[0_0_15px_rgba(59,130,246,0.4)] group-hover/step:scale-110 transition-transform shrink-0">1</div>
+                    <div className="w-[26px] h-[26px] bg-black border-2 border-[#2DD4BF] rounded-full flex items-center justify-center text-[10px] font-black text-[#2DD4BF] shadow-[0_0_15px_rgba(59,130,246,0.4)] group-hover/step:scale-110 transition-transform shrink-0">1</div>
                     <div className="flex-1 mt-0.5">
                       <h4 className="text-lg md:text-xl font-bold text-white mb-1.5 md:mb-2 uppercase tracking-tight leading-tight">Salvar Referências Visuais</h4>
                       <p className="text-[#5b5b7b] text-xs md:text-sm font-medium leading-relaxed uppercase tracking-wider">Clique nas imagens ao lado para baixar os assets.</p>
@@ -6106,7 +6103,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
 
                   {/* PASSO 02: ROTEIRO DE DIREÇÃO */}
                   <div className="flex items-start gap-4 md:gap-8 relative z-10 group/step">
-                    <div className="w-[26px] h-[26px] bg-black border-2 border-white/10 rounded-full flex items-center justify-center text-[10px] font-black text-white/40 shadow-xl group-hover/step:border-[#3B82F6]/50 group-hover/step:text-[#3B82F6] transition-all shrink-0">2</div>
+                    <div className="w-[26px] h-[26px] bg-black border-2 border-white/10 rounded-full flex items-center justify-center text-[10px] font-black text-white/40 shadow-xl group-hover/step:border-[#2DD4BF]/50 group-hover/step:text-[#2DD4BF] transition-all shrink-0">2</div>
                     <div className="flex-1 mt-0.5">
                       <h4 className="text-lg md:text-xl font-bold text-white mb-1.5 md:mb-2 uppercase tracking-tight leading-tight">Roteiro de Direção (Veo 3)</h4>
                       <p className="text-[#5b5b7b] text-xs md:text-sm font-medium leading-relaxed uppercase tracking-wider mb-6 md:mb-8">
@@ -6115,7 +6112,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
 
                       <div className="flex flex-col gap-4 md:gap-5">
                         {takes.map((text, idx) => (
-                          <div key={idx} className="bg-black/40 border border-white/5 rounded-[20px] md:rounded-[28px] p-4 md:p-6 flex flex-col gap-4 md:gap-5 group/take transition-all hover:bg-black/60 hover:border-[#3B82F6]/30 shadow-lg">
+                          <div key={idx} className="bg-black/40 border border-white/5 rounded-[20px] md:rounded-[28px] p-4 md:p-6 flex flex-col gap-4 md:gap-5 group/take transition-all hover:bg-black/60 hover:border-[#2DD4BF]/30 shadow-lg">
                             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-0">
                               <div className="flex items-center gap-3">
                                 <div className="w-1.5 h-1.5 rounded-full bg-[#00b37e] animate-pulse shadow-[0_0_8px_#00b37e]"></div>
@@ -6156,7 +6153,7 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
 
                                   setViewedPrompt({ title: `TAKE ${idx + 1} — Prompt Completo`, text: masterPrompt });
                                 }}
-                                className="text-[10px] font-black text-[#3B82F6] uppercase tracking-widest hover:underline opacity-60 hover:opacity-100 transition-opacity"
+                                className="text-[10px] font-black text-[#2DD4BF] uppercase tracking-widest hover:underline opacity-60 hover:opacity-100 transition-opacity"
                               >
                                 [Ver Prompt]
                               </button>
@@ -6197,7 +6194,7 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
 
                                 navigator.clipboard.writeText(masterPrompt);
                               }}
-                              className="w-full flex items-center justify-center gap-3 py-4 bg-[#2a2b33] hover:bg-[#3B82F6] text-white/50 hover:text-white rounded-2xl text-[12px] font-black uppercase tracking-widest transition-all active:scale-95 group/btn"
+                              className="w-full flex items-center justify-center gap-3 py-4 bg-[#2a2b33] hover:bg-[#2DD4BF] text-white/50 hover:text-white rounded-2xl text-[12px] font-black uppercase tracking-widest transition-all active:scale-95 group/btn"
                             >
                               <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                               Copiar Take {idx + 1}
@@ -6210,11 +6207,11 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
 
                   {/* PASSO 03: FINALIZAR NO VEO */}
                   <div className="flex items-start gap-4 md:gap-8 relative z-10 group/step">
-                    <div className="w-[26px] h-[26px] bg-black border-2 border-white/10 rounded-full flex items-center justify-center text-[10px] font-black text-white/40 shadow-xl group-hover/step:border-[#3B82F6]/50 group-hover/step:text-[#3B82F6] transition-all shrink-0">3</div>
+                    <div className="w-[26px] h-[26px] bg-black border-2 border-white/10 rounded-full flex items-center justify-center text-[10px] font-black text-white/40 shadow-xl group-hover/step:border-[#2DD4BF]/50 group-hover/step:text-[#2DD4BF] transition-all shrink-0">3</div>
                     <div className="flex-1 mt-0.5">
                       <h4 className="text-lg md:text-xl font-bold text-white mb-4 md:mb-8 uppercase tracking-tight leading-tight">Finalizar no Veo 3</h4>
 
-                      <button onClick={() => window.open('https://labs.google/flow/about', '_blank')} className="w-full py-4 md:py-6 px-4 bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] hover:scale-[1.02] text-white rounded-[20px] md:rounded-3xl font-black text-sm sm:text-base md:text-lg flex items-center justify-center gap-2 md:gap-4 shadow-[0_20px_40px_rgba(59,130,246,0.3)] transition-all active:scale-[0.98] group/final">
+                      <button onClick={() => window.open('https://labs.google/flow/about', '_blank')} className="w-full py-4 md:py-6 px-4 bg-gradient-to-r from-[#2DD4BF] to-[#D946EF] hover:scale-[1.02] text-white rounded-[20px] md:rounded-3xl font-black text-sm sm:text-base md:text-lg flex items-center justify-center gap-2 md:gap-4 shadow-[0_20px_40px_rgba(59,130,246,0.3)] transition-all active:scale-[0.98] group/final">
                         <Video className="w-5 h-5 md:w-7 md:h-7 shrink-0" />
                         <span>ABRIR VEO STUDIO</span>
                         <ExternalLink className="w-4 h-4 md:w-5 md:h-5 opacity-40 group-hover/final:opacity-100 transition-opacity shrink-0" />
@@ -6235,7 +6232,7 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
           <div className="relative bg-[#0B0B0E] border border-white/10 rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
             <div className="flex items-center justify-between p-6 border-b border-white/10 bg-white/[0.02]">
               <div className="flex items-center gap-3">
-                <FileText className="w-5 h-5 text-[#3B82F6]" />
+                <FileText className="w-5 h-5 text-[#2DD4BF]" />
                 <h3 className="text-xl font-bold text-white uppercase tracking-tight">{viewedPrompt.title}</h3>
               </div>
               <button onClick={() => setViewedPrompt(null)} className="p-2 hover:bg-white/10 rounded-full transition-colors">
@@ -6245,7 +6242,7 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
 
             <div className="p-6 overflow-y-auto custom-scrollbar flex-1">
               <div className="bg-black/50 border border-white/5 rounded-2xl p-6 relative group/content">
-                <p className="text-white/80 font-medium leading-relaxed whitespace-pre-wrap select-all selection:bg-[#3B82F6]/30 selection:text-white">
+                <p className="text-white/80 font-medium leading-relaxed whitespace-pre-wrap select-all selection:bg-[#2DD4BF]/30 selection:text-white">
                   {viewedPrompt.text}
                 </p>
 
@@ -6255,7 +6252,7 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
                     onClick={() => {
                       navigator.clipboard.writeText(viewedPrompt.text);
                     }}
-                    className="flex items-center gap-2 px-3 py-1.5 bg-[#3B82F6]/20 border border-[#3B82F6]/30 hover:bg-[#3B82F6] text-[#3B82F6] hover:text-white rounded-lg text-xs font-bold uppercase transition-all shadow-lg"
+                    className="flex items-center gap-2 px-3 py-1.5 bg-[#2DD4BF]/20 border border-[#2DD4BF]/30 hover:bg-[#2DD4BF] text-[#2DD4BF] hover:text-white rounded-lg text-xs font-bold uppercase transition-all shadow-lg"
                   >
                     <ArrowRight className="w-3 h-3" />
                     Copiar
@@ -6270,7 +6267,7 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
                   navigator.clipboard.writeText(viewedPrompt.text);
                   setViewedPrompt(null);
                 }}
-                className="flex items-center justify-center gap-3 px-8 py-4 bg-[#3B82F6] hover:bg-[#2563eb] text-white rounded-2xl font-black uppercase tracking-widest transition-all hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_20px_rgba(59,130,246,0.3)]"
+                className="flex items-center justify-center gap-3 px-8 py-4 bg-[#2DD4BF] hover:bg-[#2563eb] text-white rounded-2xl font-black uppercase tracking-widest transition-all hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_20px_rgba(59,130,246,0.3)]"
               >
                 Copiar e Fechar
                 <ArrowRight className="w-4 h-4" />
@@ -6326,7 +6323,7 @@ const PrevisibilidadeReceitaView: React.FC = () => {
       label: 'Moderado',
       badge: 'RECOMMENDED',
       views: '~1k views',
-      icon: <Sparkles className="w-4 h-4 text-[#3B82F6]" />,
+      icon: <Sparkles className="w-4 h-4 text-[#2DD4BF]" />,
       data: calculateResults(1000),
       isRecommended: true
     },
@@ -6343,18 +6340,18 @@ const PrevisibilidadeReceitaView: React.FC = () => {
     <main className="max-w-[1500px] mx-auto px-4 md:px-6 py-8 md:py-16 relative">
       {/* RADICAL ASYMMETRIC HEADER - PROFIT MATRIX SYNC */}
       <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-10 md:mb-16 relative z-10 bg-[#0B0B0E]/30 backdrop-blur-3xl p-6 md:p-10 rounded-[32px] md:rounded-[48px] border border-white/5 shadow-2xl overflow-hidden group">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#3B82F6]/5 via-transparent to-[#8B5CF6]/5 opacity-50"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#2DD4BF]/5 via-transparent to-[#D946EF]/5 opacity-50"></div>
 
         {/* LEFT: TYPOGRAPHY SCULPTURE & PULSE */}
         <div className="flex flex-col gap-6 flex-1 min-w-0 lg:min-w-[400px] relative z-20">
           <div className="relative">
             {/* ARCHITECTURAL STATUS LINE */}
             <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-4 justify-center lg:justify-start">
-              <div className="hidden sm:block h-[1px] w-8 bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
-              <span className="text-[9px] font-black text-[#3B82F6] tracking-[0.4em] uppercase">Profit Matrix Alignment</span>
+              <div className="hidden sm:block h-[1px] w-8 bg-gradient-to-r from-[#2DD4BF] to-transparent"></div>
+              <span className="text-[9px] font-black text-[#2DD4BF] tracking-[0.4em] uppercase">Profit Matrix Alignment</span>
               <div className="flex gap-1 shrink-0">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="w-1 h-1 bg-[#3B82F6]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
+                  <div key={i} className="w-1 h-1 bg-[#2DD4BF]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
                 ))}
               </div>
             </div>
@@ -6362,7 +6359,7 @@ const PrevisibilidadeReceitaView: React.FC = () => {
             <div className="relative">
               <h1 className="text-4xl md:text-5xl lg:text-7xl font-black tracking-tighter leading-[0.85] select-none text-center lg:text-left pl-1 lg:pl-0">
                 <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent uppercase text-shadow-sm">Previsibilidade de</span>
-                <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent uppercase">Receita</span>
+                <span className="block bg-gradient-to-r from-[#2DD4BF] via-[#D946EF] to-[#d946ef] bg-clip-text text-transparent uppercase">Receita</span>
               </h1>
             </div>
           </div>
@@ -6375,18 +6372,18 @@ const PrevisibilidadeReceitaView: React.FC = () => {
         {/* RIGHT: SYNERGIC MODULE CLUSTER */}
         <div className="flex flex-wrap items-center justify-center lg:justify-end gap-4 md:gap-6 flex-1 relative z-20">
           <div className="relative group">
-            <div className="absolute inset-0 bg-[#3B82F6]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            <div className="absolute inset-0 bg-[#2DD4BF]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
             <div className="w-30 h-30 md:w-40 md:h-40 backdrop-blur-3xl bg-white/[0.03] border border-white/10 rounded-[28px] md:rounded-[40px] p-4 md:p-6 flex flex-col items-center justify-center shadow-2xl transition-all duration-500 group-hover:scale-105">
-              <Activity className="w-4 h-4 md:w-6 md:h-6 text-[#3B82F6] mb-1.5 md:mb-2 opacity-50" />
+              <Activity className="w-4 h-4 md:w-6 md:h-6 text-[#2DD4BF] mb-1.5 md:mb-2 opacity-50" />
               <span className="text-3xl md:text-4xl font-black text-white tracking-tighter mb-0.5 md:mb-1">98%</span>
               <span className="text-[6px] md:text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">ACCURACY RATE</span>
             </div>
           </div>
 
           <div className="relative group hidden sm:block">
-            <div className="absolute inset-0 bg-[#8B5CF6]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            <div className="absolute inset-0 bg-[#D946EF]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
             <div className="w-32 h-32 backdrop-blur-3xl bg-white/[0.02] border border-white/5 rounded-[32px] p-6 flex flex-col items-center justify-center shadow-xl transition-all duration-500 group-hover:scale-105">
-              <Zap className="w-5 h-5 text-[#8B5CF6] mb-2 opacity-30" />
+              <Zap className="w-5 h-5 text-[#D946EF] mb-2 opacity-30" />
               <span className="text-2xl font-black text-white tracking-tighter mb-1">PRO</span>
               <span className="text-[7px] font-black text-[#5b5b7b] uppercase tracking-[0.2em]">MATRIX LEVEL</span>
             </div>
@@ -6399,16 +6396,16 @@ const PrevisibilidadeReceitaView: React.FC = () => {
         <div className="flex flex-col gap-8 relative">
           <div className="bg-[#0B0B0E]/60 backdrop-blur-3xl border border-white/10 rounded-[32px] md:rounded-[48px] p-6 md:p-12 flex flex-col gap-6 md:gap-14 shadow-[0_40px_100px_rgba(0,0,0,0.8)] relative overflow-hidden group">
             {/* DECORATIVE LIGHTING */}
-            <div className="absolute -left-20 -top-20 w-40 h-40 bg-[#3B82F6]/5 blur-[80px] rounded-full pointer-events-none"></div>
+            <div className="absolute -left-20 -top-20 w-40 h-40 bg-[#2DD4BF]/5 blur-[80px] rounded-full pointer-events-none"></div>
 
             <div className="flex items-center gap-4 relative z-10">
               <div className="w-12 h-12 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center shadow-xl transition-transform group-hover:rotate-6">
-                <Settings className="w-6 h-6 text-[#3B82F6] filter drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
+                <Settings className="w-6 h-6 text-[#2DD4BF] filter drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
               </div>
               <div>
                 <h3 className="text-xl font-black text-white tracking-tight uppercase">Configuração da Operação</h3>
                 <div className="flex items-center gap-2 mt-1">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#3B82F6] animate-pulse"></div>
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#2DD4BF] animate-pulse"></div>
                   <span className="text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">Active Input Core</span>
                 </div>
               </div>
@@ -6467,17 +6464,17 @@ const PrevisibilidadeReceitaView: React.FC = () => {
           {/* Bottom Summary Tags - UNIFIED CAPSULE STYLE */}
           <div className="bg-[#0B0B0E]/40 backdrop-blur-2xl border border-white/5 rounded-[32px] p-6 md:p-10 grid grid-cols-1 md:grid-cols-3 gap-6 shadow-2xl">
             <div className="flex flex-col items-center group/tag">
-              <span className="text-3xl md:text-4xl font-black text-white leading-none tracking-tighter group-hover:text-[#3B82F6] transition-colors">{accounts}</span>
+              <span className="text-3xl md:text-4xl font-black text-white leading-none tracking-tighter group-hover:text-[#2DD4BF] transition-colors">{accounts}</span>
               <span className="text-[9px] md:text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.4em] mt-2 md:mt-3">CONTAS</span>
             </div>
             <div className="flex flex-col items-center border-x border-white/5 px-4 md:px-6 group/tag">
-              <span className="text-3xl md:text-4xl font-black text-white leading-none tracking-tighter group-hover:text-[#8B5CF6] transition-colors">{postsPerDay}</span>
+              <span className="text-3xl md:text-4xl font-black text-white leading-none tracking-tighter group-hover:text-[#D946EF] transition-colors">{postsPerDay}</span>
               <span className="text-[9px] md:text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.4em] mt-2 md:mt-3">POSTS/DIA</span>
             </div>
             <div className="flex flex-col items-center group/tag">
               <div className="relative">
-                <div className="absolute -inset-1 bg-[#3B82F6]/20 blur-lg rounded-full opacity-0 group-hover/tag:opacity-100 transition-opacity"></div>
-                <span className="relative text-3xl md:text-4xl font-black text-[#3B82F6] leading-none tracking-tighter">{monthlyPosts}</span>
+                <div className="absolute -inset-1 bg-[#2DD4BF]/20 blur-lg rounded-full opacity-0 group-hover/tag:opacity-100 transition-opacity"></div>
+                <span className="relative text-3xl md:text-4xl font-black text-[#2DD4BF] leading-none tracking-tighter">{monthlyPosts}</span>
               </div>
               <span className="text-[9px] md:text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.4em] mt-2 md:mt-3">POSTS/MÊS</span>
             </div>
@@ -6487,22 +6484,22 @@ const PrevisibilidadeReceitaView: React.FC = () => {
         {/* Right Column: Projections - HIGH PERFORMANCE */}
         <div className="flex flex-col gap-10">
           <div className="flex items-center gap-5 relative">
-            <div className="w-1 h-8 bg-gradient-to-b from-[#3B82F6] to-transparent"></div>
+            <div className="w-1 h-8 bg-gradient-to-b from-[#2DD4BF] to-transparent"></div>
             <h3 className="text-sm font-black text-[#8d8d99] uppercase tracking-[0.5em] leading-none">Projeções de Faturamento Mensal</h3>
             <div className="flex-1 h-[1px] bg-gradient-to-r from-white/10 to-transparent"></div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 relative">
             {/* AMBIANT GLOW FOR GRID */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[#3B82F6]/5 blur-[120px] rounded-full -z-10 pointer-events-none"></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[#2DD4BF]/5 blur-[120px] rounded-full -z-10 pointer-events-none"></div>
 
             {projections.map((p) => (
               <div
                 key={p.id}
-                className={`group relative bg-[#0B0B0E]/60 backdrop-blur-3xl border border-white/5 rounded-[40px] md:rounded-[64px] p-6 md:p-10 flex flex-col min-h-[580px] md:min-h-[680px] transition-all duration-700 hover:scale-[1.03] hover:-translate-y-2 shadow-2xl overflow-hidden ${p.isRecommended ? 'border-[#3B82F6]/30 shadow-[0_40px_100px_rgba(59,130,246,0.15)] ring-1 ring-[#3B82F6]/20' : 'hover:border-white/20'}`}
+                className={`group relative bg-[#0B0B0E]/60 backdrop-blur-3xl border border-white/5 rounded-[40px] md:rounded-[64px] p-6 md:p-10 flex flex-col min-h-[580px] md:min-h-[680px] transition-all duration-700 hover:scale-[1.03] hover:-translate-y-2 shadow-2xl overflow-hidden ${p.isRecommended ? 'border-[#2DD4BF]/30 shadow-[0_40px_100px_rgba(59,130,246,0.15)] ring-1 ring-[#3B82F6]/20' : 'hover:border-white/20'}`}
               >
                 {/* SCAN LINE ANIMATION */}
-                <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#3B82F6] to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[scan-line_3s_linear_infinite] z-20"></div>
+                <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#2DD4BF] to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[scan-line_3s_linear_infinite] z-20"></div>
 
                 {/* STATUS BAR */}
                 <div className="flex flex-col gap-3 mb-10 relative z-10 transition-transform group-hover:translate-x-1">
@@ -6514,8 +6511,8 @@ const PrevisibilidadeReceitaView: React.FC = () => {
                   <div className="flex items-center gap-2">
                     <span className="px-3 py-1 bg-white/5 border border-white/10 text-[9px] font-black text-[#5b5b7b] rounded-lg uppercase tracking-widest leading-none flex items-center h-6">{p.views}</span>
                     {p.isRecommended && (
-                      <div className="px-3 py-1 bg-[#3B82F6]/10 border border-[#3B82F6]/30 rounded-full flex items-center h-6">
-                        <span className="text-[7px] font-black text-[#3B82F6] uppercase tracking-[0.1em]">Recommended</span>
+                      <div className="px-3 py-1 bg-[#2DD4BF]/10 border border-[#2DD4BF]/30 rounded-full flex items-center h-6">
+                        <span className="text-[7px] font-black text-[#2DD4BF] uppercase tracking-[0.1em]">Recommended</span>
                       </div>
                     )}
                   </div>
@@ -6525,12 +6522,12 @@ const PrevisibilidadeReceitaView: React.FC = () => {
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.05),transparent)] pointer-events-none scale-150"></div>
 
                   <div className="flex items-center gap-4 mb-3 border-b border-white/5 pb-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-[#3B82F6]"></div>
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#2DD4BF]"></div>
                     <span className="text-[11px] font-black text-[#5b5b7b] uppercase tracking-[0.4em]">Sua Comissão Prevista</span>
                   </div>
 
                   <div className="relative group/val">
-                    <div className="absolute inset-x-0 bottom-2 h-1/3 bg-[#3B82F6]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                    <div className="absolute inset-x-0 bottom-2 h-1/3 bg-[#2DD4BF]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                     <span className="relative text-3xl md:text-5xl font-black text-white tracking-tighter leading-none block mb-2 filter drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)]">
                       {formatBRL(p.data.commission)}
                     </span>
@@ -6538,8 +6535,8 @@ const PrevisibilidadeReceitaView: React.FC = () => {
 
                   <div className="mt-8 px-5 py-2 bg-white/5 border border-white/10 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
                     <div className="flex items-center gap-2">
-                      <TrendingUp className="w-3 h-3 text-[#3B82F6]" />
-                      <span className="text-[9px] font-black text-[#3B82F6] uppercase tracking-widest">Growth Matrix Active</span>
+                      <TrendingUp className="w-3 h-3 text-[#2DD4BF]" />
+                      <span className="text-[9px] font-black text-[#2DD4BF] uppercase tracking-widest">Growth Matrix Active</span>
                     </div>
                   </div>
                 </div>
@@ -6548,7 +6545,7 @@ const PrevisibilidadeReceitaView: React.FC = () => {
                   <div className="flex items-end justify-between group/row">
                     <div className="flex flex-col gap-1">
                       <span className="text-[8px] md:text-[9px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] group-hover/row:text-white transition-colors">Vendas Totais</span>
-                      <div className="h-[1px] w-0 group-hover/row:w-6 bg-[#3B82F6] transition-all duration-500"></div>
+                      <div className="h-[1px] w-0 group-hover/row:w-6 bg-[#2DD4BF] transition-all duration-500"></div>
                     </div>
                     <span className="text-xl md:text-2xl font-black text-white tracking-tight leading-none">{p.data.sales}</span>
                   </div>
@@ -6556,10 +6553,10 @@ const PrevisibilidadeReceitaView: React.FC = () => {
                   <div className="flex items-end justify-between group/row">
                     <div className="flex flex-col gap-1">
                       <span className="text-[9px] font-black text-[#5b5b7b] uppercase tracking-[0.2em] group-hover/row:text-white transition-colors">Faturamento Total</span>
-                      <div className="h-[1px] w-0 group-hover/row:w-10 bg-[#8B5CF6] transition-all duration-500"></div>
+                      <div className="h-[1px] w-0 group-hover/row:w-10 bg-[#D946EF] transition-all duration-500"></div>
                     </div>
                     <div className="flex flex-col items-end">
-                      <span className="text-[8px] font-black text-[#8B5CF6] uppercase mb-1 tracking-widest">Bruto Estimado</span>
+                      <span className="text-[8px] font-black text-[#D946EF] uppercase mb-1 tracking-widest">Bruto Estimado</span>
                       <span className="text-xl font-black text-white tracking-tight leading-none bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">
                         <span className="text-[#5b5b7b] text-xs mr-1">R$</span>
                         {p.data.totalRevenue.toLocaleString('pt-BR', { maximumFractionDigits: 0 })}
@@ -6596,7 +6593,7 @@ const OperationSlider: React.FC<{
   <div className="flex flex-col gap-6 group/slider">
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-4">
-        <div className="w-10 h-10 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-[#3B82F6] shadow-lg group-hover/slider:scale-110 transition-transform">
+        <div className="w-10 h-10 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-[#2DD4BF] shadow-lg group-hover/slider:scale-110 transition-transform">
           {icon}
         </div>
         <div className="flex flex-col">
@@ -6604,7 +6601,7 @@ const OperationSlider: React.FC<{
           {info && <span className="text-[9px] font-bold text-[#5b5b7b] uppercase tracking-wider">{info}</span>}
         </div>
       </div>
-      <div className="px-5 py-2 bg-[#1E1B4B]/40 border border-[#3B82F6]/30 rounded-2xl text-[13px] font-black text-[#3B82F6] shadow-[0_0_20px_rgba(59,130,246,0.2)]">
+      <div className="px-5 py-2 bg-[#1E1B4B]/40 border border-[#2DD4BF]/30 rounded-2xl text-[13px] font-black text-[#2DD4BF] shadow-[0_0_20px_rgba(59,130,246,0.2)]">
         {prefix}{value}{suffix}
       </div>
     </div>
@@ -6612,7 +6609,7 @@ const OperationSlider: React.FC<{
     <div className="relative flex items-center h-8">
       <div className="absolute inset-x-0 h-2 bg-white/5 rounded-full overflow-hidden">
         <div
-          className="h-full bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] shadow-[0_0_15px_rgba(59,130,246,0.5)]"
+          className="h-full bg-gradient-to-r from-[#2DD4BF] to-[#D946EF] shadow-[0_0_15px_rgba(59,130,246,0.5)]"
           style={{ width: `${((value - min) / (max - min)) * 100}%` }}
         ></div>
       </div>
@@ -6641,7 +6638,7 @@ const HacksViraisView: React.FC<{ hacks: HackItem[], onSelectHack: (id: string) 
     <main className="max-w-[1500px] mx-auto px-4 md:px-6 py-8 md:py-16 relative">
       {/* RADICAL ASYMMETRIC HEADER - SYNCED WITH VIRAL SECTIONS */}
       <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-10 md:mb-16 relative z-10 bg-[#0B0B0E]/30 backdrop-blur-3xl p-6 md:p-10 rounded-[32px] md:rounded-[48px] border border-white/5 shadow-2xl overflow-hidden group">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#3B82F6]/5 via-transparent to-[#8B5CF6]/5 opacity-50"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#2DD4BF]/5 via-transparent to-[#D946EF]/5 opacity-50"></div>
 
         {/* LEFT: TYPOGRAPHY SCULPTURE & PULSE */}
         <div className="flex flex-col gap-6 flex-1 min-w-0 lg:min-w-[400px] relative z-20">
@@ -6660,7 +6657,7 @@ const HacksViraisView: React.FC<{ hacks: HackItem[], onSelectHack: (id: string) 
             <div className="relative">
               <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none pl-1">
                 <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent uppercase">Hacks</span>
-                <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent uppercase">Virais</span>
+                <span className="block bg-gradient-to-r from-[#2DD4BF] via-[#D946EF] to-[#d946ef] bg-clip-text text-transparent uppercase">Virais</span>
               </h1>
             </div>
           </div>
@@ -6682,9 +6679,9 @@ const HacksViraisView: React.FC<{ hacks: HackItem[], onSelectHack: (id: string) 
           </div>
 
           <div className="relative group hidden sm:block">
-            <div className="absolute inset-0 bg-[#3B82F6]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            <div className="absolute inset-0 bg-[#2DD4BF]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
             <div className="w-32 h-32 backdrop-blur-3xl bg-white/[0.02] border border-white/5 rounded-[32px] p-6 flex flex-col items-center justify-center shadow-xl transition-all duration-500 group-hover:scale-105">
-              <TrendingUp className="w-5 h-5 text-[#3B82F6] mb-2 opacity-30" />
+              <TrendingUp className="w-5 h-5 text-[#2DD4BF] mb-2 opacity-30" />
               <span className="text-2xl font-black text-white tracking-tighter mb-1">+2K</span>
               <span className="text-[7px] font-black text-[#5b5b7b] uppercase tracking-[0.2em]">DAY GAINS</span>
             </div>
@@ -6694,14 +6691,14 @@ const HacksViraisView: React.FC<{ hacks: HackItem[], onSelectHack: (id: string) 
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
         {/* AMBIANT BACKGROUND GLOWS */}
-        <div className="absolute top-1/4 -left-20 w-[400px] h-[400px] bg-[#3B82F6]/10 blur-[120px] rounded-full -z-10 pointer-events-none"></div>
-        <div className="absolute bottom-1/4 -right-20 w-[400px] h-[400px] bg-[#8B5CF6]/10 blur-[120px] rounded-full -z-10 pointer-events-none"></div>
+        <div className="absolute top-1/4 -left-20 w-[400px] h-[400px] bg-[#2DD4BF]/10 blur-[120px] rounded-full -z-10 pointer-events-none"></div>
+        <div className="absolute bottom-1/4 -right-20 w-[400px] h-[400px] bg-[#D946EF]/10 blur-[120px] rounded-full -z-10 pointer-events-none"></div>
 
         {hacks.map((hack) => (
           <div
             key={hack.id}
             onClick={() => onSelectHack(hack.id)}
-            className="group relative aspect-[3/4] md:aspect-[3/4.5] bg-[#0B0B0E]/40 backdrop-blur-2xl border border-white/5 rounded-[32px] md:rounded-[48px] overflow-hidden cursor-pointer transition-all duration-500 hover:border-[#3B82F6]/40 hover:shadow-[0_40px_80px_rgba(0,0,0,0.6)] hover:-translate-y-2"
+            className="group relative aspect-[3/4] md:aspect-[3/4.5] bg-[#0B0B0E]/40 backdrop-blur-2xl border border-white/5 rounded-[32px] md:rounded-[48px] overflow-hidden cursor-pointer transition-all duration-500 hover:border-[#2DD4BF]/40 hover:shadow-[0_40px_80px_rgba(0,0,0,0.6)] hover:-translate-y-2"
           >
             {hack.image.endsWith('.mp4') ? (
               <video
@@ -6724,7 +6721,7 @@ const HacksViraisView: React.FC<{ hacks: HackItem[], onSelectHack: (id: string) 
             <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0E] via-transparent to-black/20 opacity-80 group-hover:opacity-60 transition-opacity"></div>
 
             {/* SCAN LINE ANIMATION */}
-            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#3B82F6] to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[scan-line_3s_linear_infinite] z-20"></div>
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#2DD4BF] to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[scan-line_3s_linear_infinite] z-20"></div>
 
             {/* EMOJI BADGE - PREMIUM POD */}
             <div className="absolute top-4 left-4 md:top-8 md:left-8 w-10 h-10 md:w-14 md:h-14 bg-white/5 backdrop-blur-xl rounded-[15px] md:rounded-[20px] flex items-center justify-center border border-white/10 shadow-2xl transform transition-transform group-hover:rotate-12">
@@ -6735,14 +6732,14 @@ const HacksViraisView: React.FC<{ hacks: HackItem[], onSelectHack: (id: string) 
             <div className="absolute bottom-10 left-10 right-10 flex flex-col gap-4 z-30">
               <div className="space-y-2">
                 <div className="flex items-center gap-3">
-                  <div className="w-1 h-8 bg-gradient-to-b from-[#3B82F6] to-transparent"></div>
+                  <div className="w-1 h-8 bg-gradient-to-b from-[#2DD4BF] to-transparent"></div>
                   <h3 className="text-3xl font-black text-white tracking-tighter leading-[0.9] uppercase group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-white/60 transition-all">
                     {hack.title}
                   </h3>
                 </div>
 
                 {hack.description && (
-                  <p className="text-[#8d8d99] text-[13px] font-medium leading-relaxed line-clamp-2 pl-4 border-l border-white/5 group-hover:border-[#3B82F6]/30 transition-colors">
+                  <p className="text-[#8d8d99] text-[13px] font-medium leading-relaxed line-clamp-2 pl-4 border-l border-white/5 group-hover:border-[#2DD4BF]/30 transition-colors">
                     {hack.description}
                   </p>
                 )}
@@ -6751,7 +6748,7 @@ const HacksViraisView: React.FC<{ hacks: HackItem[], onSelectHack: (id: string) 
               {hack.isHighlighted && (
                 <div className="flex items-center gap-4 mt-2 group/btn">
                   <div className="relative h-12 flex-1">
-                    <div className="absolute inset-0 bg-[#3B82F6] rounded-2xl opacity-80 group-hover/btn:opacity-100 transition-opacity blur-[2px]"></div>
+                    <div className="absolute inset-0 bg-[#2DD4BF] rounded-2xl opacity-80 group-hover/btn:opacity-100 transition-opacity blur-[2px]"></div>
                     <div className="absolute inset-0 bg-white/10 rounded-2xl border border-white/20"></div>
                     <div className="relative h-full flex items-center justify-center gap-3 px-6">
                       <span className="text-[10px] font-black text-white uppercase tracking-[0.2em]">Acessar Matrix</span>
@@ -6836,7 +6833,7 @@ const HacksViraisDetalheView: React.FC<{ hack: HackItem, onBack: () => void }> =
       {/* Examples Grid Section */}
       <div className="mt-10">
         <div className="flex items-center gap-4 mb-12">
-          <div className="w-[3px] h-8 bg-[#3B82F6] rounded-full"></div>
+          <div className="w-[3px] h-8 bg-[#2DD4BF] rounded-full"></div>
           <h2 className="text-2xl font-black text-white tracking-tight">Exemplos de Vídeos</h2>
         </div>
 
@@ -6900,9 +6897,9 @@ const HacksViraisDetalheView: React.FC<{ hack: HackItem, onBack: () => void }> =
                   href="https://www.transcript24.com/pt-BR"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full py-5 bg-[#14151a] border border-white/5 hover:border-[#3B82F6]/30 rounded-2xl text-[13px] font-black text-[#8d8d99] hover:text-white flex items-center justify-center gap-3 transition-all shadow-lg"
+                  className="w-full py-5 bg-[#14151a] border border-white/5 hover:border-[#2DD4BF]/30 rounded-2xl text-[13px] font-black text-[#8d8d99] hover:text-white flex items-center justify-center gap-3 transition-all shadow-lg"
                 >
-                  <FileText className="w-4 h-4 text-[#3B82F6]" />
+                  <FileText className="w-4 h-4 text-[#2DD4BF]" />
                   Script (Transcrever)
                 </a>
 
@@ -6985,8 +6982,8 @@ const PassosIniciaisView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                 "Familiarize-se com a calculadora de projeção de lucros."
               ].map((item, idx) => (
                 <div key={idx} className="flex items-center gap-3 group">
-                  <div className="w-5 h-5 rounded-full bg-[#3B82F6]/10 border border-[#3B82F6]/20 flex items-center justify-center shrink-0">
-                    <Check className="w-3 h-3 text-[#3B82F6]" />
+                  <div className="w-5 h-5 rounded-full bg-[#2DD4BF]/10 border border-[#2DD4BF]/20 flex items-center justify-center shrink-0">
+                    <Check className="w-3 h-3 text-[#2DD4BF]" />
                   </div>
                   <span className="text-[#e1e1e6] text-xs sm:text-sm md:text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity">{item}</span>
                 </div>
@@ -7048,8 +7045,8 @@ const ComoSeAfiliarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                 "Ter publicado vídeos nos últimos 30 dias."
               ].map((item, idx) => (
                 <div key={idx} className="flex items-center gap-3 group">
-                  <div className="w-5 h-5 rounded-full bg-[#3B82F6]/10 border border-[#3B82F6]/20 flex items-center justify-center shrink-0">
-                    <Check className="w-3 h-3 text-[#3B82F6]" />
+                  <div className="w-5 h-5 rounded-full bg-[#2DD4BF]/10 border border-[#2DD4BF]/20 flex items-center justify-center shrink-0">
+                    <Check className="w-3 h-3 text-[#2DD4BF]" />
                   </div>
                   <span className="text-[#e1e1e6] text-xs sm:text-sm md:text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity">{item}</span>
                 </div>
@@ -7069,7 +7066,7 @@ const ComoSeAfiliarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                 "Siga as instruções de inscrição e aguarde a aprovação."
               ].map((item, idx) => (
                 <div key={idx} className="flex items-start gap-3 group">
-                  <span className="text-[#3B82F6] text-sm md:text-base font-black pt-0.5">{idx + 1}.</span>
+                  <span className="text-[#2DD4BF] text-sm md:text-base font-black pt-0.5">{idx + 1}.</span>
                   <span className="text-[#e1e1e6] text-xs sm:text-sm md:text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity">{item}</span>
                 </div>
               ))}
@@ -7136,8 +7133,8 @@ const RegrasERestricoesView: React.FC<{ onBack: () => void }> = ({ onBack }) => 
                 { title: "Direitos Autorais:", desc: "Use apenas músicas da biblioteca comercial do TikTok." }
               ].map((item, idx) => (
                 <div key={idx} className="flex items-center gap-3 group">
-                  <div className="w-5 h-5 rounded-full bg-[#3B82F6]/10 border border-[#3B82F6]/20 flex items-center justify-center shrink-0">
-                    <Check className="w-3 h-3 text-[#3B82F6]" />
+                  <div className="w-5 h-5 rounded-full bg-[#2DD4BF]/10 border border-[#2DD4BF]/20 flex items-center justify-center shrink-0">
+                    <Check className="w-3 h-3 text-[#2DD4BF]" />
                   </div>
                   <p className="text-[#e1e1e6] text-xs sm:text-sm md:text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity">
                     <span className="font-bold">{item.title}</span> {item.desc}
@@ -7207,8 +7204,8 @@ const ComoCriarAvatarIAView: React.FC<{ onBack: () => void }> = ({ onBack }) => 
                 "Insira seu roteiro final e clique em \"Gerar Avatar\"."
               ].map((item, idx) => (
                 <div key={idx} className="flex items-center gap-3 group">
-                  <div className="w-5 h-5 rounded-full bg-[#3B82F6]/10 border border-[#3B82F6]/20 flex items-center justify-center shrink-0">
-                    <Check className="w-3 h-3 text-[#3B82F6]" />
+                  <div className="w-5 h-5 rounded-full bg-[#2DD4BF]/10 border border-[#2DD4BF]/20 flex items-center justify-center shrink-0">
+                    <Check className="w-3 h-3 text-[#2DD4BF]" />
                   </div>
                   <span className="text-[#e1e1e6] text-xs sm:text-sm md:text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity">{item}</span>
                 </div>
@@ -7269,8 +7266,8 @@ const ComoCriarVideosUGCView: React.FC<{ onBack: () => void }> = ({ onBack }) =>
                 "Gere o Roteiro via IA e faça os ajustes finais antes da produção."
               ].map((item, idx) => (
                 <div key={idx} className="flex items-center gap-3 group">
-                  <div className="w-5 h-5 rounded-full bg-[#3B82F6]/10 border border-[#3B82F6]/20 flex items-center justify-center shrink-0">
-                    <Check className="w-3 h-3 text-[#3B82F6]" />
+                  <div className="w-5 h-5 rounded-full bg-[#2DD4BF]/10 border border-[#2DD4BF]/20 flex items-center justify-center shrink-0">
+                    <Check className="w-3 h-3 text-[#2DD4BF]" />
                   </div>
                   <span className="text-[#e1e1e6] text-xs sm:text-sm md:text-base font-medium opacity-90 group-hover:opacity-100 transition-opacity">{item}</span>
                 </div>
@@ -7302,18 +7299,18 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
     <main className="max-w-[1500px] mx-auto px-4 md:px-6 py-8 md:py-16 relative">
       {/* RADICAL ASYMMETRIC HEADER - KNOWLEDGE MATRIX SYNC */}
       <div className="flex flex-col lg:flex-row items-center justify-between gap-6 md:gap-8 mb-10 md:mb-20 relative z-10 bg-[#0B0B0E]/30 backdrop-blur-3xl p-5 md:p-10 rounded-[28px] md:rounded-[48px] border border-white/5 shadow-2xl overflow-hidden group">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#3B82F6]/5 via-transparent to-[#8B5CF6]/5 opacity-50"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#2DD4BF]/5 via-transparent to-[#D946EF]/5 opacity-50"></div>
 
         {/* LEFT: TYPOGRAPHY SCULPTURE & PULSE */}
         <div className="flex flex-col gap-6 flex-1 min-w-0 lg:min-w-[400px] relative z-20 w-full overflow-hidden">
           <div className="relative w-full">
             {/* ARCHITECTURAL STATUS LINE */}
             <div className="flex items-center justify-center lg:justify-start gap-3 sm:gap-4 mb-4 flex-wrap">
-              <div className="hidden sm:block h-[1px] w-8 bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
-              <span className="text-[7px] sm:text-[9px] font-black text-[#3B82F6] tracking-[0.2em] sm:tracking-[0.4em] uppercase text-center break-words">Knowledge Matrix Syncing</span>
+              <div className="hidden sm:block h-[1px] w-8 bg-gradient-to-r from-[#2DD4BF] to-transparent"></div>
+              <span className="text-[7px] sm:text-[9px] font-black text-[#2DD4BF] tracking-[0.2em] sm:tracking-[0.4em] uppercase text-center break-words">Knowledge Matrix Syncing</span>
               <div className="flex gap-1 shrink-0">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="w-0.5 h-0.5 sm:w-1 sm:h-1 bg-[#3B82F6]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
+                  <div key={i} className="w-0.5 h-0.5 sm:w-1 sm:h-1 bg-[#2DD4BF]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
                 ))}
               </div>
             </div>
@@ -7321,7 +7318,7 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
             <div className="relative w-full">
               <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none text-center lg:text-left break-words w-full">
                 <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent uppercase text-shadow-sm truncate sm:overflow-visible sm:whitespace-normal">Creator</span>
-                <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent uppercase truncate sm:overflow-visible sm:whitespace-normal">Academy</span>
+                <span className="block bg-gradient-to-r from-[#2DD4BF] via-[#D946EF] to-[#d946ef] bg-clip-text text-transparent uppercase truncate sm:overflow-visible sm:whitespace-normal">Academy</span>
               </h1>
             </div>
           </div>
@@ -7334,18 +7331,18 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
         {/* RIGHT: SYNERGIC MODULE CLUSTER */}
         <div className="flex items-center justify-center lg:justify-end gap-4 md:gap-6 w-full lg:flex-1 relative z-20">
           <div className="relative group">
-            <div className="absolute inset-0 bg-[#3B82F6]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            <div className="absolute inset-0 bg-[#2DD4BF]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
             <div className="w-32 h-32 md:w-40 md:h-40 backdrop-blur-3xl bg-white/[0.03] border border-white/10 rounded-[32px] md:rounded-[40px] p-5 md:p-6 flex flex-col items-center justify-center shadow-2xl transition-all duration-500 group-hover:scale-105">
-              <BookOpen className="w-5 h-5 md:w-6 md:h-6 text-[#3B82F6] mb-2 opacity-50" />
+              <BookOpen className="w-5 h-5 md:w-6 md:h-6 text-[#2DD4BF] mb-2 opacity-50" />
               <span className="text-3xl md:text-4xl font-black text-white tracking-tighter mb-1">12</span>
               <span className="text-[7px] md:text-[8px] font-black text-[#5b5b7b] uppercase tracking-[0.3em]">MÓDULOS</span>
             </div>
           </div>
 
           <div className="relative group hidden sm:block">
-            <div className="absolute inset-0 bg-[#8B5CF6]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            <div className="absolute inset-0 bg-[#D946EF]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
             <div className="w-32 h-32 backdrop-blur-3xl bg-white/[0.02] border border-white/5 rounded-[32px] p-6 flex flex-col items-center justify-center shadow-xl transition-all duration-500 group-hover:scale-105">
-              <Award className="w-5 h-5 text-[#8B5CF6] mb-2 opacity-30" />
+              <Award className="w-5 h-5 text-[#D946EF] mb-2 opacity-30" />
               <span className="text-2xl font-black text-white tracking-tighter mb-1">GOLD</span>
               <span className="text-[7px] font-black text-[#5b5b7b] uppercase tracking-[0.2em]">ACCESS LEVEL</span>
             </div>
@@ -7356,26 +7353,26 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
       {/* Hero Card - ATMOSPHERIC REVIVAL */}
       <div className="w-full relative bg-[#0B0B0E]/60 backdrop-blur-3xl border border-white/5 rounded-[32px] md:rounded-[64px] p-5 md:p-12 lg:p-20 overflow-hidden mb-12 md:mb-32 shadow-[0_40px_100px_rgba(0,0,0,0.8)] flex flex-col lg:flex-row items-center justify-between gap-8 md:gap-16 group">
         {/* ATMOSPHERIC GLOWS */}
-        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#3B82F6] to-transparent opacity-30"></div>
-        <div className="absolute -left-40 top-1/2 -translate-y-1/2 w-80 h-80 bg-[#3B82F6]/10 blur-[120px] rounded-full pointer-events-none group-hover:opacity-100 transition-opacity animate-pulse"></div>
+        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#2DD4BF] to-transparent opacity-30"></div>
+        <div className="absolute -left-40 top-1/2 -translate-y-1/2 w-80 h-80 bg-[#2DD4BF]/10 blur-[120px] rounded-full pointer-events-none group-hover:opacity-100 transition-opacity animate-pulse"></div>
 
         <div className="flex flex-col items-center lg:items-start w-full lg:max-w-2xl z-10">
-          <div className="flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2.5 md:py-3 bg-white/5 border border-white/10 rounded-full text-[9px] md:text-[10px] font-black text-[#3B82F6] uppercase tracking-[0.2em] md:tracking-[0.3em] mb-8 md:mb-12 shadow-xl backdrop-blur-md">
+          <div className="flex items-center gap-2 md:gap-3 px-4 md:px-6 py-2.5 md:py-3 bg-white/5 border border-white/10 rounded-full text-[9px] md:text-[10px] font-black text-[#2DD4BF] uppercase tracking-[0.2em] md:tracking-[0.3em] mb-8 md:mb-12 shadow-xl backdrop-blur-md">
             <GraduationCap className="w-3.5 h-3.5 md:w-4 md:h-4" />
             Estratégias de Elite Validadas
           </div>
 
           <h2 className="text-4xl sm:text-5xl md:text-[84px] font-black text-white tracking-tighter mb-6 md:mb-10 leading-[0.85] text-center lg:text-left">
             Guia Mestre <br />
-            <span className="bg-gradient-to-r from-[#3B82F6] to-[#8B5CF6] bg-clip-text text-transparent uppercase break-words">TikTok Shop</span>
+            <span className="bg-gradient-to-r from-[#2DD4BF] to-[#D946EF] bg-clip-text text-transparent uppercase break-words">TikTok Shop</span>
           </h2>
 
-          <p className="text-[#8d8d99] text-sm sm:text-base md:text-xl font-medium mb-10 md:mb-14 leading-relaxed text-center lg:text-left w-full lg:max-w-xl pl-4 md:pl-6 border-l-2 border-[#3B82F6]/20 group-hover:border-[#3B82F6]/60 transition-colors">
+          <p className="text-[#8d8d99] text-sm sm:text-base md:text-xl font-medium mb-10 md:mb-14 leading-relaxed text-center lg:text-left w-full lg:max-w-xl pl-4 md:pl-6 border-l-2 border-[#2DD4BF]/20 group-hover:border-[#2DD4BF]/60 transition-colors">
             O roadmap definitivo para dominar diretrizes e <span className="text-white">atalhos lucrativos</span> de um ecossistema de alta conversão.
           </p>
 
           <button className="relative group/btn overflow-hidden h-14 md:h-16 px-8 md:px-12 rounded-[20px] md:rounded-2xl bg-white/10 backdrop-blur-xl border border-white/10 transition-all hover:scale-[1.03] active:scale-95 shadow-2xl w-full sm:w-auto">
-            <div className="absolute inset-0 bg-[#3B82F6]/80 group-hover/btn:bg-[#3B82F6] transition-colors translate-y-full group-hover/btn:translate-y-0 duration-500"></div>
+            <div className="absolute inset-0 bg-[#2DD4BF]/80 group-hover/btn:bg-[#2DD4BF] transition-colors translate-y-full group-hover/btn:translate-y-0 duration-500"></div>
             <div className="relative z-10 flex items-center gap-4 text-white font-black text-sm uppercase tracking-widest">
               Começar Jornada
               <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-2 transition-transform" />
@@ -7385,11 +7382,11 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
 
         {/* ILLUSTRATION POD - CINEMATIC VERSION */}
         <div className="relative w-full max-w-[450px] aspect-square z-10 flex items-center justify-center">
-          <div className="absolute inset-0 bg-gradient-to-br from-[#3B82F6]/20 to-[#8B5CF6]/20 blur-[60px] rounded-full opacity-40 group-hover:opacity-60 transition-opacity"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#2DD4BF]/20 to-[#D946EF]/20 blur-[60px] rounded-full opacity-40 group-hover:opacity-60 transition-opacity"></div>
           <div className="absolute inset-4 bg-white/5 border border-white/10 rounded-[64px] backdrop-blur-2xl shadow-inner group-hover:rotate-6 transition-transform duration-1000"></div>
           <div className="relative w-full h-full bg-[#0B0B0E]/80 border border-white/10 rounded-[64px] shadow-2xl flex flex-col items-center justify-center group-hover:-rotate-3 transition-transform duration-1000 overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.1),transparent)]"></div>
-            <Rocket className="w-48 h-48 text-[#3B82F6] opacity-30 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700 filter drop-shadow-[0_0_30px_rgba(59,130,246,0.5)]" />
+            <Rocket className="w-48 h-48 text-[#2DD4BF] opacity-30 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700 filter drop-shadow-[0_0_30px_rgba(59,130,246,0.5)]" />
             <div className="absolute bottom-10 right-10 opacity-20">
               <LayoutGrid className="w-20 h-20 text-white animate-spin-slow" />
             </div>
@@ -7401,11 +7398,11 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
       <div className="w-full mb-28 relative">
         <div className="flex items-center gap-6 mb-16 relative">
           <div className="flex items-center gap-4">
-            <div className="w-2 h-10 bg-gradient-to-b from-[#3B82F6] to-transparent"></div>
+            <div className="w-2 h-10 bg-gradient-to-b from-[#2DD4BF] to-transparent"></div>
             <h2 className="text-3xl font-black text-white tracking-tighter uppercase leading-none">Módulo 1</h2>
           </div>
           <div className="flex items-center gap-4 border-l border-white/10 pl-6 pt-1">
-            <div className="w-1.5 h-1.5 bg-[#3B82F6] rounded-full animate-pulse"></div>
+            <div className="w-1.5 h-1.5 bg-[#2DD4BF] rounded-full animate-pulse"></div>
             <span className="text-[11px] font-black text-[#8d8d99] uppercase tracking-[0.4em]">Active Learning Path</span>
           </div>
           <div className="flex-1 h-[1px] bg-gradient-to-r from-white/10 to-transparent ml-4"></div>
@@ -7434,11 +7431,11 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
       <div className="w-full mb-32 relative">
         <div className="flex items-center gap-6 mb-16 relative">
           <div className="flex items-center gap-4">
-            <div className="w-2 h-10 bg-gradient-to-b from-[#8B5CF6] to-transparent"></div>
+            <div className="w-2 h-10 bg-gradient-to-b from-[#D946EF] to-transparent"></div>
             <h2 className="text-3xl font-black text-white tracking-tighter uppercase leading-none">Módulo 2</h2>
           </div>
           <div className="flex items-center gap-4 border-l border-white/10 pl-6 pt-1">
-            <div className="w-1.5 h-1.5 bg-[#8B5CF6] rounded-full animate-pulse"></div>
+            <div className="w-1.5 h-1.5 bg-[#D946EF] rounded-full animate-pulse"></div>
             <span className="text-[11px] font-black text-[#8d8d99] uppercase tracking-[0.4em]">Expansion Vectors</span>
           </div>
           <div className="flex-1 h-[1px] bg-gradient-to-r from-white/10 to-transparent ml-4"></div>
@@ -7461,26 +7458,26 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
 
       {/* Support Section - FLAGSHIP STANDARD */}
       <div className="w-full relative bg-[#0B0B0E]/60 backdrop-blur-3xl border border-white/10 rounded-[32px] md:rounded-[64px] p-6 md:p-12 lg:p-20 overflow-hidden shadow-2xl flex flex-col md:flex-row items-center justify-between gap-8 md:gap-12 group">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#8B5CF6]/5 to-transparent pointer-events-none"></div>
-        <div className="absolute -right-40 bottom-0 w-[500px] h-[500px] bg-[#8B5CF6]/5 blur-[120px] rounded-full pointer-events-none group-hover:bg-[#8B5CF6]/10 transition-colors"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-[#D946EF]/5 to-transparent pointer-events-none"></div>
+        <div className="absolute -right-40 bottom-0 w-[500px] h-[500px] bg-[#D946EF]/5 blur-[120px] rounded-full pointer-events-none group-hover:bg-[#D946EF]/10 transition-colors"></div>
 
         <div className="flex flex-col items-center md:items-start text-center md:text-left z-10 w-full lg:max-w-lg">
-          <div className="flex items-center gap-2 md:gap-3 px-4 md:px-5 py-2 bg-white/5 border border-white/10 rounded-full text-[8px] md:text-[9px] font-black text-[#8B5CF6] uppercase tracking-[0.2em] md:tracking-[0.3em] mb-6 md:mb-10 shadow-lg">
+          <div className="flex items-center gap-2 md:gap-3 px-4 md:px-5 py-2 bg-white/5 border border-white/10 rounded-full text-[8px] md:text-[9px] font-black text-[#D946EF] uppercase tracking-[0.2em] md:tracking-[0.3em] mb-6 md:mb-10 shadow-lg">
             <Star className="w-2.5 h-2.5 md:w-3 md:h-3" />
             Knowledge Support Matrix
           </div>
           <h3 className="text-4xl sm:text-5xl md:text-[64px] font-black text-white tracking-tighter leading-[0.85] mb-6 md:mb-10 uppercase">
             Dúvidas ou <br />
-            <span className="bg-gradient-to-r from-[#3B82F6] to-[#d946ef] bg-clip-text text-transparent break-words">Dificuldades?</span>
+            <span className="bg-gradient-to-r from-[#2DD4BF] to-[#d946ef] bg-clip-text text-transparent break-words">Dificuldades?</span>
           </h3>
-          <p className="text-[#8d8d99] text-sm sm:text-base md:text-lg font-medium opacity-80 leading-relaxed pl-4 md:pl-6 border-l-2 border-white/10 group-hover:border-[#8B5CF6]/30 transition-colors">
+          <p className="text-[#8d8d99] text-sm sm:text-base md:text-lg font-medium opacity-80 leading-relaxed pl-4 md:pl-6 border-l-2 border-white/10 group-hover:border-[#D946EF]/30 transition-colors">
             Nossa equipe de especialistas está operando em <span className="text-white">synch-time</span> para destravar seus resultados.
           </p>
         </div>
 
         <div className="flex flex-col items-center md:items-end gap-10 z-10 w-full md:w-auto">
           <button onClick={() => window.open('https://www.contate.me/viralpulsesuporte', '_blank')} className="relative group/mail h-20 w-full md:w-[320px] rounded-2xl overflow-hidden transition-all hover:scale-[1.03] active:scale-95 shadow-3xl">
-            <div className="absolute inset-0 bg-[#3B82F6] shadow-[0_20px_50px_rgba(59,130,246,0.4)]"></div>
+            <div className="absolute inset-0 bg-[#2DD4BF] shadow-[0_20px_50px_rgba(59,130,246,0.4)]"></div>
             <div className="absolute inset-0 bg-black translate-y-full group-hover/mail:translate-y-0 transition-transform duration-500"></div>
             <div className="relative h-full flex items-center justify-center gap-4 px-10">
               <Mail className="w-6 h-6 text-white" />
@@ -7503,23 +7500,23 @@ const CreatorAcademyView: React.FC<{ onSelectModule: (id: string) => void }> = (
 const AcademyCard: React.FC<{ title: string, description: string, isHighlighted?: boolean, onClick?: () => void }> = ({ title, description, isHighlighted, onClick }) => (
   <div
     onClick={onClick}
-    className={`relative group h-[260px] md:h-[380px] cursor-pointer rounded-[32px] md:rounded-[48px] overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_40px_80px_rgba(0,0,0,0.6)] border transition-all ${isHighlighted ? 'border-[#3B82F6]/30 bg-[#0B0B0E]/60' : 'border-white/5 bg-[#0B0B0E]/40 hover:border-white/10'}`}
+    className={`relative group h-[260px] md:h-[380px] cursor-pointer rounded-[32px] md:rounded-[48px] overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_40px_80px_rgba(0,0,0,0.6)] border transition-all ${isHighlighted ? 'border-[#2DD4BF]/30 bg-[#0B0B0E]/60' : 'border-white/5 bg-[#0B0B0E]/40 hover:border-white/10'}`}
   >
     {/* GLASS LAYER */}
     <div className="absolute inset-0 backdrop-blur-3xl"></div>
 
     {/* SCAN LINE ANIMATION */}
-    <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#3B82F6] to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[scan-line_3s_linear_infinite] z-20"></div>
+    <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#2DD4BF] to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[scan-line_3s_linear_infinite] z-20"></div>
 
     <div className="relative z-10 p-6 md:p-10 h-full flex flex-col justify-between">
       <div className="flex flex-col gap-4 md:gap-8">
-        <div className={`w-10 h-10 md:w-16 md:h-16 rounded-[16px] md:rounded-[24px] flex items-center justify-center border transition-all duration-500 shadow-2xl shrink-0 ${isHighlighted ? 'bg-[#3B82F6] border-white/20 text-white rotate-6' : 'bg-white/5 border-white/10 text-[#3B82F6] group-hover:rotate-12 group-hover:bg-[#3B82F6]/10'}`}>
+        <div className={`w-10 h-10 md:w-16 md:h-16 rounded-[16px] md:rounded-[24px] flex items-center justify-center border transition-all duration-500 shadow-2xl shrink-0 ${isHighlighted ? 'bg-[#2DD4BF] border-white/20 text-white rotate-6' : 'bg-white/5 border-white/10 text-[#2DD4BF] group-hover:rotate-12 group-hover:bg-[#2DD4BF]/10'}`}>
           <FileText className="w-5 h-5 md:w-7 md:h-7" />
         </div>
 
         <div className="space-y-3 md:space-y-4">
           <div className="flex items-center gap-2 md:gap-3">
-            <div className={`w-1 h-5 md:h-6 transition-all duration-500 shrink-0 ${isHighlighted ? 'bg-white' : 'bg-[#3B82F6]/40 group-hover:bg-[#3B82F6]'}`}></div>
+            <div className={`w-1 h-5 md:h-6 transition-all duration-500 shrink-0 ${isHighlighted ? 'bg-white' : 'bg-[#2DD4BF]/40 group-hover:bg-[#2DD4BF]'}`}></div>
             <h4 className="text-[18px] md:text-2xl font-black text-white tracking-tighter leading-tight uppercase group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-white/60 transition-all">
               {title}
             </h4>
@@ -7532,10 +7529,10 @@ const AcademyCard: React.FC<{ title: string, description: string, isHighlighted?
 
       <div className="flex items-center justify-between pt-8 border-t border-white/5">
         <div className="flex items-center gap-4">
-          <div className="w-2 h-2 rounded-full bg-[#3B82F6] animate-pulse"></div>
+          <div className="w-2 h-2 rounded-full bg-[#2DD4BF] animate-pulse"></div>
           <span className="text-[10px] font-black text-[#5b5b7b] uppercase tracking-[0.3em] group-hover:text-white transition-colors">Acessar Módulo</span>
         </div>
-        <div className={`w-12 h-12 rounded-2xl border flex items-center justify-center transition-all duration-500 group-hover:scale-110 shadow-xl ${isHighlighted ? 'bg-[#3B82F6] border-white/20 text-white' : 'bg-white/5 border-white/10 text-[#3B82F6] group-hover:bg-[#3B82F6] group-hover:text-white'}`}>
+        <div className={`w-12 h-12 rounded-2xl border flex items-center justify-center transition-all duration-500 group-hover:scale-110 shadow-xl ${isHighlighted ? 'bg-[#2DD4BF] border-white/20 text-white' : 'bg-white/5 border-white/10 text-[#2DD4BF] group-hover:bg-[#2DD4BF] group-hover:text-white'}`}>
           <ChevronRight className="w-6 h-6" />
         </div>
       </div>
@@ -7573,11 +7570,11 @@ const GaleriaAvataresView: React.FC<{ onGoToMyAvatars: () => void; onCreateNew: 
           <div className="relative group">
             {/* ARCHITECTURAL STATUS LINE */}
             <div className="flex flex-wrap items-center gap-3 sm:gap-4 mb-4 justify-center lg:justify-start">
-              <div className="hidden sm:block h-[1px] w-8 bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
-              <span className="text-[9px] font-black text-[#3B82F6] tracking-[0.4em] uppercase">Neural Hub Active</span>
+              <div className="hidden sm:block h-[1px] w-8 bg-gradient-to-r from-[#2DD4BF] to-transparent"></div>
+              <span className="text-[9px] font-black text-[#2DD4BF] tracking-[0.4em] uppercase">Neural Hub Active</span>
               <div className="flex gap-1 shrink-0">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="w-1 h-1 bg-[#3B82F6]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
+                  <div key={i} className="w-1 h-1 bg-[#2DD4BF]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
                 ))}
               </div>
             </div>
@@ -7585,7 +7582,7 @@ const GaleriaAvataresView: React.FC<{ onGoToMyAvatars: () => void; onCreateNew: 
             <div className="relative">
               <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none text-center lg:text-left pl-1 lg:pl-0">
                 <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent">Galeria de</span>
-                <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent">Avatares</span>
+                <span className="block bg-gradient-to-r from-[#2DD4BF] via-[#D946EF] to-[#d946ef] bg-clip-text text-transparent">Avatares</span>
               </h1>
             </div>
           </div>
@@ -7603,15 +7600,15 @@ const GaleriaAvataresView: React.FC<{ onGoToMyAvatars: () => void; onCreateNew: 
           >
             <div className="absolute inset-0 rounded-full bg-white/[0.03] backdrop-blur-3xl border border-white/10 transition-colors group-hover:bg-white/[0.08] group-hover:border-white/20"></div>
             <div className="relative z-10 flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/5 group-hover:border-[#3B82F6]/30 group-hover:bg-[#3B82F6]/10 transition-all shadow-inner">
-                <User className="w-5 h-5 text-[#3B82F6]" />
+              <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/5 group-hover:border-[#2DD4BF]/30 group-hover:bg-[#2DD4BF]/10 transition-all shadow-inner">
+                <User className="w-5 h-5 text-[#2DD4BF]" />
               </div>
               <div className="flex flex-col items-start gap-0">
                 <span className="text-[9px] font-black text-[#5b5b7b] uppercase tracking-[0.25em]">Coleção Privada</span>
                 <span className="text-[13px] font-black text-white uppercase tracking-tighter">Meus Avatares</span>
               </div>
-              <div className="ml-1 w-6 h-6 bg-[#3B82F6]/20 border border-[#3B82F6]/30 rounded-full flex items-center justify-center backdrop-blur-md">
-                <span className="text-[9px] font-black text-[#3B82F6] tabular-nums tracking-tighter">1</span>
+              <div className="ml-1 w-6 h-6 bg-[#2DD4BF]/20 border border-[#2DD4BF]/30 rounded-full flex items-center justify-center backdrop-blur-md">
+                <span className="text-[9px] font-black text-[#2DD4BF] tabular-nums tracking-tighter">1</span>
               </div>
             </div>
           </button>
@@ -7620,15 +7617,15 @@ const GaleriaAvataresView: React.FC<{ onGoToMyAvatars: () => void; onCreateNew: 
             onClick={onCreateNew}
             className="group relative h-16 px-10 rounded-full overflow-hidden transition-all duration-500 hover:scale-105 active:scale-95 shadow-[0_20px_60px_rgba(59,130,246,0.15)]"
           >
-            <div className="absolute inset-0 rounded-full bg-[#3B82F6]/10 backdrop-blur-3xl border border-[#3B82F6]/30 group-hover:bg-[#3B82F6]/20 transition-all"></div>
+            <div className="absolute inset-0 rounded-full bg-[#2DD4BF]/10 backdrop-blur-3xl border border-[#2DD4BF]/30 group-hover:bg-[#2DD4BF]/20 transition-all"></div>
             <div className="absolute inset-0 bg-gradient-to-br from-transparent via-white/5 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[tech-shimmer_3s_infinite]"></div>
 
             <div className="relative z-10 flex items-center gap-4">
-              <div className="w-10 h-10 rounded-full bg-[#3B82F6]/20 flex items-center justify-center backdrop-blur-sm border border-white/20 shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+              <div className="w-10 h-10 rounded-full bg-[#2DD4BF]/20 flex items-center justify-center backdrop-blur-sm border border-white/20 shadow-[0_0_15px_rgba(59,130,246,0.3)]">
                 <Sparkles className="w-5 h-5 text-white" />
               </div>
               <div className="flex flex-col items-start gap-0">
-                <span className="text-[9px] font-black text-[#3B82F6] uppercase tracking-[0.25em] opacity-80">Rede Neural</span>
+                <span className="text-[9px] font-black text-[#2DD4BF] uppercase tracking-[0.25em] opacity-80">Rede Neural</span>
                 <span className="text-[13px] font-black text-white uppercase tracking-tighter">Criar do Zero</span>
               </div>
             </div>
@@ -7643,7 +7640,7 @@ const GaleriaAvataresView: React.FC<{ onGoToMyAvatars: () => void; onCreateNew: 
             onClick={() => setSelectedAvatar(avatar)}
             onMouseEnter={() => setHoveredAvatarId(avatar.id)}
             onMouseLeave={() => setHoveredAvatarId(null)}
-            className="relative aspect-[3/4] md:aspect-[3/4.5] rounded-[24px] md:rounded-[40px] overflow-hidden group cursor-pointer border border-white/5 bg-[#0B0B0E] hover:border-[#3B82F6]/60 transition-all duration-700 shadow-2xl"
+            className="relative aspect-[3/4] md:aspect-[3/4.5] rounded-[24px] md:rounded-[40px] overflow-hidden group cursor-pointer border border-white/5 bg-[#0B0B0E] hover:border-[#2DD4BF]/60 transition-all duration-700 shadow-2xl"
           >
             {/* IMAGE CONTAINER WITH PARALLAX-ISH ZOOM */}
             <div className="absolute inset-0 transition-transform duration-1000 group-hover:scale-110">
@@ -7659,12 +7656,12 @@ const GaleriaAvataresView: React.FC<{ onGoToMyAvatars: () => void; onCreateNew: 
 
             {/* GLASS INFO POD */}
             <div className="absolute bottom-4 left-4 right-4 md:bottom-6 md:left-6 md:right-6">
-              <div className="backdrop-blur-xl bg-white/[0.03] border border-white/10 rounded-[20px] md:rounded-[30px] p-4 md:p-6 transform transition-all duration-500 group-hover:translate-y-[-10px] group-hover:bg-[#3B82F6]/10 group-hover:border-[#3B82F6]/30">
+              <div className="backdrop-blur-xl bg-white/[0.03] border border-white/10 rounded-[20px] md:rounded-[30px] p-4 md:p-6 transform transition-all duration-500 group-hover:translate-y-[-10px] group-hover:bg-[#2DD4BF]/10 group-hover:border-[#2DD4BF]/30">
                 <span className="text-xl md:text-2xl font-black text-white tracking-tighter block mb-0.5 md:mb-1 uppercase leading-none">
                   {avatar.name}
                 </span>
                 <div className="flex items-center gap-2 md:gap-3">
-                  <div className="w-1.5 h-1.5 bg-[#3B82F6] rounded-full animate-pulse shadow-[0_0_8px_#3B82F6]"></div>
+                  <div className="w-1.5 h-1.5 bg-[#2DD4BF] rounded-full animate-pulse shadow-[0_0_8px_#3B82F6]"></div>
                   <span className="text-[9px] md:text-[10px] font-black text-[#8d8d99] uppercase tracking-[0.2em] group-hover:text-white/60 transition-colors">
                     {avatar.role}
                   </span>
@@ -7673,12 +7670,12 @@ const GaleriaAvataresView: React.FC<{ onGoToMyAvatars: () => void; onCreateNew: 
             </div>
 
             {/* ACTION FLOATING BUTTON */}
-            <div className="absolute top-6 right-6 w-12 h-12 bg-white/5 backdrop-blur-xl rounded-2xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all border border-white/10 translate-y-2 group-hover:translate-y-0 duration-500 group-hover:bg-[#3B82F6]">
+            <div className="absolute top-6 right-6 w-12 h-12 bg-white/5 backdrop-blur-xl rounded-2xl flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all border border-white/10 translate-y-2 group-hover:translate-y-0 duration-500 group-hover:bg-[#2DD4BF]">
               <Plus className="w-6 h-6 text-white" />
             </div>
 
             {/* SCANNING LINE EFFECT - SUBTLE */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#3B82F6]/20 via-transparent to-transparent h-[10%] w-full -translate-y-full group-hover:animate-[scanline_3s_linear_infinite] pointer-events-none"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-[#2DD4BF]/20 via-transparent to-transparent h-[10%] w-full -translate-y-full group-hover:animate-[scanline_3s_linear_infinite] pointer-events-none"></div>
           </div>
         ))}
       </div>
@@ -7717,7 +7714,7 @@ const GaleriaAvataresView: React.FC<{ onGoToMyAvatars: () => void; onCreateNew: 
                   {selectedAvatar.name}
                 </h2>
                 <div className="mb-8">
-                  <span className="px-4 py-1.5 bg-[#3B82F6]/10 border border-[#3B82F6]/20 text-[#3B82F6] rounded-full text-[11px] font-black uppercase tracking-[0.2em]">
+                  <span className="px-4 py-1.5 bg-[#2DD4BF]/10 border border-[#2DD4BF]/20 text-[#2DD4BF] rounded-full text-[11px] font-black uppercase tracking-[0.2em]">
                     {selectedAvatar.role}
                   </span>
                 </div>
@@ -7787,7 +7784,7 @@ const GaleriaAvataresView: React.FC<{ onGoToMyAvatars: () => void; onCreateNew: 
                       img.src = originalUrl + (originalUrl.includes('?') ? '&' : '?') + 'cb=' + new Date().getTime();
                     }
                   }}
-                  className="w-full py-5 bg-[#3B82F6] hover:bg-[#4338ca] text-white rounded-3xl font-black text-base flex items-center justify-center gap-3 shadow-[0_15px_40px_rgba(81,66,245,0.3)] transition-all hover:scale-[1.02] active:scale-[0.98]">
+                  className="w-full py-5 bg-[#2DD4BF] hover:bg-[#4338ca] text-white rounded-3xl font-black text-base flex items-center justify-center gap-3 shadow-[0_15px_40px_rgba(81,66,245,0.3)] transition-all hover:scale-[1.02] active:scale-[0.98]">
                   <Download className="w-6 h-6" />
                   Baixar Imagem do Avatar
                 </button>
@@ -8054,11 +8051,11 @@ const GaleriaPromptsView: React.FC = () => {
           <div className="relative group">
             {/* ARCHITECTURAL STATUS LINE */}
             <div className="flex items-center gap-4 mb-4">
-              <div className="h-[1px] w-8 bg-gradient-to-r from-[#8B5CF6] to-transparent"></div>
-              <span className="text-[9px] font-black text-[#8B5CF6] tracking-[0.4em] uppercase">Neural Synthesis Engine</span>
+              <div className="h-[1px] w-8 bg-gradient-to-r from-[#D946EF] to-transparent"></div>
+              <span className="text-[9px] font-black text-[#D946EF] tracking-[0.4em] uppercase">Neural Synthesis Engine</span>
               <div className="flex gap-1">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="w-1 h-1 bg-[#8B5CF6]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
+                  <div key={i} className="w-1 h-1 bg-[#D946EF]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
                 ))}
               </div>
             </div>
@@ -8066,7 +8063,7 @@ const GaleriaPromptsView: React.FC = () => {
             <div className="relative">
               <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none pl-1">
                 <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent">Galeria de</span>
-                <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent">Prompts</span>
+                <span className="block bg-gradient-to-r from-[#2DD4BF] via-[#D946EF] to-[#d946ef] bg-clip-text text-transparent">Prompts</span>
               </h1>
             </div>
           </div>
@@ -8082,10 +8079,10 @@ const GaleriaPromptsView: React.FC = () => {
             onClick={() => setActiveTab('todos')}
             className={`group relative h-14 min-w-[160px] px-8 rounded-full overflow-hidden transition-all duration-500 hover:scale-105 active:scale-95 shadow-2xl`}
           >
-            <div className={`absolute inset-0 rounded-full transition-all duration-500 ${activeTab === 'todos' ? 'bg-[#8B5CF6] shadow-[0_0_30px_rgba(139,92,246,0.3)] border border-white/20' : 'bg-white/[0.03] backdrop-blur-3xl border border-white/10 group-hover:bg-white/[0.08]'}`}></div>
+            <div className={`absolute inset-0 rounded-full transition-all duration-500 ${activeTab === 'todos' ? 'bg-[#D946EF] shadow-[0_0_30px_rgba(139,92,246,0.3)] border border-white/20' : 'bg-white/[0.03] backdrop-blur-3xl border border-white/10 group-hover:bg-white/[0.08]'}`}></div>
             <div className="relative z-10 flex items-center justify-center gap-3 w-full">
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${activeTab === 'todos' ? 'bg-white/20' : 'bg-white/5 border border-white/5 group-hover:border-[#8B5CF6]/30'}`}>
-                <Sparkles className={`w-4 h-4 ${activeTab === 'todos' ? 'text-white' : 'text-[#8B5CF6]'}`} />
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${activeTab === 'todos' ? 'bg-white/20' : 'bg-white/5 border border-white/5 group-hover:border-[#D946EF]/30'}`}>
+                <Sparkles className={`w-4 h-4 ${activeTab === 'todos' ? 'text-white' : 'text-[#D946EF]'}`} />
               </div>
               <span className={`text-xs font-black uppercase tracking-widest ${activeTab === 'todos' ? 'text-white' : 'text-[#8d8d99] group-hover:text-white'}`}>
                 Todos
@@ -8097,10 +8094,10 @@ const GaleriaPromptsView: React.FC = () => {
             onClick={() => setActiveTab('favoritos')}
             className={`group relative h-14 min-w-[160px] px-8 rounded-full overflow-hidden transition-all duration-500 hover:scale-105 active:scale-95 shadow-2xl`}
           >
-            <div className={`absolute inset-0 rounded-full transition-all duration-500 ${activeTab === 'favoritos' ? 'bg-[#3B82F6] shadow-[0_0_30px_rgba(59,130,246,0.3)] border border-white/20' : 'bg-white/[0.03] backdrop-blur-3xl border border-white/10 group-hover:bg-white/[0.08]'}`}></div>
+            <div className={`absolute inset-0 rounded-full transition-all duration-500 ${activeTab === 'favoritos' ? 'bg-[#2DD4BF] shadow-[0_0_30px_rgba(59,130,246,0.3)] border border-white/20' : 'bg-white/[0.03] backdrop-blur-3xl border border-white/10 group-hover:bg-white/[0.08]'}`}></div>
             <div className="relative z-10 flex items-center justify-center gap-3 w-full">
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${activeTab === 'favoritos' ? 'bg-white/20' : 'bg-white/5 border border-white/5 group-hover:border-[#3B82F6]/30'}`}>
-                <Heart className={`w-4 h-4 ${activeTab === 'favoritos' ? 'text-white' : 'text-[#3B82F6]'}`} />
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${activeTab === 'favoritos' ? 'bg-white/20' : 'bg-white/5 border border-white/5 group-hover:border-[#2DD4BF]/30'}`}>
+                <Heart className={`w-4 h-4 ${activeTab === 'favoritos' ? 'text-white' : 'text-[#2DD4BF]'}`} />
               </div>
               <span className={`text-xs font-black uppercase tracking-widest ${activeTab === 'favoritos' ? 'text-white' : 'text-[#8d8d99] group-hover:text-white'}`}>
                 Favoritos
@@ -8112,7 +8109,7 @@ const GaleriaPromptsView: React.FC = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
         {filteredPrompts.map((item) => (
-          <div key={item.id} className="relative group bg-[#0B0B0E]/40 backdrop-blur-2xl border border-white/5 rounded-[24px] md:rounded-[40px] overflow-hidden flex flex-col transition-all duration-500 hover:border-[#3B82F6]/30 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
+          <div key={item.id} className="relative group bg-[#0B0B0E]/40 backdrop-blur-2xl border border-white/5 rounded-[24px] md:rounded-[40px] overflow-hidden flex flex-col transition-all duration-500 hover:border-[#2DD4BF]/30 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
             <div className="relative aspect-[3/4] md:aspect-[3/4.5] overflow-hidden">
               {item.gif.endsWith('.mp4') ? (
                 <video
@@ -8131,13 +8128,13 @@ const GaleriaPromptsView: React.FC = () => {
                 />
               )}
               {/* SCAN LINE ANIMATION */}
-              <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#3B82F6] to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[scan-line_2s_linear_infinite] z-20"></div>
+              <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#2DD4BF] to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-[scan-line_2s_linear_infinite] z-20"></div>
 
               <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0E] via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity"></div>
 
               <button
                 onClick={() => toggleFavorite(item.id)}
-                className="absolute top-6 right-6 w-12 h-12 bg-black/40 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/10 hover:bg-[#3B82F6] hover:border-[#3B82F6] transition-all duration-300 z-30"
+                className="absolute top-6 right-6 w-12 h-12 bg-black/40 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/10 hover:bg-[#2DD4BF] hover:border-[#2DD4BF] transition-all duration-300 z-30"
               >
                 <Heart className={`w-5 h-5 ${favorites.includes(item.id) ? 'fill-white text-white' : 'text-white'}`} />
               </button>
@@ -8150,7 +8147,7 @@ const GaleriaPromptsView: React.FC = () => {
 
                 <button
                   onClick={() => copyToClipboard(item.id, item.prompt)}
-                  className="w-full h-12 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/10 flex items-center justify-center gap-3 hover:bg-[#3B82F6] hover:border-[#3B82F6] transition-all group/btn shadow-xl"
+                  className="w-full h-12 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/10 flex items-center justify-center gap-3 hover:bg-[#2DD4BF] hover:border-[#2DD4BF] transition-all group/btn shadow-xl"
                 >
                   {copiedId === item.id ? (
                     <>
@@ -8159,7 +8156,7 @@ const GaleriaPromptsView: React.FC = () => {
                     </>
                   ) : (
                     <>
-                      <Copy className="w-4 h-4 text-[#3B82F6] group-hover/btn:text-white transition-colors" />
+                      <Copy className="w-4 h-4 text-[#2DD4BF] group-hover/btn:text-white transition-colors" />
                       <span className="text-[10px] font-black text-white uppercase tracking-widest">Copiar Prompt</span>
                     </>
                   )}
@@ -8215,11 +8212,11 @@ const MeusAvataresView: React.FC<{ avatars: CustomAvatar[]; onAddAvatar: (file: 
                 </div>
                 Voltar
               </button>
-              <div className="h-[1px] w-6 bg-gradient-to-r from-[#8B5CF6] to-transparent"></div>
-              <span className="text-[9px] font-black text-[#8B5CF6] tracking-[0.4em] uppercase">Neural Avatar Studio</span>
+              <div className="h-[1px] w-6 bg-gradient-to-r from-[#D946EF] to-transparent"></div>
+              <span className="text-[9px] font-black text-[#D946EF] tracking-[0.4em] uppercase">Neural Avatar Studio</span>
               <div className="flex gap-1">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="w-1 h-1 bg-[#8B5CF6]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
+                  <div key={i} className="w-1 h-1 bg-[#D946EF]/40 rounded-full animate-pulse" style={{ animationDelay: `${i * 200}ms` }}></div>
                 ))}
               </div>
             </div>
@@ -8227,7 +8224,7 @@ const MeusAvataresView: React.FC<{ avatars: CustomAvatar[]; onAddAvatar: (file: 
             <div className="relative">
               <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.85] select-none">
                 <span className="block bg-gradient-to-b from-white to-white/20 bg-clip-text text-transparent">Meus</span>
-                <span className="block bg-gradient-to-r from-[#3B82F6] via-[#8B5CF6] to-[#d946ef] bg-clip-text text-transparent">Avatares</span>
+                <span className="block bg-gradient-to-r from-[#2DD4BF] via-[#D946EF] to-[#d946ef] bg-clip-text text-transparent">Avatares</span>
               </h1>
             </div>
           </div>
@@ -8245,8 +8242,8 @@ const MeusAvataresView: React.FC<{ avatars: CustomAvatar[]; onAddAvatar: (file: 
           >
             <div className="absolute inset-0 rounded-full transition-all duration-500 bg-white/[0.03] backdrop-blur-3xl border border-white/10 group-hover:bg-white/[0.08]"></div>
             <div className="relative z-10 flex items-center justify-center gap-3 w-full">
-              <div className="w-8 h-8 rounded-full flex items-center justify-center transition-all bg-white/5 border border-white/5 group-hover:border-[#8B5CF6]/30">
-                <Upload className="w-4 h-4 text-[#8B5CF6]" />
+              <div className="w-8 h-8 rounded-full flex items-center justify-center transition-all bg-white/5 border border-white/5 group-hover:border-[#D946EF]/30">
+                <Upload className="w-4 h-4 text-[#D946EF]" />
               </div>
               <span className="text-xs font-black uppercase tracking-widest text-[#8d8d99] group-hover:text-white transition-colors">
                 Upload de Foto
@@ -8258,7 +8255,7 @@ const MeusAvataresView: React.FC<{ avatars: CustomAvatar[]; onAddAvatar: (file: 
             onClick={onCreateNew}
             className="group relative h-14 min-w-[180px] px-8 rounded-full overflow-hidden transition-all duration-500 hover:scale-105 active:scale-95 shadow-2xl"
           >
-            <div className="absolute inset-0 rounded-full transition-all duration-500 bg-[#3B82F6] shadow-[0_0_30px_rgba(59,130,246,0.3)] border border-white/20"></div>
+            <div className="absolute inset-0 rounded-full transition-all duration-500 bg-[#2DD4BF] shadow-[0_0_30px_rgba(59,130,246,0.3)] border border-white/20"></div>
             <div className="relative z-10 flex items-center justify-center gap-3 w-full">
               <div className="w-8 h-8 rounded-full flex items-center justify-center bg-white/20">
                 <Sparkles className="w-4 h-4 text-white" />
@@ -8275,12 +8272,12 @@ const MeusAvataresView: React.FC<{ avatars: CustomAvatar[]; onAddAvatar: (file: 
       {avatars.length > 0 ? (
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
           {avatars.map((av) => (
-            <div key={av.id} className="relative group/av bg-[#0B0B0E]/40 backdrop-blur-2xl border border-white/5 rounded-[24px] md:rounded-[40px] overflow-hidden flex flex-col transition-all duration-500 hover:border-[#3B82F6]/30 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
+            <div key={av.id} className="relative group/av bg-[#0B0B0E]/40 backdrop-blur-2xl border border-white/5 rounded-[24px] md:rounded-[40px] overflow-hidden flex flex-col transition-all duration-500 hover:border-[#2DD4BF]/30 hover:shadow-[0_20px_40px_rgba(0,0,0,0.5)]">
               <div className="relative aspect-[3/4] md:aspect-[3/4.5] overflow-hidden">
                 <img src={av.image} className="w-full h-full object-cover transition-transform duration-700 group-hover/av:scale-110" alt={av.name} />
 
                 {/* SCAN LINE ANIMATION */}
-                <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#3B82F6] to-transparent opacity-0 group-hover/av:opacity-100 group-hover/av:animate-[scan-line_2s_linear_infinite] z-20"></div>
+                <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#2DD4BF] to-transparent opacity-0 group-hover/av:opacity-100 group-hover/av:animate-[scan-line_2s_linear_infinite] z-20"></div>
 
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0E] via-[#0B0B0E]/20 to-transparent opacity-80 group-hover/av:opacity-60 transition-opacity"></div>
 
@@ -8288,7 +8285,7 @@ const MeusAvataresView: React.FC<{ avatars: CustomAvatar[]; onAddAvatar: (file: 
                 <div className="absolute top-5 right-5 left-5 flex justify-between items-start opacity-0 group-hover/av:opacity-100 transition-all duration-300 z-30">
                   <button
                     onClick={() => handleDownload(av)}
-                    className="w-10 h-10 bg-black/60 backdrop-blur-xl border border-white/10 rounded-full flex items-center justify-center hover:bg-[#3B82F6] hover:border-[#3B82F6] transition-all hover:scale-110 shadow-xl"
+                    className="w-10 h-10 bg-black/60 backdrop-blur-xl border border-white/10 rounded-full flex items-center justify-center hover:bg-[#2DD4BF] hover:border-[#2DD4BF] transition-all hover:scale-110 shadow-xl"
                     title="Baixar"
                   >
                     <Download className="w-4 h-4 text-white" />
@@ -8306,7 +8303,7 @@ const MeusAvataresView: React.FC<{ avatars: CustomAvatar[]; onAddAvatar: (file: 
                 <div className="absolute bottom-6 left-5 right-5 z-30">
                   <div className="bg-black/40 backdrop-blur-xl border border-white/10 rounded-2xl px-4 py-3">
                     <h3 className="text-sm font-black text-white tracking-tighter uppercase truncate">{av.name}</h3>
-                    <span className="text-[9px] font-black text-[#3B82F6] uppercase tracking-[0.2em]">Avatar IA</span>
+                    <span className="text-[9px] font-black text-[#2DD4BF] uppercase tracking-[0.2em]">Avatar IA</span>
                   </div>
                 </div>
               </div>
@@ -8320,28 +8317,28 @@ const MeusAvataresView: React.FC<{ avatars: CustomAvatar[]; onAddAvatar: (file: 
 
             {/* BACKGROUND GLOW */}
             <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-[#3B82F6]/5 rounded-full blur-[80px]"></div>
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] bg-[#8B5CF6]/8 rounded-full blur-[40px]"></div>
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-[#2DD4BF]/5 rounded-full blur-[80px]"></div>
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200px] h-[200px] bg-[#D946EF]/8 rounded-full blur-[40px]"></div>
             </div>
 
             {/* ANIMATED ICON */}
             <div className="relative mb-10 z-10">
-              <div className="w-36 h-36 rounded-full border border-[#3B82F6]/10 flex items-center justify-center animate-pulse" style={{ animationDuration: '3s' }}>
-                <div className="w-24 h-24 rounded-full border border-[#8B5CF6]/20 flex items-center justify-center animate-pulse" style={{ animationDuration: '2s', animationDelay: '0.5s' }}>
+              <div className="w-36 h-36 rounded-full border border-[#2DD4BF]/10 flex items-center justify-center animate-pulse" style={{ animationDuration: '3s' }}>
+                <div className="w-24 h-24 rounded-full border border-[#D946EF]/20 flex items-center justify-center animate-pulse" style={{ animationDuration: '2s', animationDelay: '0.5s' }}>
                   <div className="w-16 h-16 bg-[#14151a] border border-[#1e1f26] rounded-full flex items-center justify-center shadow-2xl">
                     <User className="w-7 h-7 text-[#5b5b7b]" />
                   </div>
                 </div>
               </div>
-              <div className="absolute top-2 right-4 w-2 h-2 bg-[#3B82F6]/50 rounded-full animate-ping" style={{ animationDuration: '2s' }}></div>
-              <div className="absolute bottom-4 left-3 w-1.5 h-1.5 bg-[#8B5CF6]/50 rounded-full animate-ping" style={{ animationDuration: '2.5s', animationDelay: '0.7s' }}></div>
+              <div className="absolute top-2 right-4 w-2 h-2 bg-[#2DD4BF]/50 rounded-full animate-ping" style={{ animationDuration: '2s' }}></div>
+              <div className="absolute bottom-4 left-3 w-1.5 h-1.5 bg-[#D946EF]/50 rounded-full animate-ping" style={{ animationDuration: '2.5s', animationDelay: '0.7s' }}></div>
             </div>
 
             {/* BADGE */}
             <div className="flex items-center gap-2 mb-6 z-10">
-              <div className="h-[1px] w-8 bg-gradient-to-r from-transparent to-[#3B82F6]"></div>
-              <span className="text-[9px] font-black text-[#3B82F6] tracking-[0.4em] uppercase px-3 py-1.5 rounded-full border border-[#3B82F6]/20 bg-[#3B82F6]/5">Neural Ready</span>
-              <div className="h-[1px] w-8 bg-gradient-to-r from-[#3B82F6] to-transparent"></div>
+              <div className="h-[1px] w-8 bg-gradient-to-r from-transparent to-[#2DD4BF]"></div>
+              <span className="text-[9px] font-black text-[#2DD4BF] tracking-[0.4em] uppercase px-3 py-1.5 rounded-full border border-[#2DD4BF]/20 bg-[#2DD4BF]/5">Neural Ready</span>
+              <div className="h-[1px] w-8 bg-gradient-to-r from-[#2DD4BF] to-transparent"></div>
             </div>
 
             <h2 className="text-3xl md:text-4xl font-black text-white tracking-tighter mb-4 z-10">
@@ -8349,7 +8346,7 @@ const MeusAvataresView: React.FC<{ avatars: CustomAvatar[]; onAddAvatar: (file: 
             </h2>
 
             <p className="text-[#8d8d99] text-base font-medium mb-14 max-w-[380px] leading-relaxed z-10">
-              Faça <span className="text-white font-black">upload de uma foto</span> sua ou gere um avatar <span className="text-[#3B82F6] font-black">hiper-realista com IA</span>.
+              Faça <span className="text-white font-black">upload de uma foto</span> sua ou gere um avatar <span className="text-[#2DD4BF] font-black">hiper-realista com IA</span>.
             </p>
 
             {/* ACTION CARDS */}
@@ -8358,8 +8355,8 @@ const MeusAvataresView: React.FC<{ avatars: CustomAvatar[]; onAddAvatar: (file: 
                 onClick={() => uploadRef.current?.click()}
                 className="group flex-1 bg-white/[0.03] hover:bg-white/[0.07] border border-white/10 hover:border-white/20 rounded-[28px] p-8 flex flex-col items-center gap-4 transition-all duration-500 hover:scale-[1.02] active:scale-[0.98] backdrop-blur-xl"
               >
-                <div className="w-14 h-14 rounded-2xl bg-[#14151a] border border-white/10 flex items-center justify-center group-hover:border-[#8B5CF6]/30 transition-all group-hover:shadow-[0_0_20px_rgba(139,92,246,0.1)]">
-                  <Upload className="w-6 h-6 text-[#8B5CF6] group-hover:scale-110 transition-transform" />
+                <div className="w-14 h-14 rounded-2xl bg-[#14151a] border border-white/10 flex items-center justify-center group-hover:border-[#D946EF]/30 transition-all group-hover:shadow-[0_0_20px_rgba(139,92,246,0.1)]">
+                  <Upload className="w-6 h-6 text-[#D946EF] group-hover:scale-110 transition-transform" />
                 </div>
                 <div className="text-center">
                   <span className="block text-sm font-black text-white uppercase tracking-widest mb-1">Upload de Foto</span>
@@ -8375,14 +8372,14 @@ const MeusAvataresView: React.FC<{ avatars: CustomAvatar[]; onAddAvatar: (file: 
 
               <button
                 onClick={onCreateNew}
-                className="group flex-1 bg-[#3B82F6]/10 hover:bg-[#3B82F6]/15 border border-[#3B82F6]/20 hover:border-[#3B82F6]/40 rounded-[28px] p-8 flex flex-col items-center gap-4 transition-all duration-500 hover:scale-[1.02] active:scale-[0.98] backdrop-blur-xl hover:shadow-[0_10px_40px_rgba(59,130,246,0.1)]"
+                className="group flex-1 bg-[#2DD4BF]/10 hover:bg-[#2DD4BF]/15 border border-[#2DD4BF]/20 hover:border-[#2DD4BF]/40 rounded-[28px] p-8 flex flex-col items-center gap-4 transition-all duration-500 hover:scale-[1.02] active:scale-[0.98] backdrop-blur-xl hover:shadow-[0_10px_40px_rgba(59,130,246,0.1)]"
               >
-                <div className="w-14 h-14 rounded-2xl bg-[#3B82F6]/20 border border-[#3B82F6]/30 flex items-center justify-center group-hover:shadow-[0_0_25px_rgba(59,130,246,0.25)] transition-all">
-                  <Sparkles className="w-6 h-6 text-[#3B82F6] group-hover:scale-110 transition-transform" />
+                <div className="w-14 h-14 rounded-2xl bg-[#2DD4BF]/20 border border-[#2DD4BF]/30 flex items-center justify-center group-hover:shadow-[0_0_25px_rgba(59,130,246,0.25)] transition-all">
+                  <Sparkles className="w-6 h-6 text-[#2DD4BF] group-hover:scale-110 transition-transform" />
                 </div>
                 <div className="text-center">
                   <span className="block text-sm font-black text-white uppercase tracking-widest mb-1">Criar com IA</span>
-                  <span className="text-[10px] text-[#3B82F6]/70 font-medium">Hiper-realista</span>
+                  <span className="text-[10px] text-[#2DD4BF]/70 font-medium">Hiper-realista</span>
                 </div>
               </button>
             </div>
@@ -8421,10 +8418,10 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
   ];
   const hairStyles = ['Longo Liso', 'Curto', 'Ondulado', 'Cacheado/Crespo', 'Raspado'];
   const vibes = [
-    { id: 'Fitness', label: 'Fitness', icon: <Zap className="w-4 h-4 text-[#3B82F6]" /> },
-    { id: 'Streetwear', label: 'Streetwear', icon: <LayoutGrid className="w-4 h-4 text-[#3B82F6]" /> },
-    { id: 'Elegante', label: 'Elegante', icon: <Sparkles className="w-4 h-4 text-[#3B82F6]" /> },
-    { id: 'Casual', label: 'Casual', icon: <Home className="w-4 h-4 text-[#3B82F6]" /> }
+    { id: 'Fitness', label: 'Fitness', icon: <Zap className="w-4 h-4 text-[#2DD4BF]" /> },
+    { id: 'Streetwear', label: 'Streetwear', icon: <LayoutGrid className="w-4 h-4 text-[#2DD4BF]" /> },
+    { id: 'Elegante', label: 'Elegante', icon: <Sparkles className="w-4 h-4 text-[#2DD4BF]" /> },
+    { id: 'Casual', label: 'Casual', icon: <Home className="w-4 h-4 text-[#2DD4BF]" /> }
   ];
   const accessoryOptions = ['Óculos de Grau', 'Óculos de Sol', 'Piercing no Nariz', 'Tatuagem no Pescoço'];
 
@@ -8469,7 +8466,7 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
         <div className="flex flex-col gap-14">
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <Sparkles className="w-6 h-6 md:w-7 md:h-7 text-[#3B82F6] fill-[#3B82F6]" />
+              <Sparkles className="w-6 h-6 md:w-7 md:h-7 text-[#2DD4BF] fill-[#2DD4BF]" />
               <h1 className="text-2xl md:text-[34px] font-black text-white tracking-tighter">Crie seu Avatar</h1>
             </div>
             <p className="text-[#8d8d99] text-base font-medium opacity-80">
@@ -8494,7 +8491,7 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Ex: Ana, João, Mariana..."
-                    className="w-full bg-[#14151a] border border-[#1e1f26] rounded-2xl py-5 pl-14 pr-6 text-sm text-white placeholder:text-[#5b5b7b] focus:outline-none focus:border-[#3B82F6]/40 transition-colors"
+                    className="w-full bg-[#14151a] border border-[#1e1f26] rounded-2xl py-5 pl-14 pr-6 text-sm text-white placeholder:text-[#5b5b7b] focus:outline-none focus:border-[#2DD4BF]/40 transition-colors"
                   />
                 </div>
               </div>
@@ -8508,7 +8505,7 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                 </button>
                 <button
                   onClick={() => setGender('Fem')}
-                  className={`flex-1 py-4 rounded-xl text-xs font-black transition-all ${gender === 'Fem' ? 'bg-[#24242a] text-[#3B82F6]' : 'text-[#8d8d99] hover:text-white'}`}
+                  className={`flex-1 py-4 rounded-xl text-xs font-black transition-all ${gender === 'Fem' ? 'bg-[#24242a] text-[#2DD4BF]' : 'text-[#8d8d99] hover:text-white'}`}
                 >
                   Feminino
                 </button>
@@ -8546,7 +8543,7 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                     <button
                       key={e}
                       onClick={() => setEthnicity(e)}
-                      className={`px-6 py-3 rounded-full text-xs font-black border transition-all ${ethnicity === e ? 'bg-[#24242a] border-[#3B82F6]/40 text-[#3B82F6]' : 'bg-[#14151a] border-[#1e1f26] text-[#8d8d99] hover:border-white/10'}`}
+                      className={`px-6 py-3 rounded-full text-xs font-black border transition-all ${ethnicity === e ? 'bg-[#24242a] border-[#2DD4BF]/40 text-[#2DD4BF]' : 'bg-[#14151a] border-[#1e1f26] text-[#8d8d99] hover:border-white/10'}`}
                     >
                       {e}
                     </button>
@@ -8564,7 +8561,7 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                     <button
                       key={m}
                       onClick={() => toggleAuthMark(m)}
-                      className={`px-6 py-3 rounded-full text-xs font-black border transition-all ${authenticityMarks.includes(m) ? 'bg-[#24242a] border-[#3B82F6]/40 text-[#3B82F6]' : 'bg-[#14151a] border-[#1e1f26] text-[#8d8d99] hover:border-white/10'}`}
+                      className={`px-6 py-3 rounded-full text-xs font-black border transition-all ${authenticityMarks.includes(m) ? 'bg-[#24242a] border-[#2DD4BF]/40 text-[#2DD4BF]' : 'bg-[#14151a] border-[#1e1f26] text-[#8d8d99] hover:border-white/10'}`}
                     >
                       {m}
                     </button>
@@ -8596,7 +8593,7 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                     <button
                       key={f}
                       onClick={() => setFaceShape(f)}
-                      className={`px-6 py-3 rounded-full text-xs font-black border transition-all ${faceShape === f ? 'bg-[#24242a] border-[#3B82F6]/40 text-[#3B82F6]' : 'bg-[#14151a] border-[#1e1f26] text-[#8d8d99] hover:border-white/10'}`}
+                      className={`px-6 py-3 rounded-full text-xs font-black border transition-all ${faceShape === f ? 'bg-[#24242a] border-[#2DD4BF]/40 text-[#2DD4BF]' : 'bg-[#14151a] border-[#1e1f26] text-[#8d8d99] hover:border-white/10'}`}
                     >
                       {f}
                     </button>
@@ -8621,7 +8618,7 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                     <button
                       key={c.name}
                       onClick={() => setHairColor(c.name)}
-                      className={`px-6 py-3 rounded-full text-xs font-black border transition-all flex items-center gap-3 ${hairColor === c.name ? 'bg-[#24242a] border-[#3B82F6]/40 text-[#3B82F6]' : 'bg-[#14151a] border-[#1e1f26] text-[#8d8d99] hover:border-white/10'}`}
+                      className={`px-6 py-3 rounded-full text-xs font-black border transition-all flex items-center gap-3 ${hairColor === c.name ? 'bg-[#24242a] border-[#2DD4BF]/40 text-[#2DD4BF]' : 'bg-[#14151a] border-[#1e1f26] text-[#8d8d99] hover:border-white/10'}`}
                     >
                       <div className="w-3 h-3 rounded-full border border-white/10 shadow-sm" style={{ backgroundColor: c.color }}></div>
                       {c.name}
@@ -8637,7 +8634,7 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                     <button
                       key={s}
                       onClick={() => setHairStyle(s)}
-                      className={`px-6 py-3 rounded-full text-xs font-black border transition-all ${hairStyle === s ? 'bg-[#24242a] border-[#3B82F6]/40 text-[#3B82F6]' : 'bg-[#14151a] border-[#1e1f26] text-[#8d8d99] hover:border-white/10'}`}
+                      className={`px-6 py-3 rounded-full text-xs font-black border transition-all ${hairStyle === s ? 'bg-[#24242a] border-[#2DD4BF]/40 text-[#2DD4BF]' : 'bg-[#14151a] border-[#1e1f26] text-[#8d8d99] hover:border-white/10'}`}
                     >
                       {s}
                     </button>
@@ -8660,7 +8657,7 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                   <button
                     key={v.id}
                     onClick={() => setVibe(v.id)}
-                    className={`p-6 md:p-10 rounded-[32px] border-2 transition-all flex flex-col items-center gap-4 text-center ${vibe === v.id ? 'bg-[#1F2028] border-[#3B82F6]/40' : 'bg-[#14151a] border-[#1e1f26] hover:border-white/5'}`}
+                    className={`p-6 md:p-10 rounded-[32px] border-2 transition-all flex flex-col items-center gap-4 text-center ${vibe === v.id ? 'bg-[#1F2028] border-[#2DD4BF]/40' : 'bg-[#14151a] border-[#1e1f26] hover:border-white/5'}`}
                   >
                     <div className="mb-2">{v.icon}</div>
                     <span className={`text-[15px] font-black ${vibe === v.id ? 'text-white' : 'text-[#8d8d99]'}`}>{v.label}</span>
@@ -8678,7 +8675,7 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
                     <button
                       key={a}
                       onClick={() => toggleAccessory(a)}
-                      className={`px-6 py-3 rounded-full text-xs font-black border transition-all ${accessories.includes(a) ? 'bg-[#24242a] border-[#3B82F6]/40 text-[#3B82F6]' : 'bg-[#14151a] border-[#1e1f26] text-[#8d8d99] hover:border-white/10'}`}
+                      className={`px-6 py-3 rounded-full text-xs font-black border transition-all ${accessories.includes(a) ? 'bg-[#24242a] border-[#2DD4BF]/40 text-[#2DD4BF]' : 'bg-[#14151a] border-[#1e1f26] text-[#8d8d99] hover:border-white/10'}`}
                     >
                       {a}
                     </button>
@@ -8716,7 +8713,7 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             {isFormComplete ? (
               <button
                 onClick={() => window.open('https://x.ai/', '_blank', 'noopener,noreferrer')}
-                className="w-full py-6 bg-gradient-to-r from-[#3B82F6] to-[#7f5af0] text-white rounded-[32px] font-black text-lg flex items-center justify-center gap-3 transition-all hover:scale-[1.05] hover:shadow-[0_0_30px_rgba(81,66,245,0.5)] active:scale-[0.98] shadow-lg shadow-[#3B82F6]/30 animate-in fade-in zoom-in duration-300 group"
+                className="w-full py-6 bg-gradient-to-r from-[#2DD4BF] to-[#7f5af0] text-white rounded-[32px] font-black text-lg flex items-center justify-center gap-3 transition-all hover:scale-[1.05] hover:shadow-[0_0_30px_rgba(81,66,245,0.5)] active:scale-[0.98] shadow-lg shadow-[#2DD4BF]/30 animate-in fade-in zoom-in duration-300 group"
               >
                 <div className="w-8 h-8 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center transition-transform group-hover:rotate-12">
                   <ArrowUpRight className="w-5 h-5 text-white stroke-[4px]" />
@@ -8737,8 +8734,8 @@ const CriarAvatarView: React.FC<{ onBack: () => void }> = ({ onBack }) => {
             {/* Checklist Section */}
             <div className="w-full bg-[#14151a] border border-[#1e1f26] border-dashed rounded-[32px] p-5 md:p-8 mt-4 flex flex-col gap-6 md:gap-10">
               <div className="flex items-center gap-3">
-                <MousePointer2 className="w-4 h-4 text-[#3B82F6]" />
-                <span className="text-[11px] font-black text-[#3B82F6] uppercase tracking-[0.2em]">PRÓXIMOS PASSOS NO GROK</span>
+                <MousePointer2 className="w-4 h-4 text-[#2DD4BF]" />
+                <span className="text-[11px] font-black text-[#2DD4BF] uppercase tracking-[0.2em]">PRÓXIMOS PASSOS NO GROK</span>
               </div>
 
               <div className="flex flex-col gap-6 md:gap-10">

@@ -10,6 +10,7 @@ import { supabase, uploadImageToSupabase } from './src/lib/supabase';
 import { Login } from './src/Login';
 import { BuilderView } from './src/BuilderView';
 import { TrocasView } from './src/TrocasView';
+import { AmbientesView } from './src/AmbientesView';
 import { MovimentosView } from './src/MovimentosView';
 import {
   Search,
@@ -1107,6 +1108,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
                 { id: 'previsibilidade-receita', label: t('previsibilidadeReceita') },
                 { id: 'builder', label: 'Builder' },
                 { id: 'trocas', label: 'Trocas' },
+                { id: 'ambientes', label: 'Ambientes' },
                 { id: 'movimentos', label: 'Movimentos' },
                 { id: 'hacks-virais', label: 'Viralize AI' }
               ].map((item) => (
@@ -1159,6 +1161,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
              <SidebarItem id="ugc-criador" icon={RefreshCw} label="UGC do Criador" current={currentPage} setCurrent={setCurrentPage} />
              <SidebarItem id="builder" icon={Wand2} label="Builder" current={currentPage} setCurrent={setCurrentPage} />
              <SidebarItem id="trocas" icon={RefreshCw} label="Trocas" current={currentPage} setCurrent={setCurrentPage} />
+             <SidebarItem id="ambientes" icon={Image} label="Ambientes" current={currentPage} setCurrent={setCurrentPage} />
              <SidebarItem id="movimentos" icon={Activity} label="Movimentos" current={currentPage} setCurrent={setCurrentPage} />
              <SidebarItem id="hacks-virais" icon={Zap} label="Viralize AI" current={currentPage} setCurrent={setCurrentPage} />
            </nav>
@@ -1252,6 +1255,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
           {currentPage === 'como-criar-videos-ugc' && <ComoCriarVideosUGCView onBack={() => setCurrentPage('creator-academy')} />}
           {currentPage === 'builder' && <BuilderView />}
           {currentPage === 'trocas' && <TrocasView />}
+          {currentPage === 'ambientes' && <AmbientesView />}
           {currentPage === 'movimentos' && <MovimentosView />}
           {currentPage === 'configuracoes' && (
             <ConfiguracoesView

@@ -8,6 +8,9 @@ fal.config({
 });
 import { supabase, uploadImageToSupabase } from './src/lib/supabase';
 import { Login } from './src/Login';
+import { BuilderView } from './src/BuilderView';
+import { TrocasView } from './src/TrocasView';
+import { MovimentosView } from './src/MovimentosView';
 import {
   Search,
   Loader2,
@@ -91,7 +94,7 @@ import {
   Music,
   CreditCard,
   RefreshCw
-} from 'lucide-react';
+, Gift} from 'lucide-react';
 
 // Language Context
 const LanguageContext = createContext<{
@@ -455,6 +458,163 @@ export const useUserCredits = () => {
   return { credits, loading, fetchCredits, deductCredits };
 };
 
+
+const SidebarItem = ({ id, icon: Icon, label, current, setCurrent }: any) => {
+  const isActive = current === id || 
+    (id === 'hacks-virais' && current === 'hacks-virais-detalhe') || 
+    (id === 'galeria-avatares' && current === 'meus-avatares') ||
+    (id === 'galeria-avatares' && current === 'criar-avatar');
+
+  return (
+    <button
+      onClick={() => setCurrent(id)}
+      className={`flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-300 relative group overflow-hidden ${isActive ? 'bg-white/10 text-white' : 'text-[#8d8d99] hover:bg-white/5 hover:text-white'}`}
+    >
+      <Icon className={`w-5 h-5 ${isActive ? 'text-[#D946EF]' : ''}`} />
+      <span className="text-sm font-medium">{label}</span>
+      {isActive && (
+        <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#D946EF] rounded-r-full shadow-[0_0_10px_#D946EF]"></div>
+      )}
+    </button>
+  );
+};
+
+const DashboardHome = ({ setCurrentPage, t }: any) => {
+  return (
+    <div className="w-full flex flex-col gap-10 lg:mt-4">
+      {/* Hero Banner */}
+      <div className="w-full bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[32px] p-8 md:p-12 relative overflow-hidden flex flex-col md:flex-row items-center justify-between shadow-[0_8px_32px_rgba(0,0,0,0.5)] group">
+        <div className="relative z-10 max-w-xl">
+          <h2 className="text-2xl md:text-3xl font-light text-white italic mb-2">Aproveite o máximo da plataforma!</h2>
+          <p className="text-sm md:text-base text-[#8d8d99] mb-8 font-light">
+            Conteúdos pensados para acelerar seu fluxo de criação com mais controle e precisão.
+          </p>
+          <button 
+            onClick={() => setCurrentPage('creator-academy')}
+            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#2DD4BF] to-[#2DD4BF]/80 rounded-full text-white font-bold text-sm shadow-[0_0_20px_#2DD4BF]/30 hover:shadow-[0_0_30px_#2DD4BF]/50 transition-all hover:scale-105"
+          >
+            Acessar Academy <ChevronRight className="w-4 h-4" />
+          </button>
+        </div>
+
+        {/* Abstract Floating Glass Elements */}
+        <div className="hidden md:block relative z-10 w-[200px] h-[150px] mr-10 perspective-[1000px]">
+          <div className="absolute inset-0 bg-gradient-to-tr from-[#D946EF]/20 to-transparent blur-3xl rounded-full"></div>
+          <div className="absolute top-0 right-0 w-[120px] h-[90px] bg-white/10 backdrop-blur-xl border border-[#D946EF]/40 rounded-2xl transform rotate-12 rotateX-12 shadow-[0_0_30px_#D946EF]/20 group-hover:rotate-6 transition-transform duration-1000"></div>
+          <div className="absolute bottom-0 left-10 w-[140px] h-[100px] bg-white/5 backdrop-blur-md border border-[#2DD4BF]/40 rounded-2xl transform -rotate-6 -rotateY-12 shadow-[0_0_30px_#2DD4BF]/20 group-hover:rotate-0 transition-transform duration-1000"></div>
+        </div>
+      </div>
+
+      {/* Grid Section */}
+      <div>
+        <div className="flex items-center gap-2 text-[#D946EF] mb-2">
+          <Zap className="w-4 h-4" />
+          <span className="text-xs uppercase tracking-widest font-bold">Acesso Rápido</span>
+        </div>
+        <h3 className="text-xl md:text-2xl text-white font-light mb-6">
+          Explore o <span className="font-medium text-[#2DD4BF]">universo Viralpulse</span>
+          <span className="block text-sm text-[#8d8d99] font-light mt-1">Cada seção é uma ferramenta diferente do seu fluxo. Escolha por onde começar.</span>
+        </h3>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Large Card Left */}
+          <div 
+            onClick={() => setCurrentPage('produtos')}
+            className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[32px] p-8 flex flex-col cursor-pointer group hover:bg-white/10 transition-colors relative overflow-hidden min-h-[400px]"
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-[#2DD4BF]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+            
+            {/* Center Icon Abstract */}
+            <div className="flex-1 flex items-center justify-center relative z-10">
+              <div className="relative w-32 h-32 flex items-center justify-center">
+                <div className="absolute inset-0 bg-[#2DD4BF]/20 blur-3xl rounded-full"></div>
+                <div className="grid grid-cols-2 gap-2">
+                   <div className="w-12 h-12 bg-white/10 rounded-xl border border-white/10 flex items-center justify-center"><LayoutGrid className="w-5 h-5 text-white/50" /></div>
+                   <div className="w-12 h-12 bg-white/10 rounded-xl border border-[#2DD4BF]/30 flex items-center justify-center shadow-[0_0_15px_#2DD4BF]/30"><Zap className="w-5 h-5 text-[#2DD4BF]" /></div>
+                   <div className="w-12 h-12 bg-[#2DD4BF]/10 rounded-full border border-[#2DD4BF]/40 flex items-center justify-center"><div className="w-4 h-4 bg-[#2DD4BF] rounded-full blur-[2px]"></div></div>
+                   <div className="w-12 h-12 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center"><div className="w-2 h-2 bg-white/30 rounded-full"></div></div>
+                </div>
+              </div>
+            </div>
+
+            <div className="relative z-10 mt-auto flex items-end justify-between">
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center"><LayoutGrid className="w-3 h-3 text-[#8d8d99]" /></div>
+                  <span className="text-[10px] text-[#8d8d99] tracking-widest uppercase">Biblioteca</span>
+                </div>
+                <h4 className="text-xl text-white font-medium mb-2">Produtos</h4>
+                <p className="text-sm text-[#8d8d99] mb-4">Organize produtos, referências e ferramentas em um só lugar.</p>
+                <div className="flex gap-2">
+                  <span className="px-3 py-1 rounded-full border border-white/10 text-[10px] text-[#8d8d99]">Produtos</span>
+                  <span className="px-3 py-1 rounded-full border border-white/10 text-[10px] text-[#8d8d99]">Virais</span>
+                </div>
+              </div>
+              <ChevronRight className="w-5 h-5 text-white/30 group-hover:text-white transition-colors" />
+            </div>
+          </div>
+
+          {/* Right Column (Stacked Cards) */}
+          <div className="flex flex-col gap-6">
+            {/* Top Right Card */}
+            <div 
+              onClick={() => setCurrentPage('galeria-avatares')}
+              className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[32px] p-8 flex-1 flex flex-col cursor-pointer group hover:bg-white/10 transition-colors relative overflow-hidden"
+            >
+              <div className="flex-1 flex items-center justify-center pb-8 relative z-10">
+                 <div className="w-16 h-16 rounded-full bg-[#D946EF]/10 border border-[#D946EF]/30 flex items-center justify-center relative">
+                    <div className="absolute right-0 bottom-0 w-3 h-3 bg-[#D946EF] rounded-full shadow-[0_0_10px_#D946EF]"></div>
+                    <Users className="w-6 h-6 text-[#D946EF]" />
+                 </div>
+              </div>
+              <div className="relative z-10 flex items-end justify-between">
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center"><Users className="w-3 h-3 text-[#8d8d99]" /></div>
+                    <span className="text-[10px] text-[#8d8d99] tracking-widest uppercase">Explorar</span>
+                  </div>
+                  <h4 className="text-lg text-white font-medium mb-2">Galeria de Avatares</h4>
+                  <p className="text-xs text-[#8d8d99]">Descubra os criadores que estão dominando as trends.</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-white/30 group-hover:text-white transition-colors" />
+              </div>
+            </div>
+
+            {/* Bottom Right Card */}
+            <div 
+              onClick={() => setCurrentPage('ugc-criador')}
+              className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[32px] p-8 flex-1 flex flex-col cursor-pointer group hover:bg-white/10 transition-colors relative overflow-hidden"
+            >
+              <div className="flex-1 flex items-center justify-center pb-8 relative z-10">
+                 <div className="flex items-center justify-center relative">
+                    <div className="w-12 h-12 rounded-full bg-white/5 border border-white/20 flex items-center justify-center -mr-4 relative z-10 backdrop-blur-md"></div>
+                    <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#2DD4BF] to-[#D946EF] p-[1px] relative z-20 shadow-[0_0_20px_#D946EF]/40">
+                      <div className="w-full h-full bg-[#0b0c10] rounded-full flex items-center justify-center">
+                        <RefreshCw className="w-5 h-5 text-white" />
+                      </div>
+                    </div>
+                 </div>
+              </div>
+              <div className="relative z-10 flex items-end justify-between">
+                <div>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center"><ImageIcon className="w-3 h-3 text-[#8d8d99]" /></div>
+                    <span className="text-[10px] text-[#8d8d99] tracking-widest uppercase">IA Visual</span>
+                  </div>
+                  <h4 className="text-lg text-white font-medium mb-2">Swap AI</h4>
+                  <p className="text-xs text-[#8d8d99]">Troca de rostos e produtos de forma cirúrgica e instantânea.</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-white/30 group-hover:text-white transition-colors" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
 const App: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
   const [currentPage, setCurrentPage] = useState<'explorar' | 'produtos' | 'videos' | 'criadores' | 'ugc-criador' | 'galeria-avatares' | 'galeria-prompts' | 'meus-avatares' | 'criar-avatar' | 'previsibilidade-receita' | 'hacks-virais' | 'hacks-virais-detalhe' | 'creator-academy' | 'passos-iniciais' | 'como-se-afiliar' | 'regras-e-restricoes' | 'como-criar-avatar-ia' | 'como-criar-videos-ugc' | 'configuracoes' | 'creator-engine' | 'creator-engine-imagem' | 'creator-engine-video' | 'creator-engine-video-influencer' | 'creator-engine-video-cinematico' | 'creator-engine-video-imitar'>('explorar');
@@ -463,6 +623,7 @@ const App: React.FC = () => {
   const [language, setLanguage] = useState<Language>('pt');
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   const [customAvatars, setCustomAvatars] = useState<CustomAvatar[]>([]);
+  const [customProducts, setCustomProducts] = useState<ProductViral[]>([]);
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [showIOSInstallGuide, setShowIOSInstallGuide] = useState(false);
 
@@ -527,6 +688,42 @@ const App: React.FC = () => {
     const newAvatars = customAvatars.filter(a => a.id !== id);
     setCustomAvatars(newAvatars);
     await supabase.auth.updateUser({ data: { custom_avatars: newAvatars } });
+  };
+
+  const handleAddCustomProduct = async (file: File, title: string, productUrl: string, price: string) => {
+    try {
+      let publicUrl = '';
+      try {
+        publicUrl = await uploadImageToSupabase(file, 'custom-products', session?.user?.id || 'guest');
+      } catch (e) {
+        console.error('Supabase upload failed, using local URL', e);
+      }
+      
+      const imageUrl = publicUrl || URL.createObjectURL(file);
+      
+      let formattedPrice = price || 'N/A';
+      if (price && !price.toLowerCase().includes('r$')) {
+        formattedPrice = `R$ ${price}`;
+      }
+
+      const newProduct: ProductViral = {
+        id: `custom-product-${Date.now()}`,
+        rank: 0,
+        image: imageUrl,
+        title: title,
+        category: 'Custom',
+        revenue: '$0',
+        sales: '0',
+        priceRange: formattedPrice,
+        productUrl: productUrl
+      };
+      const newProducts = [...customProducts, newProduct];
+      setCustomProducts(newProducts);
+      return newProduct;
+    } catch (err) {
+      console.error('Error adding custom product:', err);
+      return null;
+    }
   };
 
   const handleProfileImageUpload = async (file: File) => {
@@ -598,7 +795,21 @@ const App: React.FC = () => {
     setIsLoading(true);
     try {
       // KEEP UI VISUALLY INTACT: Force static data for component state
-      setViralProducts(STATIC_VIRAL_PRODUCTS);
+      const shuffleArray = (array: any[]) => {
+        let shuffled = [...array];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+      };
+      
+      const shuffledStaticProducts = shuffleArray(STATIC_VIRAL_PRODUCTS).map((p, index) => ({
+        ...p,
+        rank: index + 1
+      }));
+      
+      setViralProducts(shuffledStaticProducts);
       setExploreTopProducts(STATIC_EXPLORE_PRODUCTS);
       setHacks(STATIC_HACKS);
 
@@ -876,12 +1087,11 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
         <div className="fixed inset-0 z-[100] lg:hidden">
           <div className="absolute inset-0 bg-[#0b0c10]/80 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)} />
           <div className="absolute left-0 top-0 bottom-0 w-[280px] bg-[#0b0c10] border-r border-[#1e1f26] flex flex-col pt-6 px-6">
-            <div className="flex items-center justify-between mb-8">
-              <div className="flex items-center gap-2 cursor-pointer" onClick={() => { setIsMobileMenuOpen(false); setCurrentPage('explorar'); }}>
-                <img src="/logo.png" alt="Viralpulse Logo" className="w-6 h-6 object-contain" />
-                <span className="text-xl font-black text-white">Viralpulse</span>
+            <div className="flex items-center mb-8 relative h-10">
+              <div className="flex items-center justify-center flex-1 cursor-pointer" onClick={() => { setIsMobileMenuOpen(false); setCurrentPage('explorar'); }}>
+                <img src="/logo.png" alt="Logo" className="w-8 h-8 object-contain" />
               </div>
-              <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 text-[#8d8d99] hover:text-white rounded-lg hover:bg-[#1f2026]">
+              <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 text-[#8d8d99] hover:text-white rounded-lg hover:bg-[#1f2026] absolute right-0">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -891,13 +1101,14 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
                 { id: 'produtos', label: t('produtos') },
                 { id: 'videos', label: t('videos') },
                 { id: 'criadores', label: t('criadores') },
-
-                { id: 'ugc-criador', label: t('ugcCriador') },
                 { id: 'galeria-avatares', label: t('galeriaAvatares') },
+                { id: 'ugc-criador', label: 'UGC do Criador' },
                 { id: 'galeria-prompts', label: t('galeriaPrompts') },
                 { id: 'previsibilidade-receita', label: t('previsibilidadeReceita') },
-                { id: 'hacks-virais', label: t('hacksVirais') },
-                { id: 'creator-academy', label: t('creatorAcademy') }
+                { id: 'builder', label: 'Builder' },
+                { id: 'trocas', label: 'Trocas' },
+                { id: 'movimentos', label: 'Movimentos' },
+                { id: 'hacks-virais', label: 'Viralize AI' }
               ].map((item) => (
                 <button
                   key={item.id}
@@ -926,152 +1137,93 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
         </div>
       )}
 
-      <div className="min-h-screen bg-transparent text-[#e1e1e6] selection:bg-[#2DD4BF]/30 flex flex-col relative">
-        {/* GLOBAL PREMIUM BACKGROUND (EXCLUINDO EXPLORAR) */}
-        {currentPage !== 'explorar' && <GlobalBackground />}
+      
+      {/* GLOBAL PREMIUM BACKGROUND ALWAYS ON */}
+      <GlobalBackground />
 
-        {/* PERFECT CLONE HEADER */}
-        <header className="h-[72px] bg-[#0B0B0E]/80 backdrop-blur-xl border-b border-white/5 sticky top-0 z-[100]">
-          <div className="max-w-[1400px] w-full mx-auto px-3 sm:px-4 md:px-6 flex items-center h-full">
-            {/* Logo Area */}
-
-            {/* Mobile Hamburger */}
-            <button
-              className="lg:hidden mr-2 md:mr-4 p-1 md:p-2 -ml-2 text-white hover:bg-[#1f2026] rounded-lg transition-colors shrink-0"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              <Menu className="w-5 h-5 md:w-6 md:h-6" />
-            </button>
-            <div className="flex items-center gap-1.5 md:gap-2 group cursor-pointer mr-auto min-w-0" onClick={() => { setIsMobileMenuOpen(false); setCurrentPage('explorar'); }}>
-              <div className="flex items-center justify-center shrink-0">
-                <img
-                  src="/logo.png"
-                  alt="Viralpulse Logo"
-                  className="w-5 h-5 md:w-6 md:h-6 object-contain"
-                />
+      <div className="flex h-screen overflow-hidden bg-transparent text-[#e1e1e6] selection:bg-[#2DD4BF]/30 relative z-10">
+        
+        {/* ENNVO SIDEBAR (Desktop) */}
+        <aside className="hidden lg:flex w-[280px] flex-col bg-[#0b0c10]/40 backdrop-blur-2xl border-r border-white/5 relative shrink-0 z-50">
+           {/* LOGO */}
+           <div className="flex items-center justify-center py-8 cursor-pointer group" onClick={() => setCurrentPage('explorar')}>
+              <img src="/logo.png" alt="Logo" className="w-10 h-10 object-contain group-hover:scale-110 transition-transform" />
+           </div>
+           
+           {/* NAV LINKS */}
+           <nav className="flex-1 px-4 flex flex-col gap-1.5 overflow-y-auto scrollbar-hide mt-2">
+             <SidebarItem id="explorar" icon={Home} label="Home" current={currentPage} setCurrent={setCurrentPage} />
+             <SidebarItem id="produtos" icon={LayoutGrid} label="Produtos" current={currentPage} setCurrent={setCurrentPage} />
+             <SidebarItem id="videos" icon={Video} label="Vídeos Virais" current={currentPage} setCurrent={setCurrentPage} />
+             <SidebarItem id="galeria-avatares" icon={Users} label="Galeria de Avatares" current={currentPage} setCurrent={setCurrentPage} />
+             <SidebarItem id="ugc-criador" icon={RefreshCw} label="UGC do Criador" current={currentPage} setCurrent={setCurrentPage} />
+             <SidebarItem id="builder" icon={Wand2} label="Builder" current={currentPage} setCurrent={setCurrentPage} />
+             <SidebarItem id="trocas" icon={RefreshCw} label="Trocas" current={currentPage} setCurrent={setCurrentPage} />
+             <SidebarItem id="movimentos" icon={Activity} label="Movimentos" current={currentPage} setCurrent={setCurrentPage} />
+             <SidebarItem id="hacks-virais" icon={Zap} label="Viralize AI" current={currentPage} setCurrent={setCurrentPage} />
+           </nav>
+           
+           {/* INDIQUE AMIGOS */}
+           <div className="p-4 mx-4 mb-4 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-between cursor-pointer hover:bg-white/10 transition-colors group">
+              <div>
+                <p className="text-xs font-bold text-white group-hover:text-[#2DD4BF] transition-colors">Indique amigos</p>
+                <p className="text-[10px] text-[#8d8d99] mt-0.5">Lucre ou presenteie amigos</p>
               </div>
-              <span className="text-[17px] sm:text-[20px] md:text-[22px] font-black tracking-tighter text-white truncate">Viralpulse</span>
-            </div>
+              <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center group-hover:bg-[#2DD4BF]/20 transition-colors">
+                <Gift className="w-4 h-4 text-white group-hover:text-[#2DD4BF]" />
+              </div>
+           </div>
 
-            {/* Navigation Links Grouped closer to Right Actions */}
-            <div className="flex items-center gap-5 md:gap-8 h-full">
-              <nav className="hidden lg:flex items-center gap-5 h-full">
-                <button
-                  onClick={() => setCurrentPage('explorar')}
-                  className={`text-sm font-semibold transition-colors relative h-full flex items-center px-2 ${currentPage === 'explorar' ? 'text-white' : 'text-[#8d8d99] hover:text-white'}`}
-                >
-                  {t('explorar')}
-                  {currentPage === 'explorar' && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#D946EF] rounded-t-sm"></span>}
-                </button>
-                <button
-                  onClick={() => setCurrentPage('produtos')}
-                  className={`text-sm font-semibold transition-colors relative h-full flex items-center px-2 ${currentPage === 'produtos' ? 'text-white' : 'text-[#8d8d99] hover:text-white'}`}
-                >
-                  {t('produtos')}
-                  {currentPage === 'produtos' && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#D946EF] rounded-t-sm"></span>}
-                </button>
-                <button
-                  onClick={() => setCurrentPage('videos')}
-                  className={`text-sm font-semibold transition-colors relative h-full flex items-center px-2 ${currentPage === 'videos' ? 'text-white' : 'text-[#8d8d99] hover:text-white'}`}
-                >
-                  {t('videos')}
-                  {currentPage === 'videos' && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#D946EF] rounded-t-sm"></span>}
-                </button>
-                <button
-                  onClick={() => setCurrentPage('criadores')}
-                  className={`text-sm font-semibold transition-colors relative h-full flex items-center px-2 ${currentPage === 'criadores' ? 'text-white' : 'text-[#8d8d99] hover:text-white'}`}
-                >
-                  {t('criadores')}
-                  {currentPage === 'criadores' && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#D946EF] rounded-t-sm"></span>}
-                </button>
+           {/* CONFIG & SAIR */}
+           <div className="px-4 pb-6 flex flex-col gap-1 border-t border-white/5 pt-4">
+             <button onClick={() => setCurrentPage('configuracoes')} className="flex items-center gap-3 px-4 py-3 text-[#8d8d99] hover:text-white rounded-xl hover:bg-white/5 transition-colors">
+                <Settings className="w-4 h-4" />
+                <span className="text-sm font-medium">Configurações</span>
+             </button>
+             <button onClick={() => setSession(null)} className="flex items-center gap-3 px-4 py-3 text-[#8d8d99] hover:text-white rounded-xl hover:bg-white/5 transition-colors">
+                <LogOut className="w-4 h-4" />
+                <span className="text-sm font-medium">Sair</span>
+             </button>
+           </div>
+        </aside>
 
-                {/* FERRAMENTAS DROPDOWN (HOVER) */}
-                <div className="relative group h-full flex items-center px-2 cursor-pointer">
-                  <div className="flex items-center gap-1">
-                    <span className={`text-sm font-semibold transition-colors relative h-full flex items-center ${['creator-engine', 'ugc-criador', 'galeria-avatares', 'meus-avatares', 'criar-avatar', 'previsibilidade-receita', 'hacks-virais', 'hacks-virais-detalhe'].includes(currentPage) ? 'text-white' : 'text-[#8d8d99] group-hover:text-white'}`}>
-                      {t('ferramentas')}
-                      {['creator-engine', 'ugc-criador', 'galeria-avatares', 'meus-avatares', 'criar-avatar', 'previsibilidade-receita', 'hacks-virais', 'hacks-virais-detalhe'].includes(currentPage) && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#D946EF] rounded-t-sm"></span>}
-                    </span>
-                    <ChevronRight className="w-3.5 h-3.5 text-[#8d8d99] rotate-90 group-hover:text-white transition-colors" />
-                  </div>
+        {/* MAIN CONTENT AREA */}
+        <main className="flex-1 flex flex-col overflow-y-auto relative z-10 scrollbar-hide">
+           {/* Mobile Header (Hamburger) */}
+           <div className="lg:hidden flex items-center justify-between p-4 border-b border-white/5 bg-[#0b0c10]/80 backdrop-blur-xl sticky top-0 z-50">
+             <button onClick={() => setIsMobileMenuOpen(true)} className="p-2 text-white hover:bg-white/10 rounded-xl transition-colors">
+               <Menu className="w-6 h-6" />
+             </button>
+             <span className="font-black text-white text-lg tracking-tighter">Viralpulse</span>
+             <div className="w-10"></div> {/* Spacer */}
+           </div>
 
-                  {/* Perfect Clone Tool Dropdown Menu */}
-                  <div className="absolute top-[72px] left-1/2 -translate-x-1/2 invisible group-hover:visible opacity-0 group-hover:opacity-100 flex flex-col bg-[#14151a] border border-[#1e1f26] rounded-2xl p-2 min-w-[240px] shadow-[0_20px_40px_rgba(0,0,0,0.8)] z-[100] transition-all duration-200">
-
-                    <DropdownToolItem label={t('ugcCriador')} badge="IA" isActive={currentPage === 'ugc-criador'} onClick={() => setCurrentPage('ugc-criador')} />
-                    <DropdownToolItem label={t('galeriaAvatares')} badge="IA" isActive={currentPage === 'galeria-avatares'} onClick={() => setCurrentPage('galeria-avatares')} />
-                    <DropdownToolItem label={t('galeriaPrompts')} isActive={currentPage === 'galeria-prompts'} onClick={() => setCurrentPage('galeria-prompts')} />
-                    <DropdownToolItem label={t('previsibilidadeReceita')} isActive={currentPage === 'previsibilidade-receita'} onClick={() => setCurrentPage('previsibilidade-receita')} />
-                    <DropdownToolItem label={t('hacksVirais')} isActive={['hacks-virais', 'hacks-virais-detalhe'].includes(currentPage)} onClick={() => setCurrentPage('hacks-virais')} />
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => setCurrentPage('creator-academy')}
-                  className={`text-sm font-semibold transition-colors relative h-full flex items-center px-2 ${currentPage === 'creator-academy' ? 'text-white' : 'text-[#8d8d99] hover:text-white'}`}
-                >
-                  {t('creatorAcademy')}
-                  {currentPage === 'creator-academy' && <span className="absolute bottom-[-1px] left-0 w-full h-[3px] bg-[#D946EF] rounded-t-sm"></span>}
-                </button>
-              </nav>
-
-              {/* Separator */}
-              <div className="w-[1.5px] h-6 bg-[#33333a] mx-1"></div>
-
-              {/* Right Actions */}
-              <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3 shrink-0">
-                <button
-                  onClick={handleInstallClick}
-                  className="hidden sm:flex items-center gap-2 px-4 py-2 border border-[#D946EF]/40 text-[#D946EF] rounded-lg text-xs font-black hover:bg-[#D946EF]/5 transition-all"
-                >
-                  <Download className="w-4 h-4" />
-                  {t('baixarApp')}
-                </button>
-
-                <div className="relative">
-                  <div
-                    onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-                    className="flex items-center gap-1 md:gap-2 px-2 py-1 md:px-3 md:py-1.5 bg-[#14151a] rounded-lg border border-[#1e1f26] text-[10px] md:text-xs font-bold cursor-pointer hover:border-[#44444f] transition-all"
-                  >
-                    <img src="https://flagcdn.com/w20/br.png" width="16" alt="Brazil" className="rounded-[1px] w-3 md:w-4" />
-                    <span className="text-[#8d8d99] uppercase">PT</span>
-                    <ChevronRight className={`w-2.5 h-2.5 md:w-3 md:h-3 text-[#8d8d99] transition-transform ${isLangMenuOpen ? '-rotate-90' : 'rotate-90'}`} />
-                  </div>
-
-                  {isLangMenuOpen && (
-                    <div className="absolute top-full mt-2 right-0 bg-[#14151a] border border-[#1e1f26] rounded-xl p-1.5 min-w-[160px] shadow-2xl z-[100] animate-in fade-in zoom-in-95 duration-200">
-                      <button
-                        onClick={() => { setLanguage('pt'); setIsLangMenuOpen(false); }}
-                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-black transition-all ${language === 'pt' ? 'bg-[#2DD4BF]/10 text-[#2DD4BF]' : 'text-[#8d8d99] hover:bg-[#2d2d33] hover:text-white'}`}
-                      >
-                        <img src="https://flagcdn.com/w20/br.png" width="16" alt="Brazil" className="rounded-[1px]" />
-                        {t('portugues')}
-                      </button>
+           {/* User Welcome Top Bar (Desktop) */}
+           <div className="hidden lg:flex items-center justify-between px-10 pt-8 pb-4">
+              <h1 className="text-2xl font-light text-white">
+                Bem-Vindo(a), <span className="font-medium text-[#2DD4BF]">{session?.user?.user_metadata?.first_name || 'Usuário'}</span>
+              </h1>
+              <div className="flex items-center gap-4">
+                 <div
+                   onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
+                   className="flex items-center gap-2 px-3 py-2 bg-white/5 backdrop-blur-2xl border-white/10 rounded-xl border cursor-pointer hover:bg-white/10 transition-all relative"
+                 >
+                   <img src="https://flagcdn.com/w20/br.png" width="16" alt="Brazil" className="rounded-[2px] w-4" />
+                   <span className="text-[#8d8d99] text-xs font-bold">PT</span>
+                   <ChevronRight className={`w-3 h-3 text-[#8d8d99] transition-transform ${isLangMenuOpen ? '-rotate-90' : 'rotate-90'}`} />
+                 </div>
+                 
+                 <div className="flex items-center gap-3 bg-white/5 backdrop-blur-2xl border-white/10 pl-2 pr-4 py-2 rounded-full border cursor-pointer hover:bg-white/10 transition-all">
+                    <div className="w-8 h-8 bg-[#D946EF] rounded-full flex items-center justify-center text-xs font-black text-white shadow-lg shadow-[#D946EF]/30">
+                      {userProfileImage ? <img src={userProfileImage} alt="User" className="w-full h-full object-cover rounded-full" /> : "U"}
                     </div>
-                  )}
-                </div>
-
-
-                <div
-                  onClick={() => setCurrentPage('configuracoes')}
-                  className="flex items-center gap-1.5 md:gap-2.5 bg-[#14151a] pl-1 pr-2 md:pl-1.5 md:pr-3 py-1 md:py-1.5 rounded-full border border-[#1e1f26] cursor-pointer hover:border-[#2DD4BF]/30 transition-all shrink-0"
-                >
-                  <div className="w-6 h-6 md:w-7 md:h-7 bg-[#D946EF] rounded-full flex items-center justify-center text-[10px] md:text-[11px] font-black text-white shadow-lg shadow-[#D946EF]/30 overflow-hidden shrink-0">
-                    {userProfileImage ? (
-                      <img src={userProfileImage} alt="User" className="w-full h-full object-cover shrink-0" />
-                    ) : (
-                      "N"
-                    )}
-                  </div>
-                  <span className="text-[9px] md:text-xs font-black text-white uppercase tracking-tight truncate">{t('usuario')}</span>
-                </div>
+                    <span className="text-xs font-black text-white uppercase">{t('usuario')}</span>
+                 </div>
               </div>
-            </div>
-          </div>
-        </header>
+           </div>
 
-        {/* Main Content Area */}
-        <div className="flex-1">
+           <div className="flex-1 px-4 lg:px-10 pb-10">
+
           {currentPage === 'creator-engine' && <CreatorEngineView onGoToImagem={() => setCurrentPage('creator-engine-imagem')} onGoToVideo={() => setCurrentPage('creator-engine-video')} onGoToMinhasCriacoes={() => setCurrentPage('creator-engine-minhas-criacoes')} onGoToCreditos={() => setCurrentPage('creator-engine-creditos')} />}
           {currentPage === 'creator-engine-minhas-criacoes' && <CreatorEngineMinhasCriacoesView onBack={() => setCurrentPage('creator-engine')} />}
           {currentPage === 'creator-engine-creditos' && <CreatorEngineCreditosView onBack={() => setCurrentPage('creator-engine')} />}
@@ -1080,11 +1232,11 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
           {currentPage === 'creator-engine-video-influencer' && <CreatorEngineGerarVideoInfluencerIAView onBack={() => setCurrentPage('creator-engine-video')} />}
           {currentPage === 'creator-engine-video-cinematico' && <CreatorEngineGerarVideoCinematicoView onBack={() => setCurrentPage('creator-engine-video')} />}
           {currentPage === 'creator-engine-video-imitar' && <CreatorEngineGerarVideoImitarMovimentosView onBack={() => setCurrentPage('creator-engine-video')} />}
-          {currentPage === 'explorar' && <ExploreView products={exploreTopProducts} onGoToAcademy={() => setCurrentPage('creator-academy')} onGoToProducts={() => setCurrentPage('produtos')} />}
-          {currentPage === 'produtos' && <ProductsView products={viralProducts} />}
+          {currentPage === 'explorar' && <DashboardHome setCurrentPage={setCurrentPage} t={t} />}
+          {currentPage === 'produtos' && <ProductsView products={viralProducts} customProducts={customProducts} onAddCustomProduct={handleAddCustomProduct} />}
           {currentPage === 'videos' && <VideosView />}
           {currentPage === 'criadores' && <CreatorsView />}
-          {currentPage === 'ugc-criador' && <UGCCreatorView viralProducts={viralProducts} exploreTopProducts={exploreTopProducts} customAvatars={customAvatars} onAddCustomAvatar={handleAddCustomAvatar} onDeleteCustomAvatar={handleDeleteCustomAvatar} />}
+          {currentPage === 'ugc-criador' && <UGCCreatorView viralProducts={viralProducts} exploreTopProducts={exploreTopProducts} customAvatars={customAvatars} customProducts={customProducts} onAddCustomAvatar={handleAddCustomAvatar} onDeleteCustomAvatar={handleDeleteCustomAvatar} />}
           {currentPage === 'galeria-avatares' && <GaleriaAvataresView onGoToMyAvatars={() => setCurrentPage('meus-avatares')} onCreateNew={() => setCurrentPage('criar-avatar')} />}
           {currentPage === 'galeria-prompts' && <GaleriaPromptsView />}
           {currentPage === 'meus-avatares' && <MeusAvataresView avatars={customAvatars} onAddAvatar={handleAddCustomAvatar} onDeleteAvatar={handleDeleteCustomAvatar} onBack={() => setCurrentPage('galeria-avatares')} onCreateNew={() => setCurrentPage('criar-avatar')} />}
@@ -1098,6 +1250,9 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
           {currentPage === 'regras-e-restricoes' && <RegrasERestricoesView onBack={() => setCurrentPage('creator-academy')} />}
           {currentPage === 'como-criar-avatar-ia' && <ComoCriarAvatarIAView onBack={() => setCurrentPage('creator-academy')} />}
           {currentPage === 'como-criar-videos-ugc' && <ComoCriarVideosUGCView onBack={() => setCurrentPage('creator-academy')} />}
+          {currentPage === 'builder' && <BuilderView />}
+          {currentPage === 'trocas' && <TrocasView />}
+          {currentPage === 'movimentos' && <MovimentosView />}
           {currentPage === 'configuracoes' && (
             <ConfiguracoesView
               profileImage={userProfileImage}
@@ -1108,7 +1263,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
             />
           )}
         </div>
-
+        </main>
       </div>
 
       {/* iOS PWA Install Guide Modal */}
@@ -3391,11 +3546,15 @@ const FeatureExploreCard: React.FC<{ icon: React.ReactNode, title: string, descr
 );
 
 // --- PRODUCTS PAGE VIEW ---
-const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => {
+const ProductsView: React.FC<{ products: ProductViral[], customProducts: ProductViral[], onAddCustomProduct: (f: File, t: string, u: string, p: string) => Promise<ProductViral | null> }> = ({ products, customProducts, onAddCustomProduct }) => {
   const [viewMode, setViewMode] = useState<'radar' | 'mapa'>('radar');
+  const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false);
+  const [isUploadingProduct, setIsUploadingProduct] = useState(false);
+
+  const allProducts = [...products, ...customProducts];
 
   // Build niche map: group products by category
-  const nicheMap = products.reduce((acc, p) => {
+  const nicheMap = allProducts.reduce((acc, p) => {
     const cat = p.category || 'Outros';
     if (!acc[cat]) acc[cat] = [];
     acc[cat].push(p);
@@ -3543,6 +3702,11 @@ const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => {
             ))}
           </div>
 
+          <button onClick={() => setIsAddProductModalOpen(true)} className="px-6 py-4 rounded-[24px] font-black uppercase text-[10px] tracking-widest text-white transition-all flex items-center gap-2.5 bg-gradient-to-r from-[#8B5CF6] to-[#7c3aed] shadow-[0_0_20px_rgba(139,92,246,0.2)] hover:shadow-[0_0_20px_rgba(139,92,246,0.5)] hover:scale-105">
+            <Plus className="w-4 h-4" />
+            Meu Produto
+          </button>
+
           <div className="px-6 py-3 rounded-[24px] bg-white/[0.02] border border-white/5 backdrop-blur-md flex items-center gap-4">
             <Clock className="w-4 h-4 text-[#2DD4BF] animate-pulse" />
             <div className="flex flex-col">
@@ -3555,7 +3719,7 @@ const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => {
 
       {viewMode === 'radar' ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-8">
-          {products.map((p) => (
+          {allProducts.map((p) => (
             <ViralCard key={p.id} product={p} />
           ))}
         </div>
@@ -3643,6 +3807,65 @@ const ProductsView: React.FC<{ products: ProductViral[] }> = ({ products }) => {
           })}
         </div>
       )}
+
+      {/* MODAL ADICIONAR PRODUTO */}
+      {isAddProductModalOpen && (
+        <div className="fixed inset-0 z-[999] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={() => !isUploadingProduct && setIsAddProductModalOpen(false)} />
+          <div className="relative bg-[#0b0c10] border border-white/10 rounded-[32px] w-full max-w-md overflow-hidden shadow-2xl">
+            <div className="p-6 md:p-8">
+              <h3 className="text-xl font-bold text-white mb-2">Adicionar Produto</h3>
+              <p className="text-[#8d8d99] text-sm mb-6">Cadastre seu próprio produto para gerar imagens e vídeos.</p>
+              
+              <form onSubmit={async (e) => {
+                e.preventDefault();
+                setIsUploadingProduct(true);
+                const formData = new FormData(e.currentTarget);
+                const file = formData.get('image') as File;
+                const title = formData.get('title') as string;
+                const price = formData.get('price') as string;
+                const url = formData.get('url') as string;
+                
+                if (file && title) {
+                  await onAddCustomProduct(file, title, url || '', price);
+                  setIsAddProductModalOpen(false);
+                }
+                setIsUploadingProduct(false);
+              }} className="space-y-4">
+                
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm font-medium text-[#8d8d99]">Foto do Produto</label>
+                  <input type="file" name="image" accept="image/*" required className="text-sm text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#8B5CF6]/10 file:text-[#8B5CF6] hover:file:bg-[#8B5CF6]/20" />
+                </div>
+                
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm font-medium text-[#8d8d99]">Nome do Produto</label>
+                  <input type="text" name="title" required placeholder="Ex: Garrafa Térmica Premium" className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#8B5CF6] transition-colors" />
+                </div>
+                
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm font-medium text-[#8d8d99]">Preço (Opcional)</label>
+                  <input type="text" name="price" placeholder="Ex: R$ 99,90" className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#8B5CF6] transition-colors" />
+                </div>
+                
+                <div className="flex flex-col gap-2">
+                  <label className="text-sm font-medium text-[#8d8d99]">URL / Link (Opcional)</label>
+                  <input type="url" name="url" placeholder="https://..." className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#8B5CF6] transition-colors" />
+                </div>
+                
+                <div className="mt-8 flex gap-3">
+                  <button type="button" onClick={() => setIsAddProductModalOpen(false)} disabled={isUploadingProduct} className="flex-1 py-3 bg-white/5 text-white rounded-xl font-bold hover:bg-white/10 transition-colors">
+                    Cancelar
+                  </button>
+                  <button type="submit" disabled={isUploadingProduct} className="flex-1 py-3 bg-[#8B5CF6] text-white rounded-xl font-bold hover:bg-[#7c3aed] transition-colors flex items-center justify-center gap-2">
+                    {isUploadingProduct ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Adicionar'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 };
@@ -3670,13 +3893,19 @@ const ViralCard: React.FC<{ product: ProductViral }> = ({ product }) => {
               <img src={product.image} alt={product.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" />
 
               {/* SMALL RANK BADGE - PILL SHAPED */}
-              <div className="absolute top-2.5 left-2.5 md:top-4 md:left-4 flex items-center gap-1.5 px-2.5 py-0.5 md:px-4 md:py-1.5 bg-[#2DD4BF] rounded-full text-[8px] md:text-[10px] font-black text-white shadow-xl theme-glow-blue">
-                <Flame className="w-2.5 h-2.5 md:w-3.5 md:h-3.5 fill-white" /> Top #{product.rank}
-              </div>
+              {product.category === 'Custom' ? (
+                <div className="absolute top-2.5 left-2.5 md:top-4 md:left-4 flex items-center gap-1.5 px-2.5 py-0.5 md:px-4 md:py-1.5 bg-[#8B5CF6] rounded-full text-[8px] md:text-[10px] font-black text-white shadow-xl">
+                  <Target className="w-2.5 h-2.5 md:w-3.5 md:h-3.5" /> Produto Autoral
+                </div>
+              ) : (
+                <div className="absolute top-2.5 left-2.5 md:top-4 md:left-4 flex items-center gap-1.5 px-2.5 py-0.5 md:px-4 md:py-1.5 bg-[#2DD4BF] rounded-full text-[8px] md:text-[10px] font-black text-white shadow-xl theme-glow-blue">
+                  <Flame className="w-2.5 h-2.5 md:w-3.5 md:h-3.5 fill-white" /> Top #{product.rank}
+                </div>
+              )}
 
-              {/* SMALL PRICE BADGE - DARK GREY PILL */}
-              <div className="absolute top-2.5 right-2.5 md:top-4 md:right-4 px-2.5 py-0.5 md:px-4 md:py-1.5 bg-[#14151a]/90 backdrop-blur-xl border border-white/5 rounded-full text-[8px] md:text-[10px] font-black text-white flex items-center gap-1.5 shadow-lg">
-                <span className="text-[#00b37e] font-black">$</span> {product.priceRange}
+              {/* SMALL PRICE BADGE - WHITE PILL */}
+              <div className="absolute top-2.5 right-2.5 md:top-4 md:right-4 px-2.5 py-0.5 md:px-4 md:py-1.5 bg-white backdrop-blur-xl rounded-full text-[8px] md:text-[10px] font-black text-black flex items-center shadow-lg">
+                {product.priceRange}
               </div>
 
 
@@ -3700,17 +3929,29 @@ const ViralCard: React.FC<{ product: ProductViral }> = ({ product }) => {
         </div>
 
         <div className="flex items-end justify-between mt-auto mb-6 md:mb-8 pt-2 md:pt-4 gap-4">
-          <div className="flex flex-col">
-            <span className="text-[8px] md:text-[9px] font-medium text-[#8d8d99] uppercase tracking-wider block mb-1 md:mb-2">RECEITA EST.</span>
-            <div className="flex items-baseline gap-0.5">
-              <span className="text-[#2DD4BF]/70 font-medium text-[11px] md:text-sm leading-none">R$</span>
-              <span className="text-lg md:text-xl font-semibold text-[#2DD4BF] tracking-tight leading-none">{product.revenue.replace('R$ ', '')}</span>
+          {product.category === 'Custom' ? (
+            <div className="flex items-center gap-3 w-full bg-[#8B5CF6]/10 border border-[#8B5CF6]/30 rounded-[16px] p-3 md:p-4 shadow-[0_0_15px_rgba(139,92,246,0.1)]">
+              <Target className="w-5 h-5 text-[#8B5CF6] shrink-0" />
+              <div className="flex flex-col">
+                <span className="text-[10px] md:text-[11px] font-black text-[#8B5CF6] uppercase tracking-widest">Mineração Própria</span>
+                <span className="text-xs md:text-sm font-medium text-white/80">Pronto para gerar vídeos e imagens</span>
+              </div>
             </div>
-          </div>
-          <div className="flex flex-col items-end">
-            <span className="text-[8px] md:text-[9px] font-medium text-[#8d8d99] uppercase tracking-wider block mb-1 md:mb-2">vendidos</span>
-            <span className="text-lg md:text-xl font-semibold text-white tracking-tight leading-none">{product.sales}</span>
-          </div>
+          ) : (
+            <>
+              <div className="flex flex-col">
+                <span className="text-[8px] md:text-[9px] font-medium text-[#8d8d99] uppercase tracking-wider block mb-1 md:mb-2">RECEITA EST.</span>
+                <div className="flex items-baseline gap-0.5">
+                  <span className="text-[#2DD4BF]/70 font-medium text-[11px] md:text-sm leading-none">R$</span>
+                  <span className="text-lg md:text-xl font-semibold text-[#2DD4BF] tracking-tight leading-none">{product.revenue.replace('R$ ', '')}</span>
+                </div>
+              </div>
+              <div className="flex flex-col items-end">
+                <span className="text-[8px] md:text-[9px] font-medium text-[#8d8d99] uppercase tracking-wider block mb-1 md:mb-2">vendidos</span>
+                <span className="text-lg md:text-xl font-semibold text-white tracking-tight leading-none">{product.sales}</span>
+              </div>
+            </>
+          )}
         </div>
 
         <button
@@ -4856,7 +5097,7 @@ const downloadImage = async (url: string, filename: string) => {
 };
 
 // --- UGC CREATOR VIEW (MULTI-STEP) ---
-const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProducts: ProductExplore[], customAvatars: CustomAvatar[], onAddCustomAvatar: (file: File) => Promise<CustomAvatar | null>, onDeleteCustomAvatar: (id: string) => void }> = ({ viralProducts, exploreTopProducts, customAvatars, onAddCustomAvatar, onDeleteCustomAvatar }) => {
+const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProducts: ProductExplore[], customAvatars: CustomAvatar[], customProducts: ProductViral[], onAddCustomAvatar: (file: File) => Promise<CustomAvatar | null>, onDeleteCustomAvatar: (id: string) => void }> = ({ viralProducts, exploreTopProducts, customAvatars, customProducts, onAddCustomAvatar, onDeleteCustomAvatar }) => {
   const [step, setStep] = useState(1);
   const [selectedStyle, setSelectedStyle] = useState<string | null>('influencer');
   const [selectedInfluencer, setSelectedInfluencer] = useState<string | null>(null);
@@ -4887,6 +5128,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
   // Step 4 state (formerly Step 5)
   const [voiceGender, setVoiceGender] = useState<'fem' | 'masc'>('fem');
   const [selectedStepTone, setSelectedStepTone] = useState<string | null>(null);
+  const [selectedAIEngine, setSelectedAIEngine] = useState<string>('Flow (Veo 3)');
   const [takes, setTakes] = useState(['']);
 
   // Loading state
@@ -4917,7 +5159,7 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
     { id: 'm6', name: 'Pedro', image: 'https://i.imgur.com/Bziwg0O.jpeg' },
   ];
 
-  const allInfluencers = [...influencersWomen, ...influencersMen];
+  const allInfluencers = [...influencersWomen, ...influencersMen, ...customAvatars.map(a => ({ id: a.id, name: a.name, image: a.image }))];
   const currentInfluencers = activeTab === 'mulheres' ? influencersWomen : (activeTab === 'homens' ? influencersMen : []);
 
   const viralStepProducts = [
@@ -4933,6 +5175,13 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
       title: p.title,
       image: p.image,
       badge: 'Em Alta',
+      viral: false
+    })),
+    ...customProducts.map(p => ({
+      id: p.id,
+      title: p.title,
+      image: p.image,
+      badge: 'Meu Produto',
       viral: false
     }))
   ];
@@ -5852,6 +6101,24 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
                   ))}
                 </div>
               </div>
+
+              <div>
+                <div className="flex items-center gap-4 mb-4 md:mb-8">
+                  <div className="w-8 h-[1px] bg-gradient-to-r from-[#2DD4BF] to-transparent"></div>
+                  <h3 className="text-[10px] md:text-[11px] font-black text-white uppercase tracking-[0.3em] md:tracking-[0.5em]">Plataforma // Motor de Vídeo</h3>
+                </div>
+                <div className="flex flex-wrap gap-2 md:gap-3">
+                  {['Flow (Veo 3)', 'Grok', 'Freepik', 'YouTube Create'].map((engine) => (
+                    <button
+                      key={engine}
+                      onClick={() => setSelectedAIEngine(engine)}
+                      className={`px-4 md:px-8 py-2 md:py-3.5 rounded-xl md:rounded-2xl text-[9px] md:text-[10px] font-black border-2 transition-all duration-500 uppercase tracking-widest ${selectedAIEngine === engine ? 'border-[#2DD4BF] bg-[#2DD4BF]/10 text-white shadow-lg shadow-[#2DD4BF]/10' : 'border-white/5 bg-black/40 text-[#5b5b7b] hover:border-white/20 hover:text-white'}`}
+                    >
+                      {engine}
+                    </button>
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* NEURAL SCRIPT ENGINE */}
@@ -6205,15 +6472,30 @@ Make the Avatar speak EXACTLY the following script in Portuguese with perfect, s
                     </div>
                   </div>
 
-                  {/* PASSO 03: FINALIZAR NO VEO */}
+                  {/* PASSO 03: DESENVOLVER VÍDEO */}
                   <div className="flex items-start gap-4 md:gap-8 relative z-10 group/step">
                     <div className="w-[26px] h-[26px] bg-black border-2 border-white/10 rounded-full flex items-center justify-center text-[10px] font-black text-white/40 shadow-xl group-hover/step:border-[#2DD4BF]/50 group-hover/step:text-[#2DD4BF] transition-all shrink-0">3</div>
-                    <div className="flex-1 mt-0.5">
-                      <h4 className="text-lg md:text-xl font-bold text-white mb-4 md:mb-8 uppercase tracking-tight leading-tight">Finalizar no Veo 3</h4>
+                    <div className="flex-1 mt-0.5 relative">
+                      <h4 className="text-lg md:text-xl font-bold text-white mb-4 md:mb-8 uppercase tracking-tight leading-tight">Desenvolver Vídeo</h4>
 
-                      <button onClick={() => window.open('https://labs.google/flow/about', '_blank')} className="w-full py-4 md:py-6 px-4 bg-gradient-to-r from-[#2DD4BF] to-[#D946EF] hover:scale-[1.02] text-white rounded-[20px] md:rounded-3xl font-black text-sm sm:text-base md:text-lg flex items-center justify-center gap-2 md:gap-4 shadow-[0_20px_40px_rgba(59,130,246,0.3)] transition-all active:scale-[0.98] group/final">
+                      <button onClick={() => {
+                        const productName = viralStepProducts.find(p => p.id === selectedProduct)?.title || 'Product';
+                        const generoVoz = voiceGender === 'fem' ? 'Female' : 'Male';
+                        const tomVoz = selectedStepTone || 'Standard';
+                        const cenarioAcao = scenarios.find(s => s.id === selectedScenario)?.label || 'Ambiente limpo';
+                        
+                        const basePrompt = `[INSTRUÇÕES - VÍDEO]\nProduto: ${productName}\nCenário: ${cenarioAcao}\nVoz: ${generoVoz} (${tomVoz})\nAção: O Avatar deve interagir com o produto de forma natural (estilo UGC).\n\n[ROTEIRO]\n${takes.join(' ')}`;
+                        const finalPrompt = (selectedAIEngine === 'YouTube Create' && basePrompt.length > 900) ? basePrompt.substring(0, 900) : basePrompt;
+                        
+                        navigator.clipboard.writeText(finalPrompt);
+                        
+                        if (selectedAIEngine === 'Flow (Veo 3)') window.open('https://labs.google/flow/about', '_blank');
+                        else if (selectedAIEngine === 'Grok') window.open('https://grok.com/', '_blank');
+                        else if (selectedAIEngine === 'Freepik') window.open('https://www.freepik.com/ai/video-generator', '_blank');
+                        else if (selectedAIEngine === 'YouTube Create') window.open('https://about.youtube/blog/youtube-create/', '_blank');
+                      }} className="w-full py-4 md:py-6 px-4 bg-gradient-to-r from-[#2DD4BF] to-[#D946EF] hover:scale-[1.02] text-white rounded-[20px] md:rounded-3xl font-black text-sm sm:text-base md:text-lg flex items-center justify-center gap-2 md:gap-4 shadow-[0_20px_40px_rgba(59,130,246,0.3)] transition-all active:scale-[0.98] group/final">
                         <Video className="w-5 h-5 md:w-7 md:h-7 shrink-0" />
-                        <span>ABRIR VEO STUDIO</span>
+                        <span>DESENVOLVER VÍDEO ({selectedAIEngine.toUpperCase()})</span>
                         <ExternalLink className="w-4 h-4 md:w-5 md:h-5 opacity-40 group-hover/final:opacity-100 transition-opacity shrink-0" />
                       </button>
                     </div>

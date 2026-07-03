@@ -3,7 +3,7 @@ export const translations = {
   pt: {
     explorar: "Explorar",
     produtos: "Produtos",
-    videos: "Vídeos",
+    videos: "Vídeos Virais",
     criadores: "Criadores",
     ferramentas: "Ferramentas",
     creatorAcademy: "Creator Academy",

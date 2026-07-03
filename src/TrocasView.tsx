@@ -1,18 +1,20 @@
 import React, { useState, useRef } from 'react';
-import { Upload, X, Loader2, Wand2, Image as ImageIcon, Shirt, ArrowLeft, Clapperboard, Scissors, Maximize, ScissorsLineDashed } from 'lucide-react';
+import { Upload, X, Loader2, Wand2, Image as ImageIcon, Shirt, ArrowLeft, Clapperboard, Scissors, Maximize, ScissorsLineDashed, Sparkles } from 'lucide-react';
 
-type SwapMode = 'upper' | 'lower' | 'full' | 'background' | null;
+type SwapMode = 'upper' | 'lower' | 'full' | 'background' | 'everything' | null;
 
 export const TrocasView = () => {
   const [swapMode, setSwapMode] = useState<SwapMode>(null);
   
   const [influencerImg, setInfluencerImg] = useState<string | null>(null);
   const [clothesImg, setClothesImg] = useState<string | null>(null);
+  const [bgImg, setBgImg] = useState<string | null>(null);
   const [resultImg, setResultImg] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
 
   const fileInputRef1 = useRef<HTMLInputElement>(null);
   const fileInputRef2 = useRef<HTMLInputElement>(null);
+  const fileInputRef3 = useRef<HTMLInputElement>(null);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>, setter: React.Dispatch<React.SetStateAction<string | null>>) => {
     const file = e.target.files?.[0];
@@ -23,7 +25,11 @@ export const TrocasView = () => {
   };
 
   const handleGenerate = () => {
-    if (!influencerImg || !clothesImg) return;
+    if (swapMode === 'everything') {
+      if (!influencerImg || !clothesImg || !bgImg) return;
+    } else {
+      if (!influencerImg || !clothesImg) return;
+    }
     setIsGenerating(true);
     
     // Simulação da API de geração
@@ -37,6 +43,7 @@ export const TrocasView = () => {
     setSwapMode(null);
     setInfluencerImg(null);
     setClothesImg(null);
+    setBgImg(null);
     setResultImg(null);
     setIsGenerating(false);
   };
@@ -118,23 +125,48 @@ export const TrocasView = () => {
               <p className="text-[#8d8d99] text-sm max-w-[80%]">Teletransporte sua influenciadora para qualquer lugar enviando uma foto de fundo.</p>
             </button>
           </div>
+
+          {/* Troca Tudo */}
+          <div className="mt-6">
+            <button 
+              onClick={() => setSwapMode('everything')}
+              className="w-full group p-6 rounded-3xl bg-gradient-to-r from-[#8B5CF6]/10 to-blue-500/10 border border-white/10 hover:border-white/20 transition-all duration-300 flex items-center justify-between overflow-hidden relative"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-[#8B5CF6]/0 to-blue-500/0 group-hover:from-[#8B5CF6]/10 group-hover:to-blue-500/10 transition-colors" />
+              <div className="flex flex-col md:flex-row items-start md:items-center gap-6 relative z-10 w-full">
+                <div className="w-14 h-14 bg-gradient-to-br from-[#8B5CF6] to-blue-500 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform shrink-0">
+                  <Sparkles className="w-7 h-7 text-white" />
+                </div>
+                <div className="text-left flex-1">
+                  <h3 className="text-xl font-bold text-white mb-1">Troca Tudo (Look + Cenário)</h3>
+                  <p className="text-[#8d8d99] text-sm">Modifique a influenciadora, a roupa completa e o ambiente de uma só vez.</p>
+                </div>
+                <div className="relative z-10 mt-4 md:mt-0 shrink-0 self-end md:self-auto">
+                  <span className="px-5 py-2.5 rounded-full bg-white/10 text-white text-sm font-medium border border-white/5 flex items-center gap-2 group-hover:bg-white/20 transition-colors">
+                    Acessar Troca Inteligente
+                  </span>
+                </div>
+              </div>
+            </button>
+          </div>
         </div>
       </div>
     );
   }
 
-  // --- ÁREA DE EDIÇÃO (3 COLUNAS) ---
+  // --- ÁREA DE EDIÇÃO ---
 
   // Adaptação dos textos baseado no modo
   const isBgMode = swapMode === 'background';
-  const targetLabel = isBgMode ? 'Cenário' : 'Roupa Alvo';
-  const targetDesc = isBgMode ? 'Selecione o novo fundo' : 'Selecione a peça de roupa';
+  const isEverythingMode = swapMode === 'everything';
+  const targetLabel = isBgMode ? 'Cenário' : isEverythingMode ? 'Look Completo' : 'Roupa Alvo';
+  const targetDesc = isBgMode ? 'Selecione o novo fundo' : isEverythingMode ? 'Selecione a roupa' : 'Selecione a peça de roupa';
   const targetUploadText = isBgMode ? 'Upload do Cenário' : 'Upload da Roupa';
   const targetUploadDesc = isBgMode ? 'Selecione a foto de fundo que deseja aplicar.' : 'Selecione a peça que deseja vestir na modelo.';
   const TargetIcon = isBgMode ? ImageIcon : Shirt;
   const buttonLabel = isBgMode ? 'Trocar Cenário' : 'Trocar Roupa';
-  const generateLabel = isBgMode ? 'Realizar Troca (Cenário)' : 'Realizar Troca (Roupa)';
-  const modeTitle = swapMode === 'upper' ? 'Parte Superior' : swapMode === 'lower' ? 'Parte Inferior' : swapMode === 'full' ? 'Look Completo' : 'Cenário';
+  const generateLabel = isEverythingMode ? 'Realizar Troca Inteligente' : isBgMode ? 'Realizar Troca (Cenário)' : 'Realizar Troca (Roupa)';
+  const modeTitle = swapMode === 'upper' ? 'Parte Superior' : swapMode === 'lower' ? 'Parte Inferior' : swapMode === 'full' ? 'Look Completo' : swapMode === 'everything' ? 'Troca Tudo' : 'Cenário';
 
   return (
     <div className="flex-1 w-full flex flex-col p-6 md:p-8 overflow-y-auto bg-transparent">
@@ -157,8 +189,8 @@ export const TrocasView = () => {
         </button>
       </div>
 
-      {/* Grid de 3 Colunas */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pb-20">
+      {/* Grid de 3 ou 4 Colunas */}
+      <div className={`grid grid-cols-1 md:grid-cols-2 ${isEverythingMode ? 'lg:grid-cols-4' : 'lg:grid-cols-3'} gap-6 pb-20`}>
         
         {/* COLUNA 1: INFLUENCIADORA */}
         <div className="flex flex-col gap-3">
@@ -250,10 +282,57 @@ export const TrocasView = () => {
           </div>
         </div>
 
-        {/* COLUNA 3: RESULTADO */}
+        {/* COLUNA 3 (OPCIONAL): CENÁRIO (SÓ NO MODO EVERYTHING) */}
+        {isEverythingMode && (
+          <div className="flex flex-col gap-3">
+            <div className="flex flex-col">
+              <span className="text-[10px] font-bold text-white uppercase tracking-widest">Etapa 3 · Cenário</span>
+              <span className="text-[11px] text-[#5b5b7b]">Selecione o novo fundo</span>
+            </div>
+
+            <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden bg-[#0e0f14] border border-white/10 flex flex-col">
+              {bgImg ? (
+                <>
+                  <img src={bgImg} alt="Cenário" className="w-full h-full object-cover" />
+                  <button 
+                    onClick={() => setBgImg(null)}
+                    className="absolute top-4 right-4 w-8 h-8 bg-black/60 rounded-full flex items-center justify-center text-white hover:bg-red-500/80 transition-colors"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                  <div className="absolute bottom-4 inset-x-4">
+                    <button 
+                      onClick={() => fileInputRef3.current?.click()}
+                      className="w-full py-3 bg-[#13141c] hover:bg-[#1a1b26] border border-white/5 rounded-xl text-white text-xs font-medium flex items-center justify-center gap-2 transition-all shadow-xl"
+                    >
+                      <Upload className="w-4 h-4" />
+                      Trocar Cenário
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <button 
+                  onClick={() => fileInputRef3.current?.click()}
+                  className="w-full h-full flex flex-col items-center justify-center gap-4 hover:bg-white/[0.02] transition-colors p-6 group"
+                >
+                  <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <ImageIcon className="w-8 h-8 text-[#5b5b7b]" />
+                  </div>
+                  <div className="text-center">
+                    <p className="text-sm font-medium text-white mb-1">Upload do Cenário</p>
+                    <p className="text-[11px] text-[#5b5b7b] px-4">Selecione a foto de fundo que deseja aplicar.</p>
+                  </div>
+                </button>
+              )}
+              <input type="file" ref={fileInputRef3} onChange={(e) => handleImageUpload(e, setBgImg)} accept="image/*" className="hidden" />
+            </div>
+          </div>
+        )}
+
+        {/* COLUNA FINAL: RESULTADO */}
         <div className="flex flex-col gap-3">
           <div className="flex flex-col">
-            <span className="text-[10px] font-bold text-white uppercase tracking-widest">Etapa 3 · Resultado Final</span>
+            <span className="text-[10px] font-bold text-white uppercase tracking-widest">Etapa {isEverythingMode ? '4' : '3'} · Resultado Final</span>
             <span className="text-[11px] text-[#5b5b7b]">Aguarde a substituição</span>
           </div>
 
@@ -283,7 +362,7 @@ export const TrocasView = () => {
             )}
             
             {/* Botão de Geração sobreposto */}
-            {!isGenerating && influencerImg && clothesImg && (
+            {!isGenerating && influencerImg && clothesImg && (!isEverythingMode || bgImg) && (
               <div className="absolute bottom-4 inset-x-4">
                 <button 
                   onClick={handleGenerate}

@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Upload, X, Loader2, Wand2, Image as ImageIcon, Shirt, ArrowLeft, Clapperboard, Scissors, Maximize, ScissorsLineDashed, Layers } from 'lucide-react';
+import { SWAP_PROMPTS } from './swapPrompts';
 
 type SwapMode = 'upper' | 'lower' | 'full' | 'background' | 'everything' | null;
 
@@ -31,6 +32,19 @@ export const TrocasView = () => {
       if (!influencerImg || !clothesImg) return;
     }
     setIsGenerating(true);
+    
+    // Preparar o payload para a API
+    const apiPayload = {
+      mode: swapMode,
+      influencerImage: influencerImg,
+      targetImage: clothesImg,
+      backgroundImage: swapMode === 'everything' ? bgImg : undefined,
+      prompt: swapMode ? SWAP_PROMPTS[swapMode] : ''
+    };
+    
+    console.log("=== ENVIANDO PARA API ===");
+    console.log(apiPayload);
+    console.log("=========================");
     
     // Simulação da API de geração
     setTimeout(() => {

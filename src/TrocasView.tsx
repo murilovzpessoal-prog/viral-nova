@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Upload, X, Loader2, Wand2, Image as ImageIcon, Shirt, ArrowLeft, Clapperboard, Scissors, Maximize, ScissorsLineDashed, Sparkles } from 'lucide-react';
+import { Upload, X, Loader2, Wand2, Image as ImageIcon, Shirt, ArrowLeft, Clapperboard, Scissors, Maximize, ScissorsLineDashed, Layers } from 'lucide-react';
 
 type SwapMode = 'upper' | 'lower' | 'full' | 'background' | 'everything' | null;
 
@@ -135,7 +135,7 @@ export const TrocasView = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-[#8B5CF6]/0 to-blue-500/0 group-hover:from-[#8B5CF6]/10 group-hover:to-blue-500/10 transition-colors" />
               <div className="flex flex-col md:flex-row items-start md:items-center gap-6 relative z-10 w-full">
                 <div className="w-14 h-14 bg-gradient-to-br from-[#8B5CF6] to-blue-500 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform shrink-0">
-                  <Sparkles className="w-7 h-7 text-white" />
+                  <Layers className="w-7 h-7 text-white" />
                 </div>
                 <div className="text-left flex-1">
                   <h3 className="text-xl font-bold text-white mb-1">Troca Tudo (Look + Cenário)</h3>

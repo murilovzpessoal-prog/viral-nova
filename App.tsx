@@ -1210,63 +1210,83 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>
       {/* Mobile Sidebar Overlay */}
-      {isMobileMenuOpen && (
-        <div className="fixed inset-0 z-[100] lg:hidden">
-          <div className="absolute inset-0 bg-[#0b0c10]/80 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)} />
-          <div className="absolute left-0 top-0 bottom-0 w-[240px] bg-[#0b0c10] border-r border-[#1e1f26] flex flex-col pt-4 px-4">
-            <div className="flex items-center mb-4 relative h-8">
-              <div className="flex items-center justify-center flex-1 cursor-pointer" onClick={() => { setIsMobileMenuOpen(false); setCurrentPage('explorar'); }}>
-                <img src="/logo.png" alt="Logo" className="w-12 h-12 object-contain" />
-              </div>
-              <button onClick={() => setIsMobileMenuOpen(false)} className="p-1.5 text-[#8d8d99] hover:text-white rounded-md hover:bg-[#1f2026] absolute right-0">
-                <X className="w-4 h-4" />
-              </button>
+      {/* Mobile Sidebar Overlay */}
+      <div id="mobile-menu-overlay" className="fixed inset-0 z-[100] lg:hidden opacity-0 pointer-events-none transition-opacity duration-200">
+        <div 
+          className="absolute inset-0 bg-[#0b0c10]/80 backdrop-blur-sm" 
+          onClick={() => {
+            document.getElementById('mobile-menu-overlay')?.classList.add('opacity-0', 'pointer-events-none');
+            document.getElementById('mobile-menu-sidebar')?.classList.add('-translate-x-full');
+          }} 
+        />
+        <div id="mobile-menu-sidebar" className="absolute left-0 top-0 bottom-0 w-[240px] bg-[#0b0c10] border-r border-[#1e1f26] flex flex-col pt-4 px-4 transition-transform duration-300 transform -translate-x-full">
+          <div className="flex items-center mb-4 relative h-8">
+            <div 
+              className="flex items-center justify-center flex-1 cursor-pointer" 
+              onClick={() => { 
+                document.getElementById('mobile-menu-overlay')?.classList.add('opacity-0', 'pointer-events-none');
+                document.getElementById('mobile-menu-sidebar')?.classList.add('-translate-x-full');
+                setCurrentPage('explorar'); 
+              }}
+            >
+              <img src="/logo.png" alt="Logo" className="w-12 h-12 object-contain" />
             </div>
-            <nav className="flex flex-col gap-1.5 py-2 overflow-y-auto max-h-[75vh]">
-              {[
-                { id: 'explorar', label: 'Home' },
-                { id: 'produtos', label: 'Produtos' },
-                { id: 'videos', label: 'Vídeos Virais' },
-                { id: 'galeria-avatares', label: 'Galeria de Avatares' },
-                { id: 'ugc-criador', label: 'UGC do Criador' },
-                { id: 'builder', label: 'Builder' },
-                { id: 'trocas', label: 'Trocas' },
-                { id: 'ambientes', label: 'Ambientes' },
-                { id: 'movimentos', label: 'Movimentos' },
-                { id: 'headline', label: 'Headline' },
-                { id: 'editor', label: 'Editor' },
-                { id: 'hacks-virais', label: 'Viralize AI' }
-              ].map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => {
-                    if (item.id === 'editor') setCurrentDraft(undefined);
-                    setCurrentPage(item.id as any);
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className={`text-left text-[13px] font-semibold py-2 px-3 rounded-lg transition-all ${currentPage === item.id ? 'text-white bg-[#FF007F]' : 'text-[#8d8d99] hover:text-white hover:bg-[#1f2026]'}`}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </nav>
-
-            {/* Mobile App Install Button */}
-            <div className="mt-auto pb-4 pt-3 border-t border-[#1e1f26]">
+            <button 
+              onClick={() => {
+                document.getElementById('mobile-menu-overlay')?.classList.add('opacity-0', 'pointer-events-none');
+                document.getElementById('mobile-menu-sidebar')?.classList.add('-translate-x-full');
+              }} 
+              className="p-1.5 text-[#8d8d99] hover:text-white rounded-md hover:bg-[#1f2026] absolute right-0"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+          <nav className="flex flex-col gap-1.5 py-2 overflow-y-auto max-h-[75vh]">
+            {[
+              { id: 'explorar', label: 'Home' },
+              { id: 'produtos', label: 'Produtos' },
+              { id: 'videos', label: 'Vídeos Virais' },
+              { id: 'galeria-avatares', label: 'Galeria de Avatares' },
+              { id: 'ugc-criador', label: 'UGC do Criador' },
+              { id: 'builder', label: 'Builder' },
+              { id: 'trocas', label: 'Trocas' },
+              { id: 'ambientes', label: 'Ambientes' },
+              { id: 'movimentos', label: 'Movimentos' },
+              { id: 'headline', label: 'Headline' },
+              { id: 'editor', label: 'Editor' },
+              { id: 'hacks-virais', label: 'Viralize AI' }
+            ].map((item) => (
               <button
+                key={item.id}
                 onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  handleInstallClick();
+                  if (item.id === 'editor') setCurrentDraft(undefined);
+                  setCurrentPage(item.id as any);
+                  document.getElementById('mobile-menu-overlay')?.classList.add('opacity-0', 'pointer-events-none');
+                  document.getElementById('mobile-menu-sidebar')?.classList.add('-translate-x-full');
                 }}
-                className="w-full flex items-center justify-center gap-2 px-3 py-2 border border-[#FF007F]/40 bg-[#FF007F]/5 text-[#FF007F] rounded-lg text-xs font-black hover:bg-[#FF007F]/10 transition-all"
+                className={`text-left text-[13px] font-semibold py-2 px-3 rounded-lg transition-all ${currentPage === item.id ? 'text-white bg-[#FF007F]' : 'text-[#8d8d99] hover:text-white hover:bg-[#1f2026]'}`}
               >
-                <Download className="w-4 h-4" />
-                {t('baixarApp')}
+                {item.label}
               </button>
-            </div>
+            ))}
+          </nav>
+
+          {/* Mobile App Install Button */}
+          <div className="mt-auto pb-4 pt-3 border-t border-[#1e1f26]">
+            <button
+              onClick={() => {
+                document.getElementById('mobile-menu-overlay')?.classList.add('opacity-0', 'pointer-events-none');
+                document.getElementById('mobile-menu-sidebar')?.classList.add('-translate-x-full');
+                handleInstallClick();
+              }}
+              className="w-full flex items-center justify-center gap-2 px-3 py-2 border border-[#FF007F]/40 bg-[#FF007F]/5 text-[#FF007F] rounded-lg text-xs font-black hover:bg-[#FF007F]/10 transition-all"
+            >
+              <Download className="w-4 h-4" />
+              {t('baixarApp')}
+            </button>
           </div>
         </div>
-      )}
+      </div>
 
       
       {/* GLOBAL PREMIUM BACKGROUND ALWAYS ON */}
@@ -1332,7 +1352,11 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
            {/* Mobile Header (Hamburger) */}
            <div className="lg:hidden flex items-center justify-between p-3 border-b border-white/5 bg-[#0b0c10]/80 backdrop-blur-xl sticky top-0 z-50">
              <button 
-               onClick={() => setIsMobileMenuOpen(true)} 
+               onClick={(e) => {
+                 e.preventDefault();
+                 document.getElementById('mobile-menu-overlay')?.classList.remove('opacity-0', 'pointer-events-none');
+                 document.getElementById('mobile-menu-sidebar')?.classList.remove('-translate-x-full');
+               }} 
                className="p-4 -ml-2 text-white hover:bg-white/10 active:bg-white/20 active:scale-95 rounded-xl transition-all touch-manipulation flex items-center justify-center"
                style={{ WebkitTapHighlightColor: 'transparent' }}
              >

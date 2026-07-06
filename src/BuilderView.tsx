@@ -1384,7 +1384,13 @@ IMPORTANT: NO MAKEUP. ZERO MAKEUP. Bare face, natural lips without lipstick, no 
                   
                   {/* Botões Overlay no Resultado */}
                   <div className="absolute bottom-6 left-0 w-full px-6 flex items-center gap-3">
-                    <button className="flex-1 py-3 bg-white text-black rounded-xl font-black text-sm flex items-center justify-center gap-2 hover:bg-gray-100 transition-colors shadow-xl">
+                    <button 
+                      onClick={async () => {
+                        const { forceDownloadImage } = await import('./lib/download');
+                        forceDownloadImage(resultImg, 'influenciadora.png');
+                      }}
+                      className="flex-1 py-3 bg-white text-black rounded-xl font-black text-sm flex items-center justify-center gap-2 hover:bg-gray-100 transition-colors shadow-xl"
+                    >
                       <Download className="w-4 h-4" />
                       Baixar Imagem
                     </button>
@@ -1477,15 +1483,17 @@ IMPORTANT: NO MAKEUP. ZERO MAKEUP. Bare face, natural lips without lipstick, no 
                   Inspire-se
                 </button>
               ) : (
-                <a
-                  href={template.image}
-                  download
-                  target="_blank"
+                <button
+                  onClick={async (e) => {
+                    e.stopPropagation();
+                    const { forceDownloadImage } = await import('./lib/download');
+                    forceDownloadImage(template.image, `imagem-${template.id}.jpg`);
+                  }}
                   className="mt-2 flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-[#00F0FF]/80 to-[#00F0FF]/80 hover:from-[#00F0FF] hover:to-[#00F0FF] backdrop-blur-md border border-white/10 rounded-xl text-white text-[11px] font-bold uppercase tracking-wider transition-colors shadow-lg group-hover:shadow-[0_0_20px_rgba(0,240,255,0.4)]"
                 >
                   <Download className="w-4 h-4" />
                   Baixar Imagem
-                </a>
+                </button>
               )}
             </div>
           </div>

@@ -190,134 +190,6 @@ const templates = [
 
 export const AmbientesView = () => {
   const [activeCategory, setActiveCategory] = useState("Todos");
-  const [selectedTemplate, setSelectedTemplate] = useState<any>(null);
-  const [isGenerating, setIsGenerating] = useState(false);
-  const [resultImg, setResultImg] = useState<string | null>(null);
-  
-  const handleCopyPrompt = (template: any) => {
-    if (template.promptText) {
-      navigator.clipboard.writeText(template.promptText);
-    }
-  };
-
-  const handleGenerate = async () => {
-    setIsGenerating(true);
-    
-    try {
-      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-      if (!apiKey) throw new Error("API Key do Gemini não configurada.");
-      
-      const b64Generated = await generateImageWithGemini(selectedTemplate.promptText, apiKey);
-      setResultImg(b64Generated);
-    } catch (error: any) {
-      console.error(error);
-      alert('Erro ao gerar cenário (Gemini): ' + (error.message || 'Erro desconhecido.'));
-    } finally {
-      setIsGenerating(false);
-    }
-  };
-
-  const handleBack = () => {
-    setSelectedTemplate(null);
-    setResultImg(null);
-    setIsGenerating(false);
-  };
-
-  // --- TELA DE GERAÇÃO (Quando um template é selecionado) ---
-  if (selectedTemplate) {
-    return (
-      <div className="flex-1 w-full flex flex-col p-6 md:p-8 pt-16 md:pt-20 overflow-y-auto bg-transparent relative">
-        <button 
-          onClick={handleBack}
-          className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-sm font-medium text-white transition-all w-max mb-8 shadow-sm"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Voltar para Galeria
-        </button>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto w-full">
-          {/* LADO ESQUERDO: REFERÊNCIA */}
-          <div className="flex flex-col gap-4">
-            <h2 className="text-xl font-semibold text-white flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-[#7B00FF]" />
-              Imagem de Referência
-            </h2>
-            <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden bg-white/[0.02] border border-white/10 backdrop-blur-[30px] shadow-2xl hover:border-[#00F0FF]/40 hover:shadow-[0_0_30px_rgba(0,240,255,0.2)] transition-all duration-300">
-              <img 
-                src={selectedTemplate.image} 
-                alt="Referência" 
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute top-4 left-4 px-3 py-1 bg-black/50 backdrop-blur-md rounded-full border border-white/10 text-xs font-bold text-white uppercase tracking-widest">
-                Referência Original
-              </div>
-            </div>
-          </div>
-
-          {/* LADO DIREITO: AÇÃO E RESULTADO */}
-          <div className="flex flex-col gap-4">
-            <h2 className="text-xl font-semibold text-white flex items-center gap-2">
-              <Wand2 className="w-5 h-5 text-[#00F0FF]" />
-              Sua Nova Influenciadora
-            </h2>
-
-            <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden bg-white/[0.02] border border-white/10 backdrop-blur-[30px] flex flex-col items-center justify-center shadow-2xl p-6 hover:border-[#00F0FF]/40 hover:shadow-[0_0_30px_rgba(0,240,255,0.2)] transition-all duration-300">
-              
-              {!isGenerating && !resultImg && (
-                <div className="text-center flex flex-col items-center max-w-sm">
-                  <div className="w-20 h-20 rounded-full bg-[#7B00FF]/10 flex items-center justify-center mb-6">
-                    <Sparkles className="w-10 h-10 text-[#7B00FF]" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-3">Pronto para Gerar</h3>
-                  <p className="text-[#8d8d99] text-sm mb-8">
-                    Nossa IA vai analisar o prompt vinculado a esta imagem e gerar a sua influenciadora de forma ultra-realista.
-                  </p>
-                  <button 
-                    onClick={handleGenerate}
-                    className="w-full py-4 bg-gradient-to-r from-[#FF007F] to-[#FF007F] hover:from-[#FF007F] hover:to-[#FF007F] text-white rounded-xl font-black text-lg shadow-[0_0_30px_rgba(123,0,255,0.3)] transition-all transform hover:scale-[1.02] active:scale-95"
-                  >
-                    ✨ Gerar Influenciadora
-                  </button>
-                </div>
-              )}
-
-              {isGenerating && (
-                <div className="flex flex-col items-center gap-6">
-                  <Loader2 className="w-12 h-12 text-[#7B00FF] animate-spin" />
-                  <div className="text-center">
-                    <p className="text-white font-bold text-lg mb-1">Processando Imagem...</p>
-                    <p className="text-[#7B00FF] text-sm animate-pulse">Enviando prompt para a API e gerando...</p>
-                  </div>
-                </div>
-              )}
-
-              {resultImg && !isGenerating && (
-                <div className="absolute inset-0 w-full h-full">
-                  <img src={resultImg} alt="Resultado" className="w-full h-full object-cover" />
-                  
-                  {/* Botões Overlay no Resultado */}
-                  <div className="absolute bottom-6 left-0 w-full px-6 flex items-center gap-3">
-                    <button className="flex-1 py-3 bg-white text-black rounded-xl font-black text-sm flex items-center justify-center gap-2 hover:bg-gray-100 transition-colors shadow-xl">
-                      <Download className="w-4 h-4" />
-                      Baixar Imagem
-                    </button>
-                    <button 
-                      onClick={handleGenerate}
-                      className="px-6 py-3 bg-black/50 backdrop-blur-md border border-white/20 text-white rounded-xl font-bold text-sm hover:bg-black/70 transition-colors shadow-xl"
-                    >
-                      Gerar Outra
-                    </button>
-                  </div>
-                </div>
-              )}
-
-            </div>
-          </div>
-
-        </div>
-      </div>
-    );
-  }
 
   // --- GRID PRINCIPAL (Galeria) ---
   return (
@@ -356,8 +228,7 @@ export const AmbientesView = () => {
         {templates.filter(t => activeCategory === 'Todos' || t.category === activeCategory).map((template) => (
           <div 
             key={template.id} 
-            onClick={() => setSelectedTemplate(template)}
-            className="relative group aspect-[4/5] rounded-[24px] overflow-hidden bg-white/5 border border-white/5 flex flex-col justify-end p-5 cursor-pointer"
+            className="relative group aspect-[4/5] rounded-[24px] overflow-hidden bg-white/5 border border-white/5 flex flex-col justify-end p-5"
           >
             {/* Imagem de Fundo */}
             <img
@@ -386,15 +257,17 @@ export const AmbientesView = () => {
               </p>
               
               {/* Botão Baixar Cenário */}
-              <a
-                href={template.image}
-                download
-                target="_blank"
+              <button
+                onClick={async (e) => {
+                  e.stopPropagation();
+                  const { forceDownloadImage } = await import('./lib/download');
+                  forceDownloadImage(template.image, `cenario-${template.id}.jpg`);
+                }}
                 className="mt-2 flex items-center justify-center gap-2 w-full py-3 bg-gradient-to-r from-[#00F0FF]/80 to-[#00F0FF]/80 hover:from-[#00F0FF] hover:to-[#00F0FF] backdrop-blur-md border border-white/10 rounded-xl text-white text-[11px] font-bold uppercase tracking-wider transition-colors shadow-lg group-hover:shadow-[0_0_20px_rgba(0,240,255,0.4)]"
               >
                 <Download className="w-4 h-4" />
                 Baixar Cenário
-              </a>
+              </button>
             </div>
           </div>
         ))}

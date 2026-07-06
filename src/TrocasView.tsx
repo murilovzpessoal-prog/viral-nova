@@ -1,8 +1,10 @@
 import React, { useState, useRef } from 'react';
-import { Upload, X, Loader2, Wand2, Image as ImageIcon, Shirt, ArrowLeft, Clapperboard, Scissors, Maximize, ScissorsLineDashed, Layers } from 'lucide-react';
+import { Upload, X, Loader2, Wand2, Image as ImageIcon, Shirt, ArrowLeft, Clapperboard, Scissors, Maximize, ScissorsLineDashed, Layers, Download } from 'lucide-react';
 import { SWAP_PROMPTS } from './swapPrompts';
+import { generateImageWithGemini } from './lib/gemini';
+import { generateVTONWithFal } from './lib/fal';
 
-type SwapMode = 'upper' | 'lower' | 'full' | 'background' | 'everything' | null;
+type SwapMode = 'upper' | 'lower' | 'full' | 'background' | 'everything' | 'upscale' | null;
 
 export const TrocasView = () => {
   const [swapMode, setSwapMode] = useState<SwapMode>(null);
@@ -12,6 +14,7 @@ export const TrocasView = () => {
   const [bgImg, setBgImg] = useState<string | null>(null);
   const [resultImg, setResultImg] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [vtonEngine, setVtonEngine] = useState<'kolors' | 'fashn'>('kolors');
 
   const fileInputRef1 = useRef<HTMLInputElement>(null);
   const fileInputRef2 = useRef<HTMLInputElement>(null);
@@ -20,14 +23,20 @@ export const TrocasView = () => {
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>, setter: React.Dispatch<React.SetStateAction<string | null>>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const url = URL.createObjectURL(file);
-      setter(url);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64 = reader.result as string;
+        setter(base64);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
-  const handleGenerate = () => {
+  const handleGenerate = async () => {
     if (swapMode === 'everything') {
       if (!influencerImg || !clothesImg || !bgImg) return;
+    } else if (swapMode === 'upscale') {
+      if (!influencerImg) return;
     } else {
       if (!influencerImg || !clothesImg) return;
     }
@@ -46,11 +55,23 @@ export const TrocasView = () => {
     console.log(apiPayload);
     console.log("=========================");
     
-    // Simulação da API de geração
-    setTimeout(() => {
-      setResultImg(influencerImg); // Apenas um placeholder visual para simular o retorno
+    try {
+      const falResultUrl = await generateVTONWithFal(
+        apiPayload.influencerImage,
+        apiPayload.targetImage,
+        apiPayload.mode as any,
+        apiPayload.prompt,
+        apiPayload.backgroundImage,
+        vtonEngine as 'fashn' | 'kolors'
+      );
+      
+      setResultImg(falResultUrl);
+    } catch (err: any) {
+      console.error(err);
+      alert('Erro na geração com Fal.ai: ' + (err.message || 'Erro desconhecido.'));
+    } finally {
       setIsGenerating(false);
-    }, 4000);
+    }
   };
 
   const resetFlow = () => {
@@ -65,7 +86,7 @@ export const TrocasView = () => {
   // Renderiza o Menu de Seleção Inicial
   if (swapMode === null) {
     return (
-      <div className="flex-1 w-full flex flex-col p-6 md:p-12 overflow-y-auto bg-transparent">
+      <div className="flex-1 w-full flex flex-col p-6 md:p-12 pt-16 md:pt-20 overflow-y-auto bg-transparent">
         <div className="max-w-5xl mx-auto w-full">
           <div className="mb-12 text-center md:text-left">
 
@@ -82,13 +103,13 @@ export const TrocasView = () => {
             {/* Parte Superior */}
             <button 
               onClick={() => setSwapMode('upper')}
-              className="group p-8 rounded-3xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-[#8B5CF6]/50 transition-all duration-300 text-left relative overflow-hidden"
+              className="group p-8 rounded-3xl bg-white/5 border border-white/5 hover:bg-white/10 hover:border-[#7B00FF]/50 transition-all duration-300 text-left relative overflow-hidden"
             >
               <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
                 <Shirt className="w-32 h-32 text-white" />
               </div>
-              <div className="w-14 h-14 bg-[#8B5CF6]/20 rounded-2xl flex items-center justify-center mb-6 border border-[#8B5CF6]/30 group-hover:scale-110 transition-transform">
-                <Shirt className="w-7 h-7 text-[#8B5CF6]" />
+              <div className="w-14 h-14 bg-[#7B00FF]/20 rounded-2xl flex items-center justify-center mb-6 border border-[#7B00FF]/30 group-hover:scale-110 transition-transform">
+                <Shirt className="w-7 h-7 text-[#7B00FF]" />
               </div>
               <h3 className="text-xl font-bold text-white mb-2">Parte Superior</h3>
               <p className="text-[#8d8d99] text-sm max-w-[80%]">Substitua apenas camisetas, blusas, jaquetas e casacos, mantendo a calça original.</p>
@@ -144,11 +165,11 @@ export const TrocasView = () => {
           <div className="mt-6">
             <button 
               onClick={() => setSwapMode('everything')}
-              className="w-full group p-6 rounded-3xl bg-gradient-to-r from-[#8B5CF6]/10 to-blue-500/10 border border-white/10 hover:border-white/20 transition-all duration-300 flex items-center justify-between overflow-hidden relative"
+              className="w-full group p-6 rounded-3xl bg-gradient-to-r from-[#7B00FF]/10 to-blue-500/10 border border-white/10 hover:border-white/20 transition-all duration-300 flex items-center justify-between overflow-hidden relative"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-[#8B5CF6]/0 to-blue-500/0 group-hover:from-[#8B5CF6]/10 group-hover:to-blue-500/10 transition-colors" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#7B00FF]/0 to-blue-500/0 group-hover:from-[#7B00FF]/10 group-hover:to-blue-500/10 transition-colors" />
               <div className="flex flex-col md:flex-row items-start md:items-center gap-6 relative z-10 w-full">
-                <div className="w-14 h-14 bg-gradient-to-br from-[#8B5CF6] to-blue-500 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform shrink-0">
+                <div className="w-14 h-14 bg-gradient-to-br from-[#7B00FF] to-blue-500 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform shrink-0">
                   <Layers className="w-7 h-7 text-white" />
                 </div>
                 <div className="text-left flex-1">
@@ -158,6 +179,30 @@ export const TrocasView = () => {
                 <div className="relative z-10 mt-4 md:mt-0 shrink-0 self-end md:self-auto">
                   <span className="px-5 py-2.5 rounded-full bg-white/10 text-white text-sm font-medium border border-white/5 flex items-center gap-2 group-hover:bg-white/20 transition-colors">
                     Acessar Troca Inteligente
+                  </span>
+                </div>
+              </div>
+            </button>
+          </div>
+
+          {/* Upscale */}
+          <div className="mt-6">
+            <button 
+              onClick={() => setSwapMode('upscale')}
+              className="w-full group p-6 rounded-3xl bg-gradient-to-r from-emerald-500/10 to-teal-500/10 border border-white/10 hover:border-white/20 transition-all duration-300 flex items-center justify-between overflow-hidden relative"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/0 to-teal-500/0 group-hover:from-emerald-500/10 group-hover:to-teal-500/10 transition-colors" />
+              <div className="flex flex-col md:flex-row items-start md:items-center gap-6 relative z-10 w-full">
+                <div className="w-14 h-14 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform shrink-0">
+                  <Wand2 className="w-7 h-7 text-white" />
+                </div>
+                <div className="text-left flex-1">
+                  <h3 className="text-xl font-bold text-white mb-1">Upscale (Realismo 1000x)</h3>
+                  <p className="text-[#8d8d99] text-sm">Eleve a qualidade fotográfica da imagem ao nível de estúdio sem alterar a roupa ou fundo.</p>
+                </div>
+                <div className="relative z-10 mt-4 md:mt-0 shrink-0 self-end md:self-auto">
+                  <span className="px-5 py-2.5 rounded-full bg-white/10 text-white text-sm font-medium border border-white/5 flex items-center gap-2 group-hover:bg-white/20 transition-colors">
+                    Aplicar Upscale
                   </span>
                 </div>
               </div>
@@ -173,17 +218,18 @@ export const TrocasView = () => {
   // Adaptação dos textos baseado no modo
   const isBgMode = swapMode === 'background';
   const isEverythingMode = swapMode === 'everything';
+  const isUpscaleMode = swapMode === 'upscale';
   const targetLabel = isBgMode ? 'Cenário' : isEverythingMode ? 'Look Completo' : 'Roupa Alvo';
   const targetDesc = isBgMode ? 'Selecione o novo fundo' : isEverythingMode ? 'Selecione a roupa' : 'Selecione a peça de roupa';
   const targetUploadText = isBgMode ? 'Upload do Cenário' : 'Upload da Roupa';
   const targetUploadDesc = isBgMode ? 'Selecione a foto de fundo que deseja aplicar.' : 'Selecione a peça que deseja vestir na modelo.';
   const TargetIcon = isBgMode ? ImageIcon : Shirt;
   const buttonLabel = isBgMode ? 'Trocar Cenário' : 'Trocar Roupa';
-  const generateLabel = isEverythingMode ? 'Realizar Troca Inteligente' : isBgMode ? 'Realizar Troca (Cenário)' : 'Realizar Troca (Roupa)';
-  const modeTitle = swapMode === 'upper' ? 'Parte Superior' : swapMode === 'lower' ? 'Parte Inferior' : swapMode === 'full' ? 'Look Completo' : swapMode === 'everything' ? 'Troca Tudo' : 'Cenário';
+  const generateLabel = isUpscaleMode ? 'Realizar Upscale' : isEverythingMode ? 'Realizar Troca Inteligente' : isBgMode ? 'Realizar Troca (Cenário)' : 'Realizar Troca (Roupa)';
+  const modeTitle = swapMode === 'upper' ? 'Parte Superior' : swapMode === 'lower' ? 'Parte Inferior' : swapMode === 'full' ? 'Look Completo' : swapMode === 'everything' ? 'Troca Tudo' : swapMode === 'upscale' ? 'Upscale 1000x' : 'Cenário';
 
   return (
-    <div className="flex-1 w-full flex flex-col p-6 md:p-8 overflow-y-auto bg-transparent">
+    <div className="flex-1 w-full flex flex-col p-6 md:p-8 pt-16 md:pt-20 overflow-y-auto bg-transparent">
       {/* Header Cloned from image */}
       <div className="mb-6 flex items-center justify-between">
         <div>
@@ -203,17 +249,17 @@ export const TrocasView = () => {
         </button>
       </div>
 
-      {/* Grid de 3 ou 4 Colunas */}
-      <div className={`grid grid-cols-1 md:grid-cols-2 ${isEverythingMode ? 'lg:grid-cols-4' : 'lg:grid-cols-3'} gap-6 pb-20`}>
+      {/* Grid de Colunas */}
+      <div className={`grid grid-cols-1 md:grid-cols-2 ${isEverythingMode ? 'lg:grid-cols-4' : isUpscaleMode ? 'lg:grid-cols-2' : 'lg:grid-cols-3'} gap-6 pb-20 max-w-${isUpscaleMode ? '4xl' : '7xl'} mx-auto w-full`}>
         
         {/* COLUNA 1: INFLUENCIADORA */}
         <div className="flex flex-col gap-3">
           <div className="flex flex-col">
-            <span className="text-[10px] font-bold text-white uppercase tracking-widest">Etapa 1 · Avatar / Modelo</span>
-            <span className="text-[11px] text-[#5b5b7b]">Envie a foto base</span>
+            <span className="text-[10px] font-bold text-white uppercase tracking-widest">Etapa 1 · {isUpscaleMode ? 'Imagem' : 'Avatar / Modelo'}</span>
+            <span className="text-[11px] text-[#5b5b7b]">{isUpscaleMode ? 'Envie a foto bugada' : 'Envie a foto base'}</span>
           </div>
 
-          <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden bg-[#0e0f14] border border-white/10 flex flex-col">
+          <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden bg-white/[0.02] border border-white/10 backdrop-blur-[30px] flex flex-col hover:border-[#00F0FF]/40 hover:shadow-[0_0_30px_rgba(0,240,255,0.2)] transition-all duration-300">
             {influencerImg ? (
               <>
                 <img src={influencerImg} alt="Influenciadora" className="w-full h-full object-cover" />
@@ -226,7 +272,7 @@ export const TrocasView = () => {
                 <div className="absolute bottom-4 inset-x-4">
                   <button 
                     onClick={() => fileInputRef1.current?.click()}
-                    className="w-full py-3 bg-[#13141c] hover:bg-[#1a1b26] border border-white/5 rounded-xl text-white text-xs font-medium flex items-center justify-center gap-2 transition-all shadow-xl"
+                    className="w-full py-3 bg-white/[0.03] border border-white/10 backdrop-blur-[30px] hover:bg-white/[0.05] border border-white/10 backdrop-blur-[20px] border border-white/5 rounded-xl text-white text-xs font-medium flex items-center justify-center gap-2 transition-all shadow-xl"
                   >
                     <Upload className="w-4 h-4" />
                     Trocar Foto
@@ -252,49 +298,51 @@ export const TrocasView = () => {
         </div>
 
         {/* COLUNA 2: ALVO (ROUPA OU CENÁRIO) */}
-        <div className="flex flex-col gap-3">
-          <div className="flex flex-col">
-            <span className="text-[10px] font-bold text-white uppercase tracking-widest">Etapa 2 · {targetLabel}</span>
-            <span className="text-[11px] text-[#5b5b7b]">{targetDesc}</span>
-          </div>
+        {!isUpscaleMode && (
+          <div className="flex flex-col gap-3">
+            <div className="flex flex-col">
+              <span className="text-[10px] font-bold text-white uppercase tracking-widest">Etapa 2 · {targetLabel}</span>
+              <span className="text-[11px] text-[#5b5b7b]">{targetDesc}</span>
+            </div>
 
-          <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden bg-[#0e0f14] border border-white/10 flex flex-col">
-            {clothesImg ? (
-              <>
-                <img src={clothesImg} alt={targetLabel} className="w-full h-full object-cover" />
-                <button 
-                  onClick={() => setClothesImg(null)}
-                  className="absolute top-4 right-4 w-8 h-8 bg-black/60 rounded-full flex items-center justify-center text-white hover:bg-red-500/80 transition-colors"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-                <div className="absolute bottom-4 inset-x-4">
+            <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden bg-white/[0.02] border border-white/10 backdrop-blur-[30px] flex flex-col hover:border-[#00F0FF]/40 hover:shadow-[0_0_30px_rgba(0,240,255,0.2)] transition-all duration-300">
+              {clothesImg ? (
+                <>
+                  <img src={clothesImg} alt={targetLabel} className="w-full h-full object-cover" />
                   <button 
-                    onClick={() => fileInputRef2.current?.click()}
-                    className="w-full py-3 bg-[#13141c] hover:bg-[#1a1b26] border border-white/5 rounded-xl text-white text-xs font-medium flex items-center justify-center gap-2 transition-all shadow-xl"
+                    onClick={() => setClothesImg(null)}
+                    className="absolute top-4 right-4 w-8 h-8 bg-black/60 rounded-full flex items-center justify-center text-white hover:bg-red-500/80 transition-colors"
                   >
-                    <Upload className="w-4 h-4" />
-                    {buttonLabel}
+                    <X className="w-4 h-4" />
                   </button>
-                </div>
-              </>
-            ) : (
-              <button 
-                onClick={() => fileInputRef2.current?.click()}
-                className="w-full h-full flex flex-col items-center justify-center gap-4 hover:bg-white/[0.02] transition-colors p-6 group"
-              >
-                <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform">
-                  <TargetIcon className="w-8 h-8 text-[#5b5b7b]" />
-                </div>
-                <div className="text-center">
-                  <p className="text-sm font-medium text-white mb-1">{targetUploadText}</p>
-                  <p className="text-[11px] text-[#5b5b7b] px-4">{targetUploadDesc}</p>
-                </div>
-              </button>
-            )}
-            <input type="file" ref={fileInputRef2} onChange={(e) => handleImageUpload(e, setClothesImg)} accept="image/*" className="hidden" />
+                  <div className="absolute bottom-4 inset-x-4">
+                    <button 
+                      onClick={() => fileInputRef2.current?.click()}
+                      className="w-full py-3 bg-white/[0.03] border border-white/10 backdrop-blur-[30px] hover:bg-white/[0.05] border border-white/10 backdrop-blur-[20px] border border-white/5 rounded-xl text-white text-xs font-medium flex items-center justify-center gap-2 transition-all shadow-xl"
+                    >
+                      <Upload className="w-4 h-4" />
+                      {buttonLabel}
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <button 
+                  onClick={() => fileInputRef2.current?.click()}
+                  className="w-full h-full flex flex-col items-center justify-center gap-4 hover:bg-white/[0.02] transition-colors p-6 group"
+                >
+                  <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <TargetIcon className="w-8 h-8 text-[#5b5b7b]" />
+                  </div>
+                  <div className="text-center">
+                    <p className="text-sm font-medium text-white mb-1">{targetUploadText}</p>
+                    <p className="text-[11px] text-[#5b5b7b] px-4">{targetUploadDesc}</p>
+                  </div>
+                </button>
+              )}
+              <input type="file" ref={fileInputRef2} onChange={(e) => handleImageUpload(e, setClothesImg)} accept="image/*" className="hidden" />
+            </div>
           </div>
-        </div>
+        )}
 
         {/* COLUNA 3 (OPCIONAL): CENÁRIO (SÓ NO MODO EVERYTHING) */}
         {isEverythingMode && (
@@ -304,7 +352,7 @@ export const TrocasView = () => {
               <span className="text-[11px] text-[#5b5b7b]">Selecione o novo fundo</span>
             </div>
 
-            <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden bg-[#0e0f14] border border-white/10 flex flex-col">
+            <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden bg-white/[0.02] border border-white/10 backdrop-blur-[30px] flex flex-col hover:border-[#00F0FF]/40 hover:shadow-[0_0_30px_rgba(0,240,255,0.2)] transition-all duration-300">
               {bgImg ? (
                 <>
                   <img src={bgImg} alt="Cenário" className="w-full h-full object-cover" />
@@ -317,7 +365,7 @@ export const TrocasView = () => {
                   <div className="absolute bottom-4 inset-x-4">
                     <button 
                       onClick={() => fileInputRef3.current?.click()}
-                      className="w-full py-3 bg-[#13141c] hover:bg-[#1a1b26] border border-white/5 rounded-xl text-white text-xs font-medium flex items-center justify-center gap-2 transition-all shadow-xl"
+                      className="w-full py-3 bg-white/[0.03] border border-white/10 backdrop-blur-[30px] hover:bg-white/[0.05] border border-white/10 backdrop-blur-[20px] border border-white/5 rounded-xl text-white text-xs font-medium flex items-center justify-center gap-2 transition-all shadow-xl"
                     >
                       <Upload className="w-4 h-4" />
                       Trocar Cenário
@@ -346,18 +394,46 @@ export const TrocasView = () => {
         {/* COLUNA FINAL: RESULTADO */}
         <div className="flex flex-col gap-3">
           <div className="flex flex-col">
-            <span className="text-[10px] font-bold text-white uppercase tracking-widest">Etapa {isEverythingMode ? '4' : '3'} · Resultado Final</span>
+            <span className="text-[10px] font-bold text-white uppercase tracking-widest">Etapa {isUpscaleMode ? '2' : isEverythingMode ? '4' : '3'} · Resultado Final</span>
             <span className="text-[11px] text-[#5b5b7b]">Aguarde a substituição</span>
           </div>
 
-          <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden bg-[#0b0c10] border border-white/5 flex flex-col">
+          <div className="relative aspect-[4/5] rounded-[24px] overflow-hidden bg-white/[0.02] border border-white/10 backdrop-blur-[40px] border border-white/5 flex flex-col group/result">
             {resultImg && !isGenerating ? (
-              <img src={resultImg} alt="Resultado Final" className="w-full h-full object-cover animate-in fade-in duration-700" />
+              <>
+                <img src={resultImg} alt="Resultado Final" className="w-full h-full object-cover animate-in fade-in duration-700" />
+                <button 
+                  onClick={async () => {
+                    try {
+                      // Fetch the image as a blob to bypass cross-origin download restrictions
+                      const response = await fetch(resultImg);
+                      const blob = await response.blob();
+                      const blobUrl = URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = blobUrl;
+                      a.download = `viralpulse-troca-${Date.now()}.png`;
+                      document.body.appendChild(a);
+                      a.click();
+                      document.body.removeChild(a);
+                      URL.revokeObjectURL(blobUrl);
+                    } catch (err) {
+                      console.error("Erro ao baixar:", err);
+                      // Fallback: alertar o usuário sobre o bloqueio de segurança do navegador
+                      alert('Seu navegador bloqueou o download automático por segurança. A imagem será aberta em uma nova guia. Clique com o botão direito nela e selecione "Salvar Imagem Como..."');
+                      window.open(resultImg, '_blank');
+                    }
+                  }}
+                  className="absolute top-4 right-4 w-10 h-10 bg-black/50 hover:bg-[#7B00FF] rounded-full flex items-center justify-center backdrop-blur-md border border-white/10 text-white transition-all opacity-0 group-hover/result:opacity-100"
+                  title="Baixar Imagem"
+                >
+                  <Download className="w-5 h-5" />
+                </button>
+              </>
             ) : (
               <div className="w-full h-full flex flex-col items-center justify-center text-center p-8">
                 <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-6">
                   {isGenerating ? (
-                    <Loader2 className="w-8 h-8 text-[#8B5CF6] animate-spin" />
+                    <Loader2 className="w-8 h-8 text-[#7B00FF] animate-spin" />
                   ) : (
                     <TargetIcon className="w-8 h-8 text-[#5b5b7b] opacity-50" />
                   )}
@@ -376,11 +452,11 @@ export const TrocasView = () => {
             )}
             
             {/* Botão de Geração sobreposto */}
-            {!isGenerating && influencerImg && clothesImg && (!isEverythingMode || bgImg) && (
+            {!isGenerating && influencerImg && (isUpscaleMode || clothesImg) && (!isEverythingMode || bgImg) && (
               <div className="absolute bottom-4 inset-x-4">
                 <button 
                   onClick={handleGenerate}
-                  className="w-full py-4 bg-[#8B5CF6] hover:bg-[#7c3aed] rounded-xl text-white text-sm font-black flex items-center justify-center gap-2 transition-all shadow-[0_0_30px_rgba(139,92,246,0.3)] animate-in slide-in-from-bottom-4"
+                  className="w-full py-4 bg-[#7B00FF] hover:bg-[#7B00FF] rounded-xl text-white text-sm font-black flex items-center justify-center gap-2 transition-all shadow-[0_0_30px_rgba(123,0,255,0.3)] animate-in slide-in-from-bottom-4"
                 >
                   <Wand2 className="w-5 h-5" />
                   {resultImg ? 'Gerar Novamente' : generateLabel}

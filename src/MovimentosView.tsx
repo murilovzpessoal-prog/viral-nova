@@ -10,6 +10,8 @@ const templates = [
   {
     id: 1,
     category: "Animações",
+    title: "TRANSIÇÃO-MÃO NA CÂMERA",
+    desc: "Transição dinâmica tapando a câmera com a mão para trocar de look de forma fluida.",
     likes: 101,
     image: "/assets/movimento-01.jpg",
     video: "/assets/movimento-01.mp4",
@@ -18,6 +20,8 @@ const templates = [
   {
     id: 2,
     category: "Animações",
+    title: "ANIMAÇÃO BASE NATURAL",
+    desc: "Movimentos corporais calmos e poses naturais em plano médio para transmitir leveza.",
     likes: 102,
     image: "/assets/movimento-02.jpg",
     video: "/assets/movimento-02.mp4",
@@ -26,6 +30,8 @@ const templates = [
   {
     id: 3,
     category: "Animações",
+    title: "ANIMAÇÃO ESPONTANEA",
+    desc: "Gestos e sorrisos espontâneos capturados de forma autêntica durante a gravação.",
     likes: 103,
     image: "/assets/movimento-03.jpg",
     video: "/assets/movimento-03.mp4",
@@ -34,6 +40,8 @@ const templates = [
   {
     id: 4,
     category: "Animações",
+    title: "DESTAQUE NOS DETALHES DA ROUPA",
+    desc: "Close-up focado nas texturas, caimento e detalhes de costura e tecido da peça.",
     likes: 104,
     image: "/assets/movimento-04.jpg",
     video: "/assets/movimento-04.mp4",
@@ -42,6 +50,8 @@ const templates = [
   {
     id: 5,
     category: "Animações",
+    title: "SEQUÊNCIA DE POSSES",
+    desc: "Cortes rápidos mostrando diferentes poses e ângulos do look de forma dinâmica.",
     likes: 105,
     image: "/assets/movimento-05.jpg",
     video: "/assets/movimento-05.mp4",
@@ -50,6 +60,8 @@ const templates = [
   {
     id: 6,
     category: "Animações",
+    title: "APROXIMAÇÃO DA CÂMERA",
+    desc: "Movimento de aproximação focado na expressão facial ou detalhes superiores do visual.",
     likes: 106,
     image: "/assets/movimento-06.jpg",
     video: "/assets/movimento-06.mp4",
@@ -58,6 +70,8 @@ const templates = [
   {
     id: 7,
     category: "Animações",
+    title: "Modelo perto da câmera, por acaso, diversificando posses e mostrando detalhes da roupa",
+    desc: "Enquadramento fechado e casual focando nas peças de roupa e nos movimentos casuais.",
     likes: 107,
     image: "/assets/movimento-07.jpg",
     video: "/assets/movimento-07.mp4",
@@ -66,6 +80,8 @@ const templates = [
   {
     id: 8,
     category: "Animações",
+    title: "MOVIMENTO SINCRONIZADO",
+    desc: "Movimentos corporais compassados exatamente no ritmo e batida do áudio musical.",
     likes: 108,
     image: "/assets/movimento-08.jpg",
     video: "/assets/movimento-08.mp4",
@@ -74,6 +90,8 @@ const templates = [
   {
     id: 9,
     category: "Animações",
+    title: "Giro Lento de Lado com 360 Controlado",
+    desc: "Giro completo em velocidade constante para mostrar todo o caimento da peça.",
     likes: 109,
     image: "/assets/movimento-09.jpg",
     video: "/assets/movimento-09.mp4",
@@ -82,6 +100,8 @@ const templates = [
   {
     id: 10,
     category: "Animações",
+    title: "MOVIMENTO LEVE + MÃO NA CINTURA (SEM GIRO)",
+    desc: "Pose elegante de mãos na cintura com oscilação sutil de corpo em plano médio.",
     likes: 110,
     image: "/assets/movimento-10.jpg",
     video: "/assets/movimento-10.mp4",
@@ -90,6 +110,8 @@ const templates = [
   {
     id: 11,
     category: "Animações",
+    title: "MOVIMENTOS CONJUNTO",
+    desc: "Sequência de gestos de mãos encadeados criando uma coreografia simples de transição.",
     likes: 111,
     image: "/assets/movimento-11.jpg",
     video: "/assets/movimento-11.mp4",
@@ -98,6 +120,8 @@ const templates = [
   {
     id: 12,
     category: "Animações",
+    title: "ENCOMENDA-CAIXA",
+    desc: "Unboxing visual ou exibição criativa da embalagem e chegada do produto.",
     likes: 112,
     image: "/assets/movimento-12.jpg",
     video: "/assets/movimento-12.mp4",
@@ -106,6 +130,8 @@ const templates = [
   {
     id: 13,
     category: "Animações",
+    title: "ENOMENDA- LOJA TIKTOK",
+    desc: "Apresentação de recebido com foco na facilidade de compra pela loja integrada.",
     likes: 113,
     image: "/assets/movimento-13.jpg",
     video: "/assets/movimento-13.mp4",
@@ -114,6 +140,8 @@ const templates = [
   {
     id: 14,
     category: "Animações",
+    title: "CTA 1",
+    desc: "Chamada para ação focada em engajamento de comentários ou link na bio.",
     likes: 114,
     image: "/assets/movimento-14.jpg",
     video: "/assets/movimento-14.mp4",
@@ -122,6 +150,8 @@ const templates = [
   {
     id: 15,
     category: "Animações",
+    title: "CTA 2",
+    desc: "Chamada para ação focada em salvamento do vídeo ou compartilhamento rápido.",
     likes: 115,
     image: "/assets/movimento-15.jpg",
     video: "/assets/movimento-15.mp4",
@@ -130,6 +160,8 @@ const templates = [
   {
     id: 16,
     category: "Animações",
+    title: "CTA 3- BEIJO",
+    desc: "Finalização carismática mandando um beijo para engajamento caloroso.",
     likes: 116,
     image: "/assets/movimento-16.jpg",
     video: "/assets/movimento-16.mp4",
@@ -138,6 +170,8 @@ const templates = [
   {
     id: 17,
     category: "Animações",
+    title: "PROMPT CABELO 1",
+    desc: "Movimento clássico jogando o cabelo lateralmente para transmitir charme.",
     likes: 117,
     image: "/assets/movimento-17.jpg",
     video: "/assets/movimento-17.mp4",
@@ -146,6 +180,8 @@ const templates = [
   {
     id: 18,
     category: "Animações",
+    title: "PROMPT CABELO 2",
+    desc: "Ajuste de franja ou fios frontais olhando fixamente para atrair atenção.",
     likes: 118,
     image: "/assets/movimento-18.jpg",
     video: "/assets/movimento-18.mp4",
@@ -154,6 +190,8 @@ const templates = [
   {
     id: 19,
     category: "Animações",
+    title: "PROMPT AMARRANDO CABELO",
+    desc: "Gesto estético e elegante de prender o cabelo na tela revelando o pescoço.",
     likes: 119,
     image: "/assets/movimento-19.jpg",
     video: "/assets/movimento-19.mp4",
@@ -162,6 +200,8 @@ const templates = [
   {
     id: 20,
     category: "Animações",
+    title: "PROMPT DE COSTA- MEXENDO NO CABELO",
+    desc: "Plano traseiro com rotação parcial de cabeça e ajuste estético de fios.",
     likes: 120,
     image: "/assets/movimento-20.jpg",
     video: "/assets/movimento-20.mp4",
@@ -170,6 +210,8 @@ const templates = [
   {
     id: 21,
     category: "Animações",
+    title: "ELASTICIDADE PARTE SUPERIOR",
+    desc: "Demonstração da elasticidade e flexibilidade da peça de roupa superior.",
     likes: 121,
     image: "/assets/movimento-21.jpg",
     video: "/assets/movimento-21.mp4",
@@ -178,6 +220,8 @@ const templates = [
   {
     id: 22,
     category: "Animações",
+    title: "ELASTICIDADE PARTE INFERIOR",
+    desc: "Demonstração de flexibilidade e caimento da calça/saia em movimento.",
     likes: 122,
     image: "/assets/movimento-22.jpg",
     video: "/assets/movimento-22.mp4",
@@ -186,6 +230,8 @@ const templates = [
   {
     id: 23,
     category: "Animações",
+    title: "ELASTICIDADE",
+    desc: "Demonstração geral de maleabilidade e recuperação rápida do tecido.",
     likes: 123,
     image: "/assets/movimento-23.jpg",
     video: "/assets/movimento-23.mp4",
@@ -195,6 +241,8 @@ const templates = [
   {
     id: 24,
     category: "Animações",
+    title: "GANCHO 1",
+    desc: "Gancho visual de início rápido para prender a atenção nos primeiros 3 segundos.",
     likes: 124,
     image: "/assets/movimento-24.jpg",
     video: "/assets/movimento-24.mp4",
@@ -203,6 +251,8 @@ const templates = [
   {
     id: 25,
     category: "Animações",
+    title: "GANCHO JOGAR ROUPA 1",
+    desc: "Efeito de transição de corte invisível jogando a peça em direção à lente.",
     likes: 125,
     image: "/assets/movimento-25.jpg",
     video: "/assets/movimento-25.mp4",
@@ -211,6 +261,8 @@ const templates = [
   {
     id: 26,
     category: "Animações",
+    title: "GANCHO JOGAR ROUPA 2",
+    desc: "Transição de impacto jogando a roupa para cima antes do corte.",
     likes: 126,
     image: "/assets/movimento-26.jpg",
     video: "/assets/movimento-26.mp4",
@@ -219,6 +271,8 @@ const templates = [
   {
     id: 27,
     category: "Animações",
+    title: "ESPELHO- MOSTRANDO DETALHES",
+    desc: "Destaque e close-up nos detalhes da roupa através do reflexo de um espelho.",
     likes: 127,
     image: "/assets/movimento-27.jpg",
     video: "/assets/movimento-27.mp4",
@@ -227,6 +281,8 @@ const templates = [
   {
     id: 28,
     category: "Animações",
+    title: "ESPELHO- CTA",
+    desc: "Chamada para ação criativa interagindo diretamente com o reflexo do espelho.",
     likes: 128,
     image: "/assets/movimento-28.jpg",
     video: "/assets/movimento-28.mp4",
@@ -235,6 +291,8 @@ const templates = [
   {
     id: 29,
     category: "Animações",
+    title: "ESPELHO- NATURAL 1",
+    desc: "Movimento espontâneo ajeitando o look em frente ao espelho com leveza.",
     likes: 129,
     image: "/assets/movimento-29.jpg",
     video: "/assets/movimento-29.mp4",
@@ -243,6 +301,8 @@ const templates = [
   {
     id: 30,
     category: "Animações",
+    title: "ESPELHO- NATURAL 2",
+    desc: "Pose e troca de olhares dinâmicos entre a câmera e o reflexo do espelho.",
     likes: 130,
     image: "/assets/movimento-30.jpg",
     video: "/assets/movimento-30.mp4",
@@ -251,6 +311,8 @@ const templates = [
   {
     id: 31,
     category: "Animações",
+    title: "ESPELHO- NATURAL 3",
+    desc: "Movimentos corporais fluidos e ajeitando o cabelo usando o espelho como guia.",
     likes: 131,
     image: "/assets/movimento-31.jpg",
     video: "/assets/movimento-31.mp4",
@@ -259,6 +321,8 @@ const templates = [
   {
     id: 32,
     category: "Animações",
+    title: "UNBOXING- SOMENTE O PRODUTO 1",
+    desc: "Destaque focado no desembalar e revelação do produto sem o criador em cena.",
     likes: 132,
     image: "/assets/movimento-32.jpg",
     video: "/assets/movimento-32.mp4",
@@ -267,6 +331,8 @@ const templates = [
   {
     id: 33,
     category: "Animações",
+    title: "UNBOXING- SOMENTE O PRODUTO 2",
+    desc: "Close-up detalhado do produto saindo da embalagem em plano fechado.",
     likes: 133,
     image: "/assets/movimento-33.jpg",
     video: "/assets/movimento-33.mp4",
@@ -275,6 +341,8 @@ const templates = [
   {
     id: 34,
     category: "Animações",
+    title: "UNBOXING- SOMENTE O PRODUTO 3",
+    desc: "Demonstração e teste de toque do produto com movimentos e detalhes.",
     likes: 134,
     image: "/assets/movimento-34.jpg",
     video: "/assets/movimento-34.mp4",
@@ -283,6 +351,8 @@ const templates = [
   {
     id: 35,
     category: "Animações",
+    title: "UNBOXING- SOMENTE O PRODUTO CTA",
+    desc: "Chamada de ação final mostrando o produto e indicando a loja.",
     likes: 135,
     image: "/assets/movimento-35.jpg",
     video: "/assets/movimento-35.mp4",
@@ -291,6 +361,8 @@ const templates = [
   {
     id: 36,
     category: "Animações",
+    title: "GANCHO",
+    desc: "Gancho rápido nos primeiros 3 segundos para reter o público.",
     likes: 136,
     image: "/assets/movimento-36.jpg",
     video: "/assets/movimento-36.mp4",
@@ -299,6 +371,8 @@ const templates = [
   {
     id: 37,
     category: "Animações",
+    title: "CABELO",
+    desc: "Gesto clássico de ajeitar o cabelo para criar apelo visual e dinamismo.",
     likes: 137,
     image: "/assets/movimento-37.jpg",
     video: "/assets/movimento-37.mp4",
@@ -307,6 +381,8 @@ const templates = [
   {
     id: 38,
     category: "Animações",
+    title: "CTA 1",
+    desc: "Chamada para ação clara direcionando o público para a loja ou bio.",
     likes: 138,
     image: "/assets/movimento-38.jpg",
     video: "/assets/movimento-38.mp4",
@@ -315,6 +391,8 @@ const templates = [
   {
     id: 39,
     category: "Animações",
+    title: "CTA 2",
+    desc: "Incentivo visual para engajamento e comentários no conteúdo.",
     likes: 139,
     image: "/assets/movimento-39.jpg",
     video: "/assets/movimento-39.mp4",
@@ -323,6 +401,8 @@ const templates = [
   {
     id: 40,
     category: "Animações",
+    title: "CTA 3-BEIJO",
+    desc: "Encerramento simpático e viral enviando um beijo para a lente.",
     likes: 140,
     image: "/assets/movimento-40.jpg",
     video: "/assets/movimento-40.mp4",
@@ -331,6 +411,8 @@ const templates = [
   {
     id: 41,
     category: "Animações",
+    title: "ANIMAÇÃO NATURAL BASE",
+    desc: "Movimentos corporais leves e descontraídos focando no caimento.",
     likes: 141,
     image: "/assets/movimento-41.jpg",
     video: "/assets/movimento-41.mp4",
@@ -339,6 +421,8 @@ const templates = [
   {
     id: 42,
     category: "Animações",
+    title: "MOVIMENTO SINCRONIZADO",
+    desc: "Coreografia e gestos curtos batendo no ritmo exato do áudio.",
     likes: 142,
     image: "/assets/movimento-42.jpg",
     video: "/assets/movimento-42.mp4",
@@ -347,6 +431,8 @@ const templates = [
   {
     id: 43,
     category: "Animações",
+    title: "GIRO LENTO DE LADO 360°",
+    desc: "Giro controlado para exibir o design e flexibilidade da peça.",
     likes: 143,
     image: "/assets/movimento-43.jpg",
     video: "/assets/movimento-43.mp4",
@@ -355,6 +441,8 @@ const templates = [
   {
     id: 44,
     category: "Animações",
+    title: "MOVIMENTO LEVE + MÃO NA CINTURA",
+    desc: "Pose estática e estilosa com mãos na cintura valorizando o corte.",
     likes: 144,
     image: "/assets/movimento-44.jpg",
     video: "/assets/movimento-44.mp4",
@@ -363,6 +451,8 @@ const templates = [
   {
     id: 45,
     category: "Animações",
+    title: "GANCHO AMARRANDO CABELO",
+    desc: "Ação de prender os cabelos expondo o pescoço e acessórios.",
     likes: 145,
     image: "/assets/movimento-45.jpg",
     video: "/assets/movimento-45.mp4",
@@ -371,6 +461,8 @@ const templates = [
   {
     id: 46,
     category: "Animações",
+    title: "MODELO ESPONTÂNEA",
+    desc: "Visual leve e risada casual gravada de forma descontraída.",
     likes: 146,
     image: "/assets/movimento-46.jpg",
     video: "/assets/movimento-46.mp4",
@@ -379,6 +471,8 @@ const templates = [
   {
     id: 47,
     category: "Animações",
+    title: "ELASTICIDADE SUPERIOR",
+    desc: "Demonstração prática da flexibilidade do tecido na parte de cima.",
     likes: 147,
     image: "/assets/movimento-47.jpg",
     video: "/assets/movimento-47.mp4",
@@ -387,6 +481,8 @@ const templates = [
   {
     id: 48,
     category: "Animações",
+    title: "ELASTICIDADE INFERIOR",
+    desc: "Demonstração de conforto e flexibilidade da calça ou saia.",
     likes: 148,
     image: "/assets/movimento-48.jpg",
     video: "/assets/movimento-48.mp4",
@@ -395,6 +491,8 @@ const templates = [
   {
     id: 49,
     category: "Animações",
+    title: "DESTAQUE NOS DETALHES DA ROUPA",
+    desc: "Close-up nas texturas, zíperes ou estampas exclusivas.",
     likes: 149,
     image: "/assets/movimento-49.jpg",
     video: "/assets/movimento-49.mp4",
@@ -403,6 +501,8 @@ const templates = [
   {
     id: 50,
     category: "Animações",
+    title: "MODELO PERTO DA CÂMERA, ESPONTÂNEA, VARIAS POSSES",
+    desc: "Cortes rápidos e dinâmicos em close-up trocando de poses.",
     likes: 150,
     image: "/assets/movimento-50.jpg",
     video: "/assets/movimento-50.mp4",
@@ -411,6 +511,8 @@ const templates = [
   {
     id: 51,
     category: "Animações",
+    title: "ENCOMENDA- TIKTOK SHOP",
+    desc: "Unboxing e indicação visual de compra facilitada na sacola.",
     likes: 151,
     image: "/assets/movimento-51.jpg",
     video: "/assets/movimento-51.mp4",
@@ -419,6 +521,8 @@ const templates = [
   {
     id: 52,
     category: "Animações",
+    title: "ANIMAÇÃO- GIRO+MÃO NA CINTURA+CTA",
+    desc: "Combinação clássica de giro rápido com pose e chamada de ação final.",
     likes: 152,
     image: "/assets/movimento-52.jpg",
     video: "/assets/movimento-52.mp4",
@@ -427,6 +531,8 @@ const templates = [
   {
     id: 53,
     category: "Animações",
+    title: "MODELO ESPONTÂNEA+POSE",
+    desc: "Estilo casual com pose descontraída finalizando em sorriso.",
     likes: 153,
     image: "/assets/movimento-53.jpg",
     video: "/assets/movimento-53.mp4",
@@ -435,6 +541,8 @@ const templates = [
   {
     id: 54,
     category: "Animações",
+    title: "COMEÇO COM EFEITO DE TRANSIÇÃO",
+    desc: "Efeito de entrada criativo cobrindo e revelando o look na transição.",
     likes: 154,
     image: "/assets/movimento-54.jpg",
     video: "/assets/movimento-54.mp4",
@@ -447,19 +555,16 @@ export const MovimentosView = () => {
   const [hoveredCardId, setHoveredCardId] = useState<number | null>(null);
 
   const handleCopyPrompt = (template: any) => {
-    if (template.promptText) {
       navigator.clipboard.writeText(template.promptText);
-      alert('Movimento copiado para a área de transferência!');
-    }
   };
 
   return (
-    <div className="flex-1 w-full flex flex-col p-6 md:p-8 overflow-y-auto bg-transparent">
+    <div className="flex-1 w-full flex flex-col p-6 md:p-8 pt-16 md:pt-20 overflow-y-auto bg-transparent">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-8">
         <div>
           <h1 className="text-3xl md:text-4xl font-light text-white mb-2 leading-tight">
-            Copie <span className="font-medium bg-gradient-to-r from-purple-400 to-[#8B5CF6] text-transparent bg-clip-text">movimentos naturais</span>
+            Copie <span className="font-medium bg-gradient-to-r from-[#00F0FF] to-[#FF007F] text-transparent bg-clip-text">movimentos naturais</span>
           </h1>
           <p className="text-[#8d8d99] text-sm max-w-2xl">
             Inspire-se em movimentos reais e aplique na sua influenciadora para gerar vídeos ultra-realistas e engajadores.
@@ -476,7 +581,7 @@ export const MovimentosView = () => {
             onClick={() => setActiveCategory(cat)}
             className={`px-5 py-2 rounded-full text-[13px] font-medium whitespace-nowrap transition-all duration-300 ${
               activeCategory === cat
-                ? 'bg-[#8B5CF6]/10 border border-[#8B5CF6] text-white shadow-[0_0_15px_rgba(139,92,246,0.2)]'
+                ? 'bg-[#7B00FF]/10 border border-[#7B00FF] text-white shadow-[0_0_15px_rgba(123,0,255,0.2)]'
                 : 'bg-white/5 border border-white/5 text-[#8d8d99] hover:text-white hover:bg-white/10'
             }`}
           >
@@ -487,12 +592,25 @@ export const MovimentosView = () => {
 
       {/* Grid Retangular */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-20">
-        {templates.map((template) => (
+        {(() => {
+          let filtered = [...templates];
+          if (activeCategory === "YouTube Create") {
+            filtered = filtered.filter(t => t.id >= 36 && t.id <= 54);
+          } else if (activeCategory === "Flow") {
+            filtered = filtered.filter(t => t.id < 36);
+            filtered.reverse();
+          } else if (activeCategory === "Grok") {
+            filtered = filtered.filter(t => t.id < 36);
+            // Misturar a ordem para parecer diferente (pares primeiro, depois ímpares)
+            filtered.sort((a, b) => (a.id % 2) - (b.id % 2));
+          }
+          return filtered;
+        })().map((template) => (
           <div 
             key={template.id} 
             onMouseEnter={() => setHoveredCardId(template.id)}
             onMouseLeave={() => setHoveredCardId(null)}
-            className="relative group aspect-[4/5] rounded-[24px] overflow-hidden bg-white/5 border border-white/5 flex flex-col justify-end p-5"
+            className="relative group aspect-[4/5] rounded-[24px] overflow-hidden bg-white/[0.03] border border-white/10 backdrop-blur-[30px] hover:border-[#00F0FF]/40 hover:shadow-[0_0_30px_rgba(0,240,255,0.2)] transition-all duration-300 shadow-2xl shadow-black/50 flex flex-col justify-end p-5"
           >
             {/* Imagem de Fundo (Placeholder) */}
             <img
@@ -514,6 +632,15 @@ export const MovimentosView = () => {
               />
             )}
             
+            {/* YTB Badge for specific cards */}
+            {template.id >= 36 && template.id <= 54 && (
+              <div className="absolute top-4 left-4 z-10">
+                <div className="px-3 py-1.5 rounded-lg bg-red-500/20 border border-red-500/30 text-red-500 text-[11px] font-bold tracking-wider backdrop-blur-sm">
+                  YTB
+                </div>
+              </div>
+            )}
+            
             {/* Top Right - Heart */}
             <div className="absolute top-4 right-4 z-10">
               <div className="w-9 h-9 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center border border-white/10 text-white hover:bg-black/60 transition-colors cursor-pointer">
@@ -527,10 +654,10 @@ export const MovimentosView = () => {
             {/* Conteúdo (Bottom) */}
             <div className="relative z-10 flex flex-col gap-2">
               <h3 className="text-white font-black text-sm uppercase tracking-wide shadow-sm">
-                MOVIMENTO {template.id}
+                {template.title || `MOVIMENTO ${template.id}`}
               </h3>
-              <p className="text-white/70 text-[11px] leading-relaxed line-clamp-2">
-                Movimento fluido e dinâmico, perfeito para prender a atenção no início do vídeo.
+              <p className="text-white/70 text-[11px] leading-relaxed line-clamp-2" title={template.desc}>
+                {template.desc || "Copie e aplique este movimento."}
               </p>
               
               <button 

@@ -102,9 +102,7 @@ export const generateVTONWithFal = async (
   backgroundImgBase64?: string,
   engine: 'fashn' | 'kolors' = 'kolors'
 ): Promise<string> => {
-  const apiKey = import.meta.env.VITE_FAL_API_KEY;
-  if (!apiKey) throw new Error("VITE_FAL_API_KEY is not set.");
-  fal.config({ credentials: apiKey });
+  fal.config({ proxyUrl: '/api/fal-proxy' });
 
   let category = 'tops';
   if (mode === 'lower_body' || mode === 'lower' as any) category = 'bottoms';

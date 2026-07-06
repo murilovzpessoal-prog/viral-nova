@@ -1331,8 +1331,12 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
         <main className="flex-1 flex flex-col overflow-y-auto relative z-10 scrollbar-hide">
            {/* Mobile Header (Hamburger) */}
            <div className="lg:hidden flex items-center justify-between p-3 border-b border-white/5 bg-[#0b0c10]/80 backdrop-blur-xl sticky top-0 z-50">
-             <button onClick={() => setIsMobileMenuOpen(true)} className="p-1.5 text-white hover:bg-white/10 rounded-lg transition-colors">
-               <Menu className="w-5 h-5" />
+             <button 
+               onClick={() => setIsMobileMenuOpen(true)} 
+               className="p-4 -ml-2 text-white hover:bg-white/10 active:bg-white/20 active:scale-95 rounded-xl transition-all touch-manipulation flex items-center justify-center"
+               style={{ WebkitTapHighlightColor: 'transparent' }}
+             >
+               <Menu className="w-6 h-6" />
              </button>
              <span className="font-black text-white text-base tracking-tighter">Viralpulse</span>
              <div className="w-8"></div> {/* Spacer */}

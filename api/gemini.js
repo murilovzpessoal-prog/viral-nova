@@ -15,7 +15,7 @@ export default async function handler(req, res) {
 
       if (subjectImageBase64 && referenceImageBase64) {
         const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({ model: "gemini-3.5-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
         const parts = [
           { text: `You are an elite AI Prompt Engineer. The user wants to apply the clothing from Image 2 onto the person from Image 1. 
           Because the target image generator ONLY accepts text, you MUST write an EXHAUSTIVELY DETAILED textual description of the person in Image 1 so the generator can recreate her EXACT face. 
@@ -42,7 +42,7 @@ export default async function handler(req, res) {
         }
       }
 
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`;
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-001:predict?key=${apiKey}`;
       const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -60,7 +60,7 @@ export default async function handler(req, res) {
     if (action === 'analyzeHeadline') {
       const { imageBase64 } = payload;
       const genAI = new GoogleGenerativeAI(apiKey);
-      const model = genAI.getGenerativeModel({ model: "gemini-3.5-flash" });
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       const b64Data = imageBase64.includes(',') ? imageBase64.split(',')[1] : imageBase64;
       let mimeType = 'image/jpeg';
       if (imageBase64.startsWith('data:')) mimeType = imageBase64.split(';')[0].split(':')[1];
@@ -88,7 +88,7 @@ REGRAS DE ESCRITA:
     if (action === 'generateScript') {
       const { influencer, product, scenario, videoModel, tone, aiEngine, numTakes } = payload;
       const genAI = new GoogleGenerativeAI(apiKey);
-      const model = genAI.getGenerativeModel({ model: "gemini-3.5-flash" });
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
       let lengthConstraint = aiEngine === 'YouTube Create' ? "\nMUITO IMPORTANTE: MÁXIMO 900 caracteres totais.\n" : "";
       let takeSizeInstruction = numTakes === 1 

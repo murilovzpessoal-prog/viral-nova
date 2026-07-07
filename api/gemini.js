@@ -42,19 +42,25 @@ export default async function handler(req, res) {
         }
       }
 
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/imagen-3.0-generate-001:predict?key=${apiKey}`;
+      const falKey = process.env.FAL_API_KEY || process.env.VITE_FAL_API_KEY;
+      if (!falKey) throw new Error("FAL_API_KEY missing");
+
+      const url = "https://fal.run/fal-ai/flux/schnell";
       const response = await fetch(url, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ instances: [{ prompt: finalPrompt }], parameters: { sampleCount: 1 } })
+        headers: {
+          'Authorization': `Key ${falKey}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ prompt: finalPrompt, image_size: "portrait_4_3" })
       });
 
       if (!response.ok) throw new Error(await response.text());
       const data = await response.json();
-      if (data.predictions && data.predictions[0] && data.predictions[0].bytesBase64Encoded) {
-        return res.status(200).json({ base64: `data:image/png;base64,${data.predictions[0].bytesBase64Encoded}` });
+      if (data && data.images && data.images.length > 0) {
+        return res.status(200).json({ base64: data.images[0].url });
       }
-      throw new Error("Invalid response from Imagen");
+      throw new Error("Invalid response from Fal AI");
     }
 
     if (action === 'analyzeHeadline') {

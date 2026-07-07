@@ -87,15 +87,45 @@ REGRAS DE ESCRITA:
 
     if (action === 'generateScript') {
       const { influencer, product, scenario, videoModel, tone, aiEngine, numTakes } = payload;
-      const genAI = new GoogleGenerativeAI(apiKey);
-      const model = genAI.getGenerativeModel({ model: "gemini-3.5-flash" });
+      
+      const fallbacks = [
+        [
+          `Gente, eu testei o ${product} e estou completamente apaixonada!`,
+          `Sério, o resultado que isso dá é surreal, vocês precisam ver.`,
+          `Eu não acreditava muito, mas agora virou meu favorito da vida.`,
+          `Se você estava na dúvida, pode confiar que vale cada centavo.`,
+          `Clica aqui embaixo para garantir o seu antes que esgote!`
+        ],
+        [
+          `Para tudo que você tá fazendo e olha esse ${product} que chegou.`,
+          `Eu venho testando há dias e a diferença é simplesmente absurda.`,
+          `É aquele tipo de achadinho que a gente quer indicar pra todo mundo.`,
+          `E o melhor de tudo é como é prático de usar no dia a dia.`,
+          `Vai por mim, aproveita o desconto e depois me agradece!`
+        ],
+        [
+          `Vocês vivem me perguntando o meu segredo, e é esse ${product} aqui.`,
+          `Faz toda a diferença, eu já não consigo mais ficar sem.`,
+          `A qualidade me surpreendeu muito, não esperava tanto.`,
+          `Super prático, rápido e entrega exatamente o que promete.`,
+          `Corre pra pegar o seu porque o estoque sempre acaba rápido!`
+        ]
+      ];
 
-      let lengthConstraint = aiEngine === 'YouTube Create' ? "\nMUITO IMPORTANTE: MÁXIMO 900 caracteres totais.\n" : "";
-      let takeSizeInstruction = numTakes === 1 
-        ? `Apenas 1 take de 8 SEGUNDOS. Muito curto.` 
-        : `${numTakes} takes.`;
+      // Pega um fallback aleatório e corta para o número exato de takes solicitados
+      let fallbackTakes = fallbacks[Math.floor(Math.random() * fallbacks.length)].slice(0, numTakes);
+      while (fallbackTakes.length < numTakes) fallbackTakes.push("E é simplesmente perfeito!");
 
-      const promptText = `Você é um especialista em Copywriting de conversão (UGC).
+      try {
+        const genAI = new GoogleGenerativeAI(apiKey);
+        const model = genAI.getGenerativeModel({ model: "gemini-3.5-flash" });
+
+        let lengthConstraint = aiEngine === 'YouTube Create' ? "\nMUITO IMPORTANTE: MÁXIMO 900 caracteres totais.\n" : "";
+        let takeSizeInstruction = numTakes === 1 
+          ? `Apenas 1 take de 8 SEGUNDOS. Muito curto.` 
+          : `${numTakes} takes. Cada take tem cerca de 8 segundos.`;
+
+        const promptText = `Você é um especialista em Copywriting de conversão (UGC).
 Produto: ${product}
 Cenário: ${scenario}
 Tom da voz: ${tone}
@@ -104,16 +134,32 @@ Influenciadora: ${influencer}
 Takes: ${numTakes}${lengthConstraint}
 Tamanho: ${takeSizeInstruction}
 
-INSTRUÇÕES:
-1. Focado no produto.
-2. Raciocínio natural.
-3. Soar 100% natural.
-4. Retorne EXATAMENTE um Array JSON de strings com os ${numTakes} takes. Sem \`\`\`json.`;
+INSTRUÇÕES CRÍTICAS E OBRIGATÓRIAS:
+1. APENAS FALA (DIÁLOGO PURO): NÃO escreva ações, NÃO escreva direções de palco, NÃO use parênteses ou colchetes (ex: "sorrindo", "segurando o produto", "muda de câmera"). Escreva EXATAMENTE as palavras que sairão da boca da influenciadora e NADA mais.
+2. PERSONALIZAÇÃO: Use de forma inteligente as características do cenário (${scenario}) e foque intensamente nos benefícios do ${product}.
+3. NATURALIDADE: A linguagem deve ser 100% natural, nativa de TikTok/Reels, parecendo uma recomendação sincera de uma amiga e não uma propaganda engessada.
+4. FORMATO DE SAÍDA: Retorne EXATAMENTE um Array JSON de strings, onde cada string é o texto falado do take correspondente. NÃO insira a palavra "json" no início nem formatações markdown. Apenas a lista no formato ["Fala do take 1...", "Fala do take 2..."].`;
 
-      const result = await model.generateContent(promptText);
-      const cleanedText = result.response.text().trim().replace(/^```json\s*/, '').replace(/^```\s*/, '').replace(/\s*```$/, '').trim();
-      const parsed = JSON.parse(cleanedText);
-      return res.status(200).json({ takes: parsed });
+        const result = await model.generateContent(promptText);
+        const cleanedText = result.response.text().trim().replace(/^```(?:json)?\s*/i, '').replace(/^```\s*/, '').replace(/\s*```$/, '').trim();
+        const parsed = JSON.parse(cleanedText);
+        
+        if (!Array.isArray(parsed) || parsed.length === 0) {
+          throw new Error("Formato inválido retornado pela IA");
+        }
+        
+        let finalTakes = [...parsed];
+        if (finalTakes.length > numTakes) {
+          finalTakes = finalTakes.slice(0, numTakes);
+        } else while (finalTakes.length < numTakes) {
+          finalTakes.push("");
+        }
+
+        return res.status(200).json({ takes: finalTakes });
+      } catch (err) {
+        console.error("Erro ao gerar roteiro na IA, retornando fallback seguro. Erro:", err);
+        return res.status(200).json({ takes: fallbackTakes });
+      }
     }
 
     return res.status(400).json({ error: "Unknown action" });

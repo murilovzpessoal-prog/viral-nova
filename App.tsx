@@ -1386,7 +1386,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
           {currentPage === 'creator-engine-video-cinematico' && <CreatorEngineGerarVideoCinematicoView onBack={() => setCurrentPage('creator-engine-video')} />}
           {currentPage === 'creator-engine-video-imitar' && <CreatorEngineGerarVideoImitarMovimentosView onBack={() => setCurrentPage('creator-engine-video')} />}
           {currentPage === 'explorar' && <DashboardHome setCurrentPage={setCurrentPage} t={t} />}
-          {currentPage === 'produtos' && <ProductsView products={viralProducts} customProducts={customProducts} onAddCustomProduct={handleAddCustomProduct} />}
+          {currentPage === 'produtos' && <ProductsView products={viralProducts} customProducts={customProducts} onAddCustomProduct={handleAddCustomProduct} onDeleteCustomProduct={handleDeleteCustomProduct} />}
           {currentPage === 'videos' && <VideosView />}
           {currentPage === 'criadores' && <CreatorsView />}
           {currentPage === 'ugc-criador' && <UGCCreatorView viralProducts={viralProducts} exploreTopProducts={exploreTopProducts} customAvatars={customAvatars} customProducts={customProducts} onAddCustomAvatar={handleAddCustomAvatar} onDeleteCustomAvatar={handleDeleteCustomAvatar} />}
@@ -3702,7 +3702,7 @@ const FeatureExploreCard: React.FC<{ icon: React.ReactNode, title: string, descr
 );
 
 // --- PRODUCTS PAGE VIEW ---
-const ProductsView: React.FC<{ products: ProductViral[], customProducts: ProductViral[], onAddCustomProduct: (f: File, t: string, u: string, p: string) => Promise<ProductViral | null> }> = ({ products, customProducts, onAddCustomProduct }) => {
+const ProductsView: React.FC<{ products: ProductViral[], customProducts: ProductViral[], onAddCustomProduct: (f: File, t: string, u: string, p: string) => Promise<ProductViral | null>, onDeleteCustomProduct: (id: string) => void }> = ({ products, customProducts, onAddCustomProduct, onDeleteCustomProduct }) => {
   const [viewMode, setViewMode] = useState<'radar' | 'mapa'>('radar');
   const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false);
   const [isUploadingProduct, setIsUploadingProduct] = useState(false);
@@ -3877,7 +3877,7 @@ const ProductsView: React.FC<{ products: ProductViral[], customProducts: Product
       {viewMode === 'radar' ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-8">
           {allProducts.map((p) => (
-            <ViralCard key={p.id} product={p} />
+            <ViralCard key={p.id} product={p} onDelete={p.category === 'Custom' ? () => onDeleteCustomProduct(p.id) : undefined} />
           ))}
         </div>
       ) : (
@@ -4027,11 +4027,11 @@ const ProductsView: React.FC<{ products: ProductViral[], customProducts: Product
   );
 };
 
-const ViralCard: React.FC<{ product: ProductViral }> = ({ product }) => {
+const ViralCard: React.FC<{ product: ProductViral, onDelete?: () => void }> = ({ product, onDelete }) => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <div className="bg-white/[0.03] border border-white/10 backdrop-blur-[30px] shadow-2xl shadow-black/50 rounded-[32px] md:rounded-[48px] overflow-hidden group hover:border-[#00F0FF]/40 transition-all flex flex-col h-full shadow-2xl relative">
+    <div className="bg-white/[0.03] border border-white/10 backdrop-blur-[30px] shadow-2xl shadow-black/50 rounded-[32px] md:rounded-[48px] overflow-hidden group hover:border-[#00F0FF]/40 transition-all flex flex-col h-full relative">
       {/* PRODUCT IMAGE SECTION */}
       <div className="p-2 md:p-5 pb-2">
         <div
@@ -4065,7 +4065,15 @@ const ViralCard: React.FC<{ product: ProductViral }> = ({ product }) => {
                 {product.priceRange}
               </div>
 
-
+              {/* DELETE BUTTON (HOVER ONLY) */}
+              {onDelete && (
+                <button
+                  onClick={(e) => { e.stopPropagation(); onDelete(); }}
+                  className="absolute inset-0 m-auto w-12 h-12 md:w-14 md:h-14 bg-red-500/80 hover:bg-red-500 backdrop-blur-md rounded-full text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-90 group-hover:scale-100 shadow-2xl z-20"
+                >
+                  <Trash2 className="w-5 h-5 md:w-6 md:h-6" />
+                </button>
+              )}
             </>
           )}
         </div>

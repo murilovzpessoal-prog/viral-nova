@@ -15,7 +15,7 @@ export default async function handler(req, res) {
 
       if (subjectImageBase64 && referenceImageBase64) {
         const genAI = new GoogleGenerativeAI(apiKey);
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-3.5-flash" });
         const parts = [
           { text: `You are an elite AI Prompt Engineer. The user wants to apply the clothing from Image 2 onto the person from Image 1. 
           Because the target image generator ONLY accepts text, you MUST write an EXHAUSTIVELY DETAILED textual description of the person in Image 1 so the generator can recreate her EXACT face. 
@@ -42,31 +42,25 @@ export default async function handler(req, res) {
         }
       }
 
-      const falKey = process.env.FAL_API_KEY || process.env.VITE_FAL_API_KEY;
-      if (!falKey) throw new Error("FAL_API_KEY missing");
-
-      const url = "https://fal.run/fal-ai/flux/schnell";
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/imagen-4.0-generate-001:predict?key=${apiKey}`;
       const response = await fetch(url, {
         method: 'POST',
-        headers: {
-          'Authorization': `Key ${falKey}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ prompt: finalPrompt, image_size: "portrait_4_3" })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ instances: [{ prompt: finalPrompt }], parameters: { sampleCount: 1 } })
       });
 
       if (!response.ok) throw new Error(await response.text());
       const data = await response.json();
-      if (data && data.images && data.images.length > 0) {
-        return res.status(200).json({ base64: data.images[0].url });
+      if (data.predictions && data.predictions[0] && data.predictions[0].bytesBase64Encoded) {
+        return res.status(200).json({ base64: `data:image/png;base64,${data.predictions[0].bytesBase64Encoded}` });
       }
-      throw new Error("Invalid response from Fal AI");
+      throw new Error("Invalid response from Imagen");
     }
 
     if (action === 'analyzeHeadline') {
       const { imageBase64 } = payload;
       const genAI = new GoogleGenerativeAI(apiKey);
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const model = genAI.getGenerativeModel({ model: "gemini-3.5-flash" });
       const b64Data = imageBase64.includes(',') ? imageBase64.split(',')[1] : imageBase64;
       let mimeType = 'image/jpeg';
       if (imageBase64.startsWith('data:')) mimeType = imageBase64.split(';')[0].split(':')[1];
@@ -94,7 +88,7 @@ REGRAS DE ESCRITA:
     if (action === 'generateScript') {
       const { influencer, product, scenario, videoModel, tone, aiEngine, numTakes } = payload;
       const genAI = new GoogleGenerativeAI(apiKey);
-      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const model = genAI.getGenerativeModel({ model: "gemini-3.5-flash" });
 
       let lengthConstraint = aiEngine === 'YouTube Create' ? "\nMUITO IMPORTANTE: MÁXIMO 900 caracteres totais.\n" : "";
       let takeSizeInstruction = numTakes === 1 

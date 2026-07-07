@@ -6479,6 +6479,19 @@ const UGCCreatorView: React.FC<{ viralProducts: ProductViral[], exploreTopProduc
       {/* Step 5: Final Result (Limpo e Profissional) */}
       {step === 5 && (
         <div className="w-full max-w-[1200px] flex flex-col items-center animate-in fade-in zoom-in duration-1000 relative z-10 px-4">
+          
+          {/* BOTÃO DE VOLTAR */}
+          <div className="w-full flex justify-start mb-8">
+            <button
+              onClick={() => setStep(4)}
+              className="flex items-center gap-2 text-[#8d8d99] hover:text-[#00F0FF] transition-colors group"
+            >
+              <div className="w-10 h-10 rounded-full bg-white/[0.03] border border-white/10 flex items-center justify-center group-hover:bg-[#00F0FF]/10 group-hover:border-[#00F0FF]/30 transition-all">
+                <ChevronLeft className="w-5 h-5" />
+              </div>
+              <span className="font-bold tracking-widest uppercase text-xs">Voltar e Editar</span>
+            </button>
+          </div>
 
           <div className="w-full flex flex-col items-center text-center mb-16">
             <div className="w-16 h-16 bg-[#00F0FF]/10 border border-[#00F0FF]/30 rounded-full flex items-center justify-center mb-8 shadow-[0_0_30px_rgba(0,179,126,0.2)]">

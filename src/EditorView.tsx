@@ -159,7 +159,7 @@ export const EditorView: React.FC<EditorViewProps> = ({ initialDraft, onSaveDraf
   const handleSaveDraft = () => {
     if (onSaveDraft) {
       onSaveDraft({
-        id: initialDraft?.id || Math.random().toString(36).substring(7),
+        id: initialDraft?.id || crypto.randomUUID(),
         name: initialDraft?.name || `Vídeo_${new Date().toLocaleDateString().replace(/\//g, '')}`,
         updatedAt: Date.now(),
         media,

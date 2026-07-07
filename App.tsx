@@ -16,6 +16,7 @@ import { MovimentosView } from './src/MovimentosView';
 import { HeadlineView } from './src/HeadlineView';
 import { EditorView, EditorDraft } from './src/EditorView';
 import { RascunhosView } from './src/RascunhosView';
+import { ReferralModal } from './src/ReferralModal';
 import {
   Search,
   Loader2,
@@ -661,6 +662,7 @@ const App: React.FC = () => {
   const [showIOSInstallGuide, setShowIOSInstallGuide] = useState(false);
   const [drafts, setDrafts] = useState<EditorDraft[]>([]);
   const [currentDraft, setCurrentDraft] = useState<EditorDraft | undefined>(undefined);
+  const [isReferralModalOpen, setIsReferralModalOpen] = useState(false);
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e: any) => {
@@ -1321,6 +1323,18 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
               </div>
            </div>
 
+                      {/* INDIQUE AMIGOS BUTTON */}
+           <div onClick={() => setIsReferralModalOpen(true)} className="mx-4 mb-4 py-2 px-3 bg-white/5 border border-white/10 rounded-xl flex items-center justify-between cursor-pointer hover:bg-white/10 transition-colors group">
+              <div>
+                <p className="text-xs font-bold text-white transition-colors">Indique amigos</p>
+                <p className="text-[9px] text-[#8d8d99] mt-0.5">Lucre ou presenteie amigos</p>
+              </div>
+              <div className="w-7 h-7 bg-white/10 rounded-full flex items-center justify-center text-white/90 group-hover:bg-white/20 transition-all border border-white/5">
+                <Gift className="w-3.5 h-3.5" />
+              </div>
+           </div>
+
+
            {/* CONFIG & SAIR */}
            <div className="px-4 pb-6 flex flex-col gap-1 border-t border-white/5 pt-4">
              <button onClick={() => setCurrentPage('configuracoes')} className="flex items-center gap-3 px-4 py-3 text-[#8d8d99] hover:text-white rounded-xl hover:bg-white/5 transition-colors">
@@ -1471,6 +1485,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
           </div>
         </div>
       )}
+        <ReferralModal isOpen={isReferralModalOpen} onClose={() => setIsReferralModalOpen(false)} />
 
     </LanguageContext.Provider>
   );

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Search, Folder, Sparkles, Flame, Heart, Copy } from 'lucide-react';
 
 const categories = [
-  "Animações", "YouTube Create", "Flow", "Grok"
+  "Animações", "Favoritos", "YouTube Create", "Flow", "Grok"
 ];
 
 // Placeholder images for the masonry grid
@@ -553,6 +553,7 @@ const templates = [
 export const MovimentosView = () => {
   const [activeCategory, setActiveCategory] = useState("Animações");
   const [hoveredCardId, setHoveredCardId] = useState<number | null>(null);
+  const [favorites, setFavorites] = useState<number[]>([]);
 
   const handleCopyPrompt = (template: any) => {
       navigator.clipboard.writeText(template.promptText);
@@ -594,7 +595,9 @@ export const MovimentosView = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-20">
         {(() => {
           let filtered = [...templates];
-          if (activeCategory === "YouTube Create") {
+          if (activeCategory === "Favoritos") {
+            filtered = filtered.filter(t => favorites.includes(t.id));
+          } else if (activeCategory === "YouTube Create") {
             filtered = filtered.filter(t => t.id >= 36 && t.id <= 54);
           } else if (activeCategory === "Flow") {
             filtered = filtered.filter(t => t.id < 36);
@@ -643,8 +646,14 @@ export const MovimentosView = () => {
             
             {/* Top Right - Heart */}
             <div className="absolute top-4 right-4 z-10">
-              <div className="w-9 h-9 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center border border-white/10 text-white hover:bg-black/60 transition-colors cursor-pointer">
-                <Heart className="w-4 h-4" />
+              <div 
+                className={`w-9 h-9 rounded-full backdrop-blur-md flex items-center justify-center border transition-colors cursor-pointer ${favorites.includes(template.id) ? 'bg-[#FF007F]/20 border-[#FF007F]/50 text-[#FF007F]' : 'bg-black/40 border-white/10 text-white hover:bg-black/60'}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setFavorites(prev => prev.includes(template.id) ? prev.filter(id => id !== template.id) : [...prev, template.id]);
+                }}
+              >
+                <Heart className="w-4 h-4" fill={favorites.includes(template.id) ? "currentColor" : "none"} />
               </div>
             </div>
 

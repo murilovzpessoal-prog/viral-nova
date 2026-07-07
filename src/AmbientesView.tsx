@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Search, Folder, Sparkles, Flame, Heart, Copy, Wand2, ArrowLeft, Loader2, Download } from 'lucide-react';
 import { generateImageWithGemini } from './lib/gemini';
 
-const categories = ["Todos", "Sala", "Quarto", "Corredor", "Varanda", "Banheiro"];
+const categories = ["Todos", "Favoritos", "Sala", "Quarto", "Corredor", "Varanda", "Banheiro"];
 
 // Placeholder images for the masonry grid
 const templates = [
@@ -190,6 +190,7 @@ const templates = [
 
 export const AmbientesView = () => {
   const [activeCategory, setActiveCategory] = useState("Todos");
+  const [favorites, setFavorites] = useState<number[]>([]);
 
   // --- GRID PRINCIPAL (Galeria) ---
   return (
@@ -225,7 +226,10 @@ export const AmbientesView = () => {
 
       {/* Grid Retangular */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-20">
-        {templates.filter(t => activeCategory === 'Todos' || t.category === activeCategory).map((template) => (
+        {templates.filter(t => {
+          if (activeCategory === 'Favoritos') return favorites.includes(t.id);
+          return activeCategory === 'Todos' || t.category === activeCategory;
+        }).map((template) => (
           <div 
             key={template.id} 
             className="relative group aspect-[4/5] rounded-[24px] overflow-hidden bg-white/5 border border-white/5 flex flex-col justify-end p-5"
@@ -239,8 +243,14 @@ export const AmbientesView = () => {
             
             {/* Top Right - Heart */}
             <div className="absolute top-4 right-4 z-10">
-              <div className="w-9 h-9 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center border border-white/10 text-white hover:bg-black/60 transition-colors cursor-pointer">
-                <Heart className="w-4 h-4" />
+              <div 
+                className={`w-9 h-9 rounded-full backdrop-blur-md flex items-center justify-center border transition-colors cursor-pointer ${favorites.includes(template.id) ? 'bg-[#FF007F]/20 border-[#FF007F]/50 text-[#FF007F]' : 'bg-black/40 border-white/10 text-white hover:bg-black/60'}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setFavorites(prev => prev.includes(template.id) ? prev.filter(id => id !== template.id) : [...prev, template.id]);
+                }}
+              >
+                <Heart className="w-4 h-4" fill={favorites.includes(template.id) ? "currentColor" : "none"} />
               </div>
             </div>
 

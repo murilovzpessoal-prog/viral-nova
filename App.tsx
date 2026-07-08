@@ -1485,7 +1485,7 @@ Do not add subtitles. Do not add text overlays. Do not add background music. Do 
           </div>
         </div>
       )}
-        <ReferralModal isOpen={isReferralModalOpen} onClose={() => setIsReferralModalOpen(false)} />
+        <ReferralModal isOpen={isReferralModalOpen} onClose={() => setIsReferralModalOpen(false)} userEmail={session?.user?.email || ""} />
 
     </LanguageContext.Provider>
   );

@@ -6,15 +6,18 @@ type ReferralView = 'selection' | 'profit' | 'promo';
 interface ReferralModalProps {
   isOpen: boolean;
   onClose: () => void;
+  userEmail?: string;
 }
 
-export function ReferralModal({ isOpen, onClose }: ReferralModalProps) {
+export function ReferralModal({ isOpen, onClose, userEmail }: ReferralModalProps) {
   const [view, setView] = useState<ReferralView>('selection');
+  const [generatedCoupon, setGeneratedCoupon] = useState<string | null>(null);
 
   if (!isOpen) return null;
 
   const handleClose = () => {
     setView('selection'); // reset view when closing
+    setGeneratedCoupon(null);
     onClose();
   };
 
@@ -271,13 +274,42 @@ export function ReferralModal({ isOpen, onClose }: ReferralModalProps) {
                   <h4 className="text-white font-semibold text-lg">Cupom presente da Copa</h4>
                 </div>
                 <p className="text-[#8d8d99] text-sm leading-relaxed mb-6">
-                  Cada cupom dá ao seu amigo <strong className="text-white">créditos infinitos</strong> + <strong className="text-white">50% de desconto</strong>. Escolha de 1 a 10 usos e gere o cupom abaixo.
+                  Cada cupom dá ao seu amigo <strong className="text-white">créditos infinitos</strong> + <strong className="text-white">50% de desconto</strong>. {userEmail === 'tst@gmail.com' ? <span className="text-white">Gere seu cupom agora e compartilhe com até 10 pessoas, vagas limitadas.</span> : 'Escolha de 1 a 10 usos e gere o cupom abaixo.'}
                 </p>
 
-                <div className="bg-[#0b0c10]/50 border border-white/5 rounded-xl p-5 text-center">
-                  <p className="text-white text-sm mb-1">Você ainda não tem um cupom presente configurado.</p>
-                  <p className="text-[#8d8d99] text-xs">Acesse o painel de Parceiros para criar o seu, ou peça à equipe ViralPulse.</p>
-                </div>
+                {userEmail === 'tst@gmail.com' ? (
+                  generatedCoupon ? (
+                    <div className="bg-[#0b0c10]/50 border border-white/5 rounded-xl p-5 text-center flex flex-col items-center justify-center animate-in fade-in zoom-in duration-300">
+                      <p className="text-[#00F0FF] text-xs font-semibold uppercase tracking-wider mb-3">Seu cupom está pronto!</p>
+                      <div className="bg-white/5 border border-white/10 px-6 py-3 rounded-lg flex items-center gap-3 w-full max-w-[280px] justify-between">
+                        <span className="text-white font-mono text-xl font-bold tracking-widest">{generatedCoupon}</span>
+                        <button className="p-2 hover:bg-white/10 rounded-md transition-colors text-white/70 hover:text-white" title="Copiar">
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="bg-[#0b0c10]/50 border border-white/5 rounded-xl p-6 text-center flex flex-col items-center justify-center animate-in fade-in duration-300">
+                      <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-4">
+                        <Ticket className="w-6 h-6 text-white/70" />
+                      </div>
+                      <p className="text-white text-sm font-medium mb-1">Você ainda não tem um cupom presente.</p>
+                      <p className="text-[#8d8d99] text-xs mb-5">Gere um agora para presentear seus amigos.</p>
+                      <button 
+                        onClick={() => setGeneratedCoupon(Math.random() > 0.5 ? 'COPA' : 'LIVE')}
+                        className="bg-white text-black hover:bg-white/90 px-6 py-2.5 rounded-lg font-semibold text-sm transition-colors w-full max-w-[200px] flex items-center justify-center gap-2"
+                      >
+                        <Sparkles className="w-4 h-4" />
+                        Gerar Cupom
+                      </button>
+                    </div>
+                  )
+                ) : (
+                  <div className="bg-[#0b0c10]/50 border border-white/5 rounded-xl p-5 text-center">
+                    <p className="text-white text-sm mb-1">Você ainda não tem um cupom presente configurado.</p>
+                    <p className="text-[#8d8d99] text-xs">Acesse o painel de Parceiros para criar o seu, ou peça à equipe ViralPulse.</p>
+                  </div>
+                )}
               </div>
             </div>
           </>

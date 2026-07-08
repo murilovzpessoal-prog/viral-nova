@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Search, Folder, Sparkles, Flame, Heart, Copy, Wand2, ArrowLeft, Loader2, Download } from 'lucide-react';
+import { Search, Folder, Flame, Heart, Trash2, Link, Save, Download, DownloadIcon, LayoutTemplate, Layers, MousePointer2, Loader2, Sparkles, Wand2, Copy, DownloadCloud, Expand, ExternalLink, Minimize, History, Clock } from 'lucide-react';
 import { generateImageWithGemini } from './lib/gemini';
+import { generateImageWithFal } from './lib/fal';
 
 const categories = [
   "Todos", "Selfies", "Lifestyle", "Close-up"
@@ -1298,7 +1299,7 @@ IMPORTANT: NO MAKEUP. ZERO MAKEUP. Bare face, natural lips without lipstick, no 
       setResultImg(b64Generated);
     } catch (error: any) {
       console.error(error);
-      alert('Erro ao gerar influenciadora (Gemini): ' + (error.message || 'Erro desconhecido.'));
+      alert('Estamos atualizando essa função, o seu limite voltará em breve. É momentâneo, fique tranquilo(a)!');
     } finally {
       setIsGenerating(false);
     }

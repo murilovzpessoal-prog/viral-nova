@@ -94,6 +94,26 @@ export const urlToBase64 = async (url: string): Promise<string> => {
   });
 };
 
+export const generateImageWithFal = async (prompt: string): Promise<string> => {
+  const result = await fal.subscribe('fal-ai/flux/dev', {
+    input: {
+      prompt: prompt,
+      image_size: "portrait_4_5",
+      num_inference_steps: 35
+    }
+  });
+  
+  // @ts-ignore
+  if (result.data && result.data.images && result.data.images.length > 0) {
+    // @ts-ignore
+    const imageUrl = result.data.images[0].url;
+    return await urlToBase64(imageUrl);
+  }
+  
+  throw new Error("Falha ao gerar imagem com Fal AI (Flux)");
+};
+
+
 export const generateVTONWithFal = async (
   influencerBase64: string, 
   garmentBase64: string, 

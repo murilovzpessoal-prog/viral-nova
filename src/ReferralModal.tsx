@@ -274,10 +274,10 @@ export function ReferralModal({ isOpen, onClose, userEmail }: ReferralModalProps
                   <h4 className="text-white font-semibold text-lg">Cupom presente da Copa</h4>
                 </div>
                 <p className="text-[#8d8d99] text-sm leading-relaxed mb-6">
-                  Cada cupom dá ao seu amigo <strong className="text-white">créditos infinitos</strong> + <strong className="text-white">50% de desconto</strong>. {userEmail === 'tst@gmail.com' ? <span className="text-white">Gere seu cupom agora e compartilhe com até 10 pessoas, vagas limitadas.</span> : 'Escolha de 1 a 10 usos e gere o cupom abaixo.'}
+                  Cada cupom dá ao seu amigo <strong className="text-white">créditos infinitos</strong> + <strong className="text-white">50% de desconto</strong>. {userEmail?.trim().toLowerCase() === 'tst@gmail.com' ? <span className="text-white">Gere seu cupom agora e compartilhe com até 10 pessoas, vagas limitadas.</span> : 'Escolha de 1 a 10 usos e gere o cupom abaixo.'}
                 </p>
 
-                {userEmail === 'tst@gmail.com' ? (
+                {userEmail?.trim().toLowerCase() === 'tst@gmail.com' ? (
                   generatedCoupon ? (
                     <div className="bg-[#0b0c10]/50 border border-white/5 rounded-xl p-5 text-center flex flex-col items-center justify-center animate-in fade-in zoom-in duration-300">
                       <p className="text-[#00F0FF] text-xs font-semibold uppercase tracking-wider mb-3">Seu cupom está pronto!</p>

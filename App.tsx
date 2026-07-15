@@ -4645,7 +4645,7 @@ const VideosView: React.FC = () => {
       revenue6h: 'R$ 57.342,18',
       productTitle: 'Saia Longa Feminina Suplex',
       productImage: 'https://i.imgur.com/X2SRT97.jpeg',
-      directVideoUrl: 'https://i.imgur.com/T5zb2aU.mp4',
+      directVideoUrl: 'https://vt.tiktok.com/ZSXSPX2Eq/',
       tiktokId: 'v41',
       profileUrl: ''
     },
@@ -4657,7 +4657,7 @@ const VideosView: React.FC = () => {
       revenue6h: 'R$ 48.745,30',
       productTitle: 'Moletom Curto Feminino com Capuz e Zíper',
       productImage: 'https://i.imgur.com/tPIvytK.jpeg',
-      directVideoUrl: 'https://i.imgur.com/rwziuut.mp4',
+      directVideoUrl: 'https://vt.tiktok.com/ZSXSfvmPe/',
       tiktokId: 'v42',
       profileUrl: ''
     },
@@ -4669,7 +4669,7 @@ const VideosView: React.FC = () => {
       revenue6h: 'R$ 28.415,62',
       productTitle: 'Corset Feminino Cropped Regata',
       productImage: 'https://i.imgur.com/XJBrrBw.jpeg',
-      directVideoUrl: 'https://i.imgur.com/qYEZ9N4.mp4',
+      directVideoUrl: 'https://vt.tiktok.com/ZSXSfTX4w/',
       tiktokId: 'v43',
       profileUrl: ''
     },
@@ -4681,7 +4681,7 @@ const VideosView: React.FC = () => {
       revenue6h: 'R$ 82.536,84',
       productTitle: 'Blusinha Feminina Gola Alta Babado Duplo Longo',
       productImage: 'https://i.imgur.com/89Y12Xf.jpeg',
-      directVideoUrl: 'https://i.imgur.com/ZIz0puF.mp4',
+      directVideoUrl: 'https://vt.tiktok.com/ZSXSPrxs6/',
       tiktokId: 'v44',
       profileUrl: ''
     },
@@ -4693,7 +4693,7 @@ const VideosView: React.FC = () => {
       revenue6h: 'R$ 124.125,50',
       productTitle: 'Vestido Feminino de Alcinha Suplex',
       productImage: 'https://i.imgur.com/dsxRApe.jpeg',
-      directVideoUrl: 'https://i.imgur.com/thOrsc0.mp4',
+      directVideoUrl: 'https://vt.tiktok.com/ZSXSPFGqx/',
       tiktokId: 'v45',
       profileUrl: ''
     },
@@ -4705,7 +4705,7 @@ const VideosView: React.FC = () => {
       revenue6h: 'R$ 356.718,42',
       productTitle: 'Macaquinho Fitness Brilhoso Canelado',
       productImage: 'https://i.imgur.com/oRfpg8y.jpeg',
-      directVideoUrl: 'https://vt.tiktok.com/ZSXhj2APJ/?page=TikTokShop',
+      directVideoUrl: 'https://vt.tiktok.com/ZSXS51Dnv/',
       tiktokId: 'v46',
       profileUrl: ''
     },
@@ -4717,7 +4717,7 @@ const VideosView: React.FC = () => {
       revenue6h: 'R$ 442.564,28',
       productTitle: 'Vestido Feminino Longo com Decote',
       productImage: 'https://i.imgur.com/HJpb7wK.jpeg',
-      directVideoUrl: 'https://i.imgur.com/5RMYnmP.mp4',
+      directVideoUrl: 'https://vt.tiktok.com/ZSXSPryko/',
       tiktokId: 'v47',
       profileUrl: ''
     },
@@ -4729,7 +4729,7 @@ const VideosView: React.FC = () => {
       revenue6h: 'R$ 38.342,75',
       productTitle: 'Cropped Blusinha Top Decote Quadrado',
       productImage: 'https://i.imgur.com/2HYgI6L.jpeg',
-      directVideoUrl: 'https://i.imgur.com/0KLIZNx.mp4',
+      directVideoUrl: 'https://vt.tiktok.com/ZSXSP5UVv/',
       tiktokId: 'v48',
       profileUrl: ''
     },
@@ -4741,7 +4741,7 @@ const VideosView: React.FC = () => {
       revenue6h: 'R$ 152.874,36',
       productTitle: 'Kit 3 Blusas Femininas Gola Alta',
       productImage: 'https://i.imgur.com/LZkm3IT.jpeg',
-      directVideoUrl: 'https://i.imgur.com/YYMSZdH.mp4',
+      directVideoUrl: 'https://vt.tiktok.com/ZSXSPjtVE/',
       tiktokId: 'v49',
       profileUrl: ''
     },
@@ -4753,7 +4753,7 @@ const VideosView: React.FC = () => {
       revenue6h: 'R$ 48.236,48',
       productTitle: 'Blusinha Cropped Manga Longa Nó',
       productImage: 'https://i.imgur.com/OTnQkwE.jpeg',
-      directVideoUrl: 'https://i.imgur.com/0xEgS2l.mp4',
+      directVideoUrl: 'https://vt.tiktok.com/ZSXSP6fSa/',
       tiktokId: 'v50',
       profileUrl: ''
     }

@@ -4636,6 +4636,126 @@ const VideosView: React.FC = () => {
       directVideoUrl: 'https://www.tiktok.com/@daily_dalucy/video/7561737049871600917?_r=1&_t=ZS-93n2powHjeO',
       tiktokId: '7561737049871600917',
       profileUrl: 'https://www.tiktok.com/@daily_dalucy?_r=1&_t=ZS-94AisDGv7r8'
+    },
+    {
+      id: 'v41',
+      rank: 41,
+      thumbnail: 'https://i.imgur.com/X2SRT97.jpeg',
+      sales6h: '1.430 vendas',
+      revenue6h: 'R$ 57.342,18',
+      productTitle: 'Saia Longa Feminina Suplex',
+      productImage: 'https://i.imgur.com/X2SRT97.jpeg',
+      directVideoUrl: 'https://i.imgur.com/T5zb2aU.mp4',
+      tiktokId: 'v41',
+      profileUrl: ''
+    },
+    {
+      id: 'v42',
+      rank: 42,
+      thumbnail: 'https://i.imgur.com/tPIvytK.jpeg',
+      sales6h: '946 vendas',
+      revenue6h: 'R$ 48.745,30',
+      productTitle: 'Moletom Curto Feminino com Capuz e Zíper',
+      productImage: 'https://i.imgur.com/tPIvytK.jpeg',
+      directVideoUrl: 'https://i.imgur.com/rwziuut.mp4',
+      tiktokId: 'v42',
+      profileUrl: ''
+    },
+    {
+      id: 'v43',
+      rank: 43,
+      thumbnail: 'https://i.imgur.com/XJBrrBw.jpeg',
+      sales6h: '799 vendas',
+      revenue6h: 'R$ 28.415,62',
+      productTitle: 'Corset Feminino Cropped Regata',
+      productImage: 'https://i.imgur.com/XJBrrBw.jpeg',
+      directVideoUrl: 'https://i.imgur.com/qYEZ9N4.mp4',
+      tiktokId: 'v43',
+      profileUrl: ''
+    },
+    {
+      id: 'v44',
+      rank: 44,
+      thumbnail: 'https://i.imgur.com/89Y12Xf.jpeg',
+      sales6h: '2.100 vendas',
+      revenue6h: 'R$ 82.536,84',
+      productTitle: 'Blusinha Feminina Gola Alta Babado Duplo Longo',
+      productImage: 'https://i.imgur.com/89Y12Xf.jpeg',
+      directVideoUrl: 'https://i.imgur.com/ZIz0puF.mp4',
+      tiktokId: 'v44',
+      profileUrl: ''
+    },
+    {
+      id: 'v45',
+      rank: 45,
+      thumbnail: 'https://i.imgur.com/dsxRApe.jpeg',
+      sales6h: '3.500 vendas',
+      revenue6h: 'R$ 124.125,50',
+      productTitle: 'Vestido Feminino de Alcinha Suplex',
+      productImage: 'https://i.imgur.com/dsxRApe.jpeg',
+      directVideoUrl: 'https://i.imgur.com/thOrsc0.mp4',
+      tiktokId: 'v45',
+      profileUrl: ''
+    },
+    {
+      id: 'v46',
+      rank: 46,
+      thumbnail: 'https://i.imgur.com/oRfpg8y.jpeg',
+      sales6h: '9.300 vendas',
+      revenue6h: 'R$ 356.718,42',
+      productTitle: 'Macaquinho Fitness Brilhoso Canelado',
+      productImage: 'https://i.imgur.com/oRfpg8y.jpeg',
+      directVideoUrl: 'https://vt.tiktok.com/ZSXhj2APJ/?page=TikTokShop',
+      tiktokId: 'v46',
+      profileUrl: ''
+    },
+    {
+      id: 'v47',
+      rank: 47,
+      thumbnail: 'https://i.imgur.com/HJpb7wK.jpeg',
+      sales6h: '11.400 vendas',
+      revenue6h: 'R$ 442.564,28',
+      productTitle: 'Vestido Feminino Longo com Decote',
+      productImage: 'https://i.imgur.com/HJpb7wK.jpeg',
+      directVideoUrl: 'https://i.imgur.com/5RMYnmP.mp4',
+      tiktokId: 'v47',
+      profileUrl: ''
+    },
+    {
+      id: 'v48',
+      rank: 48,
+      thumbnail: 'https://i.imgur.com/2HYgI6L.jpeg',
+      sales6h: '1.015 vendas',
+      revenue6h: 'R$ 38.342,75',
+      productTitle: 'Cropped Blusinha Top Decote Quadrado',
+      productImage: 'https://i.imgur.com/2HYgI6L.jpeg',
+      directVideoUrl: 'https://i.imgur.com/0KLIZNx.mp4',
+      tiktokId: 'v48',
+      profileUrl: ''
+    },
+    {
+      id: 'v49',
+      rank: 49,
+      thumbnail: 'https://i.imgur.com/LZkm3IT.jpeg',
+      sales6h: '2.700 vendas',
+      revenue6h: 'R$ 152.874,36',
+      productTitle: 'Kit 3 Blusas Femininas Gola Alta',
+      productImage: 'https://i.imgur.com/LZkm3IT.jpeg',
+      directVideoUrl: 'https://i.imgur.com/YYMSZdH.mp4',
+      tiktokId: 'v49',
+      profileUrl: ''
+    },
+    {
+      id: 'v50',
+      rank: 50,
+      thumbnail: 'https://i.imgur.com/OTnQkwE.jpeg',
+      sales6h: '1.080 vendas',
+      revenue6h: 'R$ 48.236,48',
+      productTitle: 'Blusinha Cropped Manga Longa Nó',
+      productImage: 'https://i.imgur.com/OTnQkwE.jpeg',
+      directVideoUrl: 'https://i.imgur.com/0xEgS2l.mp4',
+      tiktokId: 'v50',
+      profileUrl: ''
     }
   ];
 
@@ -4655,7 +4775,7 @@ const VideosView: React.FC = () => {
 
   useEffect(() => {
     // Generate and shuffle on mount
-    const initialData: VideoViral[] = Array.from({ length: 40 }, (_, i) => ({
+    const initialData: VideoViral[] = Array.from({ length: 50 }, (_, i) => ({
       ...baseVideos[i % baseVideos.length],
       id: `v${i + 1}`,
       rank: i + 1

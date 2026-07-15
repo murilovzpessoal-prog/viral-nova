@@ -4640,7 +4640,7 @@ const VideosView: React.FC = () => {
     {
       id: 'v41',
       rank: 41,
-      thumbnail: 'https://i.imgur.com/X2SRT97.jpeg',
+      thumbnail: 'https://i.imgur.com/T5zb2aU.jpg',
       sales6h: '1.430 vendas',
       revenue6h: 'R$ 57.342,18',
       productTitle: 'Saia Longa Feminina Suplex',
@@ -4652,7 +4652,7 @@ const VideosView: React.FC = () => {
     {
       id: 'v42',
       rank: 42,
-      thumbnail: 'https://i.imgur.com/tPIvytK.jpeg',
+      thumbnail: 'https://i.imgur.com/rwziuut.jpg',
       sales6h: '946 vendas',
       revenue6h: 'R$ 48.745,30',
       productTitle: 'Moletom Curto Feminino com Capuz e Zíper',
@@ -4664,7 +4664,7 @@ const VideosView: React.FC = () => {
     {
       id: 'v43',
       rank: 43,
-      thumbnail: 'https://i.imgur.com/XJBrrBw.jpeg',
+      thumbnail: 'https://i.imgur.com/qYEZ9N4.jpg',
       sales6h: '799 vendas',
       revenue6h: 'R$ 28.415,62',
       productTitle: 'Corset Feminino Cropped Regata',
@@ -4676,7 +4676,7 @@ const VideosView: React.FC = () => {
     {
       id: 'v44',
       rank: 44,
-      thumbnail: 'https://i.imgur.com/89Y12Xf.jpeg',
+      thumbnail: 'https://i.imgur.com/ZIz0puF.jpg',
       sales6h: '2.100 vendas',
       revenue6h: 'R$ 82.536,84',
       productTitle: 'Blusinha Feminina Gola Alta Babado Duplo Longo',
@@ -4688,7 +4688,7 @@ const VideosView: React.FC = () => {
     {
       id: 'v45',
       rank: 45,
-      thumbnail: 'https://i.imgur.com/dsxRApe.jpeg',
+      thumbnail: 'https://i.imgur.com/thOrsc0.jpg',
       sales6h: '3.500 vendas',
       revenue6h: 'R$ 124.125,50',
       productTitle: 'Vestido Feminino de Alcinha Suplex',
@@ -4700,7 +4700,7 @@ const VideosView: React.FC = () => {
     {
       id: 'v46',
       rank: 46,
-      thumbnail: 'https://i.imgur.com/oRfpg8y.jpeg',
+      thumbnail: 'https://i.imgur.com/yvvolf9.jpg',
       sales6h: '9.300 vendas',
       revenue6h: 'R$ 356.718,42',
       productTitle: 'Macaquinho Fitness Brilhoso Canelado',
@@ -4712,7 +4712,7 @@ const VideosView: React.FC = () => {
     {
       id: 'v47',
       rank: 47,
-      thumbnail: 'https://i.imgur.com/HJpb7wK.jpeg',
+      thumbnail: 'https://i.imgur.com/5RMYnmP.jpg',
       sales6h: '11.400 vendas',
       revenue6h: 'R$ 442.564,28',
       productTitle: 'Vestido Feminino Longo com Decote',
@@ -4724,7 +4724,7 @@ const VideosView: React.FC = () => {
     {
       id: 'v48',
       rank: 48,
-      thumbnail: 'https://i.imgur.com/2HYgI6L.jpeg',
+      thumbnail: 'https://i.imgur.com/0KLIZNx.jpg',
       sales6h: '1.015 vendas',
       revenue6h: 'R$ 38.342,75',
       productTitle: 'Cropped Blusinha Top Decote Quadrado',
@@ -4736,7 +4736,7 @@ const VideosView: React.FC = () => {
     {
       id: 'v49',
       rank: 49,
-      thumbnail: 'https://i.imgur.com/LZkm3IT.jpeg',
+      thumbnail: 'https://i.imgur.com/YYMSZdH.jpg',
       sales6h: '2.700 vendas',
       revenue6h: 'R$ 152.874,36',
       productTitle: 'Kit 3 Blusas Femininas Gola Alta',
@@ -4748,7 +4748,7 @@ const VideosView: React.FC = () => {
     {
       id: 'v50',
       rank: 50,
-      thumbnail: 'https://i.imgur.com/OTnQkwE.jpeg',
+      thumbnail: 'https://i.imgur.com/0xEgS2l.jpg',
       sales6h: '1.080 vendas',
       revenue6h: 'R$ 48.236,48',
       productTitle: 'Blusinha Cropped Manga Longa Nó',

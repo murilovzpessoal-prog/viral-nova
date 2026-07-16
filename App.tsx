@@ -4700,7 +4700,7 @@ const VideosView: React.FC = () => {
     {
       id: 'v46',
       rank: 46,
-      thumbnail: 'https://i.imgur.com/yvvolf9.jpg',
+      thumbnail: 'https://i.imgur.com/5RMYnmP.jpg',
       sales6h: '9.300 vendas',
       revenue6h: 'R$ 356.718,42',
       productTitle: 'Macaquinho Fitness Brilhoso Canelado',

@@ -14,7 +14,7 @@ export const TrocasView = () => {
   const [bgImg, setBgImg] = useState<string | null>(null);
   const [resultImg, setResultImg] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
-  const [vtonEngine, setVtonEngine] = useState<'kolors' | 'fashn'>('fashn');
+  const [vtonEngine, setVtonEngine] = useState<'kolors' | 'fashn'>('kolors');
 
   const fileInputRef1 = useRef<HTMLInputElement>(null);
   const fileInputRef2 = useRef<HTMLInputElement>(null);

@@ -95,6 +95,7 @@ export const urlToBase64 = async (url: string): Promise<string> => {
 };
 
 export const generateImageWithFal = async (prompt: string): Promise<string> => {
+  fal.config({ credentials: import.meta.env.VITE_FAL_API_KEY });
   const result = await fal.subscribe('fal-ai/flux/dev', {
     input: {
       prompt: prompt,
@@ -122,7 +123,7 @@ export const generateVTONWithFal = async (
   backgroundImgBase64?: string,
   engine: 'fashn' | 'kolors' = 'kolors'
 ): Promise<string> => {
-  fal.config({ proxyUrl: '/api/fal-proxy' });
+  fal.config({ credentials: import.meta.env.VITE_FAL_API_KEY });
 
   let category = 'tops';
   if (mode === 'lower_body' || mode === 'lower' as any) category = 'bottoms';

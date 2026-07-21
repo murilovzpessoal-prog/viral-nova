@@ -99,7 +99,7 @@ export const generateImageWithFal = async (prompt: string): Promise<string> => {
   const result = await fal.subscribe('fal-ai/flux/dev', {
     input: {
       prompt: prompt,
-      image_size: "portrait_4_5",
+      image_size: "portrait_4_3",
       num_inference_steps: 35
     }
   });
@@ -274,12 +274,13 @@ export const generateVTONWithFal = async (
       });
       
       if (upscaleResult && upscaleResult.data) {
-        if (upscaleResult.data.image && upscaleResult.data.image.url) {
+        const dataAny = upscaleResult.data as any;
+        if (dataAny.image && dataAny.image.url) {
           console.log("Upscale concluído com sucesso.");
-          return upscaleResult.data.image.url;
-        } else if (upscaleResult.data.images && upscaleResult.data.images[0].url) {
+          return dataAny.image.url;
+        } else if (dataAny.images && dataAny.images[0].url) {
           console.log("Upscale concluído com sucesso.");
-          return upscaleResult.data.images[0].url;
+          return dataAny.images[0].url;
         }
       }
       console.error("Upscale Result Data:", upscaleResult?.data);
@@ -297,9 +298,10 @@ export const generateVTONWithFal = async (
           }
         });
         if (kolorsResult && kolorsResult.data) {
-          if (kolorsResult.data.image && kolorsResult.data.image.url) finalImageUrl = kolorsResult.data.image.url;
-          else if (kolorsResult.data.url) finalImageUrl = kolorsResult.data.url;
-          else if (kolorsResult.data.images && kolorsResult.data.images[0].url) finalImageUrl = kolorsResult.data.images[0].url;
+          const dataAny = kolorsResult.data as any;
+          if (dataAny.image && dataAny.image.url) finalImageUrl = dataAny.image.url;
+          else if (dataAny.url) finalImageUrl = dataAny.url;
+          else if (dataAny.images && dataAny.images[0].url) finalImageUrl = dataAny.images[0].url;
         }
         if (finalImageUrl === humanUrl) throw new Error("A Fal.ai Kolors não retornou a URL da imagem.");
         console.log("Kolors VTON concluído.");
@@ -309,8 +311,9 @@ export const generateVTONWithFal = async (
           input: {
             model_image: humanUrl,
             garment_image: garmentUrl,
-            category: category,
+            category: category as "tops" | "bottoms" | "one-pieces" | "auto",
             garment_photo_type: "auto",
+            // @ts-ignore
             prompt: fashnPrompt, 
             guidance_scale: 2.5 
           }
@@ -331,7 +334,7 @@ export const generateVTONWithFal = async (
     try {
       const { applyFrequencySeparation } = await import('./cv');
       
-      const origB64 = influencerUrl.startsWith('http') ? await urlToBase64(influencerUrl) : influencerUrl;
+      const origB64 = influencerBase64.startsWith('http') ? await urlToBase64(influencerBase64) : influencerBase64;
       const genB64 = finalImageUrl.startsWith('http') ? await urlToBase64(finalImageUrl) : finalImageUrl;
       
       finalImageUrl = await applyFrequencySeparation(origB64, genB64, 0.35);

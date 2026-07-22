@@ -81,7 +81,7 @@ export function ReferralModal({ isOpen, onClose, userEmail }: ReferralModalProps
                         Quero lucrar com a indicação
                       </h4>
                       <p className="text-sm text-[#8d8d99] leading-relaxed">
-                        Você recebe <strong className="text-white font-semibold">50% do valor da compra</strong> em comissão a cada venda realizada com o seu cupom.
+                        Você recebe <strong className="text-white font-semibold">50% do valor da compra</strong> em comissão a cada venda realizada com seu link de afiliação.
                       </p>
                     </div>
                   </div>
@@ -99,13 +99,13 @@ export function ReferralModal({ isOpen, onClose, userEmail }: ReferralModalProps
                     </div>
                     <div>
                       <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#00F0FF]/10 border border-[#00F0FF]/20 mb-3">
-                        <span className="text-[10px] font-bold text-[#00F0FF] tracking-wider uppercase">🏆 Edição Copa</span>
+                        <span className="text-[10px] font-bold text-[#00F0FF] tracking-wider uppercase">🎁 Presente Exclusivo</span>
                       </div>
                       <h4 className="text-lg font-bold text-white mb-1 group-hover:text-[#00F0FF] transition-colors">
-                        Promoção Copa: presenteie um craque
+                        Presentear um Amigo
                       </h4>
                       <p className="text-sm text-[#8d8d99] leading-relaxed">
-                        Seu amigo recebe <strong className="text-white font-semibold">créditos infinitos</strong> dentro da ferramenta + <strong className="text-white font-semibold">50% de desconto</strong> na compra. Você abre mão da recompensa em favor dele.
+                        Abra mão da comissão desta indicação para liberar <strong className="text-white font-semibold">50% de desconto</strong> e <strong className="text-white font-semibold">créditos ilimitados</strong> para quem utilizar o seu presente.
                       </p>
                     </div>
                   </div>
@@ -158,32 +158,22 @@ export function ReferralModal({ isOpen, onClose, userEmail }: ReferralModalProps
 
               <div className="flex flex-col gap-6 mb-8">
                 {/* Step 1 */}
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 mt-0.5">
                     <Zap className="w-5 h-5 text-[#FF007F]" />
                   </div>
-                  <p className="text-white text-base">
-                    Compartilhe seu cupom de parceiro com quem quiser
+                  <p className="text-[#8d8d99] text-base leading-relaxed">
+                    Compartilhe seu <strong className="font-bold text-white">link de afiliação</strong> com quem quiser.
                   </p>
                 </div>
                 
                 {/* Step 2 */}
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-full bg-[#00F0FF]/10 border border-[#00F0FF]/20 flex items-center justify-center shrink-0 mt-0.5">
                     <BadgePercent className="w-5 h-5 text-[#00F0FF]" />
                   </div>
-                  <p className="text-white text-base leading-relaxed">
-                    Seu amigo aplica o cupom no checkout e fecha a assinatura normalmente
-                  </p>
-                </div>
-
-                {/* Step 3 */}
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
-                    <TrendingUp className="w-5 h-5 text-[#FF007F]" />
-                  </div>
-                  <p className="text-white text-base">
-                    Você recebe <strong className="font-bold">50% do valor da compra</strong> em comissão
+                  <p className="text-[#8d8d99] text-base leading-relaxed">
+                    Seu amigo paga através do seu checkout, fecha a assinatura normalmente e você recebe <strong className="font-bold text-white">50% do valor da compra</strong> em comissão.
                   </p>
                 </div>
               </div>
@@ -192,10 +182,10 @@ export function ReferralModal({ isOpen, onClose, userEmail }: ReferralModalProps
               <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
                 <div className="flex items-center gap-3 mb-3">
                   <Ticket className="w-5 h-5 text-[#00F0FF]" />
-                  <h4 className="text-white font-semibold text-lg">Seu cupom de parceiro</h4>
+                  <h4 className="text-white font-semibold text-lg">Seja um Parceiro</h4>
                 </div>
                 <p className="text-[#8d8d99] text-base leading-relaxed">
-                  Seu cupom ainda não foi configurado. Acesse o painel de Parceiros para criar o seu.
+                  Entre em contato com a nossa equipe para se afiliar.
                 </p>
               </div>
 
@@ -219,7 +209,7 @@ export function ReferralModal({ isOpen, onClose, userEmail }: ReferralModalProps
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6">
                 <Sparkles className="w-4 h-4 text-[#00F0FF]" />
                 <Trophy className="w-3.5 h-3.5 text-[#FF007F]" />
-                <span className="text-xs font-medium text-white/90">Promoção da Copa</span>
+                <span className="text-xs font-medium text-white/90">Programa de Presentes</span>
               </div>
 
               {/* Title */}
@@ -227,7 +217,7 @@ export function ReferralModal({ isOpen, onClose, userEmail }: ReferralModalProps
                 Indique <span className="font-bold">amigos</span>
               </h2>
               <p className="text-[#8d8d99] text-base">
-                presenteie um craque com créditos infinitos
+                Escolha como deseja utilizar a sua indicação.
               </p>
             </div>
 
@@ -242,27 +232,27 @@ export function ReferralModal({ isOpen, onClose, userEmail }: ReferralModalProps
               </button>
 
               <h3 className="text-xs font-bold text-[#8d8d99] uppercase tracking-wider mb-6">
-                Como Funciona
+                COMO FUNCIONA
               </h3>
 
               <div className="flex flex-col gap-6 mb-8">
                 {/* Step 1 */}
-                <div className="flex items-center gap-4">
+                <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-full bg-[#00F0FF]/10 border border-[#00F0FF]/20 flex items-center justify-center shrink-0">
                     <Crown className="w-5 h-5 text-[#00F0FF]" />
                   </div>
                   <p className="text-[#8d8d99] text-base leading-relaxed">
-                    Seu amigo desbloqueia <strong className="font-bold text-white">créditos infinitos</strong> na ferramenta + <strong className="font-bold text-white">50% de desconto</strong> na compra
+                    Seu amigo recebe <strong className="font-bold text-white">50% de desconto</strong> na compra e <strong className="font-bold text-white">créditos ilimitados</strong> para utilizar a ferramenta.
                   </p>
                 </div>
                 
                 {/* Step 2 */}
-                <div className="flex items-center gap-4">
+                <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
                     <MessageSquare className="w-5 h-5 text-[#FF007F]" />
                   </div>
                   <p className="text-[#8d8d99] text-base leading-relaxed">
-                    Você abre mão da recompensa — todos os benefícios vão para o novo usuário
+                    Ao escolher esta opção, sua recompensa de indicação é convertida automaticamente em benefícios para o novo usuário.
                   </p>
                 </div>
               </div>
@@ -271,43 +261,56 @@ export function ReferralModal({ isOpen, onClose, userEmail }: ReferralModalProps
               <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
                 <div className="flex items-center gap-3 mb-3">
                   <Trophy className="w-5 h-5 text-[#00F0FF]" />
-                  <h4 className="text-white font-semibold text-lg">Cupom presente da Copa</h4>
+                  <h4 className="text-white font-semibold text-lg">Presente Digital</h4>
                 </div>
                 <p className="text-[#8d8d99] text-sm leading-relaxed mb-6">
-                  Cada cupom dá ao seu amigo <strong className="text-white">créditos infinitos</strong> + <strong className="text-white">50% de desconto</strong>. {userEmail?.trim().toLowerCase() === 'tst@gmail.com' ? <span className="text-white">Gere seu cupom agora e compartilhe com até 10 pessoas, vagas limitadas.</span> : 'Escolha de 1 a 10 usos e gere o cupom abaixo.'}
+                  Transforme sua indicação em um presente exclusivo. Quem utilizar este presente recebe <strong className="text-white">50% de desconto</strong> na compra e <strong className="text-white">créditos ilimitados</strong> para utilizar a ferramenta. Você pode criar até 5 presentes por mês.
                 </p>
 
-                {userEmail?.trim().toLowerCase() === 'tst@gmail.com' ? (
-                  generatedCoupon ? (
-                    <div className="bg-[#0b0c10]/50 border border-white/5 rounded-xl p-5 text-center flex flex-col items-center justify-center animate-in fade-in zoom-in duration-300">
-                      <p className="text-[#00F0FF] text-xs font-semibold uppercase tracking-wider mb-3">Seu cupom está pronto!</p>
-                      <div className="bg-white/5 border border-white/10 px-6 py-3 rounded-lg flex items-center gap-3 w-full max-w-[280px] justify-between">
-                        <span className="text-white font-mono text-xl font-bold tracking-widest">{generatedCoupon}</span>
-                        <button className="p-2 hover:bg-white/10 rounded-md transition-colors text-white/70 hover:text-white" title="Copiar">
-                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                        </button>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="bg-[#0b0c10]/50 border border-white/5 rounded-xl p-6 text-center flex flex-col items-center justify-center animate-in fade-in duration-300">
-                      <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-4">
-                        <Ticket className="w-6 h-6 text-white/70" />
-                      </div>
-                      <p className="text-white text-sm font-medium mb-1">Você ainda não tem um cupom presente.</p>
-                      <p className="text-[#8d8d99] text-xs mb-5">Gere um agora para presentear seus amigos.</p>
-                      <button 
-                        onClick={() => setGeneratedCoupon(Math.random() > 0.5 ? 'COPA' : 'LIVE')}
-                        className="bg-white text-black hover:bg-white/90 px-6 py-2.5 rounded-lg font-semibold text-sm transition-colors w-full max-w-[200px] flex items-center justify-center gap-2"
-                      >
-                        <Sparkles className="w-4 h-4" />
-                        Gerar Cupom
+                {generatedCoupon ? (
+                  <div className="bg-[#0b0c10]/50 border border-white/5 rounded-xl p-5 text-center flex flex-col items-center justify-center animate-in fade-in zoom-in duration-300">
+                    <p className="text-[#00F0FF] text-xs font-semibold uppercase tracking-wider mb-3">Seu Presente Digital está pronto</p>
+                    <p className="text-[#8d8d99] text-xs mb-4">Compartilhe este cupom com quem você desejar presentear. Quem utilizar o cupom receberá 50% de desconto na compra e créditos ilimitados para utilizar a ferramenta.</p>
+                    <div className="bg-white/5 border border-white/10 px-6 py-3 rounded-lg flex items-center gap-3 w-full max-w-[280px] justify-between mb-4">
+                      <span className="text-white font-mono text-xl font-bold tracking-widest">{generatedCoupon}</span>
+                      <button className="p-2 hover:bg-white/10 rounded-md transition-colors text-white/70 hover:text-white" title="Copiar">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                       </button>
                     </div>
-                  )
+                    <div className="flex gap-3 w-full justify-center">
+                      <button onClick={() => {
+                        navigator.clipboard.writeText(generatedCoupon);
+                        alert('Cupom copiado!');
+                      }} className="px-4 py-2 bg-white text-black font-semibold rounded-lg text-xs hover:bg-white/90 transition-colors">
+                        Copiar Cupom
+                      </button>
+                      <button onClick={() => {
+                        const shareText = `Use meu presente digital e ganhe 50% de desconto + créditos ilimitados na ViralPulse! Cupom: ${generatedCoupon}`;
+                        navigator.clipboard.writeText(shareText);
+                        alert('Texto de compartilhamento copiado!');
+                      }} className="px-4 py-2 bg-white/10 border border-white/10 text-white font-semibold rounded-lg text-xs hover:bg-white/20 transition-colors">
+                        Compartilhar Cupom
+                      </button>
+                    </div>
+                  </div>
                 ) : (
-                  <div className="bg-[#0b0c10]/50 border border-white/5 rounded-xl p-5 text-center">
-                    <p className="text-white text-sm mb-1">Você ainda não tem um cupom presente configurado.</p>
-                    <p className="text-[#8d8d99] text-xs">Acesse o painel de Parceiros para criar o seu, ou peça à equipe ViralPulse.</p>
+                  <div className="bg-[#0b0c10]/50 border border-white/5 rounded-xl p-6 text-center flex flex-col items-center justify-center animate-in fade-in duration-300">
+                    <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-4">
+                      <Ticket className="w-6 h-6 text-white/70" />
+                    </div>
+                    <p className="text-white text-sm font-medium mb-1">Você ainda não possui um Presente Digital.</p>
+                    <p className="text-[#8d8d99] text-xs mb-5">Gere um cupom agora e compartilhe com quem você quiser presentear.</p>
+                    <button 
+                      onClick={() => {
+                        const list = ['PRIME284', 'PRIME613', 'GIFT427', 'GIFT918', 'SHARE156', 'SHARE704'];
+                        const random = list[Math.floor(Math.random() * list.length)];
+                        setGeneratedCoupon(random);
+                      }}
+                      className="bg-white text-black hover:bg-white/90 px-6 py-2.5 rounded-lg font-semibold text-sm transition-colors w-full max-w-[200px] flex items-center justify-center gap-2"
+                    >
+                      <Sparkles className="w-4 h-4" />
+                      Gerar Presente
+                    </button>
                   </div>
                 )}
               </div>

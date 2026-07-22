@@ -327,21 +327,7 @@ export const generateVTONWithFal = async (
       }
     }
     
-    // --- FASE 1.5: TEXTURE TRANSFER (COMPUTER VISION) ---
-    // Aplica Frequency Separation matematicamente direto no Frontend (Javascript/Canvas)
-    // Isso transfere a textura fotográfica original (poros) de volta para a IA gerada.
-    console.log("Iniciando Texture Transfer (Frequency Separation) via Javascript Canvas...");
-    try {
-      const { applyFrequencySeparation } = await import('./cv');
-      
-      const origB64 = influencerBase64.startsWith('http') ? await urlToBase64(influencerBase64) : influencerBase64;
-      const genB64 = finalImageUrl.startsWith('http') ? await urlToBase64(finalImageUrl) : finalImageUrl;
-      
-      finalImageUrl = await applyFrequencySeparation(origB64, genB64, 0.35);
-      console.log("Texture Transfer via Canvas concluído com sucesso!");
-    } catch (e) {
-      console.warn("Aviso: Falha ao aplicar Frequency Separation. Retornando imagem sem textura. Erro:", e);
-    }
+
 
     // --- FASE 2: BACKGROUND SWAP ---
     if (mode === 'background' || mode === 'everything' as any) {

@@ -49,7 +49,7 @@ export const HeadlineView: React.FC = () => {
       }
     } catch (err: any) {
       console.error("Erro ao gerar headlines:", err);
-      alert("Estamos atualizando essa função para melhorar a sua experiência, em breve estará online!");
+      alert("Erro detalhado da API: " + (err.message || String(err)));
     } finally {
       setIsGenerating(false);
     }

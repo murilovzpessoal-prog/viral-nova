@@ -187,3 +187,5 @@ INSTRUÇÕES CRÍTICAS E OBRIGATÓRIAS:
     return fallbackTakes;
   }
 };
+
+// Trigger build

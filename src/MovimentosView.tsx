@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Folder, Sparkles, Flame, Heart, Copy } from 'lucide-react';
+import { Search, Folder, Sparkles, Flame, Heart, Copy, Check } from 'lucide-react';
 
 const categories = [
   "Animações", "Favoritos", "YouTube Create", "Flow", "Grok"
@@ -554,9 +554,28 @@ export const MovimentosView = () => {
   const [activeCategory, setActiveCategory] = useState("Animações");
   const [hoveredCardId, setHoveredCardId] = useState<number | null>(null);
   const [favorites, setFavorites] = useState<number[]>([]);
+  const [copiedId, setCopiedId] = useState<number | null>(null);
 
   const handleCopyPrompt = (template: any) => {
+    if (navigator.clipboard && window.isSecureContext) {
       navigator.clipboard.writeText(template.promptText);
+    } else {
+      const textArea = document.createElement("textarea");
+      textArea.value = template.promptText;
+      textArea.style.position = "absolute";
+      textArea.style.left = "-999999px";
+      document.body.prepend(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+      } catch (error) {
+        console.error(error);
+      } finally {
+        textArea.remove();
+      }
+    }
+    setCopiedId(template.id);
+    setTimeout(() => setCopiedId(null), 2000);
   };
 
   return (
@@ -673,8 +692,17 @@ export const MovimentosView = () => {
                 onClick={() => handleCopyPrompt(template)}
                 className="mt-2 flex items-center justify-center gap-2 w-full py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/10 rounded-xl text-white text-[11px] font-bold uppercase tracking-wider transition-colors shadow-lg"
               >
-                <Copy className="w-4 h-4" />
-                Copiar Movimento
+                {copiedId === template.id ? (
+                  <>
+                    <Check className="w-4 h-4 text-emerald-400" />
+                    <span className="text-emerald-400">COPIADO</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-4 h-4" />
+                    Copiar Movimento
+                  </>
+                )}
               </button>
             </div>
           </div>

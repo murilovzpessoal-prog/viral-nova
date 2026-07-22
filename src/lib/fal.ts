@@ -143,50 +143,13 @@ export const generateVTONWithFal = async (
       console.log("Fashn Prompt:", fashnPrompt);
     }
 
-    console.log("Normalizando proporções da imagem...");
-    const resizeAndCropToVTON = (base64Str: string): Promise<string> => {
-      return new Promise((resolve, reject) => {
-        const img = new Image();
-        img.onload = () => {
-          const targetWidth = 768;
-          const targetHeight = 1024;
-          const targetRatio = targetWidth / targetHeight;
-          const imgRatio = img.width / img.height;
-
-          let sWidth = img.width;
-          let sHeight = img.height;
-          let sx = 0;
-          let sy = 0;
-
-          if (imgRatio > targetRatio) {
-            sWidth = img.height * targetRatio;
-            sx = (img.width - sWidth) / 2;
-          } else {
-            sHeight = img.width / targetRatio;
-            sy = (img.height - sHeight) / 2;
-          }
-
-          const canvas = document.createElement('canvas');
-          canvas.width = targetWidth;
-          canvas.height = targetHeight;
-          const ctx = canvas.getContext('2d');
-          if (!ctx) return resolve(base64Str);
-          
-          ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, targetWidth, targetHeight);
-          resolve(canvas.toDataURL('image/jpeg', 1.0));
-        };
-        img.onerror = () => reject(new Error("Erro ao ler imagem"));
-        img.src = base64Str;
-      });
-    };
-
-    const croppedHuman = await resizeAndCropToVTON(influencerBase64);
+    const croppedHuman = influencerBase64;
     let croppedGarment = '';
     
     if (mode === 'background' as any) {
       croppedGarment = garmentBase64;
     } else if (mode !== 'upscale' as any && garmentBase64) {
-      croppedGarment = await resizeAndCropToVTON(garmentBase64);
+      croppedGarment = garmentBase64;
     }
 
     const humanBlob = await base64ToBlob(croppedHuman);

@@ -90,3 +90,36 @@ export const applyFrequencySeparation = async (originalSrc: string, generatedSrc
     genImg.src = generatedSrc;
   });
 };
+
+export const applyFilmGrain = async (src: string, amount: number = 0.05): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = 'Anonymous';
+    img.onload = () => {
+      try {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d')!;
+        ctx.drawImage(img, 0, 0);
+        
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imageData.data;
+        
+        for (let i = 0; i < data.length; i += 4) {
+          const noise = (Math.random() - 0.5) * 255 * amount;
+          data[i] = Math.min(255, Math.max(0, data[i] + noise));
+          data[i+1] = Math.min(255, Math.max(0, data[i+1] + noise));
+          data[i+2] = Math.min(255, Math.max(0, data[i+2] + noise));
+        }
+        
+        ctx.putImageData(imageData, 0, 0);
+        resolve(canvas.toDataURL('image/jpeg', 0.95));
+      } catch (e) {
+        reject(e);
+      }
+    };
+    img.onerror = reject;
+    img.src = src;
+  });
+};

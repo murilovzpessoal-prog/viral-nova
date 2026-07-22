@@ -1,9 +1,10 @@
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
 export const generateImageWithGemini = async (prompt: string, apiKey: string, subjectImageBase64?: string, referenceImageBase64?: string): Promise<string> => {
   if (!apiKey) throw new Error("Chave da API do Gemini não configurada.");
   let finalPrompt = prompt;
 
   if (subjectImageBase64 || referenceImageBase64) {
-    const { GoogleGenerativeAI } = await import("@google/generative-ai");
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     const parts: any[] = [
@@ -101,7 +102,6 @@ REGRAS DE ESCRITA:
 - Estilo: Linguagem nativa de TikTok.
 - Retorne APENAS as headlines, uma por linha.`;
 
-  const { GoogleGenerativeAI } = await import("@google/generative-ai");
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
@@ -163,7 +163,6 @@ INSTRUÇÕES CRÍTICAS E OBRIGATÓRIAS:
 3. NATURALIDADE: A linguagem deve ser 100% natural, nativa de TikTok/Reels, parecendo uma recomendação sincera de uma amiga e não uma propaganda engessada.
 4. FORMATO DE SAÍDA: Retorne EXATAMENTE um Array JSON de strings, onde cada string é o texto falado do take correspondente. NÃO insira a palavra "json" no início nem formatações markdown. Apenas a lista no formato ["Fala do take 1...", "Fala do take 2..."].`;
 
-    const { GoogleGenerativeAI } = await import("@google/generative-ai");
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 

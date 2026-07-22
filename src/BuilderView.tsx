@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+// Force Vercel trigger
 import { Search, Folder, Flame, Heart, Trash2, Link, Save, Download, DownloadIcon, LayoutTemplate, Layers, MousePointer2, Loader2, Sparkles, Wand2, Copy, DownloadCloud, Expand, ExternalLink, Minimize, History, Clock, ArrowLeft } from 'lucide-react';
 import { generateImageWithGemini } from './lib/gemini';
 import { generateImageWithFal, urlToBase64 } from './lib/fal';

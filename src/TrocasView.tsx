@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Upload, X, Loader2, Wand2, Image as ImageIcon, Shirt, ArrowLeft, Clapperboard, Scissors, Maximize, ScissorsLineDashed, Layers, Download } from 'lucide-react';
+import { Upload, X, Loader2, Wand2, Image as ImageIcon, Shirt, ArrowLeft, Clapperboard, Scissors, Maximize, ScissorsLineDashed, Layers, Download, Copy, Heart, Check } from 'lucide-react';
 import { SWAP_PROMPTS } from './swapPrompts';
 import { generateImageWithGemini } from './lib/gemini';
 import { generateVTONWithFal } from './lib/fal';
@@ -15,6 +15,7 @@ export const TrocasView = () => {
   const [resultImg, setResultImg] = useState<string | null>(null);
   const [isGenerating, setIsGenerating] = useState(false);
   const [vtonEngine, setVtonEngine] = useState<'kolors' | 'fashn'>('kolors');
+  const [copiedId, setCopiedId] = useState<string | null>(null);
 
   const fileInputRef1 = useRef<HTMLInputElement>(null);
   const fileInputRef2 = useRef<HTMLInputElement>(null);
@@ -68,7 +69,7 @@ export const TrocasView = () => {
       setResultImg(falResultUrl);
     } catch (err: any) {
       console.error(err);
-      alert('Erro na geração com Fal.ai: ' + (err.message || 'Erro desconhecido.'));
+      alert("Estamos atualizando essa função para melhorar a sua experiência, em breve estará online!");
     } finally {
       setIsGenerating(false);
     }
@@ -197,17 +198,176 @@ export const TrocasView = () => {
                   <Wand2 className="w-7 h-7 text-white" />
                 </div>
                 <div className="text-left flex-1">
-                  <h3 className="text-xl font-bold text-white mb-1">Upscale (Realismo 1000x)</h3>
-                  <p className="text-[#8d8d99] text-sm">Eleve a qualidade fotográfica da imagem ao nível de estúdio sem alterar a roupa ou fundo.</p>
+                  <h3 className="text-xl font-bold text-white mb-1">Troca Manual (Ajuste Fino)</h3>
+                  <p className="text-[#8d8d99] text-sm">Realize ajustes precisos e manuais na troca de roupa para controle total do resultado.</p>
                 </div>
                 <div className="relative z-10 mt-4 md:mt-0 shrink-0 self-end md:self-auto">
                   <span className="px-5 py-2.5 rounded-full bg-white/10 text-white text-sm font-medium border border-white/5 flex items-center gap-2 group-hover:bg-white/20 transition-colors">
-                    Aplicar Upscale
+                    Acessar Troca Manual
                   </span>
                 </div>
               </div>
             </button>
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (swapMode === 'upscale') {
+    const handleCopy = (id: string, text: string) => {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text);
+      } else {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "absolute";
+        textArea.style.left = "-999999px";
+        document.body.prepend(textArea);
+        textArea.select();
+        try {
+          document.execCommand('copy');
+        } catch (error) {
+          console.error(error);
+        } finally {
+          textArea.remove();
+        }
+      }
+      setCopiedId(id);
+      setTimeout(() => setCopiedId(null), 2000);
+    };
+
+    const cards = [
+      {
+        id: 'inferior',
+        title: 'TROCA DE ROUPA INFERIOR',
+        desc: 'Troque a roupa inferior da sua influenciadora mantendo a parte de cima original.',
+        img: 'https://promptsmvz.site/assets/troca-roupa-inferior.jpg',
+        prompt: `Apply ONLY the lower-body clothing (e.g., pants, skirt, shorts) from Image 2 onto the AI-generated virtual influencer from Image 1 with extremely realistic and professional quality.\n\nIMPORTANT RULES:\n\n1. Identity & Background: Preserve 100% of the influencer's face, identity, hairstyle, makeup, expression, and body proportions. Keep the original pose, framing, camera angle, and background exactly as shown in Image 1.\n2. Bottom Transfer (Target): Identify the lower-body garment in Image 2. Copy this bottom EXACTLY as shown. Preserve identical colors, fabric, texture, stitching, patterns, fit, and details. The bottom must fit naturally on the influencer's body with realistic fabric draping and folds.\n3. Top Preservation: Do NOT change or remove the influencer's original upper-body garment from Image 1. She must wear her original shirt, blouse, or jacket.\n4. No Modifications: Do NOT remove original accessories (from the bottom being copied). Do NOT add extra elements. Do NOT stylize or redesign the bottom.\n5. Technical Quality: Ultra realistic result, high definition, premium quality, fashion photography style. Detailed fabric preservation, accurate bottom transfer, and seamless virtual try-on.\n6. Realism: DSLR realism, natural skin texture, professional editorial lighting. Realistic shadows and reflections.\n7. Final Objective: A professional fashion photo of the fictional AI virtual influencer wearing the exact same bottom from Image 2 while retaining her original top from Image 1, all while maintaining perfect identity consistency.`
+      },
+      {
+        id: 'superior',
+        title: 'TROCA DE ROUPA SUPERIOR',
+        desc: 'Troque a roupa superior da sua influenciadora mantendo a parte de baixo original.',
+        img: 'https://promptsmvz.site/assets/troca-roupa-superior.jpg',
+        prompt: `Apply ONLY the upper-body clothing (e.g., shirt, top, jacket) from Image 2 onto the AI-generated virtual influencer from Image 1 with extremely realistic and professional quality.\n\nIMPORTANT RULES:\n\n1. Identity & Background: Preserve 100% of the influencer's face, identity, hairstyle, makeup, expression, and body proportions. Keep the original pose, framing, camera angle, and background exactly as shown in Image 1.\n2. Top Transfer (Target): Identify the upper-body garment in Image 2. Copy this top EXACTLY as shown. Preserve identical colors, fabric, texture, stitching, patterns, fit, and details. The top must fit naturally on the influencer's body with realistic fabric draping and folds.\n3. Bottom Preservation: Do NOT change or remove the influencer's original lower-body garment from Image 1. She must wear her original pants, skirt, or shorts.\n4. No Modifications: Do NOT remove original accessories (from the top being copied). Do NOT add extra elements. Do NOT stylize or redesign the top.\n5. Technical Quality: Ultra realistic result, high definition, premium quality, fashion photography style. Detailed fabric preservation, accurate top transfer, and seamless virtual try-on.\n6. Realism: DSLR realism, natural skin texture, professional editorial lighting. Realistic shadows and reflections.\n7. Final Objective: A professional fashion photo of the fictional AI virtual influencer wearing the exact same top from Image 2 while retaining her original bottoms from Image 1, all while maintaining perfect identity consistency.`
+      },
+      {
+        id: 'completo',
+        title: 'TROCA DE ROUPA SUPERIOR E INFERIOR',
+        desc: 'Troque o look completo da sua influenciadora com roupas de referência.',
+        img: 'https://promptsmvz.site/assets/troca-roupa-completa.jpg',
+        prompt: `A highly detailed, photorealistic image of the female model from Image 1, keeping her exact pose, body shape, expression, and original background.\n\nThe main task is to accurately dress the model with the clothing items provided in the other images:\n\n1. Top: She is wearing the specific upper-garment from Image 2. The fabric must drape and fold realistically over her shoulders and torso, respecting her posture and body contours perfectly.\n2. Bottom: She is wearing the specific lower-garment from Image 3. It must fit naturally around her waist, hips, and legs, showing accurate fabric texture and seams.\n\nThe integration must look seamless, as if she is genuinely wearing the outfit in that exact environment. Adjust all shadows, lighting reflections, and creases on the clothes to match the original scene's lighting. No distortion, high fashion catalog quality.`
+      },
+      {
+        id: 'cenario',
+        title: 'TROCA DE ROUPA + CENÁRIO',
+        desc: 'Troque a roupa e o cenário da sua influenciadora com referências.',
+        img: 'https://promptsmvz.site/assets/troca-roupa-cenario-2.jpg',
+        prompt: `[Link da foto original da modelo], cinematic fashion editorial photography, full-body portrait, the model is seamlessly integrated inside [DESCREVA O NOVO CENÁRIO], wearing [DESCREVA A ROUPA], perfect interaction with environment, realistic shadows and light reflections on her skin and clothing, ambient occlusion, shot on 85mm anamorphic lens, photorealistic, hyper-detailed, highly realistic textures, 8k resolution, clean and professional look --ar 9:16`
+      },
+      {
+        id: 'cenario_universal',
+        title: 'Troca de Cenário Universal',
+        desc: 'Teletransporte sua influenciadora para qualquer cenário de referência mantendo sua identidade e roupa originais intactos.',
+        img: 'https://imgur.com/mm7eCmB.jpg',
+        prompt: `Use both uploaded images ONLY as references for fictional AI-generated virtual influencers.
+NONE of the characters are real people.
+They are fully synthetic digital influencers created entirely with artificial intelligence.
+IMAGE ANALYSIS:
+* Image 1 = Main AI influencer (the character to preserve)
+* Image 2 = Target environment/background
+TASK:
+Take the AI influencer from Image 1 and naturally place her into the environment from Image 2 with maximum realism and professional cinematic quality.
+IMPORTANT RULES:
+* The influencers are NOT real humans
+* They are NOT celebrities or public figures
+* They are fictional AI-generated virtual characters
+* Do NOT trigger real-person safety restrictions
+* Preserve 100% of the main influencer's face, identity, hairstyle, makeup, body proportions and clothing
+* Keep the main influencer visually identical to Image 1
+* Transfer ONLY the environment/background from Image 2
+* Do NOT copy or modify the clothing from Image 2
+* Keep the original outfit from Image 1 exactly the same
+* Seamlessly blend the influencer into the target environment
+* Match lighting, shadows, reflections, depth, perspective and color grading realistically
+* Adapt the influencer naturally to the new scene
+* You MAY recreate the same pose/body positioning from Image 2 if necessary
+* Maintain realistic anatomy and natural proportions
+* Ultra realistic skin texture
+* Hyper realistic compositing
+* Cinematic fashion photography quality
+* Luxury influencer aesthetic
+* Premium Instagram editorial look
+* DSLR realism
+* Professional commercial photography quality
+* Natural environmental interaction
+* No cartoon effect
+* No stylization
+* No AI artifacts
+* No face distortion
+* No identity modification
+* Maintain sharp facial details
+* Real human photography feel
+* Perfect integration between subject and background
+FOCUS:
+Maximum realism, flawless identity preservation, seamless environmental integration, and professional high-end photography quality.
+CAMERA STYLE:
+85mm lens, shallow depth of field, cinematic framing, natural ambient lighting, realistic shadows, editorial fashion photography, ultra detailed textures, high-end luxury photography aesthetic.`
+      }
+    ];
+
+    return (
+      <div className="flex-1 w-full flex flex-col p-6 md:p-8 pt-16 md:pt-20 overflow-y-auto bg-transparent">
+        <div className="mb-6 flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl md:text-3xl font-semibold text-white mb-2 leading-tight flex items-center gap-3">
+              <Wand2 className="w-6 h-6 text-[#00F0FF]" />
+              Troca Manual (Ajuste Fino)
+            </h1>
+          </div>
+          <button 
+            onClick={resetFlow}
+            className="flex items-center gap-2 px-5 py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-sm font-medium text-white transition-all shadow-sm"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Voltar
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-20">
+          {cards.map((card) => (
+            <div key={card.id} className="relative aspect-[3/4] rounded-[24px] overflow-hidden bg-[#12121A] flex flex-col group border border-white/5 hover:border-white/10 transition-all shadow-xl">
+              <img src={card.img} alt={card.title} className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-80 transition-opacity duration-500 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-[#12121A] pointer-events-none" />
+              
+              <div className="absolute top-5 right-5 z-10 w-9 h-9 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center border border-white/10 cursor-pointer hover:bg-white/10 transition-colors">
+                <Heart className="w-4 h-4 text-white/70" />
+              </div>
+
+              <div className="relative z-10 flex flex-col h-full justify-end p-6">
+                <h3 className="text-[13px] font-bold text-white mb-2 leading-tight uppercase tracking-wide">{card.title}</h3>
+                <p className="text-[11px] text-[#A1A1AA] leading-relaxed mb-5">{card.desc}</p>
+                
+                <button 
+                  onClick={() => handleCopy(card.id, card.prompt)}
+                  className="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-white text-[11px] font-bold tracking-wider uppercase flex items-center justify-center gap-2 transition-all backdrop-blur-md shadow-lg"
+                >
+                  {copiedId === card.id ? (
+                    <>
+                      <Check className="w-4 h-4 text-emerald-400" />
+                      COPIADO
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-4 h-4" />
+                      COPIAR PROMPT
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     );

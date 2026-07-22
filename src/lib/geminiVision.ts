@@ -6,7 +6,7 @@ export const analyzeGarmentWithGemini = async (garmentBase64: string, influencer
 
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ 
-    model: "gemini-1.5-flash",
+    model: "gemini-2.5-flash",
     generationConfig: { temperature: 0.1, topP: 0.1 }
   });
 
@@ -73,7 +73,7 @@ export const analyzeImageForUpscale = async (imageBase64: string): Promise<{prom
 
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ 
-    model: "gemini-1.5-flash",
+    model: "gemini-2.5-flash",
     generationConfig: { temperature: 0.1, topP: 0.1 }
   });
 
@@ -121,7 +121,7 @@ export const analyzeSkinForRefinement = async (imageBase64: string): Promise<{sk
 
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ 
-    model: "gemini-1.5-flash",
+    model: "gemini-2.5-flash",
     generationConfig: { temperature: 0.1, topP: 0.1 }
   });
 
@@ -167,7 +167,7 @@ export const analyzeImageForGlobalRefinement = async (originalBase64: string, vt
 
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ 
-    model: "gemini-1.5-flash",
+    model: "gemini-2.5-flash",
     generationConfig: { temperature: 0.1, topP: 0.1 }
   });
 

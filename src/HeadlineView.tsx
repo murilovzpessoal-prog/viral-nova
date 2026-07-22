@@ -49,7 +49,7 @@ export const HeadlineView: React.FC = () => {
       }
     } catch (err: any) {
       console.error("Erro ao gerar headlines:", err);
-      alert(err.message || "Erro ao conectar com a IA");
+      alert("Estamos atualizando essa função para melhorar a sua experiência, em breve estará online!");
     } finally {
       setIsGenerating(false);
     }

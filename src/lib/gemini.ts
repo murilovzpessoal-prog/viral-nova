@@ -6,7 +6,7 @@ export const generateImageWithGemini = async (prompt: string, apiKey: string, su
 
   if (subjectImageBase64 || referenceImageBase64) {
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
     const parts: any[] = [
       { text: `You are an elite AI Prompt Engineer. The user wants to generate a new image matching the subject identity, style, pose, and details from the provided reference image(s).
       
@@ -103,7 +103,7 @@ REGRAS DE ESCRITA:
 - Retorne APENAS as headlines, uma por linha.`;
 
   const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
   const result = await model.generateContent([
     promptText,
@@ -164,7 +164,7 @@ INSTRUÇÕES CRÍTICAS E OBRIGATÓRIAS:
 4. FORMATO DE SAÍDA: Retorne EXATAMENTE um Array JSON de strings, onde cada string é o texto falado do take correspondente. NÃO insira a palavra "json" no início nem formatações markdown. Apenas a lista no formato ["Fala do take 1...", "Fala do take 2..."].`;
 
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     const result = await model.generateContent(promptText);
     const text = result.response.text();
